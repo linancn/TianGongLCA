@@ -22,6 +22,26 @@
     component: './Welcome',
   },
   {
+    path: '/project',
+    name: 'Project',
+    icon: 'crown',
+    access: 'canAdmin',
+    routes: [
+      {
+        name: 'ReactFlowDemo',
+        icon: 'smile',
+        path: '/project/reactflow',
+        component: './project/ReactFlow',
+      },
+      {
+        name: 'EmptyPage',
+        icon: 'smile',
+        path: '/project/emptypage',
+        component: './project/EmptyPage',
+      },
+    ],
+  },
+  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
