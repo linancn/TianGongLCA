@@ -16,34 +16,71 @@
     ],
   },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
+    path: '/home',
+    routes: [
+      {
+        path: '/home',
+        routes: [
+          {
+            name: 'Welcome',
+            path: '/home/welcome',
+            component: './Home/Welcome',
+          },
+          {
+            name: 'Project',
+            path: '/home/project',
+            component: './Home/Welcome',
+          },
+          {
+            name: 'Starred',
+            path: '/home/starred',
+            component: './Home/Welcome',
+          },
+          {
+            name: 'Create',
+            path: '/home/create',
+            component: './Home/Welcome',
+          },
+          {
+            name: 'Connect',
+            path: '/home/connect',
+            component: './Home/Welcome',
+          },
+          {
+            name: 'RecycleBin',
+            path: '/home/recyclebin',
+            component: './Home/Welcome',
+          },
+          {
+            name: 'Database',
+            path: '/home/database',
+            component: './Home/Welcome',
+          },
+        ],
+      },
+    ],
   },
   {
-    path: '/project',
-    name: 'Project',
+    path: '/test',
+    name: 'Test',
     icon: 'crown',
     access: 'canAdmin',
     routes: [
       {
         name: 'ReactFlowDemo',
-        icon: 'smile',
-        path: '/project/reactflow',
-        component: './project/ReactFlow',
+        path: '/test/reactflowdemo',
+        component: './test/ReactFlowDemo',
       },
       {
         name: 'EmptyPage',
-        icon: 'smile',
-        path: '/project/emptypage',
-        component: './project/EmptyPage',
+        path: '/test/emptypage',
+        component: './Test/EmptyPage',
       },
     ],
   },
   {
     path: '/admin',
-    name: 'admin',
+    name: 'Admin',
     icon: 'crown',
     access: 'canAdmin',
     component: './Admin',
@@ -51,20 +88,19 @@
       {
         path: '/admin/sub-page',
         name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
+        component: './Home/Welcome',
       },
     ],
   },
   {
     name: 'list.table-list',
     icon: 'table',
-    path: '/list',
+    path: '/home/list',
     component: './TableList',
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/home/welcome',
   },
   {
     component: './404',

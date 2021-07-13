@@ -1,17 +1,21 @@
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
+import type {
+  BasicLayoutProps,
+  MenuDataItem,
+  Settings as LayoutSettings,
+} from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import { notification } from 'antd';
-import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
+import fixMenuItemIcon from './utils/fixMenuItemIcon';
+import { queryHomeMenuData, queryTestMenuData } from './services/swagger/menu';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
-/** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <PageLoading />,
 };
@@ -19,35 +23,6 @@ export const initialStateConfig = {
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
-export async function getInitialState(): Promise<{
-  settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
-}> {
-  const fetchUserInfo = async () => {
-    try {
-      const currentUser = await queryCurrentUser();
-      return currentUser;
-    } catch (error) {
-      history.push(loginPath);
-    }
-    return undefined;
-  };
-  // 如果是登录页面，不执行
-  if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
-    return {
-      fetchUserInfo,
-      currentUser,
-      settings: {},
-    };
-  }
-  return {
-    fetchUserInfo,
-    settings: {},
-  };
-}
-
 /**
  * 异常处理程序
     200: '服务器成功返回请求的数据。',
@@ -86,7 +61,7 @@ export async function getInitialState(): Promise<{
     504: The gateway timed out. ',
  * @see https://beta-pro.ant.design/docs/request-cn
  */
-export const request: RequestConfig = {
+export const request = {
   errorHandler: (error: any) => {
     const { response } = error;
 
@@ -100,8 +75,81 @@ export const request: RequestConfig = {
   },
 };
 
-// ProLayout 支持的api https://procomponents.ant.design/components/layout
-export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+export async function getInitialState(): Promise<{
+  settings?: Partial<LayoutSettings>;
+  currentUser?: API.CurrentUser;
+  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchMenuData?: () => Promise<any>;
+  menuData: any;
+}> {
+  const fetchUserInfo = async () => {
+    try {
+      const currentUser = await queryCurrentUser();
+      return currentUser;
+    } catch (error) {
+      history.push(loginPath);
+    }
+    return undefined;
+  };
+  const fetchMenuData = async () => {
+    const { pathname } = history.location;
+    const redirect = history.location.query?.redirect;
+    try {
+      let menuid = '';
+      let pathnames = pathname.split('/');
+      if (pathnames.length > 1) {
+        menuid = pathnames[1].toLocaleLowerCase();
+        if (menuid === 'user' && redirect) {
+          if (typeof redirect === 'string') {
+            pathnames = redirect.split('/');
+            if (pathnames.length > 1) {
+              menuid = pathnames[1].toLocaleLowerCase();
+            }
+          }
+        }
+      }
+      if (menuid === '' || menuid === 'home' || menuid === 'user') {
+        const menuData = await queryHomeMenuData();
+        return menuData;
+      }
+      if (menuid === 'test') {
+        const menuData = await queryTestMenuData();
+        return menuData;
+      }
+      return [];
+    } catch (error) {
+      history.push(loginPath);
+    }
+    return undefined;
+  };
+
+  const menuData = await fetchMenuData();
+  if (history.location.pathname !== loginPath) {
+    const currentUser = await fetchUserInfo();
+    return {
+      fetchUserInfo,
+      currentUser,
+      settings: {},
+      menuData,
+    };
+  }
+  return {
+    fetchUserInfo,
+    settings: {},
+    menuData,
+  };
+}
+
+// https://procomponents.ant.design/components/layout
+export const layout = ({
+  initialState,
+}: {
+  initialState: {
+    settings?: LayoutSettings;
+    menuData: MenuDataItem[];
+    currentUser?: API.CurrentUser;
+  };
+}): BasicLayoutProps => {
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
@@ -111,7 +159,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
-      // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);
       }
@@ -129,6 +176,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
         ]
       : [],
     menuHeaderRender: undefined,
+    menuDataRender: () => {
+      // return initialState.menuData;
+      return fixMenuItemIcon(initialState.menuData);
+    },
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     ...initialState?.settings,
