@@ -19,7 +19,24 @@ const loginPath = '/user/login';
 export const initialStateConfig = {
   loading: <PageLoading />,
 };
-
+const getMenuId = () => {
+  const { pathname } = history.location;
+  const redirect = history.location.query?.redirect;
+  let menuid = '';
+  let pathnames = pathname.split('/');
+  if (pathnames.length > 1) {
+    menuid = pathnames[1].toLocaleLowerCase();
+    if (menuid === 'user' && redirect) {
+      if (typeof redirect === 'string') {
+        pathnames = redirect.split('/');
+        if (pathnames.length > 1) {
+          menuid = pathnames[1].toLocaleLowerCase();
+        }
+      }
+    }
+  }
+  return menuid;
+};
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
@@ -74,12 +91,12 @@ export const request = {
     throw error;
   },
 };
-
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
   fetchMenuData?: () => Promise<any>;
+  menuId: string;
   menuData: any;
 }> {
   const fetchUserInfo = async () => {
@@ -91,23 +108,10 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
+  const menuId = getMenuId();
   const fetchMenuData = async () => {
-    const { pathname } = history.location;
-    const redirect = history.location.query?.redirect;
     try {
-      let menuid = '';
-      let pathnames = pathname.split('/');
-      if (pathnames.length > 1) {
-        menuid = pathnames[1].toLocaleLowerCase();
-        if (menuid === 'user' && redirect) {
-          if (typeof redirect === 'string') {
-            pathnames = redirect.split('/');
-            if (pathnames.length > 1) {
-              menuid = pathnames[1].toLocaleLowerCase();
-            }
-          }
-        }
-      }
+      const menuid = menuId;
       if (menuid === '' || menuid === 'home' || menuid === 'user') {
         const menuData = await queryHomeMenuData();
         return menuData;
@@ -122,7 +126,6 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-
   const menuData = await fetchMenuData();
   if (history.location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
@@ -130,12 +133,14 @@ export async function getInitialState(): Promise<{
       fetchUserInfo,
       currentUser,
       settings: {},
+      menuId,
       menuData,
     };
   }
   return {
     fetchUserInfo,
     settings: {},
+    menuId,
     menuData,
   };
 }
@@ -146,6 +151,7 @@ export const layout = ({
 }: {
   initialState: {
     settings?: LayoutSettings;
+    menuId: string;
     menuData: MenuDataItem[];
     currentUser?: API.CurrentUser;
   };
@@ -161,6 +167,9 @@ export const layout = ({
       const { location } = history;
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);
+      }
+      if (initialState.menuId !== getMenuId()) {
+        history.go(0);
       }
     },
     links: isDev
@@ -180,6 +189,7 @@ export const layout = ({
       // return initialState.menuData;
       return fixMenuItemIcon(initialState.menuData);
     },
+    // actionRef:()=>{},
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     ...initialState?.settings,
