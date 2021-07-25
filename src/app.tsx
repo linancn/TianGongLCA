@@ -12,8 +12,9 @@ import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import fixMenuItemIcon from './utils/fixMenuItemIcon';
 // import { queryHomeMenuData, queryTestMenuData } from './services/swagger/menu';
-import Home from './components/MenuData/Home';
-import Test from './components/MenuData/Test';
+import home from './components/MenuData/home';
+import project from './components/MenuData/project';
+import test from './components/MenuData/test';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -115,13 +116,16 @@ export async function getInitialState(): Promise<{
     try {
       const menuid = menuId;
       if (menuid === '' || menuid === 'home' || menuid === 'user') {
-        // const menuData = await queryHomeMenuData();
-        const menuData = Home;
+        const menuData = home;
+        return menuData;
+      }
+      if (menuid === 'project') {
+        const menuData = project;
         return menuData;
       }
       if (menuid === 'test') {
         // const menuData = await queryTestMenuData();
-        const menuData = Test;
+        const menuData = test;
         return menuData;
       }
       return [];

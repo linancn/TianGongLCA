@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { Params, ListItemDataType } from 'mock/Project/data.d';
+import type { Params, ListItemDataType } from 'mock/project/card.d';
 
 export async function queryFakeList(
   params: Params,

@@ -18,11 +18,23 @@ export default [
         component: './test/emptypage',
       },
       {
-        name: '搜索列表',
+        name: 'listsearch',
         icon: 'smile',
         path: '/test/listsearch',
         component: './Test/ListSearch',
       },
     ],
+  },
+  {
+    name: 'ListTableList',
+    icon: 'smile',
+    path: '/test/listtablelist',
+    component: './test/ListTableList',
+  },
+  {
+    name: 'ProfileBasic',
+    icon: 'smile',
+    path: '/test/profilebasic',
+    component: './test/ProfileBasic',
   },
 ];

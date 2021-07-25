@@ -1,31 +1,50 @@
 @import '~antd/es/style/themes/default.less';
 
-a.listItemMetaTitle {
-  color: @heading-color;
-}
-.listItemExtra {
-  width: 272px;
-  height: 1px;
-}
-.selfTrigger {
-  margin-left: 12px;
-}
+.filterCardList {
+  :global {
+    .ant-card-meta-content {
+      margin-top: 0;
+    }
+    // disabled white space
+    .ant-card-meta-avatar {
+      font-size: 0;
+    }
 
-@media screen and (max-width: @screen-xs) {
-  .selfTrigger {
-    display: block;
-    margin-left: 0;
+    .ant-list .ant-list-item-content-single {
+      max-width: 100%;
+    }
   }
-}
-@media screen and (max-width: @screen-md) {
-  .selfTrigger {
-    display: block;
-    margin-left: 0;
-  }
-}
-@media screen and (max-width: @screen-lg) {
-  .listItemExtra {
-    width: 0;
-    height: 1px;
+  .cardInfo {
+    margin-top: 16px;
+    margin-left: 40px;
+    zoom: 1;
+    &::before,
+    &::after {
+      display: table;
+      content: ' ';
+    }
+    &::after {
+      clear: both;
+      height: 0;
+      font-size: 0;
+      visibility: hidden;
+    }
+    & > div {
+      position: relative;
+      float: left;
+      width: 50%;
+      text-align: left;
+      p {
+        margin: 0;
+        font-size: 24px;
+        line-height: 32px;
+      }
+      p:first-child {
+        margin-bottom: 4px;
+        color: @text-color-secondary;
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
   }
 }

@@ -5,8 +5,8 @@ import { useRequest } from 'umi';
 import AvatarList from './components/AvatarList';
 import StandardFormRow from './components/StandardFormRow';
 import TagSelect from './components/TagSelect';
-import type { ListItemDataType } from 'mock/Project/data.d';
-import { queryFakeList } from '@/services/Project/service';
+import type { ListItemDataType } from 'mock/project/card.d';
+import { queryFakeList } from '@/services/project/card';
 import styles from './style.less';
 
 const { Option } = Select;

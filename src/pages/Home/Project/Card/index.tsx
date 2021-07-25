@@ -1,11 +1,11 @@
-import { DownloadOutlined, EditOutlined } from '@ant-design/icons';
+import { FolderOpenOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Avatar, Card, List, Tooltip } from 'antd';
 import numeral from 'numeral';
 import type { FC } from 'react';
 import React from 'react';
 import { useRequest } from 'umi';
-import type { ListItemDataType } from 'mock/Project/data.d';
-import { queryFakeList } from '@/services/Project/service';
+import type { ListItemDataType } from 'mock/project/card.d';
+import { queryFakeList } from '@/services/project/card';
 import styles from './style.less';
 
 export function formatWan(val: number) {
@@ -80,11 +80,13 @@ export const ListSearchApplications: FC<Record<string, any>> = () => {
               hoverable
               bodyStyle={{ paddingBottom: 20 }}
               actions={[
-                <Tooltip key="download" title="下载">
-                  <DownloadOutlined />
+                <Tooltip key="open" title="Open">
+                  <a href="/project/information" target="_blank">
+                    <FolderOpenOutlined />
+                  </a>
                 </Tooltip>,
-                <Tooltip key="edit" title="编辑">
-                  <EditOutlined />
+                <Tooltip key="delete" title="Delete">
+                  <DeleteOutlined onClick={() => alert('delete')} />
                 </Tooltip>,
               ]}
             >

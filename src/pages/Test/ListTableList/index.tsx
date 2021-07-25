@@ -1,14 +1,36 @@
-import { message, Input, Drawer } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, message, Input, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
+import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
+import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import { rule, updateRule } from '@/services/project/table';
+import { rule, addRule, updateRule, removeRule } from '@/services/project/table';
 import type { TableListItem, TableListPagination } from 'mock/project/table.d';
-import styles from './style.less';
+/**
+ * 添加节点
+ *
+ * @param fields
+ */
+
+const handleAdd = async (fields: TableListItem) => {
+  const hide = message.loading('正在添加');
+
+  try {
+    await addRule({ ...fields });
+    hide();
+    message.success('添加成功');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('添加失败请重试！');
+    return false;
+  }
+};
 /**
  * 更新节点
  *
@@ -33,20 +55,42 @@ const handleUpdate = async (fields: FormValueType) => {
     return false;
   }
 };
-type TableListProps = {
-  location: {
-    query: {
-      searchValue: string;
-    };
-  };
+/**
+ * 删除节点
+ *
+ * @param selectedRows
+ */
+
+const handleRemove = async (selectedRows: TableListItem[]) => {
+  const hide = message.loading('正在删除');
+  if (!selectedRows) return true;
+
+  try {
+    await removeRule({
+      key: selectedRows.map((row) => row.key),
+    });
+    hide();
+    message.success('删除成功，即将刷新');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('删除失败，请重试');
+    return false;
+  }
 };
-let oldSearchValue = '';
-const TableList: React.FC<TableListProps> = (porps) => {
+
+const TableList: React.FC = () => {
+  /** 新建窗口的弹窗 */
+  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
+  /** 分布更新窗口的弹窗 */
+
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   const [currentRow, setCurrentRow] = useState<TableListItem>();
-  const { searchValue } = porps.location.query;
+  const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
+  /** 国际化配置 */
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: '规则名称',
@@ -133,33 +177,103 @@ const TableList: React.FC<TableListProps> = (porps) => {
         >
           配置
         </a>,
+        <a key="subscribeAlert" href="https://procomponents.ant.design/">
+          订阅警报
+        </a>,
       ],
     },
   ];
-  if (oldSearchValue !== searchValue) {
-    oldSearchValue = searchValue;
-    actionRef.current?.reload();
-  }
-  return (
-    <div className={styles.filterCardList}>
-      <ProTable<TableListItem, TableListPagination>
-        actionRef={actionRef}
-        search={false}
-        request={(
-          params: {
-            pageSize: number;
-            current: number;
-          },
-          sort,
-        ) => {
-          return rule(params, sort, searchValue);
-        }}
-        columns={columns}
-      />
 
+  return (
+    <PageContainer>
+      <ProTable<TableListItem, TableListPagination>
+        headerTitle="查询表格"
+        actionRef={actionRef}
+        rowKey="key"
+        search={{
+          labelWidth: 120,
+        }}
+        toolBarRender={() => [
+          <Button
+            type="primary"
+            key="primary"
+            onClick={() => {
+              handleModalVisible(true);
+            }}
+          >
+            <PlusOutlined /> 新建
+          </Button>,
+        ]}
+        request={rule}
+        columns={columns}
+        rowSelection={{
+          onChange: (_, selectedRows) => {
+            setSelectedRows(selectedRows);
+          },
+        }}
+      />
+      {selectedRowsState?.length > 0 && (
+        <FooterToolbar
+          extra={
+            <div>
+              已选择{' '}
+              <a
+                style={{
+                  fontWeight: 600,
+                }}
+              >
+                {selectedRowsState.length}
+              </a>{' '}
+              项 &nbsp;&nbsp;
+              <span>
+                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo!, 0)} 万
+              </span>
+            </div>
+          }
+        >
+          <Button
+            onClick={async () => {
+              await handleRemove(selectedRowsState);
+              setSelectedRows([]);
+              actionRef.current?.reloadAndRest?.();
+            }}
+          >
+            批量删除
+          </Button>
+          <Button type="primary">批量审批</Button>
+        </FooterToolbar>
+      )}
+      <ModalForm
+        title="新建规则"
+        width="400px"
+        visible={createModalVisible}
+        onVisibleChange={handleModalVisible}
+        onFinish={async (value) => {
+          const success = await handleAdd(value as TableListItem);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      >
+        <ProFormText
+          rules={[
+            {
+              required: true,
+              message: '规则名称为必填项',
+            },
+          ]}
+          width="md"
+          name="name"
+        />
+        <ProFormTextArea width="md" name="desc" />
+      </ModalForm>
       <UpdateForm
         onSubmit={async (value) => {
           const success = await handleUpdate(value);
+
           if (success) {
             handleUpdateModalVisible(false);
             setCurrentRow(undefined);
@@ -176,6 +290,7 @@ const TableList: React.FC<TableListProps> = (porps) => {
         updateModalVisible={updateModalVisible}
         values={currentRow || {}}
       />
+
       <Drawer
         width={600}
         visible={showDetail}
@@ -199,7 +314,7 @@ const TableList: React.FC<TableListProps> = (porps) => {
           />
         )}
       </Drawer>
-    </div>
+    </PageContainer>
   );
 };
 

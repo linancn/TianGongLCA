@@ -21,49 +21,109 @@ export default [
       {
         name: 'welcome',
         path: '/home/welcome',
-        component: './Home/Welcome',
+        component: './home/welcome',
       },
       {
         name: 'project',
         path: '/home/project',
-        component: './Home/Project',
+        component: './home/project',
         routes: [
           {
             name: 'project.card',
             path: '/home/project/card',
-            component: './Home/Project/Card',
+            component: './home/project/card',
           },
           {
             name: 'project.table',
             path: '/home/project/table',
-            component: './Home/Project/Table',
+            component: './home/project/table',
           },
         ],
       },
       {
         name: 'starred',
         path: '/home/starred',
-        component: './Home/Welcome',
+        component: './home/welcome',
       },
       {
-        name: 'Create',
+        name: 'create',
         path: '/home/create',
-        component: './Home/Welcome',
+        component: './home/welcome',
       },
       {
         name: 'connect',
         path: '/home/connect',
-        component: './Home/Welcome',
+        component: './home/welcome',
       },
       {
         name: 'recyclebin',
         path: '/home/recyclebin',
-        component: './Home/Welcome',
+        component: './home/welcome',
       },
       {
         name: 'database',
         path: '/home/database',
-        component: './Home/Welcome',
+        component: './home/welcome',
+      },
+    ],
+  },
+  {
+    path: '/project',
+    routes: [
+      {
+        name: 'information',
+        path: '/project/information',
+        component: './project/welcome',
+      },
+      {
+        path: '/project/plans',
+        routes: [
+          {
+            name: 'plans',
+            path: '/project/plans/list',
+            component: './project/plans/list',
+          },
+        ],
+      },
+      {
+        path: '/project/processes',
+        routes: [
+          {
+            name: 'processes',
+            path: '/project/processes/list',
+            component: './project/welcome',
+          },
+        ],
+      },
+      {
+        path: '/project/flows',
+        routes: [
+          {
+            name: 'flows',
+            path: '/project/flows/list',
+            component: './project/welcome',
+          },
+        ],
+      },
+      {
+        name: 'quantitles',
+        path: '/project/quantitles',
+        component: './project/welcome',
+      },
+      {
+        name: 'units',
+        path: '/project/units',
+        component: './project/welcome',
+      },
+      {
+        name: 'global_parameters',
+        path: '/project/global_parameters',
+        component: './project/welcome',
+      },
+      {
+        name: 'assessment',
+        path: '/project/assessment',
+        component: './project/welcome',
       },
     ],
   },
@@ -84,24 +144,36 @@ export default [
       {
         name: 'listsearch',
         path: '/test/listsearch',
-        component: './Test/ListSearch',
+        component: './test/ListSearch',
         routes: [
           {
             name: 'applications',
             path: '/test/listsearch/applications',
-            component: './Test/ListSearch/Applications',
+            component: './test/ListSearch/Applications',
           },
           {
             name: 'articles',
             path: '/test/listsearch/articles',
-            component: './Test/ListSearch/Articles',
+            component: './test/ListSearch/Articles',
           },
           {
             name: 'projects',
             path: '/test/listsearch/projects',
-            component: './Test/ListSearch/Projects',
+            component: './test/ListSearch/Projects',
           },
         ],
+      },
+      {
+        name: 'ListTableList',
+        icon: 'smile',
+        path: '/test/listtablelist',
+        component: './test/ListTableList',
+      },
+      {
+        name: 'ProfileBasic',
+        icon: 'smile',
+        path: '/test/profilebasic',
+        component: './test/ProfileBasic',
       },
     ],
   },
@@ -113,7 +185,7 @@ export default [
       {
         path: '/admin/sub-page',
         name: 'sub-page',
-        component: './Home/Welcome',
+        component: './home/welcome',
       },
     ],
   },

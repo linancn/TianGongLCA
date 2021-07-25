@@ -24,27 +24,23 @@ const tabList = [
   },
 ];
 
+let searchvalue = '';
+
 const ListSearch: FC<ListSearchProps> = (props) => {
   const handleTabChange = (key: string) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
     switch (key) {
       case 'card':
-        history.push(`${url}/card`);
+        history.push(`${url}/card?searchValue=${searchvalue}`);
         break;
       case 'table':
-        history.push(`${url}/table`);
+        history.push(`${url}/table?searchValue=${searchvalue}`);
         break;
       default:
         break;
     }
   };
-
-  const handleFormSubmit = (value: string) => {
-    // eslint-disable-next-line no-console
-    console.log(value);
-  };
-
   const getTabKey = () => {
     const { match, location } = props;
     const url = match.path === '/' ? '' : match.path;
@@ -53,6 +49,10 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       return tabKey;
     }
     return 'card';
+  };
+  const handleFormSubmit = (value: string) => {
+    searchvalue = value;
+    handleTabChange(getTabKey());
   };
 
   return (
