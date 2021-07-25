@@ -45,9 +45,7 @@ function getRule(req: Request, res: Response, u: string) {
     (current as number) * (pageSize as number),
   );
 
-  console.log('params.name', params.name);
   if (params.name) {
-    console.log('params.name', params.name);
     dataSource = dataSource.filter((data) => data.name.includes(params.name || ''));
   }
   if (params.sort) {

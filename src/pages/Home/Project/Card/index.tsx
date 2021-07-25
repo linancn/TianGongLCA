@@ -7,6 +7,7 @@ import { useRequest } from 'umi';
 import type { ListItemDataType } from 'mock/project/card.d';
 import { queryFakeList } from '@/services/project/card';
 import styles from './style.less';
+import ProList from '@ant-design/pro-list';
 
 export function formatWan(val: number) {
   const v = val * 1;
@@ -54,14 +55,19 @@ export const ListSearchApplications: FC<Record<string, any>> = () => {
   const { data, loading } = useRequest((values: any) => {
     console.log('form data', values);
     return queryFakeList({
-      count: 1,
+      count: 100,
     });
   });
 
   const list = data?.list || [];
+  const paginationProps = {
+    showSizeChanger: true,
+    total: list.length,
+  };
+
   return (
     <div className={styles.filterCardList}>
-      <List<ListItemDataType>
+      <ProList<ListItemDataType>
         rowKey="id"
         grid={{
           gutter: 16,
@@ -74,11 +80,11 @@ export const ListSearchApplications: FC<Record<string, any>> = () => {
         }}
         loading={loading}
         dataSource={list}
+        pagination={paginationProps}
         renderItem={(item) => (
           <List.Item key={item.id}>
             <Card
               hoverable
-              bodyStyle={{ paddingBottom: 20 }}
               actions={[
                 <Tooltip key="open" title="Open">
                   <a href="/project/information" target="_blank">

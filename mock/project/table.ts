@@ -86,10 +86,6 @@ function getRule(req: Request, res: Response, u: string) {
   //   }
   // }
 
-  // if (params.name) {
-  //   dataSource = dataSource.filter((data) => data.name.includes(params.name || ''));
-  // }
-
   let finalPageSize = 10;
   if (params.pageSize) {
     finalPageSize = parseInt(`${params.pageSize}`, 10);
