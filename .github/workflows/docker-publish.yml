@@ -50,7 +50,7 @@ jobs:
 
       - name: Build image
         run: cd docker
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+             docker build . --file Dockerfile --tag $IMAGE_NAME
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
