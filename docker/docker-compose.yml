@@ -10,11 +10,11 @@ services:
     restart: unless-stopped
     command: umi-serve
 
-  ant-design-pro_web:
+  crystalca:
     image: nginx:alpine
     ports:
       - 80:80
-    container_name: ant-design-pro_web
+    container_name: crystalca
     depends_on:
       - umi-serve
     restart: unless-stopped
