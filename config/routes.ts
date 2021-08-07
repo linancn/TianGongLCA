@@ -139,7 +139,7 @@ export default [
       {
         name: 'emptypage',
         path: '/test/emptypage',
-        component: './Test/EmptyPage',
+        component: './test/EmptyPage',
       },
       {
         name: 'listsearch',

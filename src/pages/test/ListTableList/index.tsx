@@ -204,7 +204,7 @@ const TableList: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        request={rule}
+        request={async () => rule}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {

@@ -49,7 +49,7 @@ const Login: React.FC = () => {
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
-    if (userInfo) {
+    if (initialState && userInfo) {
       setInitialState({
         ...initialState,
         currentUser: userInfo,
