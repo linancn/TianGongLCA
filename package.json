@@ -109,6 +109,7 @@
     "node": ">=14.0.0"
   },
   "gitHooks": {
+    "pre-commit":"yarn lint",
     "commit-msg": "fabric verify-commit"
   }
 }
