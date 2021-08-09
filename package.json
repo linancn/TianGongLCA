@@ -109,7 +109,6 @@
     "node": ">=14.0.0"
   },
   "gitHooks": {
-    "pre-commit":"yarn tsc",
     "commit-msg": "fabric verify-commit"
   }
 }
