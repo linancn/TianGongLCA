@@ -4,7 +4,7 @@ import type { MenuDataItem } from '@ant-design/pro-layout';
 
 // FIX从接口获取菜单时icon为string类型
 // const fixMenuItemIcon = (menus: MenuDataItem[], iconType='Outlined'): MenuDataItem[] => {
-  const fixMenuItemIcon = (menus: MenuDataItem[]): MenuDataItem[] => {
+const fixMenuItemIcon = (menus: MenuDataItem[]): MenuDataItem[] => {
   // menus.forEach((item) => {
   //   const {icon, children} = item;
   //   if (typeof icon === 'string') {
@@ -13,7 +13,7 @@ import type { MenuDataItem } from '@ant-design/pro-layout';
   //   }
   //   children && children.length>0 ? item.children = fixMenuItemIcon(children) : null;
   // });
-  return menus
+  return menus;
 };
 
 export default fixMenuItemIcon;
