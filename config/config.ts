@@ -45,7 +45,14 @@ export default defineConfig({
   esbuild: {},
   title: false,
   ignoreMomentLocale: true,
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+  // proxy: proxy[REACT_APP_ENV || 'dev'],
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:8081/api/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '' },
+    },
+  },
   manifest: {
     basePath: '/',
   },

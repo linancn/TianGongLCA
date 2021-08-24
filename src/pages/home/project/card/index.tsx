@@ -1,74 +1,38 @@
-import { FolderOpenOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Avatar, Card, List, Tooltip } from 'antd';
-import numeral from 'numeral';
+// import { FolderOpenOutlined, DeleteOutlined } from '@ant-design/icons';
+// import { Avatar, Card, List, Tooltip } from 'antd';
+// import numeral from 'numeral';
 import type { FC } from 'react';
-import React from 'react';
-import { useRequest } from 'umi';
-import type { ListItemDataType } from 'mock/project/card.d';
-import { queryFakeList } from '@/services/project/card';
+import { useRef } from 'react';
+// import React from 'react';
+// import { useRequest } from 'umi';
+import { getProjectList } from '@/services/project/list';
+import type { ProjectListItem } from 'mock/project/list.d';
 import styles from './style.less';
 import ProList from '@ant-design/pro-list';
+import type { ActionType } from '@ant-design/pro-table';
 
-export function formatWan(val: number) {
-  const v = val * 1;
-  if (!v || Number.isNaN(v)) return '';
-
-  let result: React.ReactNode = val;
-  if (val > 10000) {
-    result = (
-      <span>
-        {Math.floor(val / 10000)}
-        <span
-          style={{
-            position: 'relative',
-            top: -2,
-            fontSize: 14,
-            fontStyle: 'normal',
-            marginLeft: 2,
-          }}
-        >
-          万
-        </span>
-      </span>
-    );
-  }
-  return result;
-}
-
-const CardInfo: React.FC<{
-  activeUser: React.ReactNode;
-  newUser: React.ReactNode;
-}> = () => (
-  <div className={styles.cardInfo}>
-    <div>
-      <p>Created At</p>
-      {/* <p>{activeUser}</p> */}
-    </div>
-    <div>
-      <p>Last Update</p>
-      {/* <p>{newUser}</p> */}
-    </div>
-  </div>
-);
-
-export const ListSearchApplications: FC<Record<string, any>> = () => {
-  const { data, loading } = useRequest((values: any) => {
-    console.log('form data', values);
-    return queryFakeList({
-      count: 100,
-    });
-  });
-
-  const list = data?.list || [];
-  const paginationProps = {
-    showSizeChanger: true,
-    total: list.length,
+type ProjectListProps = {
+  location: {
+    query: {
+      searchValue: string;
+    };
   };
-
+};
+let oldSearchValue = '';
+const ListSearchApplications: FC<ProjectListProps> = (porps) => {
+  const actionRef = useRef<ActionType>();
+  const { searchValue } = porps.location.query;
+  if (oldSearchValue !== searchValue) {
+    oldSearchValue = searchValue;
+    actionRef.current?.reload();
+  }
   return (
     <div className={styles.filterCardList}>
-      <ProList<ListItemDataType>
-        rowKey="id"
+      <ProList<ProjectListItem>
+        actionRef={actionRef}
+        request={(params) => {
+          return getProjectList(params, { lastUpdate: 'descend' }, searchValue);
+        }}
         grid={{
           gutter: 16,
           xs: 1,
@@ -78,34 +42,52 @@ export const ListSearchApplications: FC<Record<string, any>> = () => {
           xl: 4,
           xxl: 4,
         }}
-        loading={loading}
-        dataSource={list}
-        pagination={paginationProps}
-        renderItem={(item) => (
-          <List.Item key={item.id}>
-            <Card
-              hoverable
-              actions={[
-                <Tooltip key="open" title="Open">
-                  <a href="/project/information" target="_blank">
-                    <FolderOpenOutlined />
-                  </a>
-                </Tooltip>,
-                <Tooltip key="delete" title="Delete">
-                  <DeleteOutlined onClick={() => alert('delete')} />
-                </Tooltip>,
-              ]}
-            >
-              <Card.Meta avatar={<Avatar size="small" src={item.avatar} />} title={item.title} />
-              <div className={styles.cardItemContent}>
-                <CardInfo
-                  activeUser={formatWan(item.activeUser)}
-                  newUser={numeral(item.newUser).format('0,0')}
-                />
-              </div>
-            </Card>
-          </List.Item>
-        )}
+        metas={{
+          title: {
+            dataIndex: 'name',
+            title: 'Name',
+          },
+          content: {
+            render: (_, row) => {
+              return (
+                <p>
+                  Created At: {row.createAt}
+                  <br />
+                  Last Update: {row.lastUpdate}
+                  <br />
+                  Comment: {row.comment}
+                </p>
+              );
+            },
+          },
+        }}
+
+        // renderItem={(item) => (
+        //   <List.Item key={item.id}>
+        // <Card
+        //   hoverable
+        //   actions={[
+        //     <Tooltip key="open" title="Open">
+        //       <a href="/project/information" target="_blank">
+        //         <FolderOpenOutlined />
+        //       </a>
+        //     </Tooltip>,
+        //     <Tooltip key="delete" title="Delete">
+        //       <DeleteOutlined onClick={() => alert('delete')} />
+        //     </Tooltip>,
+        //   ]}
+        // >
+        //   <Card.Meta avatar={<Avatar size="small" src={''} />} title={item.name} />
+        //   <div className={styles.cardItemContent}>
+        //     <CardInfo
+        //       createdAt={item.createdAt}
+        //       lastUpdate={item.lastUpdate}
+        //       comment={item.comment}
+        //     />
+        //   </div>
+        // </Card>
+        // </List.Item>
+        // )}
       />
     </div>
   );
