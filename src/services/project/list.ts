@@ -48,6 +48,19 @@ export async function addProject(data?: { [key: string]: any }) {
     data: data,
   });
 }
+/** Put /api/project */
+export async function flagProject(id: number) {
+  return request<ProjectListItem>('http://localhost:8081/api/project/flag/' + id, {
+    method: 'PUT',
+  });
+}
+/** Delete /api/project */
+export async function deleteProject(id: number) {
+  return request<ProjectListItem>('http://localhost:8081/api/project/delete/' + id, {
+    method: 'DELETE',
+  });
+}
+
 export async function getProjectCardList(
   params: {
     current?: number;

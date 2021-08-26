@@ -5,11 +5,13 @@ import type { FC } from 'react';
 import { useRef } from 'react';
 // import React from 'react';
 // import { useRequest } from 'umi';
-import { getProjectList } from '@/services/project/list';
+import { getProjectList, flagProject, deleteProject } from '@/services/project/list';
 import type { ProjectListItem } from 'mock/project/list.d';
 import styles from './style.less';
 import ProList from '@ant-design/pro-list';
 import type { ActionType } from '@ant-design/pro-table';
+import { DeleteOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import { Popconfirm } from 'antd';
 
 type ProjectListProps = {
   location: {
@@ -22,6 +24,10 @@ let oldSearchValue = '';
 const ListSearchApplications: FC<ProjectListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { searchValue } = porps.location.query;
+  const setflag = (id: number) => {
+    flagProject(id);
+    actionRef.current?.reload();
+  };
   if (oldSearchValue !== searchValue) {
     oldSearchValue = searchValue;
     actionRef.current?.reload();
@@ -50,13 +56,47 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
           content: {
             render: (_, row) => {
               return (
-                <p>
-                  Created At: {row.createAt}
-                  <br />
-                  Last Update: {row.lastUpdate}
-                  <br />
-                  Comment: {row.comment}
-                </p>
+                <div>
+                  <span
+                    onClick={() => {
+                      setflag(row.id);
+                    }}
+                    hidden={row.flag}
+                  >
+                    <StarOutlined />
+                  </span>
+                  <span
+                    onClick={() => {
+                      setflag(row.id);
+                    }}
+                    hidden={!row.flag}
+                  >
+                    <StarFilled />
+                  </span>
+                  <p>
+                    Created At: {row.createAt}
+                    <br />
+                    Last Update: {row.lastUpdate}
+                    <br />
+                    Comment: {row.comment}
+                    <br />
+                    <Popconfirm
+                      title="Are you sure to delete this task?"
+                      onConfirm={() => {
+                        deleteProject(row.id);
+                        actionRef.current?.reload();
+                      }}
+                      onCancel={() => {}}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <a href="#">
+                        <DeleteOutlined />
+                        Delete
+                      </a>
+                    </Popconfirm>
+                  </p>
+                </div>
               );
             },
           },
