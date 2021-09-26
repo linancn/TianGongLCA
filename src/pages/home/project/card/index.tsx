@@ -5,13 +5,14 @@ import type { FC } from 'react';
 import { useRef } from 'react';
 // import React from 'react';
 // import { useRequest } from 'umi';
-import { getProjectList, flagProject, deleteProject } from '@/services/project/list';
-import type { ProjectListItem } from 'mock/project/list.d';
+import { getProjectList, starProject, deleteProject } from '@/services/project/list';
+import type { ProjectListItem } from '@/services/project/list.d';
 import styles from './style.less';
 import ProList from '@ant-design/pro-list';
 import type { ActionType } from '@ant-design/pro-table';
-import { DeleteOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import { FolderOpenOutlined, DeleteOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
 import { Popconfirm } from 'antd';
+import moment from 'moment';
 
 type ProjectListProps = {
   location: {
@@ -24,8 +25,8 @@ let oldSearchValue = '';
 const ListSearchApplications: FC<ProjectListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { searchValue } = porps.location.query;
-  const setflag = (id: number) => {
-    flagProject(id);
+  const setstar = (id: number) => {
+    starProject(id);
     actionRef.current?.reload();
   };
   if (oldSearchValue !== searchValue) {
@@ -37,7 +38,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
       <ProList<ProjectListItem>
         actionRef={actionRef}
         request={(params) => {
-          return getProjectList(params, { lastUpdate: 'descend' }, searchValue);
+          return getProjectList(params, { lastUpdateTime: 'descend' }, searchValue);
         }}
         grid={{
           gutter: 16,
@@ -59,27 +60,31 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
                 <div>
                   <span
                     onClick={() => {
-                      setflag(row.id);
+                      setstar(row.id);
                     }}
-                    hidden={row.flag}
+                    hidden={row.star}
                   >
                     <StarOutlined />
                   </span>
                   <span
                     onClick={() => {
-                      setflag(row.id);
+                      setstar(row.id);
                     }}
-                    hidden={!row.flag}
+                    hidden={!row.star}
                   >
                     <StarFilled />
                   </span>
                   <p>
-                    Created At: {row.createAt}
+                    Created At: {moment(row.createTime).format('YYYY-MM-DD HH:mm:ss')}
                     <br />
-                    Last Update: {row.lastUpdate}
+                    Last Update: {moment(row.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
                     <br />
                     Comment: {row.comment}
                     <br />
+                    {/* <a href={`/project/model?projectid=${row.id}`} target='_blank'> */}
+                    <a href={`/project/plan/list?project=${row.id}`}>
+                      <FolderOpenOutlined /> Open
+                    </a>
                     <Popconfirm
                       title="Are you sure to delete this task?"
                       onConfirm={() => {
@@ -91,8 +96,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
                       cancelText="No"
                     >
                       <a href="#">
-                        <DeleteOutlined />
-                        Delete
+                        <DeleteOutlined /> Delete
                       </a>
                     </Popconfirm>
                   </p>

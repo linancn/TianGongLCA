@@ -50,8 +50,8 @@
     "@ant-design/pro-descriptions": "^1.6.8",
     "@ant-design/pro-form": "^1.18.3",
     "@ant-design/pro-layout": "^6.15.3",
-    "@ant-design/pro-table": "^2.30.8",
     "@ant-design/pro-list": "^1.10.9",
+    "@ant-design/pro-table": "^2.30.8",
     "@umijs/route-utils": "^1.0.36",
     "ahooks": "^2.0.0",
     "antd": "^4.14.0",
@@ -109,7 +109,7 @@
     "node": ">=14.0.0"
   },
   "gitHooks": {
-    "pre-commit":"yarn lint",
+    "pre-commit": "yarn lint",
     "commit-msg": "fabric verify-commit"
   }
 }

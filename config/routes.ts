@@ -71,17 +71,18 @@ export default [
     path: '/project',
     routes: [
       {
-        name: 'information',
-        path: '/project/information',
-        component: './project/welcome',
-      },
-      {
-        path: '/project/plans',
+        path: '/project/plan',
         routes: [
           {
             name: 'plans',
-            path: '/project/plans/list',
-            component: './project/plans/list',
+            path: '/project/plan/list',
+            component: './project/plan/list',
+          },
+          {
+            name: 'model',
+            path: '/project/plan/model',
+            component: './project/plan/model',
+            layout: false,
           },
         ],
       },

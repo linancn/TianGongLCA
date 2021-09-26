@@ -1,15 +1,9 @@
 export default [
   {
-    path: '/project/information',
-    name: 'information',
-    icon: 'smile',
-    component: './project/welcome',
-  },
-  {
     name: 'plans',
     icon: 'crown',
-    path: '/project/plans/list',
-    component: './project/plans/list',
+    path: '/project/plan/list',
+    component: './project/plan/list',
   },
   {
     name: 'processes',

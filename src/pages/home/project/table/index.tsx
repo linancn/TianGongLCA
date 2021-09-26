@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getProjectList } from '@/services/project/list';
-import type { ProjectListItem, ProjectListPagination } from 'mock/project/list.d';
+import type { ProjectListItem, ProjectListPagination } from '@/services/project/list.d';
 import styles from './style.less';
 /**
  * 更新节点
@@ -19,9 +19,9 @@ type ProjectListProps = {
   };
 };
 let oldSearchValue = '';
-const TableList: FC<ProjectListProps> = (porps) => {
+const TableList: FC<ProjectListProps> = (props) => {
   const actionRef = useRef<ActionType>();
-  const { searchValue } = porps.location.query;
+  const { searchValue } = props.location.query;
   const columns: ProColumns<ProjectListItem>[] = [
     {
       title: 'Name',
@@ -30,13 +30,13 @@ const TableList: FC<ProjectListProps> = (porps) => {
     },
     {
       title: 'Created At',
-      dataIndex: 'createAt',
+      dataIndex: 'createTime',
       valueType: 'dateTime',
       sorter: true,
     },
     {
       title: 'Last Update',
-      dataIndex: 'lastUpdate',
+      dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
     },
@@ -45,10 +45,20 @@ const TableList: FC<ProjectListProps> = (porps) => {
       dataIndex: 'comment',
       valueType: 'textarea',
     },
+    // {
+    //   title: 'Nation',
+    //   dataIndex: 'nation',
+    //   sorter: true,
+    // },
+    // {
+    //   title: 'Type',
+    //   dataIndex: 'type',
+    //   sorter: true,
+    // },
     {
-      title: 'Flag',
-      dataIndex: 'flag',
-      sorter: true,
+      title: 'Star',
+      dataIndex: 'star',
+      sorter: false,
     },
   ];
   if (oldSearchValue !== searchValue) {

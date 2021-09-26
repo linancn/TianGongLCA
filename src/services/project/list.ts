@@ -1,7 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
-import { ProjectListItem } from 'mock/project/list.d';
+import { ProjectListItem } from './list.d';
 import { SortOrder } from 'antd/lib/table/interface';
 
 /** 获取规则列表 GET /api/project */
@@ -12,7 +12,7 @@ export async function getProjectList(
   },
   sort: Record<string, SortOrder>,
   // filter: Record<string, React.ReactText[] | null>,
-  filterByname: string,
+  name: string,
   // options?: { [key: string]: any },
 ) {
   const sortBy = Object.keys(sort)[0];
@@ -21,13 +21,13 @@ export async function getProjectList(
     data: ProjectListItem[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/project/list', {
+  }>('http://localhost:8081/api/project/grid', {
     method: 'GET',
     params: {
       ...params,
       sortBy,
       orderBy,
-      filterByname,
+      name,
     },
     // ...(options || {}),
   });
@@ -49,8 +49,8 @@ export async function addProject(data?: { [key: string]: any }) {
   });
 }
 /** Put /api/project */
-export async function flagProject(id: number) {
-  return request<ProjectListItem>('http://localhost:8081/api/project/flag/' + id, {
+export async function starProject(id: number) {
+  return request<ProjectListItem>('http://localhost:8081/api/project/starred/' + id, {
     method: 'PUT',
   });
 }

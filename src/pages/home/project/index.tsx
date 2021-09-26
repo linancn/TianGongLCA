@@ -4,7 +4,7 @@ import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType } from '@ant-design/pro-table';
 import { Button, Input, message } from 'antd';
-import type { ProjectListItem } from 'mock/project/list.d';
+import type { ProjectListItem } from '@/services/project/list.d';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
@@ -89,8 +89,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             style={{ maxWidth: 522, width: '100%' }}
           />
           <Button
-            type="primary"
-            key="primary"
+            key="add"
             onClick={() => {
               handleModalVisible(true);
             }}
