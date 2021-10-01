@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { addPlan, getPlanList } from '@/services/plan/list';
+import { createPlan, getPlanList } from '@/services/plan/list';
 import type { PlanListItem, PlanListPagination } from '@/services/plan/list.d';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
@@ -21,11 +21,11 @@ type PlanListProps = {
     };
   };
 };
-const handleAdd = async (fields: PlanListItem) => {
+const handleCreate = async (fields: PlanListItem) => {
   const hide = message.loading('loading');
 
   try {
-    await addPlan(fields);
+    await createPlan(fields);
     hide();
     message.success('success');
     return true;
@@ -88,7 +88,7 @@ const TableList: FC<PlanListProps> = (porps) => {
           optionRender: (searchConfig, formProps, dom) => [
             ...dom.reverse(),
             <Button
-              key="add"
+              key="create"
               onClick={() => {
                 handleModalVisible(true);
               }}
@@ -114,7 +114,7 @@ const TableList: FC<PlanListProps> = (porps) => {
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
         onFinish={async (value) => {
-          const success = await handleAdd({ ...value, projectId: project } as PlanListItem);
+          const success = await handleCreate({ ...value, projectId: project } as PlanListItem);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {

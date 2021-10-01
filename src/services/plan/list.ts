@@ -37,16 +37,16 @@ export async function getPlan(projectId: number, id: string) {
 }
 
 /** PUT /api/plan */
-export async function updatePlan(options?: { [key: string]: any }) {
-  return request<PlanListItem>('/api/plan', {
+export async function updatePlanChinlrenJson(data?: { [key: string]: any }) {
+  return request<PlanListItem>('http://localhost:8081/api/plan/updatechinlrenjson', {
     method: 'PUT',
-    ...(options || {}),
+    data: data,
   });
 }
 
 /** POST /api/plan */
-export async function addPlan(data?: { [key: string]: any }) {
-  return request<PlanListItem>('http://localhost:8081/api/plan/add', {
+export async function createPlan(data?: { [key: string]: any }) {
+  return request<PlanListItem>('http://localhost:8081/api/plan/create', {
     method: 'POST',
     data: data,
   });

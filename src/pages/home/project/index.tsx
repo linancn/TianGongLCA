@@ -1,4 +1,4 @@
-import { addProject } from '@/services/project/list';
+import { creatProject } from '@/services/project/list';
 // import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -9,11 +9,11 @@ import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 
-const handleAdd = async (fields: ProjectListItem) => {
+const handleCreat = async (fields: ProjectListItem) => {
   const hide = message.loading('loading');
 
   try {
-    await addProject(fields);
+    await creatProject(fields);
     hide();
     message.success('success');
     return true;
@@ -108,7 +108,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
         onFinish={async (value) => {
-          const success = await handleAdd(value as ProjectListItem);
+          const success = await handleCreat(value as ProjectListItem);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {

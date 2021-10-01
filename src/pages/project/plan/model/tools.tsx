@@ -13,11 +13,10 @@ import localforage from 'localforage';
 import styles from './index.less';
 import { DrawerForm } from '@ant-design/pro-form';
 import { Button, Drawer, Space } from 'antd';
-import { getPlanList } from '@/services/plan/list';
+import { getPlanList, updatePlanChinlrenJson } from '@/services/plan/list';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanListPagination } from '@/services/plan/list.d';
-import type { PlanListItem } from '@/services/plan/list.d';
+import type { PlanListItem, PlanListPagination } from '@/services/plan/list.d';
 
 localforage.config({
   name: 'react-flow',
@@ -40,10 +39,10 @@ type ToolsProps = {
   rfInstance?: OnLoadParams;
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;
   project: number;
-  // plan: string;
+  plan: string;
 };
 
-const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project }) => {
+const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project, plan }) => {
   const { transform } = useZoomPanHelper();
   const selectedElements = useStoreState((store) => store.selectedElements);
   const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
@@ -57,9 +56,14 @@ const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project }) => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
       localforage.setItem(flowKey, flow);
-      // console.log(flow.elements);
+      const updatePlan = {
+        projectId: project,
+        id: plan,
+        childrenJson: `{"data": ${JSON.stringify(flow.elements)}}`,
+      };
+      updatePlanChinlrenJson(updatePlan).then(() => {});
     }
-  }, [rfInstance]);
+  }, [plan, project, rfInstance]);
 
   const onToolRestore = useCallback(() => {
     const restoreFlow = async () => {

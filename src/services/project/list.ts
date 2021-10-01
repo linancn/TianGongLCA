@@ -42,8 +42,8 @@ export async function updateProject(options?: { [key: string]: any }) {
 }
 
 /** POST /api/project */
-export async function addProject(data?: { [key: string]: any }) {
-  return request<ProjectListItem>('http://localhost:8081/api/project/add', {
+export async function creatProject(data?: { [key: string]: any }) {
+  return request<ProjectListItem>('http://localhost:8081/api/project/creat', {
     method: 'POST',
     data: data,
   });
