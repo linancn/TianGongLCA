@@ -1,4 +1,4 @@
-export type PlanListItem = {
+export type PlanInfo = {
   pkid: number;
   id: string;
   projectId: number;
@@ -9,15 +9,15 @@ export type PlanListItem = {
   nation: string;
 };
 
-export type PlanItem = {
+export type PlanChildrenJson = {
   pkid: number;
   id: string;
   projectId: number;
   name: string;
-  lastUpdateTime: Date;
-  comment: string;
-  type: string;
-  nation: string;
+  // lastUpdateTime: Date;
+  // comment: string;
+  // type: string;
+  // nation: string;
   childrenJson: string;
 };
 
@@ -27,7 +27,7 @@ export type PlanListPagination = {
   current: number;
 };
 
-export type PlanListData = {
-  list: PlanListItem[];
-  pagination: Partial<PlanListPagination>;
-};
+// export type PlanListData = {
+//   list: PlanListItem[];
+//   pagination: Partial<PlanListPagination>;
+// };
