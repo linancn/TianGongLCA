@@ -1,14 +1,7 @@
 import type { Dispatch, FC } from 'react';
 import React, { useState, useCallback } from 'react';
 import type { Elements } from 'react-flow-renderer';
-import {
-  // useZoomPanHelper,
-  // useStoreState,
-  // removeElements,
-  // isNode,
-  // isEdge,
-  useStoreActions,
-} from 'react-flow-renderer';
+import { useStoreActions } from 'react-flow-renderer';
 import localforage from 'localforage';
 import styles from '../index.less';
 import { DrawerForm } from '@ant-design/pro-form';
@@ -29,7 +22,6 @@ type addProps = {
 };
 
 const Add: FC<addProps> = ({ setElements, project }) => {
-  // const selectedElements = useStoreState((store) => store.selectedElements);
   const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
   const [isDrawerAddVisible, setIsDrawerAddVisible] = useState(false);
   const [isDrawerAddPlanVisible, setIsDrawerAddPlanVisible] = useState(false);
@@ -128,7 +120,6 @@ const Add: FC<addProps> = ({ setElements, project }) => {
         }
       >
         <ProTable<PlanInfo, PlanListPagination>
-          // actionRef={actionRef}
           search={{
             defaultCollapsed: false,
             optionRender: (searchConfig, formProps, dom) => [

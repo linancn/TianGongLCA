@@ -4,7 +4,7 @@ import type { OnLoadParams, Elements } from 'react-flow-renderer';
 import {
   // useZoomPanHelper,
   useStoreState,
-  removeElements,
+  // removeElements,
   // isNode,
   // isEdge,
   // useStoreActions,
@@ -15,6 +15,8 @@ import { Button, Divider, Drawer, message } from 'antd';
 import { updatePlanChinlrenJson } from '@/services/plan/list';
 import Add from './toolbox/add';
 import View from './toolbox/view';
+import Reload from './toolbox/reload';
+import Delete from './toolbox/delete';
 
 localforage.config({
   name: 'react-flow',
@@ -46,7 +48,7 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) =
   // const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
   // const [copyElements, setCopyElements] = useState<Elements>();
 
-  const onToolSave = useCallback(() => {
+  const onSave = useCallback(() => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
       localforage.setItem(flowKey, flow);
@@ -61,17 +63,11 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) =
     }
   }, [plan, project, rfInstance]);
 
-  const onToolCopy = useCallback(() => {
+  const onCopy = useCallback(() => {
     if (selectedElements != null) {
       // setCopyElements(selectedElements);
     }
   }, [selectedElements]);
-
-  const onToolDelete = useCallback(() => {
-    if (selectedElements != null) {
-      setElements((els) => removeElements(selectedElements, els));
-    }
-  }, [setElements, selectedElements]);
 
   return (
     <>
@@ -79,23 +75,22 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) =
         <div className={styles.tools}>
           {/* <Button key="toolRestore" onClick={onToolRestore} block>Restore</Button> */}
           <View project={project} />
-          <Button key="toolEdit" block>
+          <Button key="Edit" block>
             Edit
+          </Button>
+          <Button key="Design" block>
+            Design
           </Button>
           <Divider />
           <Add setElements={setElements} project={project} />
-          <Button key="toolCopy" onClick={onToolCopy} block>
+          <Button key="Copy" onClick={onCopy} block>
             Copy
           </Button>
-          <Button key="toolDelete" onClick={onToolDelete} block>
-            Delete
-          </Button>
+          <Delete setElements={setElements} deleteElement={selectedElements} />
           <Divider />
-          <Button key="toolReset" block>
-            Reset
-          </Button>
+          <Reload />
           <Divider />
-          <Button key="toolSave" onClick={onToolSave} block>
+          <Button key="Save" onClick={onSave} block>
             Save
           </Button>
           {/* <Button key="toolPaste" onClick={onToolPaste} block>Paste</Button> */}

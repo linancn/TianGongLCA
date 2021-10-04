@@ -16,7 +16,7 @@ import { Button, Drawer, Space } from 'antd';
 import { getPlanList, updatePlanChinlrenJson } from '@/services/plan/list';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanListItem, PlanListPagination } from '@/services/plan/list.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/list.d';
 
 localforage.config({
   name: 'react-flow',
@@ -50,7 +50,7 @@ const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project, plan }) => {
   const [isDrawerAddVisible, setIsDrawerAddVisible] = useState(false);
   const [isDrawerAddPlanVisible, setIsDrawerAddPlanVisible] = useState(false);
   const [isDrawerAddProcessVisible, setIsDrawerAddProcessVisible] = useState(false);
-  const [addPlanToModel, setAddPlanToModel] = useState<PlanListItem>();
+  const [addPlanToModel, setAddPlanToModel] = useState<PlanInfo>();
 
   const onToolSave = useCallback(() => {
     if (rfInstance) {
@@ -165,7 +165,7 @@ const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project, plan }) => {
       setIsDrawerAddPlanVisible(false);
     }
   }, [addPlanToModel, setElements, setSelectedElements]);
-  const columns: ProColumns<PlanListItem>[] = [
+  const columns: ProColumns<PlanInfo>[] = [
     {
       title: 'Name',
       key: 'name',
@@ -247,7 +247,7 @@ const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project, plan }) => {
           </Space>
         }
       >
-        <ProTable<PlanListItem, PlanListPagination>
+        <ProTable<PlanInfo, PlanListPagination>
           // actionRef={actionRef}
           search={{
             defaultCollapsed: false,
