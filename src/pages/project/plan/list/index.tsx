@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { createPlan, getPlanList } from '@/services/plan/list';
-import type { PlanListItem, PlanListPagination } from '@/services/plan/list.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/list.d';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
@@ -21,7 +21,7 @@ type PlanListProps = {
     };
   };
 };
-const handleCreate = async (fields: PlanListItem) => {
+const handleCreate = async (fields: PlanInfo) => {
   const hide = message.loading('loading');
 
   try {
@@ -38,7 +38,7 @@ const handleCreate = async (fields: PlanListItem) => {
 const TableList: FC<PlanListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { project } = porps.location.query;
-  const columns: ProColumns<PlanListItem>[] = [
+  const columns: ProColumns<PlanInfo>[] = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -81,7 +81,7 @@ const TableList: FC<PlanListProps> = (porps) => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   return (
     <PageContainer>
-      <ProTable<PlanListItem, PlanListPagination>
+      <ProTable<PlanInfo, PlanListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
@@ -114,7 +114,7 @@ const TableList: FC<PlanListProps> = (porps) => {
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
         onFinish={async (value) => {
-          const success = await handleCreate({ ...value, projectId: project } as PlanListItem);
+          const success = await handleCreate({ ...value, projectId: project } as PlanInfo);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {

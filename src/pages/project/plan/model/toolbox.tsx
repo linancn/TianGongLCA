@@ -18,6 +18,7 @@ import View from './toolbox/view';
 import Reload from './toolbox/reload';
 import Delete from './toolbox/delete';
 import Edit from './toolbox/edit';
+import DrillDown from './toolbox/drilldown';
 
 localforage.config({
   name: 'react-flow',
@@ -77,9 +78,7 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) =
           <Button key="Roll_up" block>
             Roll Up
           </Button>
-          <Button key="Drill_down" block>
-            Drill Down
-          </Button>
+          <DrillDown project={project} />
           <Divider />
           {/* <Button key="toolRestore" onClick={onToolRestore} block>Restore</Button> */}
           <View project={project} />
