@@ -14,10 +14,6 @@ export type PlanChildrenJson = {
   id: string;
   projectId: number;
   name: string;
-  // lastUpdateTime: Date;
-  // comment: string;
-  // type: string;
-  // nation: string;
   childrenJson: string;
 };
 

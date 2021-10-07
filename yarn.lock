@@ -106,7 +106,23 @@
     react-color "2.19.3"
     swr "^0.5.6"
 
-"@ant-design/pro-form@1.33.1", "@ant-design/pro-form@^1.18.3":
+"@ant-design/pro-field@1.22.5":
+  version "1.22.5"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/@ant-design/pro-field/-/pro-field-1.22.5.tgz#47bc98eb4f1c42cbcd411559317814da3621457e"
+  integrity sha512-PLLuhnkn9LTnn39IPbd/+Aby88PfQu+xfiMriNR7I1v1795kHw3qj1no113RYXziV+uX67r6waeULPqxYiKAIA==
+  dependencies:
+    "@ant-design/icons" "^4.2.1"
+    "@ant-design/pro-provider" "1.4.19"
+    "@ant-design/pro-utils" "1.24.6"
+    classnames "^2.2.6"
+    lodash.tonumber "^4.0.3"
+    moment "^2.27.0"
+    omit.js "^2.0.2"
+    rc-util "^5.4.0"
+    react-color "2.19.3"
+    swr "^1.1.0-beta.0"
+
+"@ant-design/pro-form@1.33.1":
   version "1.33.1"
   resolved "https://registry.npmjs.org/@ant-design/pro-form/-/pro-form-1.33.1.tgz#635bd0fb02025686b10f9ea6cc74195fbb8d77d9"
   integrity sha512-RFBHpvyNbr0zgBegCFxj84LS/QPHLeEJYczKBg2fCNEzhUSYuXs7pvkOHN8lwncamlk5w81O3yNIKlwkXU/RXQ==
@@ -115,6 +131,23 @@
     "@ant-design/pro-field" "1.18.16"
     "@ant-design/pro-provider" "1.4.16"
     "@ant-design/pro-utils" "1.20.3"
+    "@umijs/use-params" "^1.0.2"
+    classnames "^2.2.6"
+    lodash.merge "^4.6.2"
+    omit.js "^2.0.2"
+    rc-resize-observer "^0.2.3"
+    rc-util "^5.0.6"
+    use-media-antd-query "^1.0.6"
+
+"@ant-design/pro-form@^1.42.1":
+  version "1.42.1"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/@ant-design/pro-form/-/pro-form-1.42.1.tgz#121687a48b70a360516fa4adc802e2f4a78d1320"
+  integrity sha512-cPZDygmql1zPXFzBpTeyNDpgMUzpY+2uD1cHhqGopsH2N6jIoT/dscGfXmgru1KhBJ0YtelhuV5Rsr/5KBj2Eg==
+  dependencies:
+    "@ant-design/icons" "^4.2.1"
+    "@ant-design/pro-field" "1.22.5"
+    "@ant-design/pro-provider" "1.4.19"
+    "@ant-design/pro-utils" "1.24.6"
     "@umijs/use-params" "^1.0.2"
     classnames "^2.2.6"
     lodash.merge "^4.6.2"
@@ -168,6 +201,13 @@
   dependencies:
     rc-util "^5.0.1"
 
+"@ant-design/pro-provider@1.4.19":
+  version "1.4.19"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/@ant-design/pro-provider/-/pro-provider-1.4.19.tgz#d0b1815d2db0c16556a2528ca88b372b5e2ff46b"
+  integrity sha512-0cIRwHGxZ5fXuwEyzZbAKXE8eJ732Whh2pEy/1MfPAvFujtC5OwZQbAzRmVoKYeLYyBtfOBhgk96Bvii9taWoA==
+  dependencies:
+    rc-util "^5.0.1"
+
 "@ant-design/pro-skeleton@1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@ant-design/pro-skeleton/-/pro-skeleton-1.0.1.tgz#419a0f88c5d544043ae0035eb3aa35494813e959"
@@ -207,6 +247,20 @@
     moment "^2.27.0"
     rc-util "^5.0.6"
     swr "^0.5.6"
+
+"@ant-design/pro-utils@1.24.6":
+  version "1.24.6"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/@ant-design/pro-utils/-/pro-utils-1.24.6.tgz#a04cf9f57804970610fe1a9a3845c1cb111198b2"
+  integrity sha512-/MBuTFyrEyKEnVBGnoUpB6yqLu2slW5MsyVm0eGX28TS3u/19/+JjV2Fxo/pxFOeEg6uasz8nOzru9f/CuJRUw==
+  dependencies:
+    "@ant-design/icons" "^4.3.0"
+    "@ant-design/pro-provider" "1.4.19"
+    classnames "^2.2.6"
+    lodash.merge "^4.6.2"
+    moment "^2.27.0"
+    rc-util "^5.0.6"
+    react-sortable-hoc "^2.0.0"
+    swr "^1.1.0-beta.0"
 
 "@ant-design/react-slick@~0.28.1":
   version "0.28.3"
@@ -1246,6 +1300,13 @@
   version "7.14.8"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.14.8.tgz#7119a56f421018852694290b9f9148097391b446"
   integrity sha512-twj3L8Og5SaCRCErB4x4ajbvBIVV77CGeFglHpeg5WC5FF8TZzBWXtTJ4MqaD9QszLYTtr+IsaAL2rEUevb+eg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.2.0":
+  version "7.15.4"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/@babel/runtime/-/runtime-7.15.4.tgz#fd17d16bfdf878e6dd02d19753a39fa8a8d9c84a"
+  integrity sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -12107,7 +12168,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -13141,6 +13202,15 @@ react-side-effect@^2.1.0:
   version "2.1.1"
   resolved "https://registry.npmjs.org/react-side-effect/-/react-side-effect-2.1.1.tgz#66c5701c3e7560ab4822a4ee2742dee215d72eb3"
   integrity sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==
+
+react-sortable-hoc@^2.0.0:
+  version "2.0.0"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/react-sortable-hoc/-/react-sortable-hoc-2.0.0.tgz#f6780d8aa4b922a21f3e754af542f032677078b7"
+  integrity sha512-JZUw7hBsAHXK7PTyErJyI7SopSBFRcFHDjWW5SWjcugY0i6iH7f+eJkY8cJmGMlZ1C9xz1J3Vjz0plFpavVeRg==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    invariant "^2.2.4"
+    prop-types "^15.5.7"
 
 react-syntax-highlighter@^15.4.3:
   version "15.4.4"
@@ -15296,6 +15366,11 @@ swr@^0.5.6:
   integrity sha512-Bmx3L4geMZjYT5S2Z6EE6/5Cx6v1Ka0LhqZKq8d6WL2eu9y6gHWz3dUzfIK/ymZVHVfwT/EweFXiYGgfifei3w==
   dependencies:
     dequal "2.0.2"
+
+swr@^1.1.0-beta.0:
+  version "1.1.0-beta.4"
+  resolved "https://mirrors.huaweicloud.com/repository/npm/swr/-/swr-1.1.0-beta.4.tgz#32424d24b76aa30bff84f71795cbfec55404b4e2"
+  integrity sha512-t5IzcNXzUCqlWpKj/+ATTTsogfvb7yRPUJZUaO9wa/70A39Jm9OM7il0eQfoEzH66Y2gDdQgxZaQAIx0RlH3Vg==
 
 sylvanas@^0.6.1:
   version "0.6.1"

@@ -36,6 +36,13 @@ export async function getPlanInfo(projectId: number, id: string) {
   });
 }
 
+export async function updatePlanInfo(data?: { [key: string]: any }) {
+  return request<string>('http://localhost:8081/api/plan/updateinfo', {
+    method: 'PUT',
+    data: data,
+  });
+}
+
 export async function getPlanChildrenJson(projectId: number, id: string) {
   return request<PlanChildrenJson>(
     'http://localhost:8081/api/plan/getchildrenjson/' + projectId + '/' + id,

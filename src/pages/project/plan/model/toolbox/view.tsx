@@ -15,15 +15,15 @@ let preid = '';
 const View: FC<viewProps> = ({ project }) => {
   const selectedElements = useStoreState((store) => store.selectedElements);
   const [viewPlan, setViewPlan] = useState<PlanInfo>();
-  const [isDrawerViewVisible, setIsDrawerViewVisible] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
   const onView = () => {
-    setIsDrawerViewVisible(true);
+    setIsDrawerVisible(true);
   };
   const handleDrawerAddCancel = () => {
-    setIsDrawerViewVisible(false);
+    setIsDrawerVisible(false);
   };
-  if (isDrawerViewVisible && selectedElements != null) {
+  if (isDrawerVisible && selectedElements != null) {
     if (preid !== selectedElements[0].id) {
       preid = selectedElements[0].id;
       if (isNode(selectedElements[0]) && selectedElements[0].data.type === 'plan') {
@@ -42,7 +42,7 @@ const View: FC<viewProps> = ({ project }) => {
         View
       </Button>
       <Drawer
-        visible={isDrawerViewVisible}
+        visible={isDrawerVisible}
         mask={false}
         title="View"
         width="400px"
@@ -50,7 +50,7 @@ const View: FC<viewProps> = ({ project }) => {
       >
         <Descriptions column={1}>
           <Descriptions.Item label="Name">{viewPlan?.name}</Descriptions.Item>
-          <Descriptions.Item label="Type">{viewPlan?.comment}</Descriptions.Item>
+          <Descriptions.Item label="Type">{viewPlan?.type}</Descriptions.Item>
           <Descriptions.Item label="Nation">{viewPlan?.nation}</Descriptions.Item>
           <Descriptions.Item label="Last Update">
             {moment(viewPlan?.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
