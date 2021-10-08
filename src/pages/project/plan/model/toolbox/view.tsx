@@ -3,27 +3,34 @@ import { getPlanInfo } from '@/services/plan/list';
 import { Button, Descriptions, Drawer } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { isNode, useStoreState } from 'react-flow-renderer';
+import type { Elements } from 'react-flow-renderer';
+import { isNode } from 'react-flow-renderer';
 import moment from 'moment';
 
 type viewProps = {
   project: number;
+  selectedElements: Elements<any> | null;
 };
 
 let preid = '';
 
-const View: FC<viewProps> = ({ project }) => {
-  const selectedElements = useStoreState((store) => store.selectedElements);
+const View: FC<viewProps> = ({ project, selectedElements }) => {
   const [viewPlan, setViewPlan] = useState<PlanInfo>();
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-
   const onView = () => {
     setIsDrawerVisible(true);
   };
   const handleDrawerAddCancel = () => {
     setIsDrawerVisible(false);
   };
-  if (isDrawerVisible && selectedElements != null) {
+  if (!selectedElements) {
+    return (
+      <Button key="View" block disabled={true}>
+        View
+      </Button>
+    );
+  }
+  if (isDrawerVisible) {
     if (preid !== selectedElements[0].id) {
       preid = selectedElements[0].id;
       if (isNode(selectedElements[0]) && selectedElements[0].data.type === 'plan') {

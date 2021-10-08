@@ -68,7 +68,13 @@ const SaveRestore: FC<PlanModelProps> = (props) => {
         <Controls />
         <Background />
       </ReactFlow>
-      <Toolbox rfInstance={rfInstance} setElements={setElements} project={projectid} plan={id} />
+      <Toolbox
+        rfInstance={rfInstance}
+        setElements={setElements}
+        elements={elements}
+        project={projectid}
+        plan={id}
+      />
       {/* <Sidebar setElements={setElements} /> */}
     </ReactFlowProvider>
   );

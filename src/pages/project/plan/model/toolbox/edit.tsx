@@ -2,7 +2,8 @@ import { getPlanInfo, updatePlanInfo } from '@/services/plan/list';
 import { Button, Drawer, message, Space } from 'antd';
 import type { FC } from 'react';
 import { useState, useRef } from 'react';
-import { isNode, useStoreState } from 'react-flow-renderer';
+import type { Elements } from 'react-flow-renderer';
+import { isNode } from 'react-flow-renderer';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '../index.less';
@@ -10,12 +11,12 @@ import type { PlanInfo } from '@/services/plan/list.d';
 
 type editProps = {
   project: number;
+  selectedElements: Elements<any> | null;
 };
 
 let preid = '';
 
-const Edit: FC<editProps> = ({ project }) => {
-  const selectedElements = useStoreState((store) => store.selectedElements);
+const Edit: FC<editProps> = ({ project, selectedElements }) => {
   const [editPlan, setEditPlan] = useState<PlanInfo>();
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const formRef = useRef<ProFormInstance>();
@@ -29,7 +30,7 @@ const Edit: FC<editProps> = ({ project }) => {
     formRef.current?.submit();
   };
   const onReset = () => {
-    if (selectedElements != null) {
+    if (selectedElements) {
       if (preid === selectedElements[0].id) {
         if (isNode(selectedElements[0]) && selectedElements[0].data.type === 'plan') {
           getPlanInfo(project, preid).then(async (result) => {
@@ -40,8 +41,14 @@ const Edit: FC<editProps> = ({ project }) => {
       }
     }
   };
-
-  if (isDrawerVisible && selectedElements != null) {
+  if (!selectedElements) {
+    return (
+      <Button key="Edit" block disabled={true}>
+        Edit
+      </Button>
+    );
+  }
+  if (isDrawerVisible) {
     if (preid !== selectedElements[0].id) {
       preid = selectedElements[0].id;
       if (isNode(selectedElements[0]) && selectedElements[0].data.type === 'plan') {
@@ -63,7 +70,6 @@ const Edit: FC<editProps> = ({ project }) => {
       <Drawer
         visible={isDrawerVisible}
         maskClosable={false}
-        destroyOnClose={true}
         title="Edit"
         width="400px"
         onClose={handleDrawerAddCancel}

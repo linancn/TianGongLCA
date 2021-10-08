@@ -16,9 +16,10 @@ import { updatePlanChinlrenJson } from '@/services/plan/list';
 import Add from './toolbox/add';
 import View from './toolbox/view';
 import Reload from './toolbox/reload';
-import Delete from './toolbox/delete';
+import Remove from './toolbox/remove';
 import Edit from './toolbox/edit';
 import DrillDown from './toolbox/drilldown';
+import Design from './toolbox/design';
 
 localforage.config({
   name: 'react-flow',
@@ -40,11 +41,12 @@ const flowKey = 'flow';
 type toolboxProps = {
   rfInstance?: OnLoadParams;
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;
+  elements: Elements<any>;
   project: number;
   plan: string;
 };
 
-const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) => {
+const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, elements, project, plan }) => {
   // const { transform } = useZoomPanHelper();
   const selectedElements = useStoreState((store) => store.selectedElements);
   // const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
@@ -53,6 +55,7 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) =
   const onSave = useCallback(() => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
+      console.log(flow);
       localforage.setItem(flowKey, flow);
       const updatePlan = {
         projectId: project,
@@ -65,11 +68,11 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) =
     }
   }, [plan, project, rfInstance]);
 
-  const onCopy = useCallback(() => {
-    if (selectedElements != null) {
-      // setCopyElements(selectedElements);
-    }
-  }, [selectedElements]);
+  // const onCopy = useCallback(() => {
+  //   if (selectedElements != null) {
+  //     // setCopyElements(selectedElements);
+  //   }
+  // }, [selectedElements]);
 
   return (
     <>
@@ -78,20 +81,22 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, project, plan }) =
           <Button key="Roll_up" block>
             Roll Up
           </Button>
-          <DrillDown project={project} />
+          <DrillDown project={project} selectedElements={selectedElements} />
           <Divider />
           {/* <Button key="toolRestore" onClick={onToolRestore} block>Restore</Button> */}
-          <View project={project} />
-          <Edit project={project} />
-          <Button key="Design" block>
-            Design
-          </Button>
+          <View project={project} selectedElements={selectedElements} />
+          <Edit project={project} selectedElements={selectedElements} />
+          <Design
+            setElements={setElements}
+            elements={elements}
+            selectedElements={selectedElements}
+          />
           <Divider />
           <Add setElements={setElements} project={project} />
-          <Button key="Copy" onClick={onCopy} block>
+          {/* <Button key="Copy" onClick={onCopy} block>
             Copy
-          </Button>
-          <Delete setElements={setElements} deleteElement={selectedElements} />
+          </Button> */}
+          <Remove setElements={setElements} selectedElements={selectedElements} />
           <Divider />
           <Reload />
           <Divider />
