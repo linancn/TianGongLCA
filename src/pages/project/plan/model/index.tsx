@@ -13,9 +13,9 @@ import ReactFlow, {
 
 import Toolbox from './toolbox';
 // import Sidebar from './sidebar';
-import { getPlanChildrenJson } from '@/services/plan/list';
+import { getModel } from '@/services/plan/list';
 
-type PlanModelProps = {
+type modelProps = {
   location: {
     query: {
       projectid: number;
@@ -26,18 +26,19 @@ type PlanModelProps = {
 
 let isSetData = false;
 
-const SaveRestore: FC<PlanModelProps> = (props) => {
+const SaveRestore: FC<modelProps> = (props) => {
   const { projectid, id } = props.location.query;
   // const [plan, setPlan] = useState<PlanItem>();
   const [rfInstance, setRfInstance] = useState<OnLoadParams>();
   const onLoad = (reactFlowInstance: OnLoadParams) => setRfInstance(reactFlowInstance);
   const [elements, setElements] = useState<Elements>([]);
-
+  const [parentCount, setParentCount] = useState<number>(-1);
   // let reatedat = false;
   if (!isSetData) {
-    getPlanChildrenJson(projectid, id).then((result) => {
+    getModel(projectid, id).then((result) => {
       isSetData = true;
       // setPlan(result);
+      setParentCount(result.parentCount);
       const childrenJson = JSON.parse(result.childrenJson);
       if (childrenJson !== null) {
         setElements(childrenJson.data);
@@ -74,6 +75,7 @@ const SaveRestore: FC<PlanModelProps> = (props) => {
         elements={elements}
         project={projectid}
         plan={id}
+        parentCount={parentCount}
       />
       {/* <Sidebar setElements={setElements} /> */}
     </ReactFlowProvider>

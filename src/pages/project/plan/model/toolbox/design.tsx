@@ -22,11 +22,12 @@ const Design: FC<designProps> = ({ setElements, elements, selectedElements }) =>
   const onDesign = () => {
     setIsDrawerVisible(true);
   };
-  const handleDrawerAddCancel = () => {
+  const handleDrawerCancel = () => {
     setIsDrawerVisible(false);
   };
   const onOK = () => {
     formRef.current?.submit();
+    setIsDrawerVisible(false);
   };
 
   if (!selectedElements) {
@@ -48,6 +49,9 @@ const Design: FC<designProps> = ({ setElements, elements, selectedElements }) =>
                 label: el.data.label,
                 type: el.type,
                 background: el.style?.background,
+                color: el.style?.color,
+                border: el.style?.border,
+                // width: el.style?.width,
               });
             }
             return '';
@@ -66,10 +70,10 @@ const Design: FC<designProps> = ({ setElements, elements, selectedElements }) =>
         visible={isDrawerVisible}
         title="Design"
         width="400px"
-        onClose={handleDrawerAddCancel}
+        onClose={handleDrawerCancel}
         footer={
           <Space size={'middle'} className={styles.footer_space}>
-            <Button onClick={handleDrawerAddCancel}>Cancel</Button>
+            <Button onClick={handleDrawerCancel}>Cancel</Button>
             <Button onClick={onOK} type="primary">
               OK
             </Button>
@@ -91,9 +95,18 @@ const Design: FC<designProps> = ({ setElements, elements, selectedElements }) =>
                     // eslint-disable-next-line no-param-reassign
                     el = {
                       ...el,
-                      data: { ...el.data, label: values.label },
+                      data: {
+                        ...el.data,
+                        label: values.label,
+                      },
                       type: values.type,
-                      style: { ...el.style, background: values.background },
+                      style: {
+                        ...el.style,
+                        background: values.background,
+                        color: values.color,
+                        border: values.border,
+                        // width: +values.width
+                      },
                     };
                   }
                   //  else if (isEdge(el)) {
@@ -112,6 +125,9 @@ const Design: FC<designProps> = ({ setElements, elements, selectedElements }) =>
           <ProFormText width="md" name="label" label="Label" />
           <ProFormText width="md" name="type" label="Type" />
           <ProFormText width="md" name="background" label="Background" />
+          <ProFormText width="md" name="color" label="Color" />
+          <ProFormText width="md" name="border" label="Border" />
+          {/* <ProFormText width="md" name="width" label="Width" /> */}
         </ProForm>
       </Drawer>
     </>

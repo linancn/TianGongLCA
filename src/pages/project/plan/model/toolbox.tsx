@@ -12,7 +12,7 @@ import {
 import localforage from 'localforage';
 import styles from './index.less';
 import { Button, Divider, Drawer, message } from 'antd';
-import { updatePlanChinlrenJson } from '@/services/plan/list';
+import { updateChinlrenJson } from '@/services/plan/list';
 import Add from './toolbox/add';
 import View from './toolbox/view';
 import Reload from './toolbox/reload';
@@ -20,6 +20,7 @@ import Remove from './toolbox/remove';
 import Edit from './toolbox/edit';
 import DrillDown from './toolbox/drilldown';
 import Design from './toolbox/design';
+import RollUp from './toolbox/rollup';
 
 localforage.config({
   name: 'react-flow',
@@ -44,9 +45,17 @@ type toolboxProps = {
   elements: Elements<any>;
   project: number;
   plan: string;
+  parentCount: number;
 };
 
-const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, elements, project, plan }) => {
+const Toolbox: FC<toolboxProps> = ({
+  rfInstance,
+  setElements,
+  elements,
+  project,
+  plan,
+  parentCount,
+}) => {
   // const { transform } = useZoomPanHelper();
   const selectedElements = useStoreState((store) => store.selectedElements);
   // const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
@@ -62,7 +71,7 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, elements, project,
         id: plan,
         childrenJson: `{"data": ${JSON.stringify(flow.elements)}}`,
       };
-      updatePlanChinlrenJson(updatePlan).then(() => {
+      updateChinlrenJson(updatePlan).then(() => {
         message.success('Save successfully!');
       });
     }
@@ -78,9 +87,7 @@ const Toolbox: FC<toolboxProps> = ({ rfInstance, setElements, elements, project,
     <>
       <Drawer visible={true} closable={false} mask={false} width="150px">
         <div className={styles.tools}>
-          <Button key="Roll_up" block>
-            Roll Up
-          </Button>
+          <RollUp project={project} plan={plan} parentCount={parentCount} />
           <DrillDown project={project} selectedElements={selectedElements} />
           <Divider />
           {/* <Button key="toolRestore" onClick={onToolRestore} block>Restore</Button> */}

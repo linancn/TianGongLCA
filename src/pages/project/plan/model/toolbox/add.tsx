@@ -2,19 +2,13 @@ import type { Dispatch, FC } from 'react';
 import React, { useState, useCallback } from 'react';
 import type { Elements } from 'react-flow-renderer';
 import { useStoreActions } from 'react-flow-renderer';
-import localforage from 'localforage';
 import styles from '../index.less';
 import { DrawerForm } from '@ant-design/pro-form';
 import { Button, Drawer, Space } from 'antd';
-import { getPlanList } from '@/services/plan/list';
+import { getGrid } from '@/services/plan/list';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { PlanInfo, PlanListPagination } from '@/services/plan/list.d';
-
-localforage.config({
-  name: 'react-flow',
-  storeName: 'flows',
-});
 
 type addProps = {
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;
@@ -23,7 +17,7 @@ type addProps = {
 
 const Add: FC<addProps> = ({ setElements, project }) => {
   const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
-  const [isDrawerAddVisible, setIsDrawerAddVisible] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isDrawerAddPlanVisible, setIsDrawerAddPlanVisible] = useState(false);
   const [isDrawerAddProcessVisible, setIsDrawerAddProcessVisible] = useState(false);
   const [addPlanToModel, setAddPlanToModel] = useState<PlanInfo>();
@@ -60,14 +54,14 @@ const Add: FC<addProps> = ({ setElements, project }) => {
     },
   ];
   const onAdd = () => {
-    setIsDrawerAddVisible(true);
+    setIsDrawerVisible(true);
   };
   const onDrawerAddProcess = () => {
-    setIsDrawerAddVisible(false);
+    setIsDrawerVisible(false);
     setIsDrawerAddProcessVisible(true);
   };
   const onAddPlanToModel = useCallback(() => {
-    if (addPlanToModel !== undefined) {
+    if (addPlanToModel) {
       const newNode = {
         id: addPlanToModel.id,
         data: { label: addPlanToModel.name, type: 'plan' },
@@ -82,10 +76,10 @@ const Add: FC<addProps> = ({ setElements, project }) => {
     }
   }, [addPlanToModel, setElements, setSelectedElements]);
   const handleDrawerAddCancel = () => {
-    setIsDrawerAddVisible(false);
+    setIsDrawerVisible(false);
   };
   const onDrawerAddPlan = () => {
-    setIsDrawerAddVisible(false);
+    setIsDrawerVisible(false);
     setIsDrawerAddPlanVisible(true);
   };
   const handleDrawerAddPlanCancel = () => {
@@ -96,7 +90,7 @@ const Add: FC<addProps> = ({ setElements, project }) => {
       <Button key="Add" onClick={onAdd} block>
         Add
       </Button>
-      <Drawer visible={isDrawerAddVisible} title="Add" onClose={handleDrawerAddCancel}>
+      <Drawer visible={isDrawerVisible} title="Add" onClose={handleDrawerAddCancel}>
         <Button key="plan" onClick={onDrawerAddPlan}>
           Plan
         </Button>{' '}
@@ -136,7 +130,7 @@ const Add: FC<addProps> = ({ setElements, project }) => {
             },
             sort,
           ) => {
-            return getPlanList(params, sort, project);
+            return getGrid(params, sort, project);
           }}
           columns={columns}
           rowClassName={(record) => {

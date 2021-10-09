@@ -1,11 +1,11 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from 'umi';
-import { PlanChildrenJson, PlanInfo } from './list.d';
+import { PlanInfo, PlanModel } from './list.d';
 import { SortOrder } from 'antd/lib/table/interface';
 
 /** 获取规则列表 GET /api/project */
-export async function getPlanList(
+export async function getGrid(
   params: {
     current?: number;
     pageSize?: number;
@@ -19,7 +19,7 @@ export async function getPlanList(
     data: PlanInfo[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/plan/grid', {
+  }>('http://localhost:8081/api/plan/getgrid', {
     method: 'GET',
     params: {
       ...params,
@@ -30,38 +30,72 @@ export async function getPlanList(
   });
 }
 
-export async function getPlanInfo(projectId: number, id: string) {
+export async function getParentGrid(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  sort: Record<string, SortOrder>,
+  projectId: number,
+  id: string,
+) {
+  const sortBy = Object.keys(sort)[0];
+  const orderBy = sort[sortBy]?.replace('end', '');
+  return request<{
+    data: PlanInfo[];
+    total?: number;
+    success?: boolean;
+  }>('http://localhost:8081/api/plan/getparentgrid', {
+    method: 'GET',
+    params: {
+      ...params,
+      sortBy,
+      orderBy,
+      projectId,
+      id,
+    },
+  });
+}
+
+export async function getInfo(projectId: number, id: string) {
   return request<PlanInfo>('http://localhost:8081/api/plan/getinfo/' + projectId + '/' + id, {
     method: 'GET',
   });
 }
 
-export async function updatePlanInfo(data?: { [key: string]: any }) {
+export async function updateInfo(data?: { [key: string]: any }) {
   return request<string>('http://localhost:8081/api/plan/updateinfo', {
     method: 'PUT',
     data: data,
   });
 }
 
-export async function getPlanChildrenJson(projectId: number, id: string) {
-  return request<PlanChildrenJson>(
-    'http://localhost:8081/api/plan/getchildrenjson/' + projectId + '/' + id,
-    {
-      method: 'GET',
-    },
-  );
+export async function getModel(projectId: number, id: string) {
+  return request<PlanModel>('http://localhost:8081/api/plan/getmodel/' + projectId + '/' + id, {
+    method: 'GET',
+  });
 }
 
-/** PUT /api/plan */
-export async function updatePlanChinlrenJson(data?: { [key: string]: any }) {
+export async function updateChinlrenJson(data?: { [key: string]: any }) {
   return request<PlanInfo>('http://localhost:8081/api/plan/updatechinlrenjson', {
     method: 'PUT',
     data: data,
   });
 }
 
-/** POST /api/plan */
-export async function createPlan(data?: { [key: string]: any }) {
+export async function getParentCount(projectId: number, id: string) {
+  return request<number>('http://localhost:8081/api/plan/getparentcount/' + projectId + '/' + id, {
+    method: 'GET',
+  });
+}
+
+// export async function getParents(projectId: number, id: string) {
+//   return request<PlanInfo[]>('http://localhost:8081/api/plan/getparents/' + projectId + '/' + id, {
+//     method: 'GET'
+//   });
+// }
+
+export async function create(data?: { [key: string]: any }) {
   return request<PlanInfo>('http://localhost:8081/api/plan/create', {
     method: 'POST',
     data: data,

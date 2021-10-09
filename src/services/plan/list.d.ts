@@ -9,11 +9,12 @@ export type PlanInfo = {
   nation: string;
 };
 
-export type PlanChildrenJson = {
-  pkid: number;
-  id: string;
+export type PlanModel = {
+  // pkid: number;
   projectId: number;
-  name: string;
+  id: string;
+  parentCount: number;
+  // name: string;
   childrenJson: string;
 };
 
