@@ -2,10 +2,10 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import styles from '../index.less';
 import { Button, Drawer, Space } from 'antd';
-import { getParentGrid } from '@/services/plan/list';
+import { getParentGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/list.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
 
 type rollUpProps = {
   project: number;

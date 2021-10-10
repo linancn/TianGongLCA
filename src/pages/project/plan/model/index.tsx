@@ -13,7 +13,7 @@ import ReactFlow, {
 
 import Toolbox from './toolbox';
 // import Sidebar from './sidebar';
-import { getModel } from '@/services/plan/list';
+import { getModel } from '@/services/plan/api';
 
 type modelProps = {
   location: {

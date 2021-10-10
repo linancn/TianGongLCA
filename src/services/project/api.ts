@@ -1,10 +1,7 @@
-// @ts-ignore
-/* eslint-disable */
 import { request } from 'umi';
-import { ProjectListItem } from './list.d';
-import { SortOrder } from 'antd/lib/table/interface';
+import type { ProjectListItem } from './api.d';
+import type { SortOrder } from 'antd/lib/table/interface';
 
-/** 获取规则列表 GET /api/project */
 export async function getProjectList(
   params: {
     current?: number;
@@ -34,7 +31,7 @@ export async function getProjectList(
 }
 
 /** PUT /api/project */
-export async function updateProject(options?: { [key: string]: any }) {
+export async function updateProject(options?: Record<string, any>) {
   return request<ProjectListItem>('/api/project', {
     method: 'PUT',
     ...(options || {}),
@@ -42,21 +39,21 @@ export async function updateProject(options?: { [key: string]: any }) {
 }
 
 /** POST /api/project */
-export async function creatProject(data?: { [key: string]: any }) {
+export async function creatProject(data?: Record<string, any>) {
   return request<ProjectListItem>('http://localhost:8081/api/project/creat', {
     method: 'POST',
-    data: data,
+    data,
   });
 }
 /** Put /api/project */
 export async function starProject(id: number) {
-  return request<ProjectListItem>('http://localhost:8081/api/project/starred/' + id, {
+  return request<ProjectListItem>(`http://localhost:8081/api/project/starred/${id}`, {
     method: 'PUT',
   });
 }
 /** Delete /api/project */
 export async function deleteProject(id: number) {
-  return request<ProjectListItem>('http://localhost:8081/api/project/delete/' + id, {
+  return request<ProjectListItem>(`http://localhost:8081/api/project/delete/${id}`, {
     method: 'DELETE',
   });
 }
@@ -69,7 +66,7 @@ export async function getProjectCardList(
   sort: Record<string, SortOrder>,
   // filter: Record<string, React.ReactText[] | null>,
   searchvalue: string,
-  data?: { [key: string]: any },
+  data?: Record<string, any>,
 ) {
   return request('http://localhost:8081/api/project/cardlist', {
     method: 'GET',
@@ -78,11 +75,11 @@ export async function getProjectCardList(
       sort,
       searchvalue,
     },
-    data: data,
+    data,
   });
 }
 /** DELETE /api/project */
-export async function removeProject(options?: { [key: string]: any }) {
+export async function removeProject(options?: Record<string, any>) {
   return request<Record<string, any>>('/api/project', {
     method: 'DELETE',
     ...(options || {}),

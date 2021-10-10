@@ -12,7 +12,7 @@ import {
 import localforage from 'localforage';
 import styles from './index.less';
 import { Button, Divider, Drawer, message } from 'antd';
-import { updateChinlrenJson } from '@/services/plan/list';
+import { updateChinlrenJson } from '@/services/plan/api';
 import Add from './toolbox/add';
 import View from './toolbox/view';
 import Reload from './toolbox/reload';
@@ -64,7 +64,6 @@ const Toolbox: FC<toolboxProps> = ({
   const onSave = useCallback(() => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
-      console.log(flow);
       localforage.setItem(flowKey, flow);
       const updatePlan = {
         projectId: project,

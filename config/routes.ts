@@ -143,34 +143,6 @@ export default [
         component: './test/EmptyPage',
       },
       {
-        name: 'listsearch',
-        path: '/test/listsearch',
-        component: './test/ListSearch',
-        routes: [
-          {
-            name: 'applications',
-            path: '/test/listsearch/applications',
-            component: './test/ListSearch/Applications',
-          },
-          {
-            name: 'articles',
-            path: '/test/listsearch/articles',
-            component: './test/ListSearch/Articles',
-          },
-          {
-            name: 'projects',
-            path: '/test/listsearch/projects',
-            component: './test/ListSearch/Projects',
-          },
-        ],
-      },
-      {
-        name: 'ListTableList',
-        icon: 'smile',
-        path: '/test/listtablelist',
-        component: './test/ListTableList',
-      },
-      {
         name: 'ProfileBasic',
         icon: 'smile',
         path: '/test/profilebasic',

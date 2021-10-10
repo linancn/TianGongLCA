@@ -2,8 +2,8 @@ import type { FC } from 'react';
 import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getProjectList } from '@/services/project/list';
-import type { ProjectListItem, ProjectListPagination } from '@/services/project/list.d';
+import { getProjectList } from '@/services/project/api';
+import type { ProjectListItem, ProjectListPagination } from '@/services/project/api.d';
 import styles from './style.less';
 /**
  * 更新节点

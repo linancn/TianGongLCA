@@ -1,10 +1,10 @@
-import { creatProject } from '@/services/project/list';
+import { creatProject } from '@/services/project/api';
 // import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType } from '@ant-design/pro-table';
 import { Button, Input, message } from 'antd';
-import type { ProjectListItem } from '@/services/project/list.d';
+import type { ProjectListItem } from '@/services/project/api.d';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';

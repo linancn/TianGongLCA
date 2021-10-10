@@ -1,10 +1,7 @@
-// @ts-ignore
-/* eslint-disable */
 import { request } from 'umi';
-import { PlanInfo, PlanModel } from './list.d';
-import { SortOrder } from 'antd/lib/table/interface';
+import type { PlanInfo, PlanModel } from './api.d';
+import type { SortOrder } from 'antd/lib/table/interface';
 
-/** 获取规则列表 GET /api/project */
 export async function getGrid(
   params: {
     current?: number;
@@ -58,33 +55,33 @@ export async function getParentGrid(
 }
 
 export async function getInfo(projectId: number, id: string) {
-  return request<PlanInfo>('http://localhost:8081/api/plan/getinfo/' + projectId + '/' + id, {
+  return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
-export async function updateInfo(data?: { [key: string]: any }) {
+export async function updateInfo(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/plan/updateinfo', {
     method: 'PUT',
-    data: data,
+    data,
   });
 }
 
 export async function getModel(projectId: number, id: string) {
-  return request<PlanModel>('http://localhost:8081/api/plan/getmodel/' + projectId + '/' + id, {
+  return request<PlanModel>(`http://localhost:8081/api/plan/getmodel/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
-export async function updateChinlrenJson(data?: { [key: string]: any }) {
+export async function updateChinlrenJson(data?: Record<string, any>) {
   return request<PlanInfo>('http://localhost:8081/api/plan/updatechinlrenjson', {
     method: 'PUT',
-    data: data,
+    data,
   });
 }
 
 export async function getParentCount(projectId: number, id: string) {
-  return request<number>('http://localhost:8081/api/plan/getparentcount/' + projectId + '/' + id, {
+  return request<number>(`http://localhost:8081/api/plan/getparentcount/${projectId}/${id}`, {
     method: 'GET',
   });
 }
@@ -95,10 +92,10 @@ export async function getParentCount(projectId: number, id: string) {
 //   });
 // }
 
-export async function create(data?: { [key: string]: any }) {
+export async function create(data?: Record<string, any>) {
   return request<PlanInfo>('http://localhost:8081/api/plan/create', {
     method: 'POST',
-    data: data,
+    data,
   });
 }
 
@@ -111,7 +108,7 @@ export async function create(data?: { [key: string]: any }) {
 
 /** Delete /api/plan */
 export async function deletePlan(id: number) {
-  return request<PlanInfo>('http://localhost:8081/api/plan/delete/' + id, {
+  return request<PlanInfo>(`http://localhost:8081/api/plan/delete/${id}`, {
     method: 'DELETE',
   });
 }
@@ -138,7 +135,7 @@ export async function deletePlan(id: number) {
 // }
 
 /** DELETE /api/plan */
-export async function removeplan(options?: { [key: string]: any }) {
+export async function removeplan(options?: Record<string, any>) {
   return request<Record<string, any>>('/api/plan', {
     method: 'DELETE',
     ...(options || {}),

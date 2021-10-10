@@ -6,7 +6,7 @@ import { isNode } from 'react-flow-renderer';
 import styles from '../index.less';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { getOK } from '@/services/home/list';
+import { getOK } from '@/services/home/api';
 
 type designProps = {
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;

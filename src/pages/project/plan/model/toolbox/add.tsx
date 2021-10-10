@@ -5,10 +5,10 @@ import { useStoreActions } from 'react-flow-renderer';
 import styles from '../index.less';
 import { DrawerForm } from '@ant-design/pro-form';
 import { Button, Drawer, Space } from 'antd';
-import { getGrid } from '@/services/plan/list';
+import { getGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/list.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
 
 type addProps = {
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;

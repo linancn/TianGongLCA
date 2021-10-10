@@ -13,10 +13,10 @@ import localforage from 'localforage';
 import styles from './index.less';
 import { DrawerForm } from '@ant-design/pro-form';
 import { Button, Drawer, Space } from 'antd';
-import { getPlanList, updatePlanChinlrenJson } from '@/services/plan/list';
+import { getGrid, updateChinlrenJson } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/list.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
 
 localforage.config({
   name: 'react-flow',
@@ -61,7 +61,7 @@ const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project, plan }) => {
         id: plan,
         childrenJson: `{"data": ${JSON.stringify(flow.elements)}}`,
       };
-      updatePlanChinlrenJson(updatePlan).then(() => {});
+      updateChinlrenJson(updatePlan).then(() => {});
     }
   }, [plan, project, rfInstance]);
 
@@ -265,7 +265,7 @@ const Tools: FC<ToolsProps> = ({ rfInstance, setElements, project, plan }) => {
             },
             sort,
           ) => {
-            return getPlanList(params, sort, project);
+            return getGrid(params, sort, project);
           }}
           columns={columns}
           rowClassName={(record) => {

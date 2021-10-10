@@ -1,5 +1,5 @@
-import type { PlanInfo } from '@/services/plan/list.d';
-import { getInfo } from '@/services/plan/list';
+import type { PlanInfo } from '@/services/plan/data';
+import { getInfo } from '@/services/plan/api';
 import { Button, Descriptions, Drawer } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
