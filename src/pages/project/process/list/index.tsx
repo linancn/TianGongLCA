@@ -2,17 +2,12 @@ import type { FC } from 'react';
 import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { create, getGrid } from '@/services/plan/api';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/api.d';
+import { create, getGrid } from '@/services/process/api';
+import type { Process, ProcessListPagination } from '@/services/process/api.d';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { FolderOpenOutlined } from '@ant-design/icons';
-/**
- * 更新节点
- *
- * @param fields
- */
 
 type ListProps = {
   location: {
@@ -21,9 +16,9 @@ type ListProps = {
     };
   };
 };
-const handleCreate = async (fields: PlanInfo) => {
+const handleCreate = async (fields: Process) => {
   const hide = message.loading('loading');
-
+  console.log('fields', fields);
   try {
     await create(fields);
     hide();
@@ -38,7 +33,7 @@ const handleCreate = async (fields: PlanInfo) => {
 const TableList: FC<ListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { project } = porps.location.query;
-  const columns: ProColumns<PlanInfo>[] = [
+  const columns: ProColumns<Process>[] = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -81,7 +76,7 @@ const TableList: FC<ListProps> = (porps) => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   return (
     <PageContainer>
-      <ProTable<PlanInfo, PlanListPagination>
+      <ProTable<Process, ProcessListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
@@ -109,12 +104,12 @@ const TableList: FC<ListProps> = (porps) => {
         columns={columns}
       />
       <ModalForm
-        title="Creat Plan"
+        title="Creat Process"
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
         onFinish={async (value) => {
-          const success = await handleCreate({ ...value, projectId: project } as PlanInfo);
+          const success = await handleCreate({ ...value, projectId: project } as Process);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {

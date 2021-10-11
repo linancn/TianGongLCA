@@ -1,4 +1,4 @@
-import type { PlanInfo } from '@/services/plan/data';
+import type { PlanInfo } from '@/services/plan/api.d';
 import { getInfo } from '@/services/plan/api';
 import { Button, Descriptions, Drawer } from 'antd';
 import type { FC } from 'react';

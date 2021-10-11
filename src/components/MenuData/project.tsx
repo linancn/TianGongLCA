@@ -8,8 +8,8 @@ export default [
   {
     name: 'processes',
     icon: 'crown',
-    path: '/project/processes/list',
-    component: './project/welcome',
+    path: '/project/process/list',
+    component: './project/process/list',
   },
   {
     name: 'flows',

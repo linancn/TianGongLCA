@@ -7,7 +7,7 @@ import { isNode } from 'react-flow-renderer';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '../index.less';
-import type { PlanInfo } from '@/services/plan/data';
+import type { PlanInfo } from '@/services/plan/api.d';
 
 type editProps = {
   project: number;
