@@ -7,13 +7,14 @@ type drillDownProps = {
   selectedElements: Elements<any> | null;
 };
 const DrillDown: FC<drillDownProps> = ({ project, selectedElements }) => {
-  if (!selectedElements) {
+  if (!selectedElements || selectedElements[0].data.type === 'process') {
     return (
       <Button key="DrillDown" href={''} block disabled={true}>
         Drill Down
       </Button>
     );
   }
+
   return (
     <Button
       key="DrillDown"

@@ -28,7 +28,7 @@ export async function getProcessGrid(
 }
 
 export async function getProcess(projectId: number, id: string) {
-  return request<Process>(`http://localhost:8081/api/plan/getinfo/${projectId}/${id}`, {
+  return request<Process>(`http://localhost:8081/api/process/get/${projectId}/${id}`, {
     method: 'GET',
   });
 }
