@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { create, getGrid } from '@/services/plan/api';
+import { createPlan, getPlanInfoGrid } from '@/services/plan/api';
 import type { PlanInfo, PlanListPagination } from '@/services/plan/api.d';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
@@ -25,7 +25,7 @@ const handleCreate = async (fields: PlanInfo) => {
   const hide = message.loading('loading');
 
   try {
-    await create(fields);
+    await createPlan(fields);
     hide();
     message.success('success');
     return true;
@@ -104,7 +104,7 @@ const TableList: FC<ListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getGrid(params, sort, project);
+          return getPlanInfoGrid(params, sort, project);
         }}
         columns={columns}
       />

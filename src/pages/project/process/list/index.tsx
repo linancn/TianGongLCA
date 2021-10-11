@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { create, getGrid } from '@/services/process/api';
+import { createProcess, getProcessGrid } from '@/services/process/api';
 import type { Process, ProcessListPagination } from '@/services/process/api.d';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
@@ -18,9 +18,8 @@ type ListProps = {
 };
 const handleCreate = async (fields: Process) => {
   const hide = message.loading('loading');
-  console.log('fields', fields);
   try {
-    await create(fields);
+    await createProcess(fields);
     hide();
     message.success('success');
     return true;
@@ -99,7 +98,7 @@ const TableList: FC<ListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getGrid(params, sort, project);
+          return getProcessGrid(params, sort, project);
         }}
         columns={columns}
       />

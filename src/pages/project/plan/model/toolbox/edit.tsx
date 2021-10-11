@@ -1,4 +1,4 @@
-import { getInfo, updateInfo } from '@/services/plan/api';
+import { getPlanInfo, updatePlanInfo } from '@/services/plan/api';
 import { Button, Drawer, message, Space } from 'antd';
 import type { FC } from 'react';
 import { useState, useRef } from 'react';
@@ -33,7 +33,7 @@ const Edit: FC<editProps> = ({ project, selectedElements }) => {
     if (selectedElements) {
       if (preid === selectedElements[0].id) {
         if (isNode(selectedElements[0]) && selectedElements[0].data.type === 'plan') {
-          getInfo(project, preid).then(async (result) => {
+          getPlanInfo(project, preid).then(async (result) => {
             formRef?.current?.setFieldsValue(result);
             setEditPlan(result);
           });
@@ -52,7 +52,7 @@ const Edit: FC<editProps> = ({ project, selectedElements }) => {
     if (preid !== selectedElements[0].id) {
       preid = selectedElements[0].id;
       if (isNode(selectedElements[0]) && selectedElements[0].data.type === 'plan') {
-        getInfo(project, preid).then(async (result) => {
+        getPlanInfo(project, preid).then(async (result) => {
           formRef?.current?.setFieldsValue(result);
           setEditPlan(result);
         });
@@ -90,7 +90,7 @@ const Edit: FC<editProps> = ({ project, selectedElements }) => {
             },
           }}
           onFinish={async (values) => {
-            updateInfo({ ...values, pkid: editPlan?.pkid }).then(async (result) => {
+            updatePlanInfo({ ...values, pkid: editPlan?.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
               } else {

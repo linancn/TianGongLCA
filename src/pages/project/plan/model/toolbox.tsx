@@ -12,7 +12,7 @@ import {
 import localforage from 'localforage';
 import styles from './index.less';
 import { Button, Divider, Drawer, message } from 'antd';
-import { updateChinlrenJson } from '@/services/plan/api';
+import { updatePlanChinlrenJson } from '@/services/plan/api';
 import Add from './toolbox/add';
 import View from './toolbox/view';
 import Reload from './toolbox/reload';
@@ -70,7 +70,7 @@ const Toolbox: FC<toolboxProps> = ({
         id: plan,
         childrenJson: `{"data": ${JSON.stringify(flow.elements)}}`,
       };
-      updateChinlrenJson(updatePlan).then(() => {
+      updatePlanChinlrenJson(updatePlan).then(() => {
         message.success('Save successfully!');
       });
     }

@@ -1,5 +1,5 @@
 import type { PlanInfo } from '@/services/plan/api.d';
-import { getInfo } from '@/services/plan/api';
+import { getPlanInfo } from '@/services/plan/api';
 import { Button, Descriptions, Drawer } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ const View: FC<viewProps> = ({ project, selectedElements }) => {
     if (preid !== selectedElements[0].id) {
       preid = selectedElements[0].id;
       if (isNode(selectedElements[0]) && selectedElements[0].data.type === 'plan') {
-        getInfo(project, preid).then(async (result) => {
+        getPlanInfo(project, preid).then(async (result) => {
           setViewPlan(result);
         });
       }

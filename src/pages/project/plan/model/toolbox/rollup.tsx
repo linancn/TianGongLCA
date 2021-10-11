@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import styles from '../index.less';
 import { Button, Drawer, Space } from 'antd';
-import { getParentGrid } from '@/services/plan/api';
+import { getPlanParentGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { PlanInfo, PlanListPagination } from '@/services/plan/api.d';
@@ -52,7 +52,7 @@ const RollUp: FC<rollUpProps> = ({ project, plan, parentCount }) => {
     setIsDrawerVisible(true);
   };
   const onRollUpSingleParent = () => {
-    getParentGrid({}, {}, project, plan).then((result) => {
+    getPlanParentGrid({}, {}, project, plan).then((result) => {
       window.location.replace(`/project/plan/model?projectid=${project}&id=${result.data[0].id}`);
     });
   };
@@ -103,7 +103,7 @@ const RollUp: FC<rollUpProps> = ({ project, plan, parentCount }) => {
               },
               sort,
             ) => {
-              return getParentGrid(params, sort, project, plan);
+              return getPlanParentGrid(params, sort, project, plan);
             }}
             columns={columns}
             rowClassName={(record) => {

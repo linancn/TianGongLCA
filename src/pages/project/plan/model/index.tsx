@@ -13,7 +13,7 @@ import ReactFlow, {
 
 import Toolbox from './toolbox';
 // import Sidebar from './sidebar';
-import { getModel } from '@/services/plan/api';
+import { getPlanModel } from '@/services/plan/api';
 
 type modelProps = {
   location: {
@@ -35,7 +35,7 @@ const SaveRestore: FC<modelProps> = (props) => {
   const [parentCount, setParentCount] = useState<number>(-1);
   // let reatedat = false;
   if (!isSetData) {
-    getModel(projectid, id).then((result) => {
+    getPlanModel(projectid, id).then((result) => {
       isSetData = true;
       // setPlan(result);
       setParentCount(result.parentCount);
@@ -77,7 +77,6 @@ const SaveRestore: FC<modelProps> = (props) => {
         plan={id}
         parentCount={parentCount}
       />
-      {/* <Sidebar setElements={setElements} /> */}
     </ReactFlowProvider>
   );
 };
