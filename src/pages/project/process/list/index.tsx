@@ -7,7 +7,7 @@ import type { Process, ProcessListPagination } from '@/services/process/api.d';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import { FolderOpenOutlined } from '@ant-design/icons';
+// import { FolderOpenOutlined } from '@ant-design/icons';
 
 type ListProps = {
   location: {
@@ -65,11 +65,11 @@ const TableList: FC<ListProps> = (porps) => {
       title: 'Option',
       dataIndex: 'option',
       valueType: 'option',
-      render: (_, row) => [
-        <a href={`/project/plan/model?projectid=${row.projectId}&id=${row.id}`} target="_blank">
-          <FolderOpenOutlined /> Open
-        </a>,
-      ],
+      // render: (_, row) => [
+      //     <a href={`/project/plan/model?projectid=${row.projectId}&id=${row.id}`} target="_blank">
+      //       <FolderOpenOutlined /> Open
+      //     </a>,
+      // ],
     },
   ];
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
