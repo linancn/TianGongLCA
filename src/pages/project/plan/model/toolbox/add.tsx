@@ -105,6 +105,11 @@ const Add: FC<addProps> = ({ setElements, project }) => {
           x: 0,
           y: 0,
         },
+        type: 'default',
+        style: {
+          background: '#ffffff',
+          border: '1px solid #000000',
+        },
       };
       setElements((els) => els.concat(newNode));
       setSelectedElements(newNode);
@@ -120,6 +125,11 @@ const Add: FC<addProps> = ({ setElements, project }) => {
         position: {
           x: 0,
           y: 0,
+        },
+        type: 'default',
+        style: {
+          background: '#ffffff',
+          border: '1px solid #000000',
         },
       };
       setElements((els) => els.concat(newNode));
