@@ -126,7 +126,6 @@ const Design: FC<designProps> = ({ setElements, elements, selectedElements }) =>
             if (el.id === preid) {
               if (el.style) {
                 const bordersettings = String(el.style.border).split(' ');
-                console.log();
                 formRef?.current?.setFieldsValue({
                   label: el.data.label,
                   type: el.type,

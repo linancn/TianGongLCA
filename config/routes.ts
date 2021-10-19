@@ -97,19 +97,19 @@ export default [
         ],
       },
       {
-        path: '/project/flows',
+        path: '/project/flow',
         routes: [
           {
             name: 'flows',
-            path: '/project/flows/list',
-            component: './project/welcome',
+            path: '/project/flow/list',
+            component: './project/flow/list',
           },
         ],
       },
       {
-        name: 'quantitles',
-        path: '/project/quantitles',
-        component: './project/welcome',
+        name: 'measurements',
+        path: '/project/measurement/list',
+        component: './project/measurement/list',
       },
       {
         name: 'units',

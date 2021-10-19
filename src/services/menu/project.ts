@@ -15,14 +15,14 @@ export async function getProjectMenu(project: any) {
     {
       name: 'flows',
       icon: 'crown',
-      path: `/project/flows/list?project=${project}`,
-      component: './project/welcome',
+      path: `/project/flow/list?project=${project}`,
+      component: './project/flow/list',
     },
     {
-      path: '/project/quantitles',
-      name: 'quantitles',
+      name: 'measurements',
       icon: 'crown',
-      component: './project/welcome',
+      path: `/project/measurement/list?project=${project}`,
+      component: './project/measurement/list',
     },
     {
       path: '/project/units',
