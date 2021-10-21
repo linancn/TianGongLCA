@@ -64,12 +64,14 @@ const TableList: FC<ListProps> = (porps) => {
     {
       title: 'Option',
       dataIndex: 'option',
-      valueType: 'option',
-      // render: (_, row) => [
-      //     <a href={`/project/plan/model?projectid=${row.projectId}&id=${row.id}`} target="_blank">
-      //       <FolderOpenOutlined /> Open
-      //     </a>,
-      // ],
+      render: (_, row) => [
+        <a href={`/project/process/view?project=${row.projectId}&id=${row.id}`} target="_blank">
+          View
+        </a>,
+        <a href={`/project/process/edit?project=${row.projectId}&id=${row.id}`} target="_blank">
+          Edit
+        </a>,
+      ],
     },
   ];
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);

@@ -94,6 +94,11 @@ export default [
             path: '/project/process/list',
             component: './project/process/list',
           },
+          {
+            name: 'processes',
+            path: '/project/process/edit',
+            component: './project/process/edit',
+          },
         ],
       },
       {

@@ -9,14 +9,14 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '../index.less';
 import { getProcess, updateProcess } from '@/services/process/api';
 
-type editProps = {
+type EditProps = {
   project: number;
   selectedElements: Elements<any> | null;
 };
 
 let preid = '';
 
-const Edit: FC<editProps> = ({ project, selectedElements }) => {
+const Edit: FC<EditProps> = ({ project, selectedElements }) => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [drawerBody, setDrawerBody] = useState<JSX.Element>();
   const formRef = useRef<ProFormInstance>();
