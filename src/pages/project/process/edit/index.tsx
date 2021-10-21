@@ -167,7 +167,6 @@ const AdvancedForm: FC<EditProps> = (porps) => {
             return getParameterGrid(params, sort, project, id);
           }}
           editable={{
-            type: 'multiple',
             editableKeys,
             onSave: async (key, record) => {
               if (key === -1) {
