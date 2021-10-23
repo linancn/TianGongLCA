@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { Process } from './api.d';
+import type { Process } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getProcessGrid(

@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { PlanInfo, PlanModel } from './api.d';
+import type { PlanInfo, PlanModel } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getPlanInfoGrid(

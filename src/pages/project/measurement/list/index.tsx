@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { createMeasurementBase, getMeasurementBaseGrid } from '@/services/measurement/api';
-import type { MeasurementBase, MeasurementBaseListPagination } from '@/services/measurement/api.d';
+import type { MeasurementBase, MeasurementBaseListPagination } from '@/services/measurement/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';

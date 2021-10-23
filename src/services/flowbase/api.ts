@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { FlowBase } from './api.d';
+import type { FlowBase } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getFlowBaseGrid(

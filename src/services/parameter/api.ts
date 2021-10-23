@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { Parameter } from './api.d';
+import type { Parameter } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getParameterGrid(

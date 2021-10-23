@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { MeasurementBase } from './api.d';
+import type { MeasurementBase } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getMeasurementBaseGrid(

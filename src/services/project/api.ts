@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { ProjectListItem } from './api.d';
+import type { ProjectListItem } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getProjectList(
