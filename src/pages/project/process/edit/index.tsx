@@ -6,7 +6,7 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import { getProcess, updateProcess } from '@/services/process/api';
-import type { Process } from '@/services/process/api.d';
+import type { Process } from '@/services/process/data';
 import ProCard from '@ant-design/pro-card';
 import ParameterCard from './parameter';
 import InputCard from './input';

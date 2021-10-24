@@ -10,6 +10,7 @@ export async function getFlowProcessGrid(
   sort: Record<string, SortOrder>,
   projectId: number,
   processId: string,
+  ioType: string,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -25,6 +26,7 @@ export async function getFlowProcessGrid(
       orderBy,
       projectId,
       processId,
+      ioType,
     },
   });
 }

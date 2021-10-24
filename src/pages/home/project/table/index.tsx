@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getProjectList } from '@/services/project/api';
-import type { ProjectListItem, ProjectListPagination } from '@/services/project/api.d';
+import type { ProjectListItem, ProjectListPagination } from '@/services/project/data';
 import styles from './style.less';
 /**
  * 更新节点

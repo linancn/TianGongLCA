@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import ProCard from '@ant-design/pro-card';
-import type { Parameter, ParameterListPagination } from '@/services/parameter/api.d';
+import type { Parameter, ParameterListPagination } from '@/services/parameter/data';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { EditableProTable } from '@ant-design/pro-table';
 import {

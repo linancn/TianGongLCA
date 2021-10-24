@@ -6,7 +6,7 @@ import { useRef } from 'react';
 // import React from 'react';
 // import { useRequest } from 'umi';
 import { getProjectList, starProject, deleteProject } from '@/services/project/api';
-import type { ProjectListItem } from '@/services/project/api.d';
+import type { ProjectListItem } from '@/services/project/data';
 import styles from './style.less';
 import ProList from '@ant-design/pro-list';
 import type { ActionType } from '@ant-design/pro-table';

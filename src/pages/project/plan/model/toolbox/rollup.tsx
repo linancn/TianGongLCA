@@ -5,7 +5,7 @@ import { Button, Drawer, Space } from 'antd';
 import { getPlanParentGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/api.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
 
 type rollUpProps = {
   project: number;

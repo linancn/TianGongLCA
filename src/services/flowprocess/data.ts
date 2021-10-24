@@ -1,10 +1,10 @@
 export type FlowProcess = {
   pkid: number;
-  id: string;
+  id?: string;
   projectId: number;
   processId: string;
   ioType: string;
-  comment: string;
+  comment?: string;
 };
 
 export type FlowProcessListPagination = {

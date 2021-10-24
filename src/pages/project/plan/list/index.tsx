@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { createPlan, getPlanInfoGrid } from '@/services/plan/api';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/api.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';

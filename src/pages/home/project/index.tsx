@@ -4,7 +4,7 @@ import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType } from '@ant-design/pro-table';
 import { Button, Input, message } from 'antd';
-import type { ProjectListItem } from '@/services/project/api.d';
+import type { ProjectListItem } from '@/services/project/data';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';

@@ -7,8 +7,8 @@ import { Button, Drawer, Space } from 'antd';
 import { getPlanInfoGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/api.d';
-import type { Process, ProcessListPagination } from '@/services/process/api.d';
+import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
+import type { Process, ProcessListPagination } from '@/services/process/data';
 import { getProcessGrid } from '@/services/process/api';
 
 type addProps = {

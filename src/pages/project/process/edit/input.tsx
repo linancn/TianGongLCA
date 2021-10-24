@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import ProCard from '@ant-design/pro-card';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { EditableProTable } from '@ant-design/pro-table';
-import { message } from 'antd';
+import { Button, Drawer, message } from 'antd';
 import type { FlowProcess, FlowProcessListPagination } from '@/services/flowprocess/data';
 import {
   createFlowProcess,
@@ -20,6 +20,7 @@ type InputProps = {
 const InputCard: FC<InputProps> = ({ project, process }) => {
   const actionRef = useRef<ActionType>();
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([]);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
   const columns: ProColumns<FlowProcess>[] = [
     {
@@ -63,18 +64,21 @@ const InputCard: FC<InputProps> = ({ project, process }) => {
       ],
     },
   ];
-
+  const handleDrawerAddCancel = () => {
+    setIsDrawerVisible(false);
+  };
   return (
     <ProCard title="Inputs" bordered={false} collapsible>
+      <Drawer visible={isDrawerVisible} title="Add" onClose={handleDrawerAddCancel}>
+        <Button key="plan">Plan</Button> Or <Button key="process">Process</Button>
+      </Drawer>
       <EditableProTable<FlowProcess, FlowProcessListPagination>
         actionRef={actionRef}
         recordCreatorProps={{
           record: () => {
             return {
               pkid: -1,
-              id: '',
               ioType: 'input',
-              comment: '',
               projectId: project,
               processId: process,
             };
@@ -89,7 +93,7 @@ const InputCard: FC<InputProps> = ({ project, process }) => {
           },
           sort,
         ) => {
-          return getFlowProcessGrid(params, sort, project, process);
+          return getFlowProcessGrid(params, sort, project, process, 'input');
         }}
         editable={{
           editableKeys,

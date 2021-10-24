@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { createProcess, getProcessGrid } from '@/services/process/api';
-import type { Process, ProcessListPagination } from '@/services/process/api.d';
+import type { Process, ProcessListPagination } from '@/services/process/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
