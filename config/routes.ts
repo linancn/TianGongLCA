@@ -109,6 +109,11 @@ export default [
             path: '/project/flow/list',
             component: './project/flow/list',
           },
+          {
+            name: 'flows',
+            path: '/project/flow/edit',
+            component: './project/flow/edit',
+          },
         ],
       },
       {
