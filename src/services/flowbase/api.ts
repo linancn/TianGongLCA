@@ -41,7 +41,7 @@ export async function updateFlowBase(data?: Record<string, any>) {
 }
 
 export async function createFlowBase(data?: Record<string, any>) {
-  return request<FlowBase>('http://localhost:8081/api/flowbase/create', {
+  return request<string>('http://localhost:8081/api/flowbase/create', {
     method: 'POST',
     data,
   });

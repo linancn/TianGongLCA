@@ -34,10 +34,25 @@ const InputCard: FC<InputProps> = ({ project, process }) => {
       dataIndex: 'comment',
     },
     {
+      title: 'Base Flow',
+      dataIndex: 'flowBaseId',
+      editable: false,
+      render: (_, record: FlowProcess) => [
+        <span>{record.flowBaseId ? record.flowBaseId : '  -  '}</span>,
+        <a
+          key="detail"
+          onClick={() => {
+            setIsDrawerVisible(true);
+          }}
+        >
+          Detail
+        </a>,
+      ],
+    },
+    {
       title: 'Option',
       valueType: 'option',
-      width: 200,
-      render: (_, record: FlowProcess, index, action) => [
+      render: (_, record: FlowProcess, _index, action) => [
         <a
           key="edit"
           onClick={() => {

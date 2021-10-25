@@ -5,6 +5,7 @@ export type FlowProcess = {
   processId: string;
   ioType: string;
   comment?: string;
+  flowBaseId?: string;
 };
 
 export type FlowProcessListPagination = {
