@@ -73,47 +73,51 @@ const MeasurementCard: FC<InputProps> = ({ project }) => {
     setIsDrawerVisible(false);
   };
   const addMeasurementBase = () => {
+    // actionRef.current?.reload();
     // actionRef.current?.reset?.();
     // actionRef.current?.reload();
     // actionRef.current?.cancelEditable(-1);
     // actionRef.current?.startEditable(-1);
     // actionRef.current?.addEditRecord?.({
-    //   pkid: -1,
+    //   pkid: -2,
     //   projectId: project,
     //   comment: '123123',
     // });
   };
   return (
-    <ProCard title="Measurements" bordered={false} collapsible>
-      <Drawer visible={isDrawerVisible} title="Select" onClose={handleDrawerAddCancel}>
-        <Button key="select" onClick={addMeasurementBase}>
-          Select
+    <ProCard
+      title="Measurements"
+      bordered={false}
+      extra={
+        <Button
+          type="primary"
+          key="add"
+          onClick={() => {
+            setIsDrawerVisible(true);
+          }}
+        >
+          Add
         </Button>
-      </Drawer>
+      }
+    >
       <EditableProTable<MeasurementFlow, MeasurementFlowListPagination>
         actionRef={actionRef}
-        recordCreatorProps={{
-          // onClick: () => {
-          //   setIsDrawerVisible(true);
-
-          //   actionRef.current?.cancelEditable(-1);
-
-          //   actionRef.current?.addEditRecord?.({
-          //     pkid: -1,
-          //     projectId: project,
-          //     comment: '123123',
-          //   });
-          // },
-          record: () => {
-            return {
-              pkid: -1,
-              projectId: project,
-              // comment: '1',
-            };
-          },
-        }}
+        recordCreatorProps={false}
         columns={columns}
         rowKey="pkid"
+        // toolBarRender={() => {
+        //   return [
+        //     <Button
+        //       type="primary"
+        //       key="add"
+        //       onClick={() => {
+        //         setIsDrawerVisible(true);
+        //       }}
+        //     >
+        //       Add
+        //     </Button>,
+        //   ];
+        // }}
         request={(
           params: {
             pageSize: number;
@@ -151,6 +155,11 @@ const MeasurementCard: FC<InputProps> = ({ project }) => {
           },
         }}
       />
+      <Drawer visible={isDrawerVisible} title="Select" onClose={handleDrawerAddCancel}>
+        <Button key="select" onClick={addMeasurementBase}>
+          Select
+        </Button>
+      </Drawer>
     </ProCard>
   );
 };
