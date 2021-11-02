@@ -1,13 +1,13 @@
 export type ProjectListItem = {
   id: number;
-  name: string;
-  createTime: Date;
-  lastUpdateTime: Date;
-  comment: string;
-  star: boolean;
-  creator: string;
-  nation: string;
-  type: string;
+  name?: string;
+  createTime?: Date;
+  lastUpdateTime?: Date;
+  comment?: string;
+  star?: boolean;
+  creator?: string;
+  nation?: string;
+  type?: string;
 };
 
 export type ProjectListPagination = {
