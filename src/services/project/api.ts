@@ -31,16 +31,27 @@ export async function getProjectList(
 }
 
 /** PUT /api/project */
-export async function updateProject(options?: Record<string, any>) {
-  return request<ProjectListItem>('/api/project', {
+// export async function updateProject(options?: Record<string, any>) {
+//   return request<ProjectListItem>('/api/project', {
+//     method: 'PUT',
+//     ...(options || {}),
+//   });
+// }
+export async function updateProject(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/project/update', {
     method: 'PUT',
-    ...(options || {}),
+    data,
   });
 }
-
 /** POST /api/project */
+// export async function creatProject(data?: Record<string, any>) {
+//   return request<ProjectListItem>('http://localhost:8081/api/project/creat', {
+//     method: 'POST',
+//     data,
+//   });
+// }
 export async function creatProject(data?: Record<string, any>) {
-  return request<ProjectListItem>('http://localhost:8081/api/project/creat', {
+  return request<string>('http://localhost:8081/api/project/creat', {
     method: 'POST',
     data,
   });
@@ -53,7 +64,7 @@ export async function starProject(id: number) {
 }
 /** Delete /api/project */
 export async function deleteProject(id: number) {
-  return request<ProjectListItem>(`http://localhost:8081/api/project/delete/${id}`, {
+  return request<string>(`http://localhost:8081/api/project/delete/${id}`, {
     method: 'DELETE',
   });
 }
