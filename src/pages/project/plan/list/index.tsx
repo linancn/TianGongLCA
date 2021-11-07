@@ -72,7 +72,10 @@ const TableList: FC<ListProps> = (porps) => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, row) => [
-        <a href={`/project/plan/model?projectid=${row.projectId}&id=${row.id}`} target="_blank">
+        // <a href={`/project/plan/editmodel?projectid=${row.projectId}&id=${row.id}`} target="_blank">
+        //   <FolderOpenOutlined /> Open
+        // </a>,
+        <a href={`/project/plan/viewmodel?projectid=${row.projectId}&id=${row.id}`} target="_blank">
           <FolderOpenOutlined /> Open
         </a>,
       ],

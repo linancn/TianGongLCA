@@ -23,7 +23,7 @@ const DrillDown: FC<drillDownProps> = ({ project, selectedElements }) => {
   return (
     <Button
       key="DrillDown"
-      href={`/project/plan/model?projectid=${project}&id=${selectedElements[0].id}`}
+      href={`/project/plan/editmodel?projectid=${project}&id=${selectedElements[0].id}`}
       block
     >
       Drill Down

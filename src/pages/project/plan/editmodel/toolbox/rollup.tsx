@@ -53,13 +53,15 @@ const RollUp: FC<rollUpProps> = ({ project, plan, parentCount }) => {
   };
   const onRollUpSingleParent = () => {
     getPlanParentGrid({}, {}, project, plan).then((result) => {
-      window.location.replace(`/project/plan/model?projectid=${project}&id=${result.data[0].id}`);
+      window.location.replace(
+        `/project/plan/editmodel?projectid=${project}&id=${result.data[0].id}`,
+      );
     });
   };
 
   const onOpen = () => {
     if (selectParent) {
-      window.location.replace(`/project/plan/model?projectid=${project}&id=${selectParent.id}`);
+      window.location.replace(`/project/plan/editmodel?projectid=${project}&id=${selectParent.id}`);
     }
   };
 
