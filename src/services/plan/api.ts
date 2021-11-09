@@ -93,7 +93,7 @@ export async function getPlanParentCount(projectId: number, id: string) {
 // }
 
 export async function createPlan(data?: Record<string, any>) {
-  return request<PlanInfo>('http://localhost:8081/api/plan/create', {
+  return request<string>('http://localhost:8081/api/plan/create', {
     method: 'POST',
     data,
   });

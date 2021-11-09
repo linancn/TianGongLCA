@@ -5,14 +5,16 @@ import ProTable from '@ant-design/pro-table';
 import { createPlan, getPlanInfoGrid } from '@/services/plan/api';
 import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, message } from 'antd';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import { FolderOpenOutlined } from '@ant-design/icons';
-/**
- * 更新节点
- *
- * @param fields
- */
+import { Button, Drawer, message, Space, Tooltip } from 'antd';
+import { ProFormInstance, ProFormTextArea } from '@ant-design/pro-form';
+import ProForm, { ProFormText } from '@ant-design/pro-form';
+import {
+  ApartmentOutlined,
+  DeleteOutlined,
+  FormOutlined,
+  ProfileOutlined,
+} from '@ant-design/icons';
+import styles from './style.less';
 
 type ListProps = {
   location: {
@@ -21,23 +23,10 @@ type ListProps = {
     };
   };
 };
-const handleCreate = async (fields: PlanInfo) => {
-  const hide = message.loading('loading');
-
-  try {
-    await createPlan(fields);
-    hide();
-    message.success('success');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('error');
-    return false;
-  }
-};
 const TableList: FC<ListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { project } = porps.location.query;
+  const formRefCreate = useRef<ProFormInstance>();
   const columns: ProColumns<PlanInfo>[] = [
     {
       title: 'Name',
@@ -72,16 +61,37 @@ const TableList: FC<ListProps> = (porps) => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, row) => [
-        // <a href={`/project/plan/editmodel?projectid=${row.projectId}&id=${row.id}`} target="_blank">
-        //   <FolderOpenOutlined /> Open
-        // </a>,
-        <a href={`/project/plan/viewmodel?projectid=${row.projectId}&id=${row.id}`} target="_blank">
-          <FolderOpenOutlined /> Open
-        </a>,
+        <Tooltip title="Open model">
+          <Button
+            href={`/project/plan/editmodel?projectid=${row.projectId}&id=${row.id}`}
+            target="_blank"
+            shape="circle"
+            icon={<ApartmentOutlined />}
+            size="small"
+          />
+        </Tooltip>,
+        // <Tooltip title="Open model">
+        //   <Button href={`/project/plan/viewmodel?projectid=${row.projectId}&id=${row.id}`} target="_blank" shape="circle" icon={<ApartmentOutlined />} size="small" />
+        // </Tooltip>,
+        <Tooltip title="View info">
+          <Button shape="circle" icon={<ProfileOutlined />} size="small" />
+        </Tooltip>,
+        <Tooltip title="Edit info">
+          <Button shape="circle" icon={<FormOutlined />} size="small" />
+        </Tooltip>,
+        <Tooltip title="Delete">
+          <Button shape="circle" icon={<DeleteOutlined />} size="small" />
+        </Tooltip>,
       ],
     },
   ];
-  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
+  const [drawerCreateVisible, handleDrawerCreateVisible] = useState<boolean>(false);
+  const handleDrawerCreateCancel = () => {
+    handleDrawerCreateVisible(false);
+  };
+  const onSubmitCreate = () => {
+    formRefCreate.current?.submit();
+  };
   return (
     <PageContainer>
       <ProTable<PlanInfo, PlanListPagination>
@@ -93,10 +103,10 @@ const TableList: FC<ListProps> = (porps) => {
             <Button
               key="create"
               onClick={() => {
-                handleModalVisible(true);
+                handleDrawerCreateVisible(true);
               }}
             >
-              Creat
+              Create
             </Button>,
           ],
         }}
@@ -111,35 +121,49 @@ const TableList: FC<ListProps> = (porps) => {
         }}
         columns={columns}
       />
-      <ModalForm
-        title="Creat Plan"
+      <Drawer
+        title="Create Plan"
         width="400px"
-        visible={createModalVisible}
-        onVisibleChange={handleModalVisible}
-        onFinish={async (value) => {
-          const success = await handleCreate({ ...value, projectId: project } as PlanInfo);
-          if (success) {
-            handleModalVisible(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
+        maskClosable={false}
+        visible={drawerCreateVisible}
+        onClose={handleDrawerCreateCancel}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={handleDrawerCreateCancel}>Cancel</Button>
+            <Button onClick={onSubmitCreate} type="primary">
+              Submit
+            </Button>
+          </Space>
+        }
       >
-        Name:
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: '',
+        <ProForm
+          formRef={formRefCreate}
+          submitter={{
+            render: () => {
+              return [];
             },
-          ]}
-          width="md"
-          name="name"
-        />
-        Comment:
-        <ProFormTextArea width="md" name="comment" />
-      </ModalForm>
+          }}
+          onFinish={async (values) => {
+            createPlan({ ...values, projectId: project }).then(async (result) => {
+              if (result === 'ok') {
+                message.success('Create successfully!');
+                handleDrawerCreateVisible(false);
+                if (actionRef.current) {
+                  actionRef.current.reload();
+                }
+              } else {
+                message.error(result);
+              }
+            });
+            return true;
+          }}
+        >
+          <ProFormText width="md" name="name" label="Name" />
+          <ProFormText width="md" name="type" label="Type" />
+          <ProFormText width="md" name="nation" label="Nation" />
+          <ProFormTextArea width="md" name="comment" label="Comment" />
+        </ProForm>
+      </Drawer>
     </PageContainer>
   );
 };
