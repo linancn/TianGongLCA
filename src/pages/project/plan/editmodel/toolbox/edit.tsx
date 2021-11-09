@@ -135,7 +135,7 @@ const Edit: FC<EditProps> = ({ project, selectedElements }) => {
         width="400px"
         onClose={handleDrawerAddCancel}
         footer={
-          <Space size={'middle'} className={styles.footer_space}>
+          <Space size={'middle'} className={styles.footer_right}>
             <Button onClick={onReset}>Reset</Button>
             <Button onClick={onSubmit} type="primary">
               Submit

@@ -59,6 +59,11 @@ export async function getPlanInfo(projectId: number, id: string) {
     method: 'GET',
   });
 }
+export async function getPlanInfoByPkid(pkid: number) {
+  return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${pkid}`, {
+    method: 'GET',
+  });
+}
 
 export async function updatePlanInfo(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/plan/updateinfo', {
@@ -107,8 +112,8 @@ export async function createPlan(data?: Record<string, any>) {
 // }
 
 /** Delete /api/plan */
-export async function deletePlan(id: number) {
-  return request<PlanInfo>(`http://localhost:8081/api/plan/delete/${id}`, {
+export async function deletePlan(pkid: number) {
+  return request<string>(`http://localhost:8081/api/plan/delete/${pkid}`, {
     method: 'DELETE',
   });
 }
