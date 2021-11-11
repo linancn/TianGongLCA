@@ -32,7 +32,7 @@ type ListProps = {
     };
   };
 };
-const TableList: FC<ListProps> = (porps) => {
+const PlanList: FC<ListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { project } = porps.location.query;
   const formRefCreate = useRef<ProFormInstance>();
@@ -312,4 +312,4 @@ const TableList: FC<ListProps> = (porps) => {
   );
 };
 
-export default TableList;
+export default PlanList;

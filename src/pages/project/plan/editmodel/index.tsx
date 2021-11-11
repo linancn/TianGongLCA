@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import type { Elements, Connection, Edge, OnLoadParams } from 'react-flow-renderer';
+import { Elements, Connection, Edge, OnLoadParams, ArrowHeadType } from 'react-flow-renderer';
 import ReactFlow, {
   ReactFlowProvider,
   removeElements,
@@ -47,7 +47,18 @@ const SaveRestore: FC<modelProps> = (props) => {
   }
   // console.log(plan);
   const onConnect = (params: Connection | Edge) =>
-    setElements((els) => addEdge({ ...params, animated: true }, els));
+    setElements((els) =>
+      addEdge(
+        {
+          ...params,
+          animated: false,
+          arrowHeadType: ArrowHeadType.Arrow,
+          label: '',
+          style: { strokeWidth: '1px' },
+        },
+        els,
+      ),
+    );
   // eslint-disable-next-line no-console
   // const onElementClick = (_: MouseEvent, element: FlowElement) => console.log('click', element);
   const onElementsRemove = (elementsToRemove: Elements) =>
