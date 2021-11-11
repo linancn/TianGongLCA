@@ -6,11 +6,11 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProCard from '@ant-design/pro-card';
-import MeasurementCard from './measurement';
 import type { FlowBase } from '@/services/flowbase/data';
 import { getFlowBase, updateFlowBase } from '@/services/flowbase/api';
+import MeasurementList from './measurement';
 
-type EditProps = {
+type Props = {
   location: {
     query: {
       project: number;
@@ -19,7 +19,7 @@ type EditProps = {
   };
 };
 
-const AdvancedForm: FC<EditProps> = (porps) => {
+const AdvancedForm: FC<Props> = (porps) => {
   const { project, id } = porps.location.query;
   const [editFlowBase, setEditFlowBase] = useState<FlowBase>();
   const formRef = useRef<ProFormInstance>();
@@ -71,7 +71,7 @@ const AdvancedForm: FC<EditProps> = (porps) => {
           </Row>
         </ProForm>
       </ProCard>
-      <MeasurementCard project={project} process={id} />
+      <MeasurementList project={project} process={id} />
     </PageContainer>
   );
 };

@@ -27,13 +27,10 @@ export async function getMeasurementFlowGrid(
   });
 }
 
-export async function getMeasurementFlow(projectId: number, id: string) {
-  return request<MeasurementFlow>(
-    `http://localhost:8081/api/measurementflow/get/${projectId}/${id}`,
-    {
-      method: 'GET',
-    },
-  );
+export async function getMeasurementFlow(pkid: number) {
+  return request<MeasurementFlow>(`http://localhost:8081/api/measurementflow/get/${pkid}`, {
+    method: 'GET',
+  });
 }
 
 export async function updateMeasurementFlow(data?: Record<string, any>) {
@@ -50,8 +47,8 @@ export async function createMeasurementFlow(data?: Record<string, any>) {
   });
 }
 
-export async function deleteMeasurementFlow(id: number) {
-  return request<string>(`http://localhost:8081/api/measurementflow/delete/${id}`, {
+export async function deleteMeasurementFlow(pkid: number) {
+  return request<string>(`http://localhost:8081/api/measurementflow/delete/${pkid}`, {
     method: 'DELETE',
   });
 }
