@@ -31,8 +31,8 @@ export async function getFlowProcessGrid(
   });
 }
 
-export async function getFlowProcess(projectId: number, id: string) {
-  return request<FlowProcess>(`http://localhost:8081/api/flowprocess/get/${projectId}/${id}`, {
+export async function getFlowProcess(pkid: number) {
+  return request<FlowProcess>(`http://localhost:8081/api/flowprocess/get/${pkid}`, {
     method: 'GET',
   });
 }

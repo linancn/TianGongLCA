@@ -1,5 +1,5 @@
 import { getPlanInfo, updatePlanInfo } from '@/services/plan/api';
-import { Button, Drawer, message, Modal, Space, Tooltip } from 'antd';
+import { Button, Descriptions, Drawer, message, Modal, Space, Tooltip } from 'antd';
 import type { FC } from 'react';
 import { useState, useRef } from 'react';
 import type { Elements } from 'react-flow-renderer';
@@ -10,13 +10,16 @@ import styles from '../index.less';
 import { getProcess, updateProcess } from '@/services/process/api';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { DeleteOutlined, ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import type { EdgeProcess } from '@/services/edgeprocess/data';
 import {
-  createEdgeProcess,
-  deleteEdgeProcess,
-  getEdgeProcessGrid,
-} from '@/services/edgeprocess/api';
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+  ProfileOutlined,
+  SelectOutlined,
+} from '@ant-design/icons';
+import type { EdgeProcess } from '@/services/edgeprocess/data';
+import { deleteEdgeProcess, getEdgeProcessGrid } from '@/services/edgeprocess/api';
+import { getFlowProcess, getFlowProcessGrid } from '@/services/flowprocess/api';
+import type { FlowProcess, FlowProcessListPagination } from '@/services/flowprocess/data';
 
 type EditProps = {
   project: number;
@@ -28,7 +31,11 @@ let preid = '';
 
 const Edit: FC<EditProps> = ({ project, plan, selectedElements }) => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const [drawerViewVisible, handleDrawerViewVisible] = useState(false);
+  const [drawerSelectVisible, handleDrawerSelectVisible] = useState<boolean>(false);
   const [drawerBody, setDrawerBody] = useState<JSX.Element>();
+  const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
+  const [selectRowFlowProcess, setSelectRowFlowProcess] = useState<FlowProcess>();
   const formRefNode = useRef<ProFormInstance>();
   const actionRefEdge = useRef<ActionType>();
   const edgeColumns: ProColumns<EdgeProcess>[] = [
@@ -40,7 +47,7 @@ const Edit: FC<EditProps> = ({ project, plan, selectedElements }) => {
             shape="circle"
             icon={<DeleteOutlined />}
             size="small"
-            onClick={() => onDeleteEdgeProcess(row.pkid)}
+            onClick={() => onDeleteFlowProcess(row.pkid)}
           />
         </Tooltip>,
       ],
@@ -54,26 +61,26 @@ const Edit: FC<EditProps> = ({ project, plan, selectedElements }) => {
       title: 'Source Name',
       dataIndex: 'sourceFlowName',
       sorter: true,
-      // render: (_, row) => [
-      //   <Space size={'small'} className={styles.footer_right}>
-      //     <Tooltip title="View">
-      //       <Button
-      //         shape="circle"
-      //         icon={<ProfileOutlined />}
-      //         size="small"
-      //       // onClick={() => onView(row.pkid)}
-      //       />
-      //     </Tooltip>
-      //     <Tooltip title="Edit">
-      //       <Button
-      //         shape="circle"
-      //         icon={<FormOutlined />}
-      //         size="small"
-      //       // onClick={() => onEdit(row.pkid)}
-      //       />
-      //     </Tooltip>
-      //   </Space>
-      // ]
+      render: (_, row) => [
+        <Space size={'small'} className={styles.footer_right}>
+          <Tooltip title="View">
+            <Button
+              shape="circle"
+              icon={<ProfileOutlined />}
+              size="small"
+              onClick={() => onViewFlowProcess(row.pkid)}
+            />
+          </Tooltip>
+          <Tooltip title="Select">
+            <Button
+              shape="circle"
+              icon={<SelectOutlined />}
+              size="small"
+              onClick={() => onSelectFlowProcess()}
+            />
+          </Tooltip>
+        </Space>,
+      ],
     },
     {
       title: '',
@@ -104,7 +111,27 @@ const Edit: FC<EditProps> = ({ project, plan, selectedElements }) => {
       // ]
     },
   ];
-  function onDeleteEdgeProcess(pkid: number) {
+  const flowProcessColumns: ProColumns<FlowProcess>[] = [
+    {
+      title: 'ID',
+      dataIndex: 'pkid',
+      search: false,
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+    },
+  ];
+  const handleDrawerAddCancel = () => {
+    setIsDrawerVisible(false);
+  };
+  const handleDrawerViewCancel = () => {
+    handleDrawerViewVisible(false);
+  };
+  const handleDrawerSelectCancel = () => {
+    handleDrawerSelectVisible(false);
+  };
+  function onDeleteFlowProcess(pkid: number) {
     Modal.confirm({
       title: 'Do you Want to delete this flow connection?',
       icon: <ExclamationCircleOutlined />,
@@ -122,9 +149,20 @@ const Edit: FC<EditProps> = ({ project, plan, selectedElements }) => {
       onCancel() {},
     });
   }
-  const handleDrawerAddCancel = () => {
-    setIsDrawerVisible(false);
-  };
+  function onViewFlowProcess(pkid: number) {
+    handleDrawerViewVisible(true);
+    getFlowProcess(pkid).then(async (result) => {
+      setViewDescriptions(
+        <Descriptions column={1}>
+          <Descriptions.Item label="Comment">{result?.comment}</Descriptions.Item>
+        </Descriptions>,
+      );
+    });
+  }
+  function onSelectFlowProcess() {
+    handleDrawerSelectVisible(true);
+  }
+  function onSelectFlowProcessToEdgeProcess() {}
   const onSubmit = () => {
     formRefNode.current?.submit();
   };
@@ -258,23 +296,6 @@ const Edit: FC<EditProps> = ({ project, plan, selectedElements }) => {
               search={false}
               pagination={false}
               columns={edgeColumns}
-              toolBarRender={() => [
-                <Tooltip title="Add">
-                  <Button
-                    type="text"
-                    icon={<PlusOutlined />}
-                    onClick={() => {
-                      createEdgeProcess({
-                        projectId: project,
-                        planId: plan,
-                        sourceProcessId: edge.source,
-                        targetProcessId: edge.target,
-                      });
-                      actionRefEdge.current?.reload();
-                    }}
-                  />
-                </Tooltip>,
-              ]}
               request={(
                 params: {
                   pageSize: number;
@@ -283,6 +304,60 @@ const Edit: FC<EditProps> = ({ project, plan, selectedElements }) => {
                 sort,
               ) => {
                 return getEdgeProcessGrid(params, sort, project, plan, edge.source, edge.target);
+              }}
+            />
+          </Drawer>
+          <Drawer
+            title="View Flow"
+            width="600px"
+            maskClosable={true}
+            visible={drawerViewVisible}
+            onClose={handleDrawerViewCancel}
+          >
+            {viewDescriptions}
+          </Drawer>
+          <Drawer
+            title="Select Flow"
+            width="600px"
+            maskClosable={true}
+            visible={drawerSelectVisible}
+            onClose={handleDrawerSelectCancel}
+            footer={
+              <Space size={'middle'} className={styles.footer_space}>
+                <Button onClick={handleDrawerSelectCancel}>Cancel</Button>
+                <Button onClick={onSelectFlowProcessToEdgeProcess} type="primary">
+                  Select
+                </Button>
+              </Space>
+            }
+          >
+            <ProTable<FlowProcess, FlowProcessListPagination>
+              search={{
+                defaultCollapsed: false,
+              }}
+              request={(
+                params: {
+                  pageSize: number;
+                  current: number;
+                },
+                sort,
+              ) => {
+                return getFlowProcessGrid(params, sort, project, edge.source, 'output');
+              }}
+              columns={flowProcessColumns}
+              rowClassName={(record) => {
+                return record.pkid === selectRowFlowProcess?.pkid
+                  ? styles['split-row-select-active']
+                  : '';
+              }}
+              onRow={(record) => {
+                return {
+                  onClick: () => {
+                    if (record) {
+                      setSelectRowFlowProcess(record);
+                    }
+                  },
+                };
               }}
             />
           </Drawer>
