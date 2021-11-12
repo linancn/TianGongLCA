@@ -147,28 +147,6 @@ export default [
     ],
   },
   {
-    path: '/test',
-    access: 'canAdmin',
-    routes: [
-      {
-        name: 'reactflowdemo',
-        path: '/test/reactflowdemo',
-        component: './test/ReactFlowDemo',
-      },
-      {
-        name: 'emptypage',
-        path: '/test/emptypage',
-        component: './test/EmptyPage',
-      },
-      {
-        name: 'ProfileBasic',
-        icon: 'smile',
-        path: '/test/profilebasic',
-        component: './test/ProfileBasic',
-      },
-    ],
-  },
-  {
     path: '/admin',
     access: 'canAdmin',
     component: './Admin',
