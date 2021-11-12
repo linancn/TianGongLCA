@@ -129,7 +129,7 @@ const Add: FC<addProps> = ({ setElements, project }) => {
         type: 'default',
         style: {
           background: '#ffffff',
-          border: '1px solid #000000',
+          border: '2px solid #000000',
         },
       };
       setElements((els) => els.concat(newNode));

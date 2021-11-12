@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Elements, Connection, Edge, OnLoadParams, ArrowHeadType } from 'react-flow-renderer';
+import type { Elements, Connection, Edge, OnLoadParams } from 'react-flow-renderer';
+import { ArrowHeadType } from 'react-flow-renderer';
 import ReactFlow, {
   ReactFlowProvider,
   removeElements,
@@ -52,9 +53,9 @@ const SaveRestore: FC<modelProps> = (props) => {
         {
           ...params,
           animated: false,
-          arrowHeadType: ArrowHeadType.Arrow,
+          arrowHeadType: ArrowHeadType.ArrowClosed,
           label: '',
-          style: { strokeWidth: '1px' },
+          style: { strokeWidth: '2px' },
         },
         els,
       ),

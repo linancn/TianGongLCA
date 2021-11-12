@@ -91,7 +91,7 @@ const Toolbox: FC<toolboxProps> = ({
           <Divider />
           {/* <Button key="toolRestore" onClick={onToolRestore} block>Restore</Button> */}
           <View project={project} selectedElements={selectedElements} />
-          <Edit project={project} selectedElements={selectedElements} />
+          <Edit project={project} plan={plan} selectedElements={selectedElements} />
           <Design
             setElements={setElements}
             elements={elements}

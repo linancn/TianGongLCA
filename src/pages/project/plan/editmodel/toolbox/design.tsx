@@ -502,7 +502,7 @@ const Design: FC<designProps> = ({ setElements, elements, selectedElements }) =>
               <ProFormSelect
                 options={[
                   {
-                    value: '',
+                    value: 'none',
                     label: 'none',
                   },
                   {

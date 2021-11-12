@@ -81,31 +81,6 @@ const MeasurementList: FC<Props> = ({ project }) => {
           />
         </Tooltip>,
       ],
-      // render: (_, record: MeasurementFlow, _index, action) => [
-      //   <a
-      //     key="edit"
-      //     onClick={() => {
-
-      //     }}
-      //   >
-      //     Edit
-      //   </a>,
-      //   <a
-      //     key="delete"
-      //     onClick={() => {
-      //       deleteMeasurementFlow(record.pkid).then(async (result) => {
-      //         if (result === 'ok') {
-      //           message.success('Delete successfully!');
-      //         } else {
-      //           message.error(result);
-      //         }
-      //         actionRef.current?.reload();
-      //       });
-      //     }}
-      //   >
-      //     Delete
-      //   </a>,
-      // ],
     },
   ];
   const handleDrawerAddCancel = () => {
