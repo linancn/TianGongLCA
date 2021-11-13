@@ -212,7 +212,7 @@ const TableList: FC<ListProps> = (porps) => {
           <ProFormText width="md" name="name" label="Name" />
           <ProFormText width="md" name="nation" label="Nation" />
           <ProFormText width="md" name="source" label="Source" />
-          <ProFormText width="md" name="Type" label="type" />
+          <ProFormText width="md" name="type" label="Type" />
           <ProFormTextArea width="md" name="comment" label="Comment" />
         </ProForm>
       </Drawer>

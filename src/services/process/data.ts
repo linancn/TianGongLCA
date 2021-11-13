@@ -3,6 +3,8 @@ export type Process = {
   id: string;
   projectId: number;
   name: string;
+  creator: string;
+  createTime: Date;
   lastUpdateTime: Date;
   comment: string;
   type: string;

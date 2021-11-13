@@ -3,6 +3,8 @@ export type PlanInfo = {
   id: string;
   projectId: number;
   name: string;
+  creator: string;
+  createTime: Date;
   lastUpdateTime: Date;
   comment: string;
   type: string;

@@ -47,15 +47,15 @@ export async function updateProcess(data?: Record<string, any>) {
 // }
 
 export async function createProcess(data?: Record<string, any>) {
-  return request<Process>('http://localhost:8081/api/process/create', {
+  return request<string>('http://localhost:8081/api/process/create', {
     method: 'POST',
     data,
   });
 }
 
 /** Delete /api/plan */
-export async function deleteProcess(id: number) {
-  return request<Process>(`http://localhost:8081/api/process/delete/${id}`, {
+export async function deleteProcess(pkid: number) {
+  return request<string>(`http://localhost:8081/api/process/delete/${pkid}`, {
     method: 'DELETE',
   });
 }
