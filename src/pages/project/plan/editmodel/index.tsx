@@ -85,8 +85,8 @@ const SaveRestore: FC<modelProps> = (props) => {
         rfInstance={rfInstance}
         setElements={setElements}
         elements={elements}
-        project={projectid}
-        plan={id}
+        projectId={projectid}
+        id={id}
         parentCount={parentCount}
       />
     </ReactFlowProvider>

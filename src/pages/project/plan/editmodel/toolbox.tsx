@@ -43,8 +43,8 @@ type toolboxProps = {
   rfInstance?: OnLoadParams;
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;
   elements: Elements<any>;
-  project: number;
-  plan: string;
+  projectId: number;
+  id: string;
   parentCount: number;
 };
 
@@ -52,8 +52,8 @@ const Toolbox: FC<toolboxProps> = ({
   rfInstance,
   setElements,
   elements,
-  project,
-  plan,
+  projectId,
+  id,
   parentCount,
 }) => {
   // const { transform } = useZoomPanHelper();
@@ -66,15 +66,15 @@ const Toolbox: FC<toolboxProps> = ({
       const flow = rfInstance.toObject();
       localforage.setItem(flowKey, flow);
       const updatePlan = {
-        projectId: project,
-        id: plan,
+        projectId,
+        id,
         childrenJson: `{"data": ${JSON.stringify(flow.elements)}}`,
       };
       updatePlanChinlrenJson(updatePlan).then(() => {
         message.success('Save successfully!');
       });
     }
-  }, [plan, project, rfInstance]);
+  }, [id, projectId, rfInstance]);
 
   // const onCopy = useCallback(() => {
   //   if (selectedElements != null) {
@@ -86,19 +86,18 @@ const Toolbox: FC<toolboxProps> = ({
     <>
       <Drawer visible={true} closable={false} mask={false} width="150px">
         <div className={styles.tools}>
-          <RollUp project={project} plan={plan} parentCount={parentCount} />
-          <DrillDown project={project} selectedElements={selectedElements} />
+          <RollUp projectId={projectId} planId={id} parentCount={parentCount} />
+          <DrillDown projectId={projectId} selectedElements={selectedElements} />
           <Divider />
-          {/* <Button key="toolRestore" onClick={onToolRestore} block>Restore</Button> */}
-          <View project={project} selectedElements={selectedElements} />
-          <Edit projectId={project} planId={plan} selectedElements={selectedElements} />
+          <View projectId={projectId} selectedElements={selectedElements} />
+          <Edit projectId={projectId} planId={id} selectedElements={selectedElements} />
           <Design
             setElements={setElements}
             elements={elements}
             selectedElements={selectedElements}
           />
           <Divider />
-          <Add setElements={setElements} project={project} />
+          <Add setElements={setElements} projectId={projectId} />
           {/* <Button key="Copy" onClick={onCopy} block>
             Copy
           </Button> */}

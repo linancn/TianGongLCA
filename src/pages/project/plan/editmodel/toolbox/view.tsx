@@ -8,21 +8,16 @@ import moment from 'moment';
 import { getProcess } from '@/services/process/api';
 
 type viewProps = {
-  project: number;
+  projectId: number;
   selectedElements: Elements<any> | null;
 };
 
 let preid = '';
 
-const View: FC<viewProps> = ({ project, selectedElements }) => {
+const View: FC<viewProps> = ({ projectId, selectedElements }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const onView = () => {
-    setIsDrawerVisible(true);
-  };
-  const handleDrawerAddCancel = () => {
-    setIsDrawerVisible(false);
-  };
+
   if (!selectedElements) {
     return (
       <Button key="View" block disabled={true}>
@@ -35,7 +30,7 @@ const View: FC<viewProps> = ({ project, selectedElements }) => {
       preid = selectedElements[0].id;
       if (isNode(selectedElements[0])) {
         if (selectedElements[0].data.type === 'plan') {
-          getPlanInfo(project, preid).then(async (result) => {
+          getPlanInfo(projectId, preid).then(async (result) => {
             setViewDescriptions(
               <Descriptions column={1}>
                 <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>
@@ -49,7 +44,7 @@ const View: FC<viewProps> = ({ project, selectedElements }) => {
             );
           });
         } else if (selectedElements[0].data.type === 'process') {
-          getProcess(project, preid).then(async (result) => {
+          getProcess(projectId, preid).then(async (result) => {
             setViewDescriptions(
               <Descriptions column={1}>
                 <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>
@@ -71,7 +66,7 @@ const View: FC<viewProps> = ({ project, selectedElements }) => {
 
   return (
     <>
-      <Button key="View" onClick={onView} block>
+      <Button key="View" onClick={() => setIsDrawerVisible(true)} block>
         View
       </Button>
       <Drawer
@@ -79,7 +74,7 @@ const View: FC<viewProps> = ({ project, selectedElements }) => {
         mask={false}
         title="View"
         width="400px"
-        onClose={handleDrawerAddCancel}
+        onClose={() => setIsDrawerVisible(false)}
       >
         {viewDescriptions}
       </Drawer>

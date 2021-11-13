@@ -4,10 +4,10 @@ import type { Elements } from 'react-flow-renderer';
 import { isEdge } from 'react-flow-renderer';
 
 type drillDownProps = {
-  project: number;
+  projectId: number;
   selectedElements: Elements<any> | null;
 };
-const DrillDown: FC<drillDownProps> = ({ project, selectedElements }) => {
+const DrillDown: FC<drillDownProps> = ({ projectId, selectedElements }) => {
   if (
     !selectedElements ||
     isEdge(selectedElements[0]) ||
@@ -23,7 +23,7 @@ const DrillDown: FC<drillDownProps> = ({ project, selectedElements }) => {
   return (
     <Button
       key="DrillDown"
-      href={`/project/plan/editmodel?projectid=${project}&id=${selectedElements[0].id}`}
+      href={`/project/plan/editmodel?projectid=${projectId}&id=${selectedElements[0].id}`}
       block
     >
       Drill Down

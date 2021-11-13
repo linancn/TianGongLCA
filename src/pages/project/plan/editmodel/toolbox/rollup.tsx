@@ -8,12 +8,12 @@ import ProTable from '@ant-design/pro-table';
 import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
 
 type rollUpProps = {
-  project: number;
-  plan: string;
+  projectId: number;
+  planId: string;
   parentCount: number;
 };
 
-const RollUp: FC<rollUpProps> = ({ project, plan, parentCount }) => {
+const RollUp: FC<rollUpProps> = ({ projectId, planId, parentCount }) => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [selectParent, setSelectParent] = useState<PlanInfo>();
 
@@ -48,25 +48,21 @@ const RollUp: FC<rollUpProps> = ({ project, plan, parentCount }) => {
       search: false,
     },
   ];
-  const onRollUp = () => {
-    setIsDrawerVisible(true);
-  };
+
   const onRollUpSingleParent = () => {
-    getPlanParentGrid({}, {}, project, plan).then((result) => {
+    getPlanParentGrid({}, {}, projectId, planId).then((result) => {
       window.location.replace(
-        `/project/plan/editmodel?projectid=${project}&id=${result.data[0].id}`,
+        `/project/plan/editmodel?projectid=${projectId}&id=${result.data[0].id}`,
       );
     });
   };
 
   const onOpen = () => {
     if (selectParent) {
-      window.location.replace(`/project/plan/editmodel?projectid=${project}&id=${selectParent.id}`);
+      window.location.replace(
+        `/project/plan/editmodel?projectid=${projectId}&id=${selectParent.id}`,
+      );
     }
-  };
-
-  const handleDrawerCancel = () => {
-    setIsDrawerVisible(false);
   };
 
   if (parentCount === 1) {
@@ -79,17 +75,17 @@ const RollUp: FC<rollUpProps> = ({ project, plan, parentCount }) => {
   if (parentCount > 1) {
     return (
       <>
-        <Button key="RollUp" onClick={onRollUp} block>
+        <Button key="RollUp" onClick={() => setIsDrawerVisible(true)} block>
           Roll Up
         </Button>
         <Drawer
           visible={isDrawerVisible}
           title="Roll Up"
           width="800px"
-          onClose={handleDrawerCancel}
+          onClose={() => setIsDrawerVisible(false)}
           footer={
             <Space size={'middle'} className={styles.footer_space}>
-              <Button onClick={handleDrawerCancel}>Cancel</Button>
+              <Button onClick={() => setIsDrawerVisible(false)}>Cancel</Button>
               <Button onClick={onOpen} type="primary">
                 Open
               </Button>
@@ -105,7 +101,7 @@ const RollUp: FC<rollUpProps> = ({ project, plan, parentCount }) => {
               },
               sort,
             ) => {
-              return getPlanParentGrid(params, sort, project, plan);
+              return getPlanParentGrid(params, sort, projectId, planId);
             }}
             columns={columns}
             rowClassName={(record) => {

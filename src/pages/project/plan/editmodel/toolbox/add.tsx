@@ -13,14 +13,14 @@ import { getProcessGrid } from '@/services/process/api';
 
 type addProps = {
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;
-  project: number;
+  projectId: number;
 };
 
-const Add: FC<addProps> = ({ setElements, project }) => {
+const Add: FC<addProps> = ({ setElements, projectId }) => {
   const setSelectedElements = useStoreActions((actions) => actions.setSelectedElements);
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [isDrawerAddPlanVisible, setIsDrawerAddPlanVisible] = useState(false);
-  const [isDrawerAddProcessVisible, setIsDrawerAddProcessVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [drawerAddPlanVisible, setDrawerAddPlanVisible] = useState(false);
+  const [drawerAddProcessVisible, setDrawerAddProcessVisible] = useState(false);
   const [addPlanToModel, setAddPlanToModel] = useState<PlanInfo>();
   const [addProcessToModel, setAddProcessToModel] = useState<Process>();
 
@@ -87,15 +87,6 @@ const Add: FC<addProps> = ({ setElements, project }) => {
     },
   ];
 
-  const onAdd = () => {
-    setIsDrawerVisible(true);
-  };
-
-  const onDrawerAddProcess = () => {
-    setIsDrawerVisible(false);
-    setIsDrawerAddProcessVisible(true);
-  };
-
   const onAddPlanToModel = useCallback(() => {
     if (addPlanToModel) {
       const newNode = {
@@ -113,7 +104,7 @@ const Add: FC<addProps> = ({ setElements, project }) => {
       };
       setElements((els) => els.concat(newNode));
       setSelectedElements(newNode);
-      setIsDrawerAddPlanVisible(false);
+      setDrawerAddPlanVisible(false);
     }
   }, [addPlanToModel, setElements, setSelectedElements]);
 
@@ -134,49 +125,44 @@ const Add: FC<addProps> = ({ setElements, project }) => {
       };
       setElements((els) => els.concat(newNode));
       setSelectedElements(newNode);
-      setIsDrawerAddProcessVisible(false);
+      setDrawerAddProcessVisible(false);
     }
   }, [addProcessToModel, setElements, setSelectedElements]);
 
-  const handleDrawerAddCancel = () => {
-    setIsDrawerVisible(false);
-  };
-
-  const onDrawerAddPlan = () => {
-    setIsDrawerVisible(false);
-    setIsDrawerAddPlanVisible(true);
-  };
-
-  const handleDrawerAddPlanCancel = () => {
-    setIsDrawerAddPlanVisible(false);
-  };
-
-  const handleDrawerAddProcessCancel = () => {
-    setIsDrawerAddProcessVisible(false);
-  };
-
   return (
     <>
-      <Button key="Add" onClick={onAdd} block>
+      <Button key="Add" onClick={() => setDrawerVisible(true)} block>
         Add
       </Button>
-      <Drawer visible={isDrawerVisible} title="Add" onClose={handleDrawerAddCancel}>
-        <Button key="plan" onClick={onDrawerAddPlan}>
+      <Drawer visible={drawerVisible} title="Add" onClose={() => setDrawerVisible(false)}>
+        <Button
+          key="plan"
+          onClick={() => {
+            setDrawerVisible(false);
+            setDrawerAddPlanVisible(true);
+          }}
+        >
           Plan
         </Button>{' '}
         Or{' '}
-        <Button key="process" onClick={onDrawerAddProcess}>
+        <Button
+          key="process"
+          onClick={() => {
+            setDrawerVisible(false);
+            setDrawerAddProcessVisible(true);
+          }}
+        >
           Process
         </Button>
       </Drawer>
       <Drawer
-        visible={isDrawerAddPlanVisible}
+        visible={drawerAddPlanVisible}
         title="Add Plan"
         width="800px"
-        onClose={handleDrawerAddPlanCancel}
+        onClose={() => setDrawerAddPlanVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_space}>
-            <Button onClick={handleDrawerAddPlanCancel}>Cancel</Button>
+            <Button onClick={() => setDrawerAddPlanVisible(false)}>Cancel</Button>
             <Button onClick={onAddPlanToModel} type="primary">
               Add
             </Button>
@@ -200,7 +186,7 @@ const Add: FC<addProps> = ({ setElements, project }) => {
             },
             sort,
           ) => {
-            return getPlanInfoGrid(params, sort, project);
+            return getPlanInfoGrid(params, sort, projectId);
           }}
           columns={planInfoColumns}
           rowClassName={(record) => {
@@ -218,13 +204,13 @@ const Add: FC<addProps> = ({ setElements, project }) => {
         />
       </Drawer>
       <Drawer
-        visible={isDrawerAddProcessVisible}
+        visible={drawerAddProcessVisible}
         title="Add Process"
         width="800px"
-        onClose={handleDrawerAddPlanCancel}
+        onClose={() => setDrawerAddPlanVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_space}>
-            <Button onClick={handleDrawerAddProcessCancel}>Cancel</Button>
+            <Button onClick={() => setDrawerAddProcessVisible(false)}>Cancel</Button>
             <Button onClick={onAddProcessToModel} type="primary">
               Add
             </Button>
@@ -248,7 +234,7 @@ const Add: FC<addProps> = ({ setElements, project }) => {
             },
             sort,
           ) => {
-            return getProcessGrid(params, sort, project);
+            return getProcessGrid(params, sort, projectId);
           }}
           columns={ProcessColumns}
           rowClassName={(record) => {
