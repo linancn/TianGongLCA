@@ -27,13 +27,18 @@ export async function getMeasurementBaseGrid(
   });
 }
 
-export async function getMeasurementBase(projectId: number, id: string) {
+export async function getMeasurementBaseById(projectId: number, id: string) {
   return request<MeasurementBase>(
     `http://localhost:8081/api/measurementbase/get/${projectId}/${id}`,
     {
       method: 'GET',
     },
   );
+}
+export async function getMeasurementBaseByPkid(pkid: number) {
+  return request<MeasurementBase>(`http://localhost:8081/api/measurementbase/get/${pkid}`, {
+    method: 'GET',
+  });
 }
 
 export async function updateMeasurementBase(data?: Record<string, any>) {
@@ -44,14 +49,14 @@ export async function updateMeasurementBase(data?: Record<string, any>) {
 }
 
 export async function createMeasurementBase(data?: Record<string, any>) {
-  return request<MeasurementBase>('http://localhost:8081/api/measurementbase/create', {
+  return request<string>('http://localhost:8081/api/measurementbase/create', {
     method: 'POST',
     data,
   });
 }
 
-export async function deleteMeasurementBase(id: number) {
-  return request<MeasurementBase>(`http://localhost:8081/api/measurementbase/delete/${id}`, {
+export async function deleteMeasurementBase(pkid: number) {
+  return request<string>(`http://localhost:8081/api/measurementbase/delete/${pkid}`, {
     method: 'DELETE',
   });
 }

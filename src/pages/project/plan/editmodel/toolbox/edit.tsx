@@ -334,6 +334,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
               toolBarRender={() => [
                 <Tooltip title="Add">
                   <Button
+                    size={'middle'}
                     type="text"
                     icon={<PlusOutlined />}
                     onClick={() => {

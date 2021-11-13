@@ -20,6 +20,7 @@ import {
   DeleteOutlined,
   ExclamationCircleOutlined,
   FormOutlined,
+  PlusOutlined,
   ProfileOutlined,
 } from '@ant-design/icons';
 import styles from './style.less';
@@ -39,7 +40,9 @@ const PlanList: FC<ListProps> = (porps) => {
   const formRefEdit = useRef<ProFormInstance>();
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [editDescriptions, setEditDescriptions] = useState<JSX.Element>();
-  const [drawerCreateVisible, handleDrawerCreateVisible] = useState<boolean>(false);
+  const [drawerCreateVisible, handleDrawerCreateVisible] = useState(false);
+  const [drawerViewVisible, handleDrawerViewVisible] = useState(false);
+  const [drawerEditVisible, handleDrawerEditVisible] = useState(false);
   const [editPkid, setEditPkid] = useState<number>(0);
   const columns: ProColumns<PlanInfo>[] = [
     {
@@ -114,20 +117,6 @@ const PlanList: FC<ListProps> = (porps) => {
       ],
     },
   ];
-  const onSubmitCreate = () => {
-    formRefCreate.current?.submit();
-  };
-  const handleDrawerCreateCancel = () => {
-    handleDrawerCreateVisible(false);
-  };
-  const [drawerViewVisible, handleDrawerViewVisible] = useState<boolean>(false);
-  const handleDrawerViewCancel = () => {
-    handleDrawerViewVisible(false);
-  };
-  const [drawerEditVisible, handleDrawerEditVisible] = useState<boolean>(false);
-  const handleDrawerEditCancel = () => {
-    handleDrawerEditVisible(false);
-  };
   function onDelete(pkid: number) {
     Modal.confirm({
       title: 'Do you Want to delete this plan?',
@@ -205,9 +194,6 @@ const PlanList: FC<ListProps> = (porps) => {
       formRefEdit.current?.setFieldsValue(pi);
     });
   }
-  const onSubmitEdit = () => {
-    formRefEdit.current?.submit();
-  };
 
   return (
     <PageContainer>
@@ -215,18 +201,19 @@ const PlanList: FC<ListProps> = (porps) => {
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
-          optionRender: (searchConfig, formProps, dom) => [
-            ...dom.reverse(),
+        }}
+        toolBarRender={() => [
+          <Tooltip title="Create">
             <Button
-              key="create"
+              size={'middle'}
+              type="text"
+              icon={<PlusOutlined />}
               onClick={() => {
                 handleDrawerCreateVisible(true);
               }}
-            >
-              Create
-            </Button>,
-          ],
-        }}
+            />
+          </Tooltip>,
+        ]}
         request={(
           params: {
             pageSize: number;
@@ -243,11 +230,11 @@ const PlanList: FC<ListProps> = (porps) => {
         width="400px"
         maskClosable={false}
         visible={drawerCreateVisible}
-        onClose={handleDrawerCreateCancel}
+        onClose={() => handleDrawerCreateVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={handleDrawerCreateCancel}>Cancel</Button>
-            <Button onClick={onSubmitCreate} type="primary">
+            <Button onClick={() => handleDrawerCreateVisible(false)}>Cancel</Button>
+            <Button onClick={() => formRefCreate.current?.submit()} type="primary">
               Submit
             </Button>
           </Space>
@@ -286,7 +273,7 @@ const PlanList: FC<ListProps> = (porps) => {
         width="400px"
         maskClosable={true}
         visible={drawerViewVisible}
-        onClose={handleDrawerViewCancel}
+        onClose={() => handleDrawerViewVisible(false)}
       >
         {viewDescriptions}
       </Drawer>
@@ -295,12 +282,12 @@ const PlanList: FC<ListProps> = (porps) => {
         width="400px"
         maskClosable={false}
         visible={drawerEditVisible}
-        onClose={handleDrawerEditCancel}
+        onClose={() => handleDrawerEditVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={handleDrawerEditCancel}>Cancel</Button>
+            <Button onClick={() => handleDrawerEditVisible(false)}>Cancel</Button>
             <Button onClick={() => onReset(editPkid)}>Reset</Button>
-            <Button onClick={onSubmitEdit} type="primary">
+            <Button onClick={() => formRefEdit.current?.submit()} type="primary">
               Submit
             </Button>
           </Space>

@@ -3,11 +3,12 @@ export type MeasurementBase = {
   id: string;
   projectId: number;
   name: string;
+  unit: string;
+  creator: string;
+  createTime: Date;
   lastUpdateTime: Date;
   comment: string;
-  type: string;
-  nation: string;
-  source: string;
+  version: string;
 };
 
 export type MeasurementBaseListPagination = {
