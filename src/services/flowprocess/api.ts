@@ -31,10 +31,18 @@ export async function getFlowProcessGrid(
   });
 }
 
-export async function getFlowProcess(pkid: number) {
+export async function getFlowProcessByPkid(pkid: number) {
   return request<FlowProcess>(`http://localhost:8081/api/flowprocess/get/${pkid}`, {
     method: 'GET',
   });
+}
+export async function getFlowProcessById(projectid: number, processid: string, id: string) {
+  return request<FlowProcess>(
+    `http://localhost:8081/api/flowprocess/get/${projectid}/${processid}/${id}`,
+    {
+      method: 'GET',
+    },
+  );
 }
 
 export async function updateFlowProcess(data?: Record<string, any>) {
