@@ -48,8 +48,8 @@ export async function createFlowBase(data?: Record<string, any>) {
 }
 
 /** Delete /api/plan */
-export async function deleteFlowBase(id: number) {
-  return request<FlowBase>(`http://localhost:8081/api/flowbase/delete/${id}`, {
+export async function deleteFlowBase(pkid: number) {
+  return request<string>(`http://localhost:8081/api/flowbase/delete/${pkid}`, {
     method: 'DELETE',
   });
 }

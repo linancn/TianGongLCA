@@ -86,7 +86,7 @@ export async function getInitialState(): Promise<{
         return getHomeMenu();
       }
       if (urlparam.menuId === 'project') {
-        return getProjectMenu(urlparam.query?.project);
+        return getProjectMenu(urlparam.query?.projectid);
       }
       return [];
     } catch (error) {

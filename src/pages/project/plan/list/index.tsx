@@ -29,13 +29,13 @@ import moment from 'moment';
 type ListProps = {
   location: {
     query: {
-      project: number;
+      projectid: number;
     };
   };
 };
 const PlanList: FC<ListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
-  const { project } = porps.location.query;
+  const { projectid } = porps.location.query;
   const formRefCreate = useRef<ProFormInstance>();
   const formRefEdit = useRef<ProFormInstance>();
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
@@ -221,7 +221,7 @@ const PlanList: FC<ListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getPlanInfoGrid(params, sort, project);
+          return getPlanInfoGrid(params, sort, projectid);
         }}
         columns={columns}
       />
@@ -248,7 +248,7 @@ const PlanList: FC<ListProps> = (porps) => {
             },
           }}
           onFinish={async (values) => {
-            createPlan({ ...values, projectId: project }).then(async (result) => {
+            createPlan({ ...values, projectId: projectid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Create successfully!');
                 handleDrawerCreateVisible(false);

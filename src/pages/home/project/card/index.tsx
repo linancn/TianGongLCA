@@ -82,7 +82,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
                     Comment: {row.comment}
                     <br />
                     {/* <a href={`/project/model?projectid=${row.id}`} target='_blank'> */}
-                    <a href={`/project/plan/list?project=${row.id}`}>
+                    <a href={`/project/plan/list?projectid=${row.id}`}>
                       <FolderOpenOutlined /> Open
                     </a>
                     <Popconfirm

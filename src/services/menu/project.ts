@@ -1,27 +1,27 @@
-export async function getProjectMenu(project: any) {
+export async function getProjectMenu(projectId: any) {
   return [
     {
       name: 'plans',
       icon: 'crown',
-      path: `/project/plan/list?project=${project}`,
+      path: `/project/plan/list?projectid=${projectId}`,
       component: './project/plan/list',
     },
     {
       name: 'processes',
       icon: 'crown',
-      path: `/project/process/list?project=${project}`,
+      path: `/project/process/list?projectid=${projectId}`,
       component: './project/process/list',
     },
     {
       name: 'flows',
       icon: 'crown',
-      path: `/project/flow/list?project=${project}`,
+      path: `/project/flow/list?projectid=${projectId}`,
       component: './project/flow/list',
     },
     {
       name: 'measurements',
       icon: 'crown',
-      path: `/project/measurement/list?project=${project}`,
+      path: `/project/measurement/list?projectid=${projectId}`,
       component: './project/measurement/list',
     },
     {
