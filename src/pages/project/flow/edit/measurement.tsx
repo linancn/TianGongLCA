@@ -48,8 +48,52 @@ const MeasurementList: FC<Props> = ({ project }) => {
       sorter: true,
     },
     {
+      title: 'Unit',
+      dataIndex: 'unit',
+      sorter: true,
+    },
+    {
+      title: 'As Ref',
+      dataIndex: 'asRef',
+      sorter: false,
+      search: false,
+    },
+    {
+      title: 'Conversion Ref',
+      dataIndex: 'conversionRef',
+      sorter: false,
+      search: false,
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'creator',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Create Time',
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Last Update',
+      dataIndex: 'lastUpdateTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
+    },
+    {
       title: 'Comment',
       dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+      search: false,
     },
     {
       title: 'Option',
@@ -176,7 +220,7 @@ const MeasurementList: FC<Props> = ({ project }) => {
         pagination={false}
         columns={columns}
         toolBarRender={() => [
-          <Tooltip title="Add">
+          <Tooltip title="Create">
             <Button
               type="text"
               icon={<PlusOutlined />}
@@ -196,8 +240,8 @@ const MeasurementList: FC<Props> = ({ project }) => {
           return getMeasurementFlowGrid(params, sort, project);
         }}
       />
-      <Drawer visible={isDrawerVisible} title="Add" onClose={handleDrawerAddCancel}>
-        <Button onClick={addMeasurementBase}>Add</Button>
+      <Drawer visible={isDrawerVisible} title="Create" onClose={handleDrawerAddCancel}>
+        <Button onClick={addMeasurementBase}>Create</Button>
       </Drawer>
       <Drawer
         title="View Measurement"
