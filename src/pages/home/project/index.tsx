@@ -1,4 +1,4 @@
-import { creatProject } from '@/services/project/api';
+import { createProject } from '@/services/project/api';
 // import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -9,11 +9,11 @@ import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 
-const handleCreat = async (fields: ProjectListItem) => {
+const handleCreate = async (fields: ProjectListItem) => {
   const hide = message.loading('loading');
 
   try {
-    await creatProject(fields);
+    await createProject(fields);
     hide();
     message.success('success');
     return true;
@@ -94,7 +94,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
               handleModalVisible(true);
             }}
           >
-            Creat
+            Create
           </Button>
         </div>
       }
@@ -103,12 +103,12 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       onTabChange={handleTabChange}
     >
       <ModalForm
-        title="Creat Project"
+        title="Create Project"
         width="400px"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
         onFinish={async (value) => {
-          const success = await handleCreat(value as ProjectListItem);
+          const success = await handleCreate(value as ProjectListItem);
           if (success) {
             handleModalVisible(false);
             if (actionRef.current) {

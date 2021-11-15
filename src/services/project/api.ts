@@ -44,14 +44,14 @@ export async function updateProject(data?: Record<string, any>) {
   });
 }
 /** POST /api/project */
-// export async function creatProject(data?: Record<string, any>) {
-//   return request<ProjectListItem>('http://localhost:8081/api/project/creat', {
+// export async function createProject(data?: Record<string, any>) {
+//   return request<ProjectListItem>('http://localhost:8081/api/project/create', {
 //     method: 'POST',
 //     data,
 //   });
 // }
-export async function creatProject(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/project/creat', {
+export async function createProject(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/project/create', {
     method: 'POST',
     data,
   });

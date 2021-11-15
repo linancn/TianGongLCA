@@ -3,7 +3,12 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { EditableProTable } from '@ant-design/pro-table';
-import { creatProject, deleteProject, getProjectList, updateProject } from '@/services/project/api';
+import {
+  createProject,
+  deleteProject,
+  getProjectList,
+  updateProject,
+} from '@/services/project/api';
 import type { ProjectListItem, ProjectListPagination } from '@/services/project/data';
 import ProCard from '@ant-design/pro-card';
 import { message } from 'antd';
@@ -123,7 +128,7 @@ const TableList: FC<ProjectListProps> = (props) => {
           editableKeys,
           onSave: async (key, record) => {
             if (key === -1) {
-              creatProject(record).then(async (result) => {
+              createProject(record).then(async (result) => {
                 if (result === 'ok') {
                   message.success('Create successfully!');
                 } else {

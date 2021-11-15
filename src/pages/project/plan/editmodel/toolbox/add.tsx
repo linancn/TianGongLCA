@@ -174,9 +174,7 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
             defaultCollapsed: false,
             optionRender: (searchConfig, formProps, dom) => [
               ...dom.reverse(),
-              <Button key="creat" onClick={() => {}}>
-                Creat
-              </Button>,
+              <Button onClick={() => {}}>Create</Button>,
             ],
           }}
           request={(
@@ -222,9 +220,7 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
             defaultCollapsed: false,
             optionRender: (searchConfig, formProps, dom) => [
               ...dom.reverse(),
-              <Button key="creat" onClick={() => {}}>
-                Creat
-              </Button>,
+              <Button onClick={() => {}}>Create</Button>,
             ],
           }}
           request={(
