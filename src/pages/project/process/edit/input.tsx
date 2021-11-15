@@ -13,11 +13,11 @@ import {
 } from '@/services/flowprocess/api';
 
 type InputProps = {
-  project: number;
-  process: string;
+  projectId: number;
+  processId: string;
 };
 
-const InputCard: FC<InputProps> = ({ project, process }) => {
+const InputCard: FC<InputProps> = ({ projectId, processId }) => {
   const actionRef = useRef<ActionType>();
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([]);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -94,8 +94,8 @@ const InputCard: FC<InputProps> = ({ project, process }) => {
             return {
               pkid: -1,
               ioType: 'input',
-              projectId: project,
-              processId: process,
+              projectId,
+              processId,
             };
           },
         }}
@@ -108,7 +108,7 @@ const InputCard: FC<InputProps> = ({ project, process }) => {
           },
           sort,
         ) => {
-          return getFlowProcessGrid(params, sort, project, process, 'input');
+          return getFlowProcessGrid(params, sort, projectId, processId, 'input');
         }}
         editable={{
           editableKeys,

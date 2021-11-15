@@ -13,11 +13,11 @@ import {
 import { message } from 'antd';
 
 type ParameterProps = {
-  project: number;
-  process: string;
+  projectId: number;
+  processId: string;
 };
 
-const ParameterCard: FC<ParameterProps> = ({ project, process }) => {
+const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
   const actionRef = useRef<ActionType>();
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([]);
 
@@ -79,8 +79,8 @@ const ParameterCard: FC<ParameterProps> = ({ project, process }) => {
               pkid: -1,
               name: '',
               comment: '',
-              projectId: project,
-              processId: process,
+              projectId,
+              processId,
             };
           },
         }}
@@ -93,7 +93,7 @@ const ParameterCard: FC<ParameterProps> = ({ project, process }) => {
           },
           sort,
         ) => {
-          return getParameterGrid(params, sort, project, process);
+          return getParameterGrid(params, sort, projectId, processId);
         }}
         editable={{
           editableKeys,

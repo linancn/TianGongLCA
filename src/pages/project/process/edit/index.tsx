@@ -15,19 +15,19 @@ import OutputCard from './output';
 type EditProps = {
   location: {
     query: {
-      project: number;
+      projectid: number;
       id: string;
     };
   };
 };
 
 const AdvancedForm: FC<EditProps> = (porps) => {
-  const { project, id } = porps.location.query;
+  const { projectid, id } = porps.location.query;
   const [editProcess, setEditProcess] = useState<Process>();
   const formRef = useRef<ProFormInstance>();
 
   if (!editProcess) {
-    getProcess(project, id).then(async (result) => {
+    getProcess(projectid, id).then(async (result) => {
       setEditProcess(result);
       formRef?.current?.setFieldsValue(result);
     });
@@ -51,7 +51,7 @@ const AdvancedForm: FC<EditProps> = (porps) => {
             return false;
           }}
           onReset={() => {
-            getProcess(project, id).then(async (result) => {
+            getProcess(projectid, id).then(async (result) => {
               setEditProcess(result);
               formRef?.current?.setFieldsValue(result);
             });
@@ -73,9 +73,9 @@ const AdvancedForm: FC<EditProps> = (porps) => {
           </Row>
         </ProForm>
       </ProCard>
-      <ParameterCard project={project} process={id} />
-      <InputCard project={project} process={id} />
-      <OutputCard project={project} process={id} />
+      <ParameterCard projectId={projectid} processId={id} />
+      <InputCard projectId={projectid} processId={id} />
+      <OutputCard projectId={projectid} processId={id} />
     </PageContainer>
   );
 };

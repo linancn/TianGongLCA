@@ -60,10 +60,13 @@ const AdvancedForm: FC<Props> = (porps) => {
               <ProFormText width="md" name="name" label="Name" />
             </Col>
             <Col lg={6} md={12} sm={24}>
-              <ProFormText width="md" name="type" label="Type" />
+              <ProFormText width="md" name="nation" label="Nation" />
             </Col>
             <Col lg={6} md={12} sm={24}>
-              <ProFormText width="md" name="nation" label="Nation" />
+              <ProFormText width="md" name="source" label="Source" />
+            </Col>
+            <Col lg={6} md={12} sm={24}>
+              <ProFormText width="md" name="type" label="Type" />
             </Col>
             <Col lg={6} md={12} sm={24}>
               <ProFormText width="md" name="comment" label="Comment" />
