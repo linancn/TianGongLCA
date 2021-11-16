@@ -7,7 +7,7 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProCard from '@ant-design/pro-card';
 import type { FlowBase } from '@/services/flowbase/data';
-import { getFlowBase, updateFlowBase } from '@/services/flowbase/api';
+import { getFlowBaseById, updateFlowBase } from '@/services/flowbase/api';
 import MeasurementList from './measurement';
 
 type Props = {
@@ -25,7 +25,7 @@ const AdvancedForm: FC<Props> = (porps) => {
   const formRef = useRef<ProFormInstance>();
 
   if (!editFlowBase) {
-    getFlowBase(project, id).then(async (result) => {
+    getFlowBaseById(project, id).then(async (result) => {
       setEditFlowBase(result);
       formRef?.current?.setFieldsValue(result);
     });
@@ -49,7 +49,7 @@ const AdvancedForm: FC<Props> = (porps) => {
             return false;
           }}
           onReset={() => {
-            getFlowBase(project, id).then(async (result) => {
+            getFlowBaseById(project, id).then(async (result) => {
               setEditFlowBase(result);
               formRef?.current?.setFieldsValue(result);
             });

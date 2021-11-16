@@ -27,8 +27,14 @@ export async function getFlowBaseGrid(
   });
 }
 
-export async function getFlowBase(projectId: number, id: string) {
+export async function getFlowBaseById(projectId: number, id: string) {
   return request<FlowBase>(`http://localhost:8081/api/flowbase/get/${projectId}/${id}`, {
+    method: 'GET',
+  });
+}
+
+export async function getFlowBaseByPkid(pkid: number) {
+  return request<FlowBase>(`http://localhost:8081/api/flowbase/get/${pkid}`, {
     method: 'GET',
   });
 }

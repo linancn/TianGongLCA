@@ -35,6 +35,7 @@ export async function getMeasurementBaseById(projectId: number, id: string) {
     },
   );
 }
+
 export async function getMeasurementBaseByPkid(pkid: number) {
   return request<MeasurementBase>(`http://localhost:8081/api/measurementbase/get/${pkid}`, {
     method: 'GET',

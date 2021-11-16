@@ -10,6 +10,7 @@ export type FlowBase = {
   type: string;
   nation: string;
   source: string;
+  version: string;
 };
 
 export type FlowBaseListPagination = {

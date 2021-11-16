@@ -9,6 +9,7 @@ export async function getMeasurementFlowGrid(
   },
   sort: Record<string, SortOrder>,
   projectId: number,
+  flowBaseId: string,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -23,6 +24,7 @@ export async function getMeasurementFlowGrid(
       sortBy,
       orderBy,
       projectId,
+      flowBaseId,
     },
   });
 }

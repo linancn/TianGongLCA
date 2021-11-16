@@ -94,7 +94,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
               <Tooltip title="Open">
                 <Button
                   href={`/project/plan/list?projectid=${row.id}`}
-                  target="_blank"
+                  // target='_blank'
                   shape="circle"
                   icon={<FolderOpenOutlined />}
                   size="small"
