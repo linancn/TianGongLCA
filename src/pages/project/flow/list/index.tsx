@@ -31,7 +31,7 @@ import type {
   MeasurementFlowBaseListPagination,
 } from '@/services/measurementflowbase/data';
 import { getMeasurementFlowBaseGrid } from '@/services/measurementflowbase/api';
-import { createMeasurementFlow } from '@/services/measurementflow/api';
+import { createMeasurementFlow, deleteMeasurementFlow } from '@/services/measurementflow/api';
 import type {
   MeasurementBase,
   MeasurementBaseListPagination,
@@ -251,7 +251,7 @@ const TableList: FC<ListProps> = (porps) => {
             shape="circle"
             icon={<ProfileOutlined />}
             size="small"
-            onClick={() => onView(row.pkid)}
+            // onClick={() => onView(row.pkid)}
           />
         </Tooltip>,
         <Tooltip title="Edit">
@@ -259,7 +259,7 @@ const TableList: FC<ListProps> = (porps) => {
             shape="circle"
             icon={<FormOutlined />}
             size="small"
-            onClick={() => onEdit(row.pkid)}
+            // onClick={() => onEdit(row.pkid)}
           />
         </Tooltip>,
         <Tooltip title="Delete">
@@ -267,7 +267,7 @@ const TableList: FC<ListProps> = (porps) => {
             shape="circle"
             icon={<DeleteOutlined />}
             size="small"
-            onClick={() => onDelete(row.pkid)}
+            onClick={() => onDeleteMeasurementFlow(row.pkid)}
           />
         </Tooltip>,
       ],
@@ -453,6 +453,24 @@ const TableList: FC<ListProps> = (porps) => {
       />,
     );
   }
+  function onDeleteMeasurementFlow(pkid: number) {
+    Modal.confirm({
+      title: 'Do you Want to delete this measurement?',
+      icon: <ExclamationCircleOutlined />,
+      content: '',
+      onOk() {
+        deleteMeasurementFlow(pkid).then(async (result) => {
+          if (result === 'ok') {
+            message.success('Delete successfully!');
+            actionRefMeasurement.current?.reload();
+          } else {
+            message.error(result);
+          }
+        });
+      },
+      onCancel() {},
+    });
+  }
   return (
     <PageContainer>
       <ProTable<FlowBase, FlowBaseListPagination>
@@ -562,7 +580,9 @@ const TableList: FC<ListProps> = (porps) => {
         onClose={() => handleDrawerSettingVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerSettingVisible(false)}>Finish</Button>
+            <Button onClick={() => handleDrawerSettingVisible(false)} type="primary">
+              Finish
+            </Button>
           </Space>
         }
       >
