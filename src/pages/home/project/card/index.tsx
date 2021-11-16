@@ -1,10 +1,5 @@
-// import { FolderOpenOutlined, DeleteOutlined } from '@ant-design/icons';
-// import { Avatar, Card, List, Tooltip } from 'antd';
-// import numeral from 'numeral';
 import type { FC } from 'react';
 import { useRef } from 'react';
-// import React from 'react';
-// import { useRequest } from 'umi';
 import { getProjectList, starProject, deleteProject } from '@/services/project/api';
 import type { ProjectListItem } from '@/services/project/data';
 import ProList from '@ant-design/pro-list';
@@ -22,14 +17,16 @@ import moment from 'moment';
 type ProjectListProps = {
   location: {
     query: {
-      searchValue: string;
+      nl: string;
+      r: number;
     };
   };
 };
-let oldSearchValue = '';
+let nameLike = '';
+let reload = 0;
 const ListSearchApplications: FC<ProjectListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
-  const { searchValue } = porps.location.query;
+  const { nl, r } = porps.location.query;
   const setstar = (id: number) => {
     starProject(id);
     actionRef.current?.reload();
@@ -54,16 +51,19 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
       onCancel() {},
     });
   }
-  if (oldSearchValue !== searchValue) {
-    oldSearchValue = searchValue;
+  if (nameLike !== nl) {
+    nameLike = nl;
+    actionRef.current?.reload();
+  }
+  if (reload < r) {
+    reload = r;
     actionRef.current?.reload();
   }
   return (
-    // <div className={styles.filterCardList}>
     <ProList<ProjectListItem>
       actionRef={actionRef}
       request={(params) => {
-        return getProjectList(params, { lastUpdateTime: 'descend' }, searchValue);
+        return getProjectList(params, { lastUpdateTime: 'descend' }, nl);
       }}
       grid={{
         gutter: 16,
@@ -81,10 +81,10 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
         actions: {
           render: (_, row) => {
             return [
-              <Tooltip title={row.star ? 'No star' : 'Starred'}>
+              <Tooltip title={row.star === true ? 'Starred' : 'No star'}>
                 <Button
                   shape="circle"
-                  icon={row.star ? <StarOutlined /> : <StarFilled />}
+                  icon={row.star === true ? <StarFilled /> : <StarOutlined />}
                   size="small"
                   onClick={() => {
                     setstar(row.id);
@@ -125,35 +125,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
           },
         },
       }}
-
-      // renderItem={(item) => (
-      //   <List.Item key={item.id}>
-      // <Card
-      //   hoverable
-      //   actions={[
-      //     <Tooltip key='open' title='Open'>
-      //       <a href='/project/information' target='_blank'>
-      //         <FolderOpenOutlined />
-      //       </a>
-      //     </Tooltip>,
-      //     <Tooltip key='delete' title='Delete'>
-      //       <DeleteOutlined onClick={() => alert('delete')} />
-      //     </Tooltip>,
-      //   ]}
-      // >
-      //   <Card.Meta avatar={<Avatar size='small' src={''} />} title={item.name} />
-      //   <div className={styles.cardItemContent}>
-      //     <CardInfo
-      //       createdAt={item.createdAt}
-      //       lastUpdate={item.lastUpdate}
-      //       comment={item.comment}
-      //     />
-      //   </div>
-      // </Card>
-      // </List.Item>
-      // )}
     />
-    // </div>
   );
 };
 

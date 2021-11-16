@@ -1,28 +1,12 @@
 import { createProject } from '@/services/project/api';
-// import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
+import type { ProFormInstance } from '@ant-design/pro-form';
+import ProForm, { ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
-import type { ActionType } from '@ant-design/pro-table';
-import { Button, Input, message } from 'antd';
-import type { ProjectListItem } from '@/services/project/data';
+import { Button, Drawer, Input, message, Space } from 'antd';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
-
-const handleCreate = async (fields: ProjectListItem) => {
-  const hide = message.loading('loading');
-
-  try {
-    await createProject(fields);
-    hide();
-    message.success('success');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('error');
-    return false;
-  }
-};
+import styles from './style.less';
 
 type ListSearchProps = {
   match: {
@@ -44,19 +28,20 @@ const tabList = [
     tab: 'Table',
   },
 ];
-
-let searchvalue = '';
-
+let nameLike = '';
+let reload = 0;
 const ListSearch: FC<ListSearchProps> = (props) => {
+  const [drawerCreateVisible, handleDrawerCreateVisible] = useState(false);
+  const formRefCreate = useRef<ProFormInstance>();
   const handleTabChange = (key: string) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
     switch (key) {
       case 'card':
-        history.push(`${url}/card?searchValue=${searchvalue}`);
+        history.push(`${url}/card?nl=${nameLike}&r=${reload}`);
         break;
       case 'table':
-        history.push(`${url}/table?searchValue=${searchvalue}`);
+        history.push(`${url}/table?nl=${nameLike}&r=${reload}`);
         break;
       default:
         break;
@@ -72,11 +57,9 @@ const ListSearch: FC<ListSearchProps> = (props) => {
     return 'card';
   };
   const handleFormSubmit = (value: string) => {
-    searchvalue = value;
+    nameLike = value;
     handleTabChange(getTabKey());
   };
-  const actionRef = useRef<ActionType>();
-  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   return (
     <PageContainer
       content={
@@ -89,9 +72,8 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             style={{ maxWidth: 522, width: '100%' }}
           />
           <Button
-            key="add"
             onClick={() => {
-              handleModalVisible(true);
+              handleDrawerCreateVisible(true);
             }}
           >
             Create
@@ -102,35 +84,63 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       tabActiveKey={getTabKey()}
       onTabChange={handleTabChange}
     >
-      <ModalForm
-        title="Create Project"
+      <Drawer
+        title="Create Plan"
         width="400px"
-        visible={createModalVisible}
-        onVisibleChange={handleModalVisible}
-        onFinish={async (value) => {
-          const success = await handleCreate(value as ProjectListItem);
-          if (success) {
-            handleModalVisible(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
+        maskClosable={false}
+        visible={drawerCreateVisible}
+        onClose={() => handleDrawerCreateVisible(false)}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={() => handleDrawerCreateVisible(false)}>Cancel</Button>
+            <Button onClick={() => formRefCreate.current?.submit()} type="primary">
+              Submit
+            </Button>
+          </Space>
+        }
       >
-        Name:
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: '',
+        <ProForm
+          formRef={formRefCreate}
+          submitter={{
+            render: () => {
+              return [];
             },
-          ]}
-          width="md"
-          name="name"
-        />
-        Comment:
-        <ProFormTextArea width="md" name="comment" />
-      </ModalForm>
+          }}
+          onFinish={async (values) => {
+            createProject({ ...values }).then(async (result) => {
+              if (result === 'ok') {
+                message.success('Create successfully!');
+                handleDrawerCreateVisible(false);
+                reload += 1;
+                handleTabChange(getTabKey());
+              } else {
+                message.error(result);
+              }
+            });
+            return true;
+          }}
+        >
+          <ProFormText width="md" name="name" label="Name" />
+          <ProFormText width="md" name="nation" label="Nation" />
+          <ProFormText width="md" name="type" label="Type" />
+          <ProFormSelect
+            options={[
+              {
+                value: 'true',
+                label: 'true',
+              },
+              {
+                value: 'false',
+                label: 'false',
+              },
+            ]}
+            width="md"
+            name="star"
+            label="Star"
+          />
+          <ProFormTextArea width="md" name="comment" label="Comment" />
+        </ProForm>
+      </Drawer>
       {props.children}
     </PageContainer>
   );
