@@ -9,7 +9,7 @@ import {
   getFlowBaseGrid,
   updateFlowBase,
 } from '@/services/flowbase/api';
-import type { FlowBase, FlowBaseListPagination } from '@/services/flowbase/data';
+import type { FlowBase } from '@/services/flowbase/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Descriptions, Divider, Drawer, message, Modal, Space, Tooltip } from 'antd';
 import type { ProFormInstance } from '@ant-design/pro-form';
@@ -26,17 +26,12 @@ import {
 } from '@ant-design/icons';
 import styles from './style.less';
 import moment from 'moment';
-import type {
-  MeasurementFlowBase,
-  MeasurementFlowBaseListPagination,
-} from '@/services/measurementflowbase/data';
+import type { MeasurementFlowBase } from '@/services/measurementflowbase/data';
 import { getMeasurementFlowBaseGrid } from '@/services/measurementflowbase/api';
 import { createMeasurementFlow, deleteMeasurementFlow } from '@/services/measurementflow/api';
-import type {
-  MeasurementBase,
-  MeasurementBaseListPagination,
-} from '@/services/measurementbase/data';
+import type { MeasurementBase } from '@/services/measurementbase/data';
 import { getMeasurementBaseGrid } from '@/services/measurementbase/api';
+import { ListPagination } from '@/services/home/data';
 
 type ListProps = {
   location: {
@@ -304,7 +299,7 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
     },
     {
-      title: 'Last Update',
+      title: 'Last Update Time',
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
@@ -410,7 +405,7 @@ const TableList: FC<ListProps> = (porps) => {
     handleDrawerSettingVisible(true);
     setSettingFlowBaseId(flowBaseId);
     setSettingTable(
-      <ProTable<MeasurementFlowBase, MeasurementFlowBaseListPagination>
+      <ProTable<MeasurementFlowBase, ListPagination>
         actionRef={actionRefMeasurement}
         search={{
           defaultCollapsed: false,
@@ -473,7 +468,7 @@ const TableList: FC<ListProps> = (porps) => {
   }
   return (
     <PageContainer>
-      <ProTable<FlowBase, FlowBaseListPagination>
+      <ProTable<FlowBase, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
@@ -706,7 +701,7 @@ const TableList: FC<ListProps> = (porps) => {
           </Space>
         }
       >
-        <ProTable<MeasurementBase, MeasurementBaseListPagination>
+        <ProTable<MeasurementBase, ListPagination>
           search={{
             defaultCollapsed: false,
           }}

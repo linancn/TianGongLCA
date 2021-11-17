@@ -9,7 +9,7 @@ import {
   getPlanInfoGrid,
   updatePlanInfo,
 } from '@/services/plan/api';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
+import type { PlanInfo } from '@/services/plan/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Descriptions, Drawer, message, Modal, Space, Tooltip } from 'antd';
 import type { ProFormInstance } from '@ant-design/pro-form';
@@ -25,6 +25,7 @@ import {
 } from '@ant-design/icons';
 import styles from './style.less';
 import moment from 'moment';
+import type { ListPagination } from '@/services/home/data';
 
 type ListProps = {
   location: {
@@ -197,7 +198,7 @@ const PlanList: FC<ListProps> = (porps) => {
 
   return (
     <PageContainer>
-      <ProTable<PlanInfo, PlanListPagination>
+      <ProTable<PlanInfo, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,

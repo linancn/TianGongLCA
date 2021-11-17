@@ -25,7 +25,8 @@ import {
   updateEdgeProcess,
 } from '@/services/edgeprocess/api';
 import { getFlowProcessById, getFlowProcessGrid } from '@/services/flowprocess/api';
-import type { FlowProcess, FlowProcessListPagination } from '@/services/flowprocess/data';
+import type { FlowProcess } from '@/services/flowprocess/data';
+import { ListPagination } from '@/services/home/data';
 
 type EditProps = {
   projectId: number;
@@ -401,7 +402,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
               </Space>
             }
           >
-            <ProTable<FlowProcess, FlowProcessListPagination>
+            <ProTable<FlowProcess, ListPagination>
               search={{
                 defaultCollapsed: false,
               }}
@@ -461,7 +462,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
               </Space>
             }
           >
-            <ProTable<FlowProcess, FlowProcessListPagination>
+            <ProTable<FlowProcess, ListPagination>
               search={{
                 defaultCollapsed: false,
               }}

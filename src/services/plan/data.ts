@@ -19,14 +19,3 @@ export type PlanModel = {
   // name: string;
   childrenJson: string;
 };
-
-export type PlanListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};
-
-// export type PlanListData = {
-//   list: PlanListItem[];
-//   pagination: Partial<PlanListPagination>;
-// };

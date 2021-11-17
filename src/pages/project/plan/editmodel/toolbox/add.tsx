@@ -7,9 +7,10 @@ import { Button, Drawer, Space } from 'antd';
 import { getPlanInfoGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
-import type { Process, ProcessListPagination } from '@/services/process/data';
+import type { PlanInfo } from '@/services/plan/data';
+import type { Process } from '@/services/process/data';
 import { getProcessGrid } from '@/services/process/api';
+import type { ListPagination } from '@/services/home/data';
 
 type addProps = {
   setElements: Dispatch<React.SetStateAction<Elements<any>>>;
@@ -169,7 +170,7 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
           </Space>
         }
       >
-        <ProTable<PlanInfo, PlanListPagination>
+        <ProTable<PlanInfo, ListPagination>
           search={{
             defaultCollapsed: false,
             optionRender: (searchConfig, formProps, dom) => [
@@ -215,7 +216,7 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
           </Space>
         }
       >
-        <ProTable<Process, ProcessListPagination>
+        <ProTable<Process, ListPagination>
           search={{
             defaultCollapsed: false,
             optionRender: (searchConfig, formProps, dom) => [

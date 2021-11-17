@@ -7,9 +7,3 @@ export type FlowProcess = {
   comment?: string;
   flowBaseId?: string;
 };
-
-export type FlowProcessListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

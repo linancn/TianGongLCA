@@ -14,9 +14,3 @@ export type MeasurementFlowBase = {
   lastUpdateTime: Date;
   version: string;
 };
-
-export type MeasurementFlowBaseListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

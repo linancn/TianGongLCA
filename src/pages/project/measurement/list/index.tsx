@@ -9,10 +9,7 @@ import {
   getMeasurementBaseGrid,
   updateMeasurementBase,
 } from '@/services/measurementbase/api';
-import type {
-  MeasurementBase,
-  MeasurementBaseListPagination,
-} from '@/services/measurementbase/data';
+import type { MeasurementBase } from '@/services/measurementbase/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Descriptions, Drawer, message, Modal, Space, Tooltip } from 'antd';
 import type { ProFormInstance } from '@ant-design/pro-form';
@@ -26,6 +23,7 @@ import {
 } from '@ant-design/icons';
 import moment from 'moment';
 import styles from './style.less';
+import type { ListPagination } from '@/services/home/data';
 
 type ListProps = {
   location: {
@@ -48,8 +46,8 @@ const TableList: FC<ListProps> = (porps) => {
   const columns: ProColumns<MeasurementBase>[] = [
     {
       title: 'ID',
-      dataIndex: 'pkid',
-      sorter: true,
+      dataIndex: 'index',
+      valueType: 'index',
       search: false,
     },
     {
@@ -207,7 +205,7 @@ const TableList: FC<ListProps> = (porps) => {
   }
   return (
     <PageContainer>
-      <ProTable<MeasurementBase, MeasurementBaseListPagination>
+      <ProTable<MeasurementBase, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,

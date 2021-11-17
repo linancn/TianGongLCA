@@ -12,9 +12,3 @@ export type FlowBase = {
   source: string;
   version: string;
 };
-
-export type FlowBaseListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

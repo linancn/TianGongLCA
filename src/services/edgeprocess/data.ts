@@ -10,9 +10,3 @@ export type EdgeProcess = {
   targetFlowId: string;
   targetFlowName?: string;
 };
-
-export type EdgeProcessListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

@@ -10,9 +10,3 @@ export type MeasurementBase = {
   comment: string;
   version: string;
 };
-
-export type MeasurementBaseListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

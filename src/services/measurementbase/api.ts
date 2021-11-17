@@ -4,8 +4,8 @@ import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getMeasurementBaseGrid(
   params: {
-    current?: number;
     pageSize?: number;
+    current?: number;
   },
   sort: Record<string, SortOrder>,
   projectId: number,

@@ -7,9 +7,3 @@ export type MeasurementFlow = {
   asRef: boolean;
   conversionRef: number;
 };
-
-export type MeasurementFlowListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

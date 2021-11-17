@@ -11,9 +11,3 @@ export type Process = {
   nation: string;
   source: string;
 };
-
-export type ProcessListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

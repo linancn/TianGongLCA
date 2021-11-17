@@ -1,3 +1,5 @@
+// import type { ListPagination } from "../home/data";
+
 export type ProjectListItem = {
   id: number;
   name?: string;
@@ -10,20 +12,14 @@ export type ProjectListItem = {
   type?: string;
 };
 
-export type ProjectListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};
+// export type ProjectListData = {
+//   list: ProjectListItem[];
+//   pagination: Partial<ListPagination>;
+// };
 
-export type ProjectListData = {
-  list: ProjectListItem[];
-  pagination: Partial<ProjectListPagination>;
-};
-
-export type ProjectListParams = {
-  pageSize?: number;
-  currentPage?: number;
-  sort?: Record<string, any>;
-  searchvalue?: string;
-};
+// export type ProjectListParams = {
+//   pageSize?: number;
+//   currentPage?: number;
+//   sort?: Record<string, any>;
+//   searchvalue?: string;
+// };

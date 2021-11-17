@@ -12,9 +12,3 @@ export type Parameter = {
   max?: number;
   sd?: string;
 };
-
-export type ParameterListPagination = {
-  total: number;
-  pageSize: number;
-  current: number;
-};

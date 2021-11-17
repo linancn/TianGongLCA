@@ -9,9 +9,10 @@ import {
   getProjectList,
   updateProject,
 } from '@/services/project/api';
-import type { ProjectListItem, ProjectListPagination } from '@/services/project/data';
+import type { ProjectListItem } from '@/services/project/data';
 import ProCard from '@ant-design/pro-card';
 import { message } from 'antd';
+import { ListPagination } from '@/services/home/data';
 /**
  * 更新节点
  *
@@ -104,7 +105,7 @@ const TableList: FC<ProjectListProps> = (props) => {
   }
   return (
     <ProCard title="Project" bordered={false} collapsible>
-      <EditableProTable<ProjectListItem, ProjectListPagination>
+      <EditableProTable<ProjectListItem, ListPagination>
         actionRef={actionRef}
         recordCreatorProps={{
           record: () => {

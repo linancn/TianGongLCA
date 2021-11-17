@@ -5,7 +5,8 @@ import { Button, Drawer, Space } from 'antd';
 import { getPlanParentGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { PlanInfo, PlanListPagination } from '@/services/plan/data';
+import type { PlanInfo } from '@/services/plan/data';
+import type { ListPagination } from '@/services/home/data';
 
 type rollUpProps = {
   projectId: number;
@@ -92,7 +93,7 @@ const RollUp: FC<rollUpProps> = ({ projectId, planId, parentCount }) => {
             </Space>
           }
         >
-          <ProTable<PlanInfo, PlanListPagination>
+          <ProTable<PlanInfo, ListPagination>
             search={false}
             request={(
               params: {

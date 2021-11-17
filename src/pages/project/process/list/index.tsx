@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { createProcess, deleteProcess, getProcessGrid } from '@/services/process/api';
-import type { Process, ProcessListPagination } from '@/services/process/data';
+import type { Process } from '@/services/process/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Drawer, message, Modal, Space, Tooltip } from 'antd';
 import type { ProFormInstance } from '@ant-design/pro-form';
@@ -16,6 +16,7 @@ import {
   ProfileOutlined,
 } from '@ant-design/icons';
 import styles from './style.less';
+import type { ListPagination } from '@/services/home/data';
 
 type ListProps = {
   location: {
@@ -145,7 +146,7 @@ const TableList: FC<ListProps> = (porps) => {
 
   return (
     <PageContainer>
-      <ProTable<Process, ProcessListPagination>
+      <ProTable<Process, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
