@@ -27,11 +27,18 @@ import {
 import styles from './style.less';
 import moment from 'moment';
 import type { MeasurementFlowBase } from '@/services/measurementflowbase/data';
-import { getMeasurementFlowBaseGrid } from '@/services/measurementflowbase/api';
-import { createMeasurementFlow, deleteMeasurementFlow } from '@/services/measurementflow/api';
+import {
+  getMeasurementFlowBaseByPkid,
+  getMeasurementFlowBaseGrid,
+} from '@/services/measurementflowbase/api';
+import {
+  createMeasurementFlow,
+  deleteMeasurementFlow,
+  updateMeasurementFlow,
+} from '@/services/measurementflow/api';
 import type { MeasurementBase } from '@/services/measurementbase/data';
 import { getMeasurementBaseGrid } from '@/services/measurementbase/api';
-import { ListPagination } from '@/services/home/data';
+import type { ListPagination } from '@/services/home/data';
 
 type ListProps = {
   location: {
@@ -49,16 +56,21 @@ const TableList: FC<ListProps> = (porps) => {
   const formRefCreateMeasurement = useRef<ProFormInstance>();
   const formRefCreateMeasurementBase = useRef<ProFormInstance>();
   const formRefEdit = useRef<ProFormInstance>();
+  const formRefEditMeasurement = useRef<ProFormInstance>();
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [editForm, setEditForm] = useState<JSX.Element>();
+  const [editFormMeasurementForm, setEditMeasurementForm] = useState<JSX.Element>();
   const [settingTable, setSettingTable] = useState<JSX.Element>();
-  // const [measurementBaseTable, setMeasurementBaseTable] = useState<JSX.Element>();
   const [drawerCreateVisible, handleDrawerCreateVisible] = useState(false);
   const [drawerViewVisible, handleDrawerViewVisible] = useState(false);
   const [drawerEditVisible, handleDrawerEditVisible] = useState(false);
   const [drawerSettingVisible, handleDrawerSettingVisible] = useState(false);
   const [drawerCreateMeasurementVisible, handleDrawerCreateMeasurementVisible] = useState(false);
-  const [drawerSelectMeasurementVisible, handleDrawerSelectMeasurementVisible] = useState(false);
+  const [drawerSelectCreateMeasurementVisible, handleDrawerSelectCreateMeasurementVisible] =
+    useState(false);
+  const [drawerEditMeasurementVisible, handleDrawerEditMeasurementVisible] = useState(false);
+  const [drawerSelectEditMeasurementVisible, handleDrawerSelectEditMeasurementVisible] =
+    useState(false);
   const [editPkid, setEditPkid] = useState<number>(0);
   const [settingFlowBaseId, setSettingFlowBaseId] = useState<string>();
   const [selectRowMeasurementBase, setSelectRowMeasurementBase] = useState<MeasurementBase>();
@@ -254,7 +266,7 @@ const TableList: FC<ListProps> = (porps) => {
             shape="circle"
             icon={<FormOutlined />}
             size="small"
-            // onClick={() => onEdit(row.pkid)}
+            onClick={() => onEditMeasurementFlow(row.pkid)}
           />
         </Tooltip>,
         <Tooltip title="Delete">
@@ -447,6 +459,79 @@ const TableList: FC<ListProps> = (porps) => {
         columns={measurementFlowBaseColumns}
       />,
     );
+  }
+  function onEditMeasurementFlow(pkid: number) {
+    handleDrawerEditMeasurementVisible(true);
+    getMeasurementFlowBaseByPkid(pkid).then(async (pi) => {
+      setEditMeasurementForm(
+        <ProForm
+          formRef={formRefEditMeasurement}
+          submitter={{
+            render: () => {
+              return [];
+            },
+          }}
+          onFinish={async (values) => {
+            updateMeasurementFlow({
+              ...values,
+              pkid,
+            }).then(async (result) => {
+              if (result === 'ok') {
+                message.success('Edit successfully!');
+                handleDrawerEditMeasurementVisible(false);
+                actionRefMeasurement.current?.reload();
+              } else {
+                message.error(result);
+              }
+            });
+            return true;
+          }}
+        >
+          <ProFormSelect
+            options={[
+              {
+                value: 'true',
+                label: 'true',
+              },
+              {
+                value: 'false',
+                label: 'false',
+              },
+            ]}
+            width="md"
+            name="asRef"
+            label="As Ref"
+          />
+          <ProFormText width="md" name="conversionRef" label="Conversion Ref" />
+          <ProFormText
+            width="md"
+            name="measurementBaseId"
+            label="measurementBaseId"
+            hidden={true}
+          />
+          <Divider>
+            Measurement Base Info{' '}
+            <Tooltip title="Select">
+              <Button
+                shape="circle"
+                size="small"
+                icon={<SelectOutlined />}
+                onClick={() => {
+                  handleDrawerSelectEditMeasurementVisible(true);
+                }}
+              />
+            </Tooltip>
+          </Divider>
+          <ProFormText width="md" name="name" label="Name" disabled={true} />
+          <ProFormText width="md" name="unit" label="Unit" disabled={true} />
+          <ProFormTextArea width="md" name="comment" label="Comment" disabled={true} />
+        </ProForm>,
+      );
+      formRefEditMeasurement.current?.setFieldsValue(pi);
+      formRefEditMeasurement.current?.setFieldsValue({
+        asRef: pi.asRef === true ? 'true' : 'false',
+      });
+    });
   }
   function onDeleteMeasurementFlow(pkid: number) {
     Modal.confirm({
@@ -653,12 +738,11 @@ const TableList: FC<ListProps> = (porps) => {
               size="small"
               icon={<SelectOutlined />}
               onClick={() => {
-                handleDrawerSelectMeasurementVisible(true);
+                handleDrawerSelectCreateMeasurementVisible(true);
               }}
             />
           </Tooltip>
         </Divider>
-        {/* {measurementBaseTable} */}
         <ProForm
           formRef={formRefCreateMeasurementBase}
           submitter={{
@@ -677,11 +761,13 @@ const TableList: FC<ListProps> = (porps) => {
         title="Select Measurement Base Info"
         width="100%"
         maskClosable={true}
-        visible={drawerSelectMeasurementVisible}
-        onClose={() => handleDrawerSelectMeasurementVisible(false)}
+        visible={drawerSelectCreateMeasurementVisible}
+        onClose={() => handleDrawerSelectCreateMeasurementVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerSelectMeasurementVisible(false)}>Cancel</Button>
+            <Button onClick={() => handleDrawerSelectCreateMeasurementVisible(false)}>
+              Cancel
+            </Button>
             <Button
               onClick={() => {
                 if (selectRowMeasurementBase) {
@@ -689,7 +775,85 @@ const TableList: FC<ListProps> = (porps) => {
                   formRefCreateMeasurement.current?.setFieldsValue({
                     measurementBaseId: selectRowMeasurementBase.id,
                   });
-                  handleDrawerSelectMeasurementVisible(false);
+                  handleDrawerSelectCreateMeasurementVisible(false);
+                } else {
+                  message.error('Select nothing');
+                }
+              }}
+              type="primary"
+            >
+              Select
+            </Button>
+          </Space>
+        }
+      >
+        <ProTable<MeasurementBase, ListPagination>
+          search={{
+            defaultCollapsed: false,
+          }}
+          request={(
+            params: {
+              pageSize: number;
+              current: number;
+            },
+            sort,
+          ) => {
+            return getMeasurementBaseGrid(params, sort, projectid);
+          }}
+          columns={measurementBaseColumns}
+          rowClassName={(record) => {
+            return record.pkid === selectRowMeasurementBase?.pkid
+              ? styles['split-row-select-active']
+              : '';
+          }}
+          onRow={(record) => {
+            return {
+              onClick: () => {
+                if (record) {
+                  setSelectRowMeasurementBase(record);
+                }
+              },
+            };
+          }}
+        />
+      </Drawer>
+      <Drawer
+        title="Edit Measurement"
+        width="400px"
+        maskClosable={false}
+        visible={drawerEditMeasurementVisible}
+        onClose={() => handleDrawerEditMeasurementVisible(false)}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={() => handleDrawerEditMeasurementVisible(false)}>Cancel</Button>
+            <Button onClick={() => formRefEditMeasurement.current?.submit()} type="primary">
+              Submit
+            </Button>
+          </Space>
+        }
+      >
+        {editFormMeasurementForm}
+      </Drawer>
+      <Drawer
+        title="Select Measurement Base Info"
+        width="100%"
+        maskClosable={true}
+        visible={drawerSelectEditMeasurementVisible}
+        onClose={() => handleDrawerSelectEditMeasurementVisible(false)}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={() => handleDrawerSelectEditMeasurementVisible(false)}>Cancel</Button>
+            <Button
+              onClick={() => {
+                if (selectRowMeasurementBase) {
+                  // formRefEditMeasurementBase.current?.setFieldsValue(selectRowMeasurementBase);
+                  formRefEditMeasurement.current?.setFieldsValue({
+                    name: selectRowMeasurementBase.name,
+                    unit: selectRowMeasurementBase.unit,
+                    comment: selectRowMeasurementBase.comment,
+                    measurementBaseId: selectRowMeasurementBase.id,
+                  });
+                  handleDrawerSelectEditMeasurementVisible(false);
                 } else {
                   message.error('Select nothing');
                 }
