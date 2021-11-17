@@ -18,13 +18,14 @@ import {
   DeleteOutlined,
   ExclamationCircleOutlined,
   FormOutlined,
-  // OrderedListOutlined,
+  OrderedListOutlined,
   PlusOutlined,
   ProfileOutlined,
-  // SettingOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import styles from './style.less';
 import type { ListPagination } from '@/services/home/data';
+import ParameterCard from '../setting/parameter';
 
 type ListProps = {
   location: {
@@ -41,7 +42,9 @@ const TableList: FC<ListProps> = (porps) => {
   const { projectid } = porps.location.query;
   const [drawerCreateVisible, handleDrawerCreateVisible] = useState(false);
   const [drawerEditVisible, handleDrawerEditVisible] = useState(false);
+  const [drawerSettingVisible, handleDrawerSettingVisible] = useState(false);
   const [editForm, setEditForm] = useState<JSX.Element>();
+  const [setting, setSetting] = useState<JSX.Element>();
   const [editPkid, setEditPkid] = useState<number>(0);
   const columns: ProColumns<Process>[] = [
     {
@@ -105,26 +108,26 @@ const TableList: FC<ListProps> = (porps) => {
       title: 'Flows',
       dataIndex: 'flows',
       search: false,
-      // render: (_, row) => [
-      //   <Space size={'small'}>
-      //     <Tooltip title="List">
-      //       <Button
-      //         shape="circle"
-      //         icon={<OrderedListOutlined />}
-      //         size="small"
-      //       // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
-      //       />
-      //     </Tooltip>
-      //     <Tooltip title="Setting">
-      //       <Button
-      //         shape="circle"
-      //         icon={<SettingOutlined />}
-      //         size="small"
-      //       // onClick={() => onSetting(row.projectId, row.id)}
-      //       />
-      //     </Tooltip>
-      //   </Space>,
-      // ],
+      render: (_, row) => [
+        <Space size={'small'}>
+          <Tooltip title="List">
+            <Button
+              shape="circle"
+              icon={<OrderedListOutlined />}
+              size="small"
+              // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
+            />
+          </Tooltip>
+          <Tooltip title="Setting">
+            <Button
+              shape="circle"
+              icon={<SettingOutlined />}
+              size="small"
+              onClick={() => onSetting(row.projectId, row.id)}
+            />
+          </Tooltip>
+        </Space>,
+      ],
     },
     {
       title: 'Option',
@@ -221,7 +224,10 @@ const TableList: FC<ListProps> = (porps) => {
       onCancel() {},
     });
   }
-
+  function onSetting(projectId: number, processId: string) {
+    handleDrawerSettingVisible(true);
+    setSetting(<ParameterCard projectId={projectId} processId={processId} />);
+  }
   return (
     <PageContainer>
       <ProTable<Process, ListPagination>
@@ -313,6 +319,22 @@ const TableList: FC<ListProps> = (porps) => {
         }
       >
         {editForm}
+      </Drawer>
+      <Drawer
+        title="Setting"
+        width="100%"
+        maskClosable={false}
+        visible={drawerSettingVisible}
+        onClose={() => handleDrawerSettingVisible(false)}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={() => handleDrawerSettingVisible(false)} type="primary">
+              Finish
+            </Button>
+          </Space>
+        }
+      >
+        {setting}
       </Drawer>
     </PageContainer>
   );

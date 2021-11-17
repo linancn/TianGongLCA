@@ -1,17 +1,18 @@
 import type { FC } from 'react';
-import { useState, useRef } from 'react';
-import type { ProColumns, ActionType } from '@ant-design/pro-table';
+import { useRef, useState } from 'react';
+import ProCard from '@ant-design/pro-card';
+import type { Parameter } from '@/services/parameter/data';
+import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import {
-  createMeasurementBase,
-  deleteMeasurementBase,
-  getMeasurementBaseByPkid,
-  getMeasurementBaseGrid,
-  updateMeasurementBase,
-} from '@/services/measurementbase/api';
-import type { MeasurementBase } from '@/services/measurementbase/data';
-import { PageContainer } from '@ant-design/pro-layout';
+  createParameter,
+  deleteParameter,
+  getParameterByPkid,
+  getParameterGrid,
+  updateParameter,
+} from '@/services/parameter/api';
 import { Button, Descriptions, Drawer, message, Modal, Space, Tooltip } from 'antd';
+import type { ListPagination } from '@/services/home/data';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import {
@@ -21,20 +22,16 @@ import {
   PlusOutlined,
   ProfileOutlined,
 } from '@ant-design/icons';
-import moment from 'moment';
-import styles from './style.less';
-import type { ListPagination } from '@/services/home/data';
+// import moment from 'moment';
+import styles from '../list/style.less';
 
-type ListProps = {
-  location: {
-    query: {
-      projectid: number;
-    };
-  };
+type ParameterProps = {
+  projectId: number;
+  processId: string;
 };
-const TableList: FC<ListProps> = (porps) => {
+
+const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
   const actionRef = useRef<ActionType>();
-  const { projectid } = porps.location.query;
   const formRefCreate = useRef<ProFormInstance>();
   const formRefEdit = useRef<ProFormInstance>();
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
@@ -43,7 +40,7 @@ const TableList: FC<ListProps> = (porps) => {
   const [drawerViewVisible, handleDrawerViewVisible] = useState(false);
   const [drawerEditVisible, handleDrawerEditVisible] = useState(false);
   const [editPkid, setEditPkid] = useState<number>(0);
-  const columns: ProColumns<MeasurementBase>[] = [
+  const columns: ProColumns<Parameter>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -56,9 +53,29 @@ const TableList: FC<ListProps> = (porps) => {
       sorter: true,
     },
     {
-      title: 'Unit',
-      dataIndex: 'unit',
-      sorter: true,
+      title: 'Formula',
+      dataIndex: 'formula',
+      search: false,
+    },
+    {
+      title: 'Value',
+      dataIndex: 'value',
+      search: false,
+    },
+    {
+      title: 'Min',
+      dataIndex: 'min',
+      search: false,
+    },
+    {
+      title: 'Max',
+      dataIndex: 'max',
+      search: false,
+    },
+    {
+      title: 'SD',
+      dataIndex: 'sd',
+      search: false,
     },
     {
       title: 'Creator',
@@ -74,7 +91,7 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
     },
     {
-      title: 'Last Update',
+      title: 'Last Update Time',
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
@@ -125,11 +142,11 @@ const TableList: FC<ListProps> = (porps) => {
   ];
   function onDelete(pkid: number) {
     Modal.confirm({
-      title: 'Do you Want to delete this measurement?',
+      title: 'Do you want to delete this parameter?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deleteMeasurementBase(pkid).then(async (result) => {
+        deleteParameter(pkid).then(async (result) => {
           if (result === 'ok') {
             message.success('Delete successfully!');
             if (actionRef.current) {
@@ -145,11 +162,11 @@ const TableList: FC<ListProps> = (porps) => {
   }
   function onView(pkid: number) {
     handleDrawerViewVisible(true);
-    getMeasurementBaseByPkid(pkid).then(async (result) => {
+    getParameterByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>
-          <Descriptions.Item label="Unit">{result?.unit}</Descriptions.Item>
+          {/* <Descriptions.Item label="Unit">{result?.unit}</Descriptions.Item>
           <Descriptions.Item label="Creator">{result?.creator}</Descriptions.Item>
           <Descriptions.Item label="Create Time">
             {moment(result?.createTime).format('YYYY-MM-DD HH:mm:ss')}
@@ -158,7 +175,7 @@ const TableList: FC<ListProps> = (porps) => {
             {moment(result?.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
           <Descriptions.Item label="Comment">{result?.comment}</Descriptions.Item>
-          <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
+          <Descriptions.Item label="Version">{result?.version}</Descriptions.Item> */}
         </Descriptions>,
       );
     });
@@ -166,7 +183,7 @@ const TableList: FC<ListProps> = (porps) => {
   function onEdit(pkid: number) {
     handleDrawerEditVisible(true);
     setEditPkid(pkid);
-    getMeasurementBaseByPkid(pkid).then(async (pi) => {
+    getParameterByPkid(pkid).then(async (pi) => {
       setEditDescriptions(
         <ProForm
           formRef={formRefEdit}
@@ -176,7 +193,7 @@ const TableList: FC<ListProps> = (porps) => {
             },
           }}
           onFinish={async (values) => {
-            updateMeasurementBase({ ...values, pkid: pi.pkid }).then(async (result) => {
+            updateParameter({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
                 handleDrawerEditVisible(false);
@@ -191,7 +208,11 @@ const TableList: FC<ListProps> = (porps) => {
           }}
         >
           <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="unit" label="Unit" />
+          <ProFormText width="md" name="formula" label="Formula" />
+          <ProFormText width="md" name="value" label="Value" />
+          <ProFormText width="md" name="min" label="Min" />
+          <ProFormText width="md" name="max" label="Max" />
+          <ProFormText width="md" name="sd" label="SD" />
           <ProFormTextArea width="md" name="comment" label="Comment" />
         </ProForm>,
       );
@@ -199,13 +220,13 @@ const TableList: FC<ListProps> = (porps) => {
     });
   }
   function onReset(pkid: number) {
-    getMeasurementBaseByPkid(pkid).then(async (result) => {
+    getParameterByPkid(pkid).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   }
   return (
-    <PageContainer>
-      <ProTable<MeasurementBase, ListPagination>
+    <ProCard title="Parameters" bordered={false} collapsible>
+      <ProTable<Parameter, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
@@ -229,7 +250,7 @@ const TableList: FC<ListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getMeasurementBaseGrid(params, sort, projectid);
+          return getParameterGrid(params, sort, projectId, processId);
         }}
         columns={columns}
       />
@@ -256,7 +277,7 @@ const TableList: FC<ListProps> = (porps) => {
             },
           }}
           onFinish={async (values) => {
-            createMeasurementBase({ ...values, projectId: projectid }).then(async (result) => {
+            createParameter({ ...values, projectId, processId }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Create successfully!');
                 handleDrawerCreateVisible(false);
@@ -271,7 +292,11 @@ const TableList: FC<ListProps> = (porps) => {
           }}
         >
           <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="unit" label="Unit" />
+          <ProFormText width="md" name="formula" label="Formula" />
+          <ProFormText width="md" name="value" label="Value" />
+          <ProFormText width="md" name="min" label="Min" />
+          <ProFormText width="md" name="max" label="Max" />
+          <ProFormText width="md" name="sd" label="SD" />
           <ProFormTextArea width="md" name="comment" label="Comment" />
         </ProForm>
       </Drawer>
@@ -302,8 +327,7 @@ const TableList: FC<ListProps> = (porps) => {
       >
         {editDescriptions}
       </Drawer>
-    </PageContainer>
+    </ProCard>
   );
 };
-
-export default TableList;
+export default ParameterCard;
