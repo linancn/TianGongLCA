@@ -5,7 +5,7 @@ import { useState } from 'react';
 import type { Elements } from 'react-flow-renderer';
 import { isNode } from 'react-flow-renderer';
 import moment from 'moment';
-import { getProcess } from '@/services/process/api';
+import { getProcessById } from '@/services/process/api';
 
 type viewProps = {
   projectId: number;
@@ -44,7 +44,7 @@ const View: FC<viewProps> = ({ projectId, selectedElements }) => {
             );
           });
         } else if (selectedElements[0].data.type === 'process') {
-          getProcess(projectId, preid).then(async (result) => {
+          getProcessById(projectId, preid).then(async (result) => {
             setViewDescriptions(
               <Descriptions column={1}>
                 <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>

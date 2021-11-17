@@ -27,8 +27,14 @@ export async function getProcessGrid(
   });
 }
 
-export async function getProcess(projectId: number, id: string) {
+export async function getProcessById(projectId: number, id: string) {
   return request<Process>(`http://localhost:8081/api/process/get/${projectId}/${id}`, {
+    method: 'GET',
+  });
+}
+
+export async function getProcessByPkid(pkid: number) {
+  return request<Process>(`http://localhost:8081/api/process/get/${pkid}`, {
     method: 'GET',
   });
 }

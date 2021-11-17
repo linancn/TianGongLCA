@@ -7,7 +7,7 @@ import { isNode, isEdge } from 'react-flow-renderer';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '../index.less';
-import { getProcess, updateProcess } from '@/services/process/api';
+import { getProcessById, updateProcess } from '@/services/process/api';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import {
@@ -26,7 +26,7 @@ import {
 } from '@/services/edgeprocess/api';
 import { getFlowProcessById, getFlowProcessGrid } from '@/services/flowprocess/api';
 import type { FlowProcess } from '@/services/flowprocess/data';
-import { ListPagination } from '@/services/home/data';
+import type { ListPagination } from '@/services/home/data';
 
 type EditProps = {
   projectId: number;
@@ -233,7 +233,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
         formRefNode.current?.setFieldsValue(pi);
       });
     } else if (typeName === 'process') {
-      getProcess(projectId, preid).then(async (pc) => {
+      getProcessById(projectId, preid).then(async (pc) => {
         setDrawerBodyNode(
           <ProForm
             formRef={formRefNode}
