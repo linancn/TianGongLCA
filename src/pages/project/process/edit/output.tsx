@@ -4,13 +4,14 @@ import ProCard from '@ant-design/pro-card';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { EditableProTable } from '@ant-design/pro-table';
 import { Button, Drawer, message } from 'antd';
-import type { FlowProcess, FlowProcessListPagination } from '@/services/flowprocess/data';
+import type { FlowProcess } from '@/services/flowprocess/data';
 import {
   createFlowProcess,
   deleteFlowProcess,
   getFlowProcessGrid,
   updateFlowProcess,
 } from '@/services/flowprocess/api';
+import type { ListPagination } from '@/services/home/data';
 
 type OutputProps = {
   projectId: number;
@@ -72,7 +73,7 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
       <Drawer visible={isDrawerVisible} title="Add" onClose={handleDrawerAddCancel}>
         <Button key="plan">Plan</Button> Or <Button key="process">Process</Button>
       </Drawer>
-      <EditableProTable<FlowProcess, FlowProcessListPagination>
+      <EditableProTable<FlowProcess, ListPagination>
         actionRef={actionRef}
         recordCreatorProps={{
           record: () => {

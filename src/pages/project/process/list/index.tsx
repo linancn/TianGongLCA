@@ -26,6 +26,7 @@ import {
 import styles from './style.less';
 import type { ListPagination } from '@/services/home/data';
 import ParameterCard from '../setting/parameter';
+import InputCard from '../setting/input';
 
 type ListProps = {
   location: {
@@ -226,7 +227,12 @@ const TableList: FC<ListProps> = (porps) => {
   }
   function onSetting(projectId: number, processId: string) {
     handleDrawerSettingVisible(true);
-    setSetting(<ParameterCard projectId={projectId} processId={processId} />);
+    setSetting(
+      <>
+        <ParameterCard projectId={projectId} processId={processId} />
+        <InputCard projectId={projectId} processId={processId} />
+      </>,
+    );
   }
   return (
     <PageContainer>

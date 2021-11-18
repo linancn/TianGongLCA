@@ -1,0 +1,22 @@
+export type FlowProcessBase = {
+  pkid: number;
+  id: string;
+  projectId: number;
+  processId: string;
+  ioType: string;
+  amount: number;
+  sd: number;
+  factor: number;
+  parameterId: string;
+  parameterName: string;
+  flowBaseId?: string;
+  name: string;
+  type: string;
+  nation: string;
+  source: string;
+  creator: string;
+  createTime: Date;
+  lastUpdateTime: Date;
+  comment: string;
+  version: string;
+};
