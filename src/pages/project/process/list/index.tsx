@@ -27,6 +27,7 @@ import styles from './style.less';
 import type { ListPagination } from '@/services/home/data';
 import ParameterCard from '../setting/parameter';
 import InputCard from '../setting/input';
+import OutputCard from '../setting/output';
 
 type ListProps = {
   location: {
@@ -231,6 +232,7 @@ const TableList: FC<ListProps> = (porps) => {
       <>
         <ParameterCard projectId={projectId} processId={processId} />
         <InputCard projectId={projectId} processId={processId} />
+        <OutputCard projectId={projectId} processId={processId} />
       </>,
     );
   }

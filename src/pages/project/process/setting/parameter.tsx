@@ -224,6 +224,7 @@ const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   }
+  actionRef.current?.reload();
   return (
     <ProCard title="Parameters" bordered={false} collapsible>
       <ProTable<Parameter, ListPagination>

@@ -295,6 +295,7 @@ const InputCard: FC<InputProps> = ({ projectId, processId }) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   }
+  actionRef.current?.reload();
   return (
     <ProCard title="Input Flows" bordered={false} collapsible>
       <ProTable<FlowProcess, ListPagination>
