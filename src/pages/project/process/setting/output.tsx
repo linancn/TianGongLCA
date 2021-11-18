@@ -17,7 +17,6 @@ import {
 } from '@ant-design/icons';
 // import moment from 'moment';
 import styles from '../list/style.less';
-import type { FlowProcess } from '@/services/flowprocess/data';
 import {
   createFlowProcess,
   deleteFlowProcess,
@@ -27,6 +26,9 @@ import {
 import type { FlowBase } from '@/services/flowbase/data';
 import { getFlowBaseGrid } from '@/services/flowbase/api';
 import { getFlowProcessBaseByPkid, getFlowProcessBaseGrid } from '@/services/flowprocessbase/api';
+import type { FlowProcessBase } from '@/services/flowprocessbase/data';
+import type { Parameter } from '@/services/parameter/data';
+import { getParameterGrid } from '@/services/parameter/api';
 
 type OutputProps = {
   projectId: number;
@@ -45,9 +47,12 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
   const [drawerEditVisible, handleDrawerEditVisible] = useState(false);
   const [drawerSelectCreateVisible, handleDrawerSelectCreateVisible] = useState(false);
   const [drawerSelectEditVisible, handleDrawerSelectEditVisible] = useState(false);
+  const [drawerSelectParameterVisible, handleDrawerSelectParameterVisible] = useState(false);
   const [selectRowFlowBase, setSelectRowFlowBase] = useState<FlowBase>();
+  const [selectRowParameter, setSelectRowParameter] = useState<Parameter>();
+  const [editFlowPkid, setEditFlowPkid] = useState<number>();
   const [editPkid, setEditPkid] = useState<number>(0);
-  const columns: ProColumns<FlowProcess>[] = [
+  const columns: ProColumns<FlowProcessBase>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -106,6 +111,34 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
       search: false,
     },
     {
+      title: 'Parameter',
+      dataIndex: 'parameterName',
+      sorter: true,
+      render: (_, row) => [
+        <Space size={'small'} className={styles.footer_left}>
+          {row.parameterName}
+        </Space>,
+        <Space size={'small'} className={styles.footer_right}>
+          <Tooltip title="View">
+            <Button
+              shape="circle"
+              icon={<ProfileOutlined />}
+              size="small"
+              // onClick={() => onViewParameter(row.pkid)}
+            />
+          </Tooltip>
+          <Tooltip title="Select">
+            <Button
+              shape="circle"
+              icon={<SelectOutlined />}
+              size="small"
+              onClick={() => onSelectParameter(row.pkid)}
+            />
+          </Tooltip>
+        </Space>,
+      ],
+    },
+    {
       title: 'Option',
       dataIndex: 'option',
       valueType: 'option',
@@ -162,6 +195,75 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
     {
       title: 'Type',
       dataIndex: 'type',
+      search: false,
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'creator',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Create Time',
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Last Update Time',
+      dataIndex: 'lastUpdateTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+      search: false,
+    },
+  ];
+  const parameterColumns: ProColumns<Parameter>[] = [
+    {
+      title: 'ID',
+      dataIndex: 'index',
+      valueType: 'index',
+      search: false,
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      sorter: true,
+    },
+    {
+      title: 'Formula',
+      dataIndex: 'formula',
+      search: false,
+    },
+    {
+      title: 'Value',
+      dataIndex: 'value',
+      search: false,
+    },
+    {
+      title: 'Min',
+      dataIndex: 'min',
+      search: false,
+    },
+    {
+      title: 'Max',
+      dataIndex: 'max',
+      search: false,
+    },
+    {
+      title: 'SD',
+      dataIndex: 'sd',
       search: false,
     },
     {
@@ -295,10 +397,25 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   }
+  function onSelectParameter(pkid: number) {
+    setEditFlowPkid(pkid);
+    handleDrawerSelectParameterVisible(true);
+  }
+  function onSelectParameterToFlow(pkid: number | undefined, parameterId: string | undefined) {
+    updateFlowProcess({ pkid, parameterId }).then((result) => {
+      if (result === 'ok') {
+        handleDrawerSelectParameterVisible(false);
+        actionRef.current?.reload();
+      } else {
+        message.error(result);
+      }
+    });
+    return true;
+  }
   actionRef.current?.reload();
   return (
     <ProCard title="Output Flows" bordered={false} collapsible>
-      <ProTable<FlowProcess, ListPagination>
+      <ProTable<FlowProcessBase, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
@@ -599,6 +716,54 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
               onClick: () => {
                 if (record) {
                   setSelectRowFlowBase(record);
+                }
+              },
+            };
+          }}
+        />
+      </Drawer>
+      <Drawer
+        title="Select Parameter"
+        width="750px"
+        maskClosable={true}
+        visible={drawerSelectParameterVisible}
+        onClose={() => handleDrawerSelectParameterVisible(false)}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={() => handleDrawerSelectParameterVisible(false)}>Cancel</Button>
+            <Button
+              onClick={() => onSelectParameterToFlow(editFlowPkid, selectRowParameter?.id)}
+              type="primary"
+            >
+              Select
+            </Button>
+          </Space>
+        }
+      >
+        <ProTable<Parameter, ListPagination>
+          search={{
+            defaultCollapsed: false,
+          }}
+          request={(
+            params: {
+              pageSize: number;
+              current: number;
+            },
+            sort,
+          ) => {
+            return getParameterGrid(params, sort, projectId, processId);
+          }}
+          columns={parameterColumns}
+          rowClassName={(record) => {
+            return record.pkid === selectRowParameter?.pkid
+              ? styles['split-row-select-active']
+              : '';
+          }}
+          onRow={(record) => {
+            return {
+              onClick: () => {
+                if (record) {
+                  setSelectRowParameter(record);
                 }
               },
             };
