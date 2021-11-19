@@ -6,29 +6,29 @@ export default () => {
   const intl = useIntl();
   const defaultMessage = intl.formatMessage({
     id: 'app.copyright.produced',
-    defaultMessage: '蚂蚁集团体验技术部出品',
+    defaultMessage: 'CrystaLCA R&D Team',
   });
 
   return (
     <DefaultFooter
-      copyright={`2020 ${defaultMessage}`}
+      copyright={`2021-2022 ${defaultMessage}`}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: 'NGO',
+          title: 'NGO',
+          href: 'https://www.crystalca.org/',
+          blankTarget: true,
+        },
+        {
+          key: 'CrystaLCA R&D Team',
+          title: 'CrystaLCA R&D Team',
+          href: 'https://www.crystalca.org/team',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
-          blankTarget: true,
-        },
-        {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          href: 'https://github.com/linancn/CrystaLCA',
           blankTarget: true,
         },
       ]}
