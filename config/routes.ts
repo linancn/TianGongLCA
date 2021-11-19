@@ -19,11 +19,6 @@ export default [
     path: '/home',
     routes: [
       {
-        name: 'welcome',
-        path: '/home/welcome',
-        component: './home/welcome',
-      },
-      {
         name: 'project',
         path: '/home/project',
         component: './home/project',
@@ -154,7 +149,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/home/welcome',
+    redirect: '/home/project/card',
   },
   {
     component: './404',

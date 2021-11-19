@@ -1,12 +1,6 @@
 export async function getHomeMenu() {
   return [
     {
-      path: '/home/welcome',
-      name: 'welcome',
-      icon: 'smile',
-      component: './home/welcome',
-    },
-    {
       name: 'project',
       icon: 'crown',
       path: '/home/project/card',
