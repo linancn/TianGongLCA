@@ -2,45 +2,51 @@ export async function getProjectMenu(projectId: any) {
   return [
     {
       name: 'plans',
-      icon: 'crown',
+      icon: 'Apartment',
       path: `/project/plan/list?projectid=${projectId}`,
       component: './project/plan/list',
     },
     {
       name: 'processes',
-      icon: 'crown',
+      icon: 'ShareAlt',
       path: `/project/process/list?projectid=${projectId}`,
       component: './project/process/list',
     },
     {
       name: 'flows',
-      icon: 'crown',
+      icon: 'NodeExpand',
       path: `/project/flow/list?projectid=${projectId}`,
       component: './project/flow/list',
     },
     {
       name: 'measurements',
-      icon: 'crown',
+      icon: 'Profile',
       path: `/project/measurement/list?projectid=${projectId}`,
       component: './project/measurement/list',
     },
     {
       path: '/project/units',
       name: 'units',
-      icon: 'crown',
+      icon: 'Swap',
       component: './project/welcome',
     },
     {
       path: '/project/global_parameters',
       name: 'global_parameters',
-      icon: 'crown',
+      icon: 'Control',
       component: './project/welcome',
     },
     {
       path: '/project/assessment',
       name: 'assessment',
-      icon: 'crown',
+      icon: 'Reconciliation',
       component: './project/welcome',
+    },
+    {
+      path: '/home/project/card',
+      name: 'go_back',
+      icon: 'DoubleLeft',
+      component: './home/project/card',
     },
   ];
 }

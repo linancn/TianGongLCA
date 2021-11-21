@@ -11,6 +11,7 @@ export default {
   'menu.measurements': '度量',
   'menu.units': '单位',
   'menu.global_parameters': '参数',
+  'menu.go_back': '返回',
   'menu.assessment': '评价',
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
