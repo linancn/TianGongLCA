@@ -1,6 +1,12 @@
 export async function getProjectMenu(projectId: any) {
   return [
     {
+      path: '/home/project/card',
+      name: 'go_back',
+      icon: 'DoubleLeft',
+      component: './home/project/card',
+    },
+    {
       name: projectId,
       icon: 'Wallet',
       children: [
@@ -54,12 +60,6 @@ export async function getProjectMenu(projectId: any) {
           component: './project/welcome',
         },
       ],
-    },
-    {
-      path: '/home/project/card',
-      name: 'go_back',
-      icon: 'DoubleLeft',
-      component: './home/project/card',
     },
   ];
 }
