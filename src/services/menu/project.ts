@@ -5,6 +5,12 @@ export async function getProjectMenu(projectId: any) {
     .then(async (result) => {
       return [
         {
+          path: '/home/project/card',
+          name: 'go_back',
+          icon: 'DoubleLeft',
+          component: './home/project/card',
+        },
+        {
           name: result.name?.toString(),
           icon: 'Wallet',
           children: [
@@ -58,12 +64,6 @@ export async function getProjectMenu(projectId: any) {
               component: './project/welcome',
             },
           ],
-        },
-        {
-          path: '/home/project/card',
-          name: 'go_back',
-          icon: 'DoubleLeft',
-          component: './home/project/card',
         },
       ];
     })
