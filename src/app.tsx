@@ -181,11 +181,12 @@ export const layout = ({
 export const request = {
   errorHandler: (error: any) => {
     const { response } = error;
-
     if (!response) {
       notification.error({
-        description: '您的网络发生异常，无法连接服务器',
-        message: '网络异常',
+        // description: '您的网络发生异常，无法连接服务器',
+        description: 'Your network is abnormal and you cannot connect to the server',
+        // message: '网络异常',
+        message: 'Network Anomaly',
       });
     }
     throw error;

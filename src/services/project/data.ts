@@ -1,6 +1,6 @@
 // import type { ListPagination } from "../home/data";
 
-export type ProjectListItem = {
+export type Project = {
   id: number;
   name?: string;
   createTime?: Date;

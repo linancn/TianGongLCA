@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { ProjectListItem } from './data';
+import type { Project } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getProjectList(
@@ -15,7 +15,7 @@ export async function getProjectList(
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
   return request<{
-    data: ProjectListItem[];
+    data: Project[];
     total?: number;
     success?: boolean;
   }>('http://localhost:8081/api/project/grid', {
@@ -37,6 +37,13 @@ export async function getProjectList(
 //     ...(options || {}),
 //   });
 // }
+
+export async function getProject(id: number) {
+  return request<Project>(`http://localhost:8081/api/project/get/${id}`, {
+    method: 'GET',
+  });
+}
+
 export async function updateProject(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/project/update', {
     method: 'PUT',
@@ -58,7 +65,7 @@ export async function createProject(data?: Record<string, any>) {
 }
 /** Put /api/project */
 export async function starProject(id: number) {
-  return request<ProjectListItem>(`http://localhost:8081/api/project/starred/${id}`, {
+  return request<Project>(`http://localhost:8081/api/project/starred/${id}`, {
     method: 'PUT',
   });
 }

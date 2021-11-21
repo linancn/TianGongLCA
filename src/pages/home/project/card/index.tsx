@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useRef } from 'react';
 import { getProjectList, starProject, deleteProject } from '@/services/project/api';
-import type { ProjectListItem } from '@/services/project/data';
+import type { Project } from '@/services/project/data';
 import ProList from '@ant-design/pro-list';
 import type { ActionType } from '@ant-design/pro-table';
 import {
@@ -60,7 +60,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
     actionRef.current?.reload();
   }
   return (
-    <ProList<ProjectListItem>
+    <ProList<Project>
       actionRef={actionRef}
       request={(params) => {
         return getProjectList(params, { lastUpdateTime: 'descend' }, nl);

@@ -9,10 +9,10 @@ import {
   getProjectList,
   updateProject,
 } from '@/services/project/api';
-import type { ProjectListItem } from '@/services/project/data';
+import type { Project } from '@/services/project/data';
 import ProCard from '@ant-design/pro-card';
 import { message } from 'antd';
-import { ListPagination } from '@/services/home/data';
+import type { ListPagination } from '@/services/home/data';
 /**
  * 更新节点
  *
@@ -31,7 +31,7 @@ const TableList: FC<ProjectListProps> = (props) => {
   const actionRef = useRef<ActionType>();
   const [editableKeys, setEditableKeys] = useState<React.Key[]>([]);
   const { searchValue } = props.location.query;
-  const columns: ProColumns<ProjectListItem>[] = [
+  const columns: ProColumns<Project>[] = [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -72,7 +72,7 @@ const TableList: FC<ProjectListProps> = (props) => {
     {
       title: 'Option',
       valueType: 'option',
-      render: (_, record: ProjectListItem, _index, action) => [
+      render: (_, record: Project, _index, action) => [
         <a
           key="edit"
           onClick={() => {
@@ -105,7 +105,7 @@ const TableList: FC<ProjectListProps> = (props) => {
   }
   return (
     <ProCard title="Project" bordered={false} collapsible>
-      <EditableProTable<ProjectListItem, ListPagination>
+      <EditableProTable<Project, ListPagination>
         actionRef={actionRef}
         recordCreatorProps={{
           record: () => {
