@@ -120,13 +120,13 @@ const PlanList: FC<ListProps> = (porps) => {
   ];
   function onDelete(pkid: number) {
     Modal.confirm({
-      title: 'Do you Want to delete this plan?',
+      title: 'Are you sure to delete this plan?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
         deletePlan(pkid).then(async (result) => {
           if (result === 'ok') {
-            message.success('Delete successfully!');
+            message.success('Successfully deleted!');
             if (actionRef.current) {
               actionRef.current.reload();
             }
