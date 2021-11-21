@@ -2,7 +2,7 @@ export async function getHomeMenu() {
   return [
     {
       name: 'project',
-      icon: 'wallet',
+      icon: 'Wallet',
       path: '/home/project/card',
       component: './home/project/card',
     },
