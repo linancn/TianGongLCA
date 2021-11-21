@@ -2,14 +2,14 @@ export async function getHomeMenu() {
   return [
     {
       name: 'project',
-      icon: 'crown',
+      icon: 'wallet',
       path: '/home/project/card',
       component: './home/project/card',
     },
     {
       hideInMenu: true,
       name: 'project',
-      icon: 'crown',
+      icon: 'Wallet',
       path: '/home/project/table',
       component: './home/project/table',
       parentKeys: ['/home/project/card'],
@@ -17,31 +17,31 @@ export async function getHomeMenu() {
     {
       path: '/home/starred',
       name: 'starred',
-      icon: 'crown',
+      icon: 'Star',
       component: './home/welcome',
     },
     {
       path: '/home/create',
       name: 'create',
-      icon: 'crown',
+      icon: 'FileAdd',
       component: './home/welcome',
     },
     {
       path: '/home/connect',
       name: 'connect',
-      icon: 'crown',
+      icon: 'Api',
       component: './home/welcome',
     },
     {
       path: '/home/recyclebin',
       name: 'recyclebin',
-      icon: 'crown',
+      icon: 'Delete',
       component: './home/welcome',
     },
     {
       path: '/home/database',
       name: 'database',
-      icon: 'crown',
+      icon: 'Database',
       component: './home/welcome',
     },
   ];
