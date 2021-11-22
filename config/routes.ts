@@ -136,18 +136,6 @@ export default [
     ],
   },
   {
-    path: '/admin',
-    access: 'canAdmin',
-    component: './Admin',
-    routes: [
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './home/welcome',
-      },
-    ],
-  },
-  {
     path: '/',
     redirect: '/home/project/card',
   },
