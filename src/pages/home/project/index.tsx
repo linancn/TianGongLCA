@@ -64,20 +64,22 @@ const ListSearch: FC<ListSearchProps> = (props) => {
     <PageContainer
       content={
         <div style={{ textAlign: 'center' }}>
-          Name
-          <Input.Search
-            placeholder=""
-            enterButton="Search"
-            onSearch={handleFormSubmit}
-            style={{ maxWidth: 522, width: '100%' }}
-          />
-          <Button
-            onClick={() => {
-              handleDrawerCreateVisible(true);
-            }}
-          >
-            Create
-          </Button>
+          <Space>
+            Name:
+            <Input.Search
+              placeholder=""
+              enterButton="Search"
+              onSearch={handleFormSubmit}
+              style={{ maxWidth: 500, minWidth: 300 }}
+            />
+            <Button
+              onClick={() => {
+                handleDrawerCreateVisible(true);
+              }}
+            >
+              Create
+            </Button>
+          </Space>
         </div>
       }
       tabList={tabList}
