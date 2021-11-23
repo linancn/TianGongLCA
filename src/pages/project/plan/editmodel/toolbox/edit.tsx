@@ -17,16 +17,16 @@ import {
   ProfileOutlined,
   SelectOutlined,
 } from '@ant-design/icons';
-import type { EdgeProcess } from '@/services/edgeprocess/data';
 import {
   createEdgeProcess,
   deleteEdgeProcess,
-  getEdgeProcessGrid,
   updateEdgeProcess,
 } from '@/services/edgeprocess/api';
 import { getFlowProcessById, getFlowProcessGrid } from '@/services/flowprocess/api';
 import type { FlowProcess } from '@/services/flowprocess/data';
 import type { ListPagination } from '@/services/home/data';
+import { getEdgeProcessFlowGrid } from '@/services/edgeprocessflow/api';
+import type { EdgeProcessFlow } from '@/services/edgeprocessflow/data';
 
 type EditProps = {
   projectId: number;
@@ -47,7 +47,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
   const [editEdgeProcessPkid, setEditEdgeProcessPkid] = useState<number>();
   const formRefNode = useRef<ProFormInstance>();
   const actionRefEdge = useRef<ActionType>();
-  const edgeColumns: ProColumns<EdgeProcess>[] = [
+  const edgeColumns: ProColumns<EdgeProcessFlow>[] = [
     {
       title: '',
       render: (_, row) => [
@@ -63,16 +63,17 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
     },
     {
       title: 'ID',
-      dataIndex: 'pkid',
+      dataIndex: 'index',
+      valueType: 'index',
       sorter: true,
     },
     {
       title: 'Source Name',
-      dataIndex: 'sourceFlowId',
+      dataIndex: 'sourceFlowName',
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.sourceFlowId}
+          {row.sourceFlowName}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
           <Tooltip title="View">
@@ -103,7 +104,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.targetFlowId}
+          {row.targetFlowName}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
           <Tooltip title="View">
@@ -358,7 +359,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                 },
                 sort,
               ) => {
-                return getEdgeProcessGrid(
+                return getEdgeProcessFlowGrid(
                   params,
                   sort,
                   projectId,
