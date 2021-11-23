@@ -115,8 +115,8 @@ export default [
       },
       {
         name: 'measurements',
-        path: '/project/measurement/list',
-        component: './project/measurement/list',
+        path: '/project/measurement',
+        component: './project/measurement',
       },
       {
         name: 'units',
