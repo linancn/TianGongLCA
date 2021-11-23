@@ -22,11 +22,13 @@ import {
   deleteEdgeProcess,
   updateEdgeProcess,
 } from '@/services/edgeprocess/api';
-import { getFlowProcessById, getFlowProcessGrid } from '@/services/flowprocess/api';
+import { getFlowProcessById } from '@/services/flowprocess/api';
 import type { FlowProcess } from '@/services/flowprocess/data';
 import type { ListPagination } from '@/services/home/data';
 import { getEdgeProcessFlowGrid } from '@/services/edgeprocessflow/api';
 import type { EdgeProcessFlow } from '@/services/edgeprocessflow/data';
+import type { FlowProcessBase } from '@/services/flowprocessbase/data';
+import { getFlowProcessBaseGrid } from '@/services/flowprocessbase/api';
 
 type EditProps = {
   projectId: number;
@@ -43,7 +45,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
   const [drawerSelectTargetVisible, handleDrawerSelectTargetVisible] = useState(false);
   const [drawerBodyNode, setDrawerBodyNode] = useState<JSX.Element>();
   const [viewFlowProcessDescriptions, setViewFlowProcessDescriptions] = useState<JSX.Element>();
-  const [selectRowFlowProcess, setSelectRowFlowProcess] = useState<FlowProcess>();
+  const [selectRowFlowProcessBase, setSelectRowFlowProcessBase] = useState<FlowProcess>();
   const [editEdgeProcessPkid, setEditEdgeProcessPkid] = useState<number>();
   const formRefNode = useRef<ProFormInstance>();
   const actionRefEdge = useRef<ActionType>();
@@ -127,11 +129,16 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
       ],
     },
   ];
-  const flowProcessColumns: ProColumns<FlowProcess>[] = [
+  const flowProcessBaseColumns: ProColumns<FlowProcessBase>[] = [
     {
       title: 'ID',
-      dataIndex: 'pkid',
+      dataIndex: 'index',
+      valueType: 'index',
       search: false,
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
     },
     {
       title: 'Comment',
@@ -392,7 +399,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                   onClick={() =>
                     onSelectFlowProcessToEdgeProcess(
                       editEdgeProcessPkid,
-                      selectRowFlowProcess?.id,
+                      selectRowFlowProcessBase?.id,
                       'source',
                     )
                   }
@@ -403,7 +410,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
               </Space>
             }
           >
-            <ProTable<FlowProcess, ListPagination>
+            <ProTable<FlowProcessBase, ListPagination>
               search={{
                 defaultCollapsed: false,
               }}
@@ -414,7 +421,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                 },
                 sort,
               ) => {
-                return getFlowProcessGrid(
+                return getFlowProcessBaseGrid(
                   params,
                   sort,
                   projectId,
@@ -422,9 +429,9 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                   'output',
                 );
               }}
-              columns={flowProcessColumns}
+              columns={flowProcessBaseColumns}
               rowClassName={(record) => {
-                return record.pkid === selectRowFlowProcess?.pkid
+                return record.pkid === selectRowFlowProcessBase?.pkid
                   ? styles['split-row-select-active']
                   : '';
               }}
@@ -432,7 +439,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                 return {
                   onClick: () => {
                     if (record) {
-                      setSelectRowFlowProcess(record);
+                      setSelectRowFlowProcessBase(record);
                     }
                   },
                 };
@@ -452,7 +459,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                   onClick={() =>
                     onSelectFlowProcessToEdgeProcess(
                       editEdgeProcessPkid,
-                      selectRowFlowProcess?.id,
+                      selectRowFlowProcessBase?.id,
                       'target',
                     )
                   }
@@ -463,7 +470,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
               </Space>
             }
           >
-            <ProTable<FlowProcess, ListPagination>
+            <ProTable<FlowProcessBase, ListPagination>
               search={{
                 defaultCollapsed: false,
               }}
@@ -474,11 +481,17 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                 },
                 sort,
               ) => {
-                return getFlowProcessGrid(params, sort, projectId, selectedElement.target, 'input');
+                return getFlowProcessBaseGrid(
+                  params,
+                  sort,
+                  projectId,
+                  selectedElement.target,
+                  'input',
+                );
               }}
-              columns={flowProcessColumns}
+              columns={flowProcessBaseColumns}
               rowClassName={(record) => {
-                return record.pkid === selectRowFlowProcess?.pkid
+                return record.pkid === selectRowFlowProcessBase?.pkid
                   ? styles['split-row-select-active']
                   : '';
               }}
@@ -486,7 +499,7 @@ const Edit: FC<EditProps> = ({ projectId, planId, selectedElements }) => {
                 return {
                   onClick: () => {
                     if (record) {
-                      setSelectRowFlowProcess(record);
+                      setSelectRowFlowProcessBase(record);
                     }
                   },
                 };
