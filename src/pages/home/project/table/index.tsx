@@ -1,17 +1,28 @@
 import type { FC } from 'react';
-import { useState } from 'react';
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
-import { EditableProTable } from '@ant-design/pro-table';
+import ProTable from '@ant-design/pro-table';
 import {
   createProject,
   deleteProject,
+  getProject,
   getProjectList,
   updateProject,
 } from '@/services/project/api';
 import type { Project } from '@/services/project/data';
-import ProCard from '@ant-design/pro-card';
-import { message } from 'antd';
+import { Button, Descriptions, Drawer, message, Modal, Space, Tooltip } from 'antd';
+import type { ProFormInstance } from '@ant-design/pro-form';
+import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
+import {
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+  FormOutlined,
+  PlusOutlined,
+  ProfileOutlined,
+} from '@ant-design/icons';
+import moment from 'moment';
+import styles from './style.less';
+import { PageContainer } from '@ant-design/pro-layout';
 import type { ListPagination } from '@/services/home/data';
 /**
  * 更新节点
@@ -29,7 +40,14 @@ type ProjectListProps = {
 let oldSearchValue = '';
 const TableList: FC<ProjectListProps> = (props) => {
   const actionRef = useRef<ActionType>();
-  const [editableKeys, setEditableKeys] = useState<React.Key[]>([]);
+  const formRefCreate = useRef<ProFormInstance>();
+  const formRefEdit = useRef<ProFormInstance>();
+  const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
+  const [editDescriptions, setEditDescriptions] = useState<JSX.Element>();
+  const [drawerCreateVisible, handleDrawerCreateVisible] = useState(false);
+  const [drawerViewVisible, handleDrawerViewVisible] = useState(false);
+  const [drawerEditVisible, handleDrawerEditVisible] = useState(false);
+  const [editPkid, setEditPkid] = useState<number>(0);
   const { searchValue } = props.location.query;
   const columns: ProColumns<Project>[] = [
     {
@@ -54,16 +72,6 @@ const TableList: FC<ProjectListProps> = (props) => {
       dataIndex: 'comment',
       valueType: 'textarea',
     },
-    // {
-    //   title: 'Nation',
-    //   dataIndex: 'nation',
-    //   sorter: true,
-    // },
-    // {
-    //   title: 'Type',
-    //   dataIndex: 'type',
-    //   sorter: true,
-    // },
     {
       title: 'Star',
       dataIndex: 'star',
@@ -72,30 +80,31 @@ const TableList: FC<ProjectListProps> = (props) => {
     {
       title: 'Option',
       valueType: 'option',
-      render: (_, record: Project, _index, action) => [
-        <a
-          key="edit"
-          onClick={() => {
-            action?.startEditable?.(record.id);
-          }}
-        >
-          Edit
-        </a>,
-        <a
-          key="delete"
-          onClick={() => {
-            deleteProject(record.id).then(async (result) => {
-              if (result === 'ok') {
-                message.success('Delete successfully!');
-              } else {
-                message.error(result);
-              }
-              actionRef.current?.reload();
-            });
-          }}
-        >
-          Delete
-        </a>,
+      render: (_, record: Project) => [
+        <Tooltip title="View info">
+          <Button
+            shape="circle"
+            icon={<ProfileOutlined />}
+            size="small"
+            onClick={() => onView(record.id)}
+          />
+        </Tooltip>,
+        <Tooltip title="Edit info">
+          <Button
+            shape="circle"
+            icon={<FormOutlined />}
+            size="small"
+            onClick={() => onEdit(record.id)}
+          />
+        </Tooltip>,
+        <Tooltip title="Delete">
+          <Button
+            shape="circle"
+            icon={<DeleteOutlined />}
+            size="small"
+            onClick={() => onDelete(record.id)}
+          />
+        </Tooltip>,
       ],
     },
   ];
@@ -103,19 +112,99 @@ const TableList: FC<ProjectListProps> = (props) => {
     oldSearchValue = searchValue;
     actionRef.current?.reload();
   }
+  function onDelete(pkid: number) {
+    Modal.confirm({
+      title: 'Are you sure to delete this plan?',
+      icon: <ExclamationCircleOutlined />,
+      content: '',
+      onOk() {
+        deleteProject(pkid).then(async (result) => {
+          if (result === 'ok') {
+            message.success('Successfully deleted!');
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          } else {
+            message.error(result);
+          }
+        });
+      },
+      onCancel() {},
+    });
+  }
+  function onView(pkid: number) {
+    handleDrawerViewVisible(true);
+    getProject(pkid).then(async (result) => {
+      setViewDescriptions(
+        <Descriptions column={1}>
+          <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>
+          <Descriptions.Item label="Star">{result?.star}</Descriptions.Item>
+          <Descriptions.Item label="Last Update">
+            {moment(result?.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
+          </Descriptions.Item>
+          <Descriptions.Item label="Comment">{result?.comment}</Descriptions.Item>
+        </Descriptions>,
+      );
+    });
+  }
+  function onEdit(pkid: number) {
+    handleDrawerEditVisible(true);
+    setEditPkid(pkid);
+    getProject(pkid).then(async (pi) => {
+      setEditDescriptions(
+        <ProForm
+          formRef={formRefEdit}
+          submitter={{
+            render: () => {
+              return [];
+            },
+          }}
+          onFinish={async (values) => {
+            updateProject({ ...values, id: pi.id }).then(async (result) => {
+              if (result === 'ok') {
+                message.success('Edit successfully!');
+                handleDrawerEditVisible(false);
+                if (actionRef.current) {
+                  actionRef.current.reload();
+                }
+              } else {
+                message.error(result);
+              }
+            });
+            return true;
+          }}
+        >
+          <ProFormText width="md" name="name" label="Name" />
+          <ProFormTextArea width="md" name="comment" label="Comment" />
+        </ProForm>,
+      );
+      formRefEdit.current?.setFieldsValue(pi);
+    });
+  }
+  function onReset(pkid: number) {
+    getProject(pkid).then(async (pi) => {
+      formRefEdit.current?.setFieldsValue(pi);
+    });
+  }
   return (
-    <ProCard title="Project" bordered={false} collapsible>
-      <EditableProTable<Project, ListPagination>
+    <PageContainer>
+      <ProTable<Project, ListPagination>
         actionRef={actionRef}
-        recordCreatorProps={{
-          record: () => {
-            return {
-              id: -1,
-            };
-          },
+        search={{
+          defaultCollapsed: false,
         }}
-        columns={columns}
-        rowKey="id"
+        toolBarRender={() => [
+          <Tooltip title="Create">
+            <Button
+              size={'middle'}
+              type="text"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                handleDrawerCreateVisible(true);
+              }}
+            />
+          </Tooltip>,
+        ]}
         request={(
           params: {
             pageSize: number;
@@ -125,66 +214,77 @@ const TableList: FC<ProjectListProps> = (props) => {
         ) => {
           return getProjectList(params, sort, searchValue);
         }}
-        editable={{
-          editableKeys,
-          onSave: async (key, record) => {
-            if (key === -1) {
-              createProject(record).then(async (result) => {
-                if (result === 'ok') {
-                  message.success('Create successfully!');
-                } else {
-                  message.error(result);
-                }
-                actionRef.current?.reload();
-              });
-            } else {
-              updateProject(record).then(async (result) => {
-                if (result === 'ok') {
-                  message.success('Edit successfully!');
-                } else {
-                  message.error(result);
-                }
-                actionRef.current?.reload();
-              });
-            }
-          },
-          onChange: (keys) => {
-            setEditableKeys(keys);
-          },
-          onDelete: async (key, record) => {
-            if (key === -1) {
-              message.success('Nothing to Delete!');
-            } else {
-              deleteProject(record.id).then(async (result) => {
-                if (result === 'ok') {
-                  message.success('Delete successfully!');
-                } else {
-                  message.error(result);
-                }
-                actionRef.current?.reload();
-              });
-            }
-          },
-        }}
+        columns={columns}
       />
-    </ProCard>
-    // <div className={styles.filterCardList}>
-    //   <ProTable<ProjectListItem, ProjectListPagination>
-    //     actionRef={actionRef}
-    //     search={false}
-    //     request={(
-    //       params: {
-    //         pageSize: number;
-    //         current: number;
-    //       },
-    //       sort,
-    //     ) => {
-    //       return getProjectList(params, sort, searchValue);
-    //     }}
-    //     columns={columns}
-    //   />
-
-    // </div>
+      <Drawer
+        title="Create Plan"
+        width="400px"
+        maskClosable={false}
+        visible={drawerCreateVisible}
+        onClose={() => handleDrawerCreateVisible(false)}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={() => handleDrawerCreateVisible(false)}>Cancel</Button>
+            <Button onClick={() => formRefCreate.current?.submit()} type="primary">
+              Submit
+            </Button>
+          </Space>
+        }
+      >
+        <ProForm
+          formRef={formRefCreate}
+          submitter={{
+            render: () => {
+              return [];
+            },
+          }}
+          onFinish={async (values) => {
+            createProject({ ...values }).then(async (result) => {
+              if (result === 'ok') {
+                message.success('Create successfully!');
+                handleDrawerCreateVisible(false);
+                if (actionRef.current) {
+                  actionRef.current.reload();
+                }
+              } else {
+                message.error(result);
+              }
+            });
+            return true;
+          }}
+        >
+          <ProFormText width="md" name="name" label="Name" />
+          <ProFormTextArea width="md" name="comment" label="Comment" />
+        </ProForm>
+      </Drawer>
+      <Drawer
+        title="View Plan"
+        width="400px"
+        maskClosable={true}
+        visible={drawerViewVisible}
+        onClose={() => handleDrawerViewVisible(false)}
+      >
+        {viewDescriptions}
+      </Drawer>
+      <Drawer
+        title="Edit Plan"
+        width="400px"
+        maskClosable={false}
+        visible={drawerEditVisible}
+        onClose={() => handleDrawerEditVisible(false)}
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            <Button onClick={() => handleDrawerEditVisible(false)}>Cancel</Button>
+            <Button onClick={() => onReset(editPkid)}>Reset</Button>
+            <Button onClick={() => formRefEdit.current?.submit()} type="primary">
+              Submit
+            </Button>
+          </Space>
+        }
+      >
+        {editDescriptions}
+      </Drawer>
+    </PageContainer>
   );
 };
 
