@@ -5,7 +5,7 @@ import { Button, Drawer, message, Space, Tooltip } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import styles from '../style.less';
+import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getFlowBaseByPkid, updateFlowBase } from '@/services/flowbase/api';
 

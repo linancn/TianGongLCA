@@ -25,8 +25,8 @@ export async function getProjectMenu(projectId: any) {
               name: 'processes',
               icon: 'ShareAlt',
               locale: 'menu.processes',
-              path: `/project/process/list?projectid=${projectId}`,
-              component: './project/process/list',
+              path: `/project/process?projectid=${projectId}`,
+              component: './project/process',
             },
             {
               name: 'flows',
