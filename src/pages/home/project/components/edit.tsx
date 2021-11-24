@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 import { useState } from 'react';
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
-import type { ProFormInstance } from '@ant-design/pro-form';
+import { ProFormInstance, ProFormSelect } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '../style.less';
 import type { ActionType } from '@ant-design/pro-table';
@@ -45,6 +45,23 @@ const ProjectEdit: FC<Props> = ({ pkid, actionRef }) => {
           }}
         >
           <ProFormText width="md" name="name" label="Name" />
+          <ProFormText width="md" name="nation" label="Nation" />
+          <ProFormText width="md" name="type" label="Type" />
+          <ProFormSelect
+            options={[
+              {
+                value: 'true',
+                label: 'true',
+              },
+              {
+                value: 'false',
+                label: 'false',
+              },
+            ]}
+            width="md"
+            name="star"
+            label="Star"
+          />
           <ProFormTextArea width="md" name="comment" label="Comment" />
         </ProForm>,
       );
