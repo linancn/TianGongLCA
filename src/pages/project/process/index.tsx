@@ -1,21 +1,18 @@
 import type { FC } from 'react';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getProcessGrid } from '@/services/process/api';
 import type { Process } from '@/services/process/data';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Drawer, Space, Tooltip } from 'antd';
-import { OrderedListOutlined, SettingOutlined } from '@ant-design/icons';
-import styles from '@/style/custom.less';
+import { Button, Space, Tooltip } from 'antd';
+import { OrderedListOutlined } from '@ant-design/icons';
 import type { ListPagination } from '@/services/home/data';
-import ParameterCard from './setting/parameter';
-import InputCard from './setting/input';
-import OutputCard from './setting/output';
 import ProcessDelete from './components/delete';
 import ProcessView from './components/view';
 import ProcessEdit from './components/edit';
 import ProcessCreate from './components/create';
+import ProcessFlowSetting from './components/detail/setting';
 
 type ListProps = {
   location: {
@@ -28,8 +25,6 @@ type ListProps = {
 const TableList: FC<ListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { projectid } = porps.location.query;
-  const [drawerSettingVisible, handleDrawerSettingVisible] = useState(false);
-  const [setting, setSetting] = useState<JSX.Element>();
   const columns: ProColumns<Process>[] = [
     {
       title: 'ID',
@@ -89,8 +84,7 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
     },
     {
-      title: 'Flows',
-      dataIndex: 'flows',
+      title: 'Detail',
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
@@ -102,14 +96,7 @@ const TableList: FC<ListProps> = (porps) => {
               // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
             />
           </Tooltip>
-          <Tooltip title="Setting">
-            <Button
-              shape="circle"
-              icon={<SettingOutlined />}
-              size="small"
-              onClick={() => onSetting(row.projectId, row.id)}
-            />
-          </Tooltip>
+          <ProcessFlowSetting projectId={row.projectId} processId={row.id} />
         </Space>,
       ],
     },
@@ -125,16 +112,6 @@ const TableList: FC<ListProps> = (porps) => {
     },
   ];
 
-  function onSetting(projectId: number, processId: string) {
-    handleDrawerSettingVisible(true);
-    setSetting(
-      <>
-        <ParameterCard projectId={projectId} processId={processId} />
-        <InputCard projectId={projectId} processId={processId} />
-        <OutputCard projectId={projectId} processId={processId} />
-      </>,
-    );
-  }
   return (
     <PageContainer>
       <ProTable<Process, ListPagination>
@@ -154,23 +131,6 @@ const TableList: FC<ListProps> = (porps) => {
         }}
         columns={columns}
       />
-
-      <Drawer
-        title="Setting"
-        width="100%"
-        maskClosable={false}
-        visible={drawerSettingVisible}
-        onClose={() => handleDrawerSettingVisible(false)}
-        footer={
-          <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerSettingVisible(false)} type="primary">
-              Finish
-            </Button>
-          </Space>
-        }
-      >
-        {setting}
-      </Drawer>
     </PageContainer>
   );
 };

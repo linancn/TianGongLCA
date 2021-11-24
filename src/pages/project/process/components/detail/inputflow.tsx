@@ -15,6 +15,7 @@ import {
   ProfileOutlined,
   SelectOutlined,
 } from '@ant-design/icons';
+// import moment from 'moment';
 import styles from '@/style/custom.less';
 import {
   createFlowProcess,
@@ -29,12 +30,12 @@ import type { FlowProcessBase } from '@/services/flowprocessbase/data';
 import type { Parameter } from '@/services/parameter/data';
 import { getParameterGrid } from '@/services/parameter/api';
 
-type OutputProps = {
+type InputProps = {
   projectId: number;
   processId: string;
 };
 
-const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
+const InputFlowCard: FC<InputProps> = ({ projectId, processId }) => {
   const actionRef = useRef<ActionType>();
   const formRefCreate = useRef<ProFormInstance>();
   const formRefEdit = useRef<ProFormInstance>();
@@ -413,7 +414,7 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
   }
   actionRef.current?.reload();
   return (
-    <ProCard title="Output Flows" bordered={false} collapsible>
+    <ProCard title="Input Flows" bordered={false} collapsible>
       <ProTable<FlowProcessBase, ListPagination>
         actionRef={actionRef}
         search={{
@@ -438,7 +439,7 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
           },
           sort,
         ) => {
-          return getFlowProcessBaseGrid(params, sort, projectId, processId, 'output');
+          return getFlowProcessBaseGrid(params, sort, projectId, processId, 'input');
         }}
         columns={columns}
       />
@@ -516,7 +517,7 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
         {editForm}
       </Drawer>
       <Drawer
-        title="Create Output Flow"
+        title="Create Input Flow"
         width="400px"
         maskClosable={false}
         visible={drawerCreateVisible}
@@ -542,7 +543,7 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
               ...values,
               projectId,
               processId,
-              ioType: 'output',
+              ioType: 'input',
             }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Create successfully!');
@@ -645,7 +646,7 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
         />
       </Drawer>
       <Drawer
-        title="Edit Output Flow"
+        title="Edit Input Flow"
         width="400px"
         maskClosable={false}
         visible={drawerEditVisible}
@@ -772,4 +773,4 @@ const OutputCard: FC<OutputProps> = ({ projectId, processId }) => {
     </ProCard>
   );
 };
-export default OutputCard;
+export default InputFlowCard;

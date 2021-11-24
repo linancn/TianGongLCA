@@ -107,12 +107,6 @@ export default [
             path: '/project/process',
             component: './project/process',
           },
-          {
-            name: 'processes',
-            path: '/project/process/edit',
-            component: './project/process/edit',
-            layout: false,
-          },
         ],
       },
       {
