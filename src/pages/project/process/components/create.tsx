@@ -7,13 +7,13 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { createFlowBase } from '@/services/flowbase/api';
+import { createProcess } from '@/services/process/api';
 
 type Props = {
   projectId: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
+const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
   const [drawerVisible, handleDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
@@ -56,7 +56,7 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            createFlowBase({ ...values, projectId }).then(async (result) => {
+            createProcess({ ...values, projectId }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Successfully Created!');
                 handleDrawerVisible(false);
@@ -79,4 +79,4 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
   );
 };
 
-export default FlowCreate;
+export default ProcessCreate;

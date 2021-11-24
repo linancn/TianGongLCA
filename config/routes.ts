@@ -104,8 +104,8 @@ export default [
         routes: [
           {
             name: 'processes',
-            path: '/project/process/list',
-            component: './project/process/list',
+            path: '/project/process',
+            component: './project/process',
           },
           {
             name: 'processes',

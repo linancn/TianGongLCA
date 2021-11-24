@@ -22,8 +22,7 @@ import {
   PlusOutlined,
   ProfileOutlined,
 } from '@ant-design/icons';
-// import moment from 'moment';
-import styles from '../list/style.less';
+import styles from '@/style/custom.less';
 
 type ParameterProps = {
   projectId: number;

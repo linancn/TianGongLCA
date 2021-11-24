@@ -10,4 +10,5 @@ export type Process = {
   type: string;
   nation: string;
   source: string;
+  version: string;
 };
