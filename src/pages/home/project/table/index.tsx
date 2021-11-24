@@ -7,6 +7,7 @@ import {
   deleteProject,
   getProject,
   getProjectList,
+  starProject,
   updateProject,
 } from '@/services/project/api';
 import type { Project } from '@/services/project/data';
@@ -19,6 +20,8 @@ import {
   FormOutlined,
   PlusOutlined,
   ProfileOutlined,
+  StarFilled,
+  StarOutlined,
 } from '@ant-design/icons';
 import moment from 'moment';
 import styles from './style.less';
@@ -72,10 +75,25 @@ const TableList: FC<ProjectListProps> = (props) => {
       dataIndex: 'comment',
       valueType: 'textarea',
     },
+    // {
+    //   title: 'Star',
+    //   dataIndex: 'star',
+    //   sorter: false,
+    // },
     {
       title: 'Star',
-      dataIndex: 'star',
-      sorter: false,
+      render: (_, row: Project) => [
+        <Tooltip title={row.star === true ? 'Starred' : 'No star'}>
+          <Button
+            shape="circle"
+            icon={row.star === true ? <StarFilled /> : <StarOutlined />}
+            size="small"
+            onClick={() => {
+              onStar(row.id, row.star);
+            }}
+          />
+        </Tooltip>,
+      ],
     },
     {
       title: 'Option',
@@ -112,6 +130,26 @@ const TableList: FC<ProjectListProps> = (props) => {
     oldSearchValue = searchValue;
     actionRef.current?.reload();
   }
+  function onStar(pkid: number, star: any) {
+    Modal.confirm({
+      title: `Are you sure to ${star === true ? 'remove star' : 'add star'} this project?`,
+      icon: <ExclamationCircleOutlined />,
+      content: '',
+      onOk() {
+        starProject(pkid).then(async (result) => {
+          if (result === 'ok') {
+            message.success(`Successfully ${star === true ? 'remove star' : 'add star'}!`);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          } else {
+            message.error(result);
+          }
+        });
+      },
+      onCancel() {},
+    });
+  }
   function onDelete(pkid: number) {
     Modal.confirm({
       title: 'Are you sure to delete this plan?',
@@ -138,7 +176,9 @@ const TableList: FC<ProjectListProps> = (props) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>
-          <Descriptions.Item label="Star">{result?.star}</Descriptions.Item>
+          <Descriptions.Item label="Star">
+            {result?.star === true ? 'true' : 'false'}
+          </Descriptions.Item>
           <Descriptions.Item label="Last Update">
             {moment(result?.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
