@@ -1,18 +1,13 @@
 import type { FC } from 'react';
 import { useRef } from 'react';
-import { getProjectList, starProject, deleteProject } from '@/services/project/api';
+import { getProjectList } from '@/services/project/api';
 import type { Project } from '@/services/project/data';
 import ProList from '@ant-design/pro-list';
 import type { ActionType } from '@ant-design/pro-table';
-import {
-  FolderOpenOutlined,
-  DeleteOutlined,
-  StarFilled,
-  StarOutlined,
-  ExclamationCircleOutlined,
-} from '@ant-design/icons';
-import { Button, message, Modal, Tooltip } from 'antd';
 import moment from 'moment';
+import ProjectStar from '../components/star';
+import ProjectDelete from '../components/delete';
+import ProjectOpen from '../components/open';
 
 type ProjectListProps = {
   location: {
@@ -27,46 +22,6 @@ let reload = 0;
 const ListSearchApplications: FC<ProjectListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { nl, r } = porps.location.query;
-  function onStar(pkid: number, star: any) {
-    Modal.confirm({
-      title: `Are you sure to ${star === true ? 'remove star' : 'add star'} this project?`,
-      icon: <ExclamationCircleOutlined />,
-      content: '',
-      onOk() {
-        starProject(pkid).then(async (result) => {
-          if (result === 'ok') {
-            message.success(`Successfully ${star === true ? 'remove star' : 'add star'}!`);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          } else {
-            message.error(result);
-          }
-        });
-      },
-      onCancel() {},
-    });
-  }
-  function onDelete(pkid: number) {
-    Modal.confirm({
-      title: 'Are you sure to delete this plan?',
-      icon: <ExclamationCircleOutlined />,
-      content: '',
-      onOk() {
-        deleteProject(pkid).then(async (result) => {
-          if (result === 'ok') {
-            message.success('Successfully deleted!');
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          } else {
-            message.error(result);
-          }
-        });
-      },
-      onCancel() {},
-    });
-  }
   if (nameLike !== nl) {
     nameLike = nl;
     actionRef.current?.reload();
@@ -97,33 +52,9 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
         actions: {
           render: (_, row) => {
             return [
-              <Tooltip title={row.star === true ? 'Starred' : 'No star'}>
-                <Button
-                  shape="circle"
-                  icon={row.star === true ? <StarFilled /> : <StarOutlined />}
-                  size="small"
-                  onClick={() => {
-                    onStar(row.id, row.star);
-                  }}
-                />
-              </Tooltip>,
-              <Tooltip title="Open">
-                <Button
-                  href={`/project/plan/list?projectid=${row.id}`}
-                  // target='_blank'
-                  shape="circle"
-                  icon={<FolderOpenOutlined />}
-                  size="small"
-                />
-              </Tooltip>,
-              <Tooltip title="Delete">
-                <Button
-                  shape="circle"
-                  icon={<DeleteOutlined />}
-                  size="small"
-                  onClick={() => onDelete(row.id)}
-                />
-              </Tooltip>,
+              <ProjectStar pkid={row.id} star={row.star} actionRef={actionRef} />,
+              <ProjectOpen pkid={row.id} />,
+              <ProjectDelete pkid={row.id} actionRef={actionRef} />,
             ];
           },
         },
