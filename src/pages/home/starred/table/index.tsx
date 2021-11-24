@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getStarredProjectList } from '@/services/project/api';
+import { getProjectList } from '@/services/project/api';
 import type { Project } from '@/services/project/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ListPagination } from '@/services/home/data';
@@ -96,7 +96,7 @@ const TableList: FC<ProjectListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getStarredProjectList(params, sort, nl);
+          return getProjectList(params, sort, nl, true);
         }}
         columns={columns}
       />

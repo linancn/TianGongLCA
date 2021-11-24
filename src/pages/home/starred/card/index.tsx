@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useRef } from 'react';
-import { getStarredProjectList } from '@/services/project/api';
+import { getProjectList } from '@/services/project/api';
 import type { Project } from '@/services/project/data';
 import ProList from '@ant-design/pro-list';
 import type { ActionType } from '@ant-design/pro-table';
@@ -34,7 +34,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
     <ProList<Project>
       actionRef={actionRef}
       request={(params) => {
-        return getStarredProjectList(params, { lastUpdateTime: 'descend' }, nl);
+        return getProjectList(params, { lastUpdateTime: 'descend' }, nl, true);
       }}
       grid={{
         gutter: 16,
