@@ -108,8 +108,8 @@ export default [
         routes: [
           {
             name: 'flows',
-            path: '/project/flow/list',
-            component: './project/flow/list',
+            path: '/project/flow',
+            component: './project/flow',
           },
         ],
       },

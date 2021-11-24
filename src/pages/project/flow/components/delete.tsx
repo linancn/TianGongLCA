@@ -1,22 +1,22 @@
 import type { FC } from 'react';
 import { useCallback } from 'react';
-import { deleteMeasurementBase } from '@/services/measurementbase/api';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
+import { deleteFlowBase } from '@/services/flowbase/api';
 
 type Props = {
   pkid: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const MeasurementDelete: FC<Props> = ({ pkid, actionRef }) => {
+const FlowDelete: FC<Props> = ({ pkid, actionRef }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
-      title: 'Are you sure to delete this measurement?',
+      title: 'Are you sure to delete this flow?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deleteMeasurementBase(pkid).then(async (result) => {
+        deleteFlowBase(pkid).then(async (result) => {
           if (result === 'ok') {
             message.success('Successfully deleted!');
             actionRef.current?.reload();
@@ -37,4 +37,4 @@ const MeasurementDelete: FC<Props> = ({ pkid, actionRef }) => {
   );
 };
 
-export default MeasurementDelete;
+export default FlowDelete;

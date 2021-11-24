@@ -32,8 +32,8 @@ export async function getProjectMenu(projectId: any) {
               name: 'flows',
               icon: 'NodeExpand',
               locale: 'menu.flows',
-              path: `/project/flow/list?projectid=${projectId}`,
-              component: './project/flow/list',
+              path: `/project/flow?projectid=${projectId}`,
+              component: './project/flow',
             },
             {
               name: 'measurements',
