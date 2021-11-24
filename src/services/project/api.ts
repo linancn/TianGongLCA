@@ -65,7 +65,7 @@ export async function createProject(data?: Record<string, any>) {
 }
 /** Put /api/project */
 export async function starProject(id: number) {
-  return request<Project>(`http://localhost:8081/api/project/starred/${id}`, {
+  return request<string>(`http://localhost:8081/api/project/flag/${id}`, {
     method: 'PUT',
   });
 }
