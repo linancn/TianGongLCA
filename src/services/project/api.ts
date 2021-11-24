@@ -30,6 +30,34 @@ export async function getProjectList(
   });
 }
 
+export async function getStarredProjectList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  sort: Record<string, SortOrder>,
+  // filter: Record<string, React.ReactText[] | null>,
+  name: string,
+  // options?: { [key: string]: any },
+) {
+  const sortBy = Object.keys(sort)[0];
+  const orderBy = sort[sortBy]?.replace('end', '');
+  return request<{
+    data: Project[];
+    total?: number;
+    success?: boolean;
+  }>('http://localhost:8081/api/project/starred/grid', {
+    method: 'GET',
+    params: {
+      ...params,
+      sortBy,
+      orderBy,
+      name,
+    },
+    // ...(options || {}),
+  });
+}
+
 /** PUT /api/project */
 // export async function updateProject(options?: Record<string, any>) {
 //   return request<ProjectListItem>('/api/project', {

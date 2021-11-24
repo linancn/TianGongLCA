@@ -38,7 +38,19 @@ export default [
       {
         name: 'starred',
         path: '/home/starred',
-        component: './home/welcome',
+        component: './home/starred',
+        routes: [
+          {
+            name: 'starred.card',
+            path: '/home/starred/card',
+            component: './home/starred/card',
+          },
+          {
+            name: 'starred.table',
+            path: '/home/starred/table',
+            component: './home/starred/table',
+          },
+        ],
       },
       {
         name: 'create',
