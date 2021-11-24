@@ -27,10 +27,26 @@ let reload = 0;
 const ListSearchApplications: FC<ProjectListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { nl, r } = porps.location.query;
-  const setstar = (id: number) => {
-    starProject(id);
-    actionRef.current?.reload();
-  };
+  function onStar(pkid: number, star: any) {
+    Modal.confirm({
+      title: `Are you sure to ${star === true ? 'remove star' : 'add star'} this project?`,
+      icon: <ExclamationCircleOutlined />,
+      content: '',
+      onOk() {
+        starProject(pkid).then(async (result) => {
+          if (result === 'ok') {
+            message.success(`Successfully ${star === true ? 'remove star' : 'add star'}!`);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          } else {
+            message.error(result);
+          }
+        });
+      },
+      onCancel() {},
+    });
+  }
   function onDelete(pkid: number) {
     Modal.confirm({
       title: 'Are you sure to delete this plan?',
@@ -87,7 +103,7 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
                   icon={row.star === true ? <StarFilled /> : <StarOutlined />}
                   size="small"
                   onClick={() => {
-                    setstar(row.id);
+                    onStar(row.id, row.star);
                   }}
                 />
               </Tooltip>,
