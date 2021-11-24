@@ -10,6 +10,7 @@ export async function getProjectList(
   sort: Record<string, SortOrder>,
   // filter: Record<string, React.ReactText[] | null>,
   name: string,
+  star?: boolean,
   // options?: { [key: string]: any },
 ) {
   const sortBy = Object.keys(sort)[0];
@@ -25,34 +26,7 @@ export async function getProjectList(
       sortBy,
       orderBy,
       name,
-    },
-    // ...(options || {}),
-  });
-}
-
-export async function getStarredProjectList(
-  params: {
-    current?: number;
-    pageSize?: number;
-  },
-  sort: Record<string, SortOrder>,
-  // filter: Record<string, React.ReactText[] | null>,
-  name: string,
-  // options?: { [key: string]: any },
-) {
-  const sortBy = Object.keys(sort)[0];
-  const orderBy = sort[sortBy]?.replace('end', '');
-  return request<{
-    data: Project[];
-    total?: number;
-    success?: boolean;
-  }>('http://localhost:8081/api/project/starred/grid', {
-    method: 'GET',
-    params: {
-      ...params,
-      sortBy,
-      orderBy,
-      name,
+      star,
     },
     // ...(options || {}),
   });
