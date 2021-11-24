@@ -6,7 +6,6 @@ import { getProjectList } from '@/services/project/api';
 import type { Project } from '@/services/project/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ListPagination } from '@/services/home/data';
-import ProjectCreate from '../components/create';
 import ProjectDelete from '../components/delete';
 import ProjectEdit from '../components/edit';
 import ProjectView from '../components/view';
@@ -20,14 +19,24 @@ import ProjectStar from '../components/star';
 type ProjectListProps = {
   location: {
     query: {
-      searchValue: string;
+      nl: string;
+      r: number;
     };
   };
 };
-let oldSearchValue = '';
-const TableList: FC<ProjectListProps> = (props) => {
+let nameLike = '';
+let reload = 0;
+const TableList: FC<ProjectListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
-  const { searchValue } = props.location.query;
+  const { nl, r } = porps.location.query;
+  if (nameLike !== nl) {
+    nameLike = nl;
+    actionRef.current?.reload();
+  }
+  if (reload < r) {
+    reload = r;
+    actionRef.current?.reload();
+  }
   const columns: ProColumns<Project>[] = [
     {
       title: 'Name',
@@ -56,34 +65,30 @@ const TableList: FC<ProjectListProps> = (props) => {
     //   dataIndex: 'star',
     //   sorter: false,
     // },
-    {
-      title: 'Star',
-      render: (_, record: Project) => [
-        <ProjectStar pkid={record.id} star={record.star} actionRef={actionRef} />,
-      ],
-    },
+    // {
+    //   title: 'Star',
+    //   render: (_, record: Project) => [
+    //     <ProjectStar pkid={record.id} star={record.star} actionRef={actionRef} />,
+    //   ],
+    // },
     {
       title: 'Option',
       valueType: 'option',
       render: (_, record: Project) => [
+        <ProjectStar pkid={record.id} star={record.star} actionRef={actionRef} />,
         <ProjectView pkid={record.id} />,
         <ProjectEdit pkid={record.id} actionRef={actionRef} />,
         <ProjectDelete pkid={record.id} actionRef={actionRef} />,
       ],
     },
   ];
-  if (oldSearchValue !== searchValue) {
-    oldSearchValue = searchValue;
-    actionRef.current?.reload();
-  }
+
   return (
-    <PageContainer>
+    <PageContainer title={false}>
       <ProTable<Project, ListPagination>
         actionRef={actionRef}
-        search={{
-          defaultCollapsed: false,
-        }}
-        toolBarRender={() => [<ProjectCreate actionRef={actionRef} />]}
+        search={false}
+        // toolBarRender={() => [<ProjectCreate actionRef={actionRef} />]}
         request={(
           params: {
             pageSize: number;
@@ -91,7 +96,7 @@ const TableList: FC<ProjectListProps> = (props) => {
           },
           sort,
         ) => {
-          return getProjectList(params, sort, searchValue);
+          return getProjectList(params, sort, nl);
         }}
         columns={columns}
       />
