@@ -7,20 +7,20 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { getProcessByPkid, updateProcess } from '@/services/process/api';
+import { getParameterByPkid, updateParameter } from '@/services/parameter/api';
 
 type Props = {
   pkid: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
+const ProcessParameterEdit: FC<Props> = ({ pkid, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, handleDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
     handleDrawerVisible(true);
-    getProcessByPkid(pkid).then(async (pi) => {
+    getParameterByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -30,7 +30,7 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            updateProcess({ ...values, pkid: pi.pkid }).then(async (result) => {
+            updateParameter({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Successfully Edited!');
                 handleDrawerVisible(false);
@@ -45,18 +45,20 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
           }}
         >
           <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="source" label="Source" />
-          <ProFormText width="md" name="type" label="Type" />
+          <ProFormText width="md" name="formula" label="Formula" />
+          <ProFormText width="md" name="value" label="Value" />
+          <ProFormText width="md" name="min" label="Min" />
+          <ProFormText width="md" name="max" label="Max" />
+          <ProFormText width="md" name="sd" label="SD" />
           <ProFormTextArea width="md" name="comment" label="Comment" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [pkid, actionRef]);
 
   const onReset = () => {
-    getProcessByPkid(pkid).then(async (result) => {
+    getParameterByPkid(pkid).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };
@@ -69,7 +71,7 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
       <Drawer
         title="Edit"
         width="400px"
-        maskClosable={true}
+        maskClosable={false}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}
         footer={
@@ -88,4 +90,4 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
   );
 };
 
-export default ProcessEdit;
+export default ProcessParameterEdit;

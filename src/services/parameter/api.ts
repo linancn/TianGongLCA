@@ -29,10 +29,13 @@ export async function getParameterGrid(
   });
 }
 
-export async function getParameterById(projectId: number, id: string) {
-  return request<Parameter>(`http://localhost:8081/api/parameter/get/${projectId}/${id}`, {
-    method: 'GET',
-  });
+export async function getParameterById(projectId: number, processId: string, id: string) {
+  return request<Parameter>(
+    `http://localhost:8081/api/parameter/get/${projectId}/${processId}/${id}`,
+    {
+      method: 'GET',
+    },
+  );
 }
 
 export async function getParameterByPkid(pkid: number) {

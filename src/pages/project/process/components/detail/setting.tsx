@@ -4,8 +4,7 @@ import { Button, Drawer, Space, Tooltip } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import styles from '@/style/custom.less';
 import ParameterCard from './parameter';
-import InputFlowCard from './inputflow';
-import OutputFlowCard from './outputflow';
+import FlowCard from './flow';
 
 type Props = {
   projectId: number;
@@ -20,8 +19,8 @@ const ProcessFlowSetting: FC<Props> = ({ projectId, processId }) => {
     setSetting(
       <>
         <ParameterCard projectId={projectId} processId={processId} />
-        <InputFlowCard projectId={projectId} processId={processId} />
-        <OutputFlowCard projectId={projectId} processId={processId} />
+        <FlowCard projectId={projectId} processId={processId} ioType="input" />
+        <FlowCard projectId={projectId} processId={processId} ioType="output" />
       </>,
     );
   };

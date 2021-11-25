@@ -1,9 +1,12 @@
 export type FlowProcess = {
   pkid: number;
-  id?: string;
+  id: string;
   projectId: number;
   processId: string;
   ioType: string;
-  comment?: string;
-  flowBaseId?: string;
+  amount: number;
+  sd: number;
+  factor: number;
+  parameterId: string;
+  flowBaseId: string;
 };

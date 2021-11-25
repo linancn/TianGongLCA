@@ -102,6 +102,7 @@ const TableList: FC<ListProps> = (porps) => {
     },
     {
       title: 'Option',
+      search: false,
       render: (_, row) => [
         <Space size={'small'}>
           <ProcessView pkid={row.pkid} />

@@ -4,8 +4,6 @@ export type Parameter = {
   projectId: number;
   processId: string;
   name: string;
-  lastUpdateTime?: Date;
-  comment: string;
   formula?: string;
   value?: number;
   min?: number;

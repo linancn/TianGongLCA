@@ -44,24 +44,3 @@ export async function getFlowProcessBaseById(projectid: number, processid: strin
     },
   );
 }
-
-export async function updateFlowProcessBase(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flowprocessbase/update', {
-    method: 'PUT',
-    data,
-  });
-}
-
-export async function createFlowProcessBase(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flowprocessbase/create', {
-    method: 'POST',
-    data,
-  });
-}
-
-/** Delete /api/plan */
-export async function deleteFlowProcessBase(id: number) {
-  return request<string>(`http://localhost:8081/api/flowprocessbase/delete/${id}`, {
-    method: 'DELETE',
-  });
-}
