@@ -4,7 +4,6 @@ import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getProjectList } from '@/services/project/api';
 import type { Project } from '@/services/project/data';
-import { PageContainer } from '@ant-design/pro-layout';
 import type { ListPagination } from '@/services/home/data';
 import ProjectDelete from '../components/delete';
 import ProjectEdit from '../components/edit';
@@ -84,23 +83,21 @@ const TableList: FC<ProjectListProps> = (porps) => {
   ];
 
   return (
-    <PageContainer title={false}>
-      <ProTable<Project, ListPagination>
-        actionRef={actionRef}
-        search={false}
-        // toolBarRender={() => [<ProjectCreate actionRef={actionRef} />]}
-        request={(
-          params: {
-            pageSize: number;
-            current: number;
-          },
-          sort,
-        ) => {
-          return getProjectList(params, sort, nl);
-        }}
-        columns={columns}
-      />
-    </PageContainer>
+    <ProTable<Project, ListPagination>
+      actionRef={actionRef}
+      search={false}
+      // toolBarRender={() => [<ProjectCreate actionRef={actionRef} />]}
+      request={(
+        params: {
+          pageSize: number;
+          current: number;
+        },
+        sort,
+      ) => {
+        return getProjectList(params, sort, nl);
+      }}
+      columns={columns}
+    />
   );
 };
 

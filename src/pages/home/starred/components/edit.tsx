@@ -6,7 +6,7 @@ import { FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { ProFormSelect } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
-import styles from '../style.less';
+import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getProject, updateProject } from '@/services/project/api';
 

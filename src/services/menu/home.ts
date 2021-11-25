@@ -10,8 +10,9 @@ export async function getHomeMenu() {
       hideInMenu: true,
       name: 'project',
       icon: 'Wallet',
-      path: '/home/project/card',
-      component: './home/project/card',
+      path: '/home/project/table',
+      component: './home/project/table',
+      parentKeys: ['/home/project/card'],
     },
     {
       name: 'starred',

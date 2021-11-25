@@ -6,7 +6,7 @@ import { Button, Drawer, Input, message, Space } from 'antd';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
-import styles from './style.less';
+import styles from '@/style/custom.less';
 
 type ListSearchProps = {
   match: {
