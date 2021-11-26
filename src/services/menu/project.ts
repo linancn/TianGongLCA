@@ -18,8 +18,8 @@ export async function getProjectMenu(projectId: any) {
               name: 'plans',
               icon: 'Apartment',
               locale: 'menu.plans',
-              path: `/project/plan/list?projectid=${projectId}`,
-              component: './project/plan/list',
+              path: `/project/plan?projectid=${projectId}`,
+              component: './project/plan',
             },
             {
               name: 'processes',

@@ -82,8 +82,8 @@ export default [
         routes: [
           {
             name: 'plans',
-            path: '/project/plan/list',
-            component: './project/plan/list',
+            path: '/project/plan',
+            component: './project/plan',
           },
           {
             name: 'editmodel',

@@ -9,6 +9,7 @@ export type PlanInfo = {
   comment: string;
   type: string;
   nation: string;
+  version: string;
 };
 
 export type PlanModel = {

@@ -10,7 +10,7 @@ const ProjectOpen: FC<Props> = ({ pkid }) => {
     <>
       <Tooltip title="Open">
         <Button
-          href={`/project/plan/list?projectid=${pkid}`}
+          href={`/project/plan?projectid=${pkid}`}
           // target='_blank'
           shape="circle"
           icon={<FolderOpenOutlined />}
