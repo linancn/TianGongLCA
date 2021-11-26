@@ -12,6 +12,7 @@ import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import fixMenuItemIcon from './utils/fixMenuItemIcon';
 import { getHomeMenu } from './services/menu/home';
 import { getProjectMenu } from './services/menu/project';
+import HeaderContent from './components/HeaderContent';
 
 // const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -140,6 +141,7 @@ export const layout = ({
       );
     },
     rightContentRender: () => <RightContent />,
+    headerContentRender: () => <HeaderContent />,
     disableContentMargin: false,
     // waterMarkProps: {
     //   content: initialState?.currentUser?.name,
