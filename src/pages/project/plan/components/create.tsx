@@ -7,13 +7,13 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { createProcess } from '@/services/process/api';
+import { createPlan } from '@/services/plan/api';
 
 type Props = {
   projectId: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
+const PlanCreate: FC<Props> = ({ projectId, actionRef }) => {
   const [drawerVisible, handleDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
@@ -56,9 +56,9 @@ const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            createProcess({ ...values, projectId }).then(async (result) => {
+            createPlan({ ...values, projectId }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Successfully Created!');
+                message.success('Create successfully!');
                 handleDrawerVisible(false);
                 reload();
               } else {
@@ -69,9 +69,8 @@ const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
           }}
         >
           <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="source" label="Source" />
           <ProFormText width="md" name="type" label="Type" />
+          <ProFormText width="md" name="nation" label="Nation" />
           <ProFormTextArea width="md" name="comment" label="Comment" />
         </ProForm>
       </Drawer>
@@ -79,4 +78,4 @@ const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
   );
 };
 
-export default ProcessCreate;
+export default PlanCreate;

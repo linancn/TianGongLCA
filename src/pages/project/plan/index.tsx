@@ -1,21 +1,17 @@
 import type { FC } from 'react';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { createPlan, getPlanInfoGrid } from '@/services/plan/api';
+import { getPlanInfoGrid } from '@/services/plan/api';
 import type { PlanInfo } from '@/services/plan/data';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import type { ProFormInstance } from '@ant-design/pro-form';
-import { ProFormTextArea } from '@ant-design/pro-form';
-import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { PlusOutlined } from '@ant-design/icons';
-import styles from '@/style/custom.less';
+import { Space } from 'antd';
 import type { ListPagination } from '@/services/home/data';
 import PlanDelete from './components/delete';
 import PlanView from './components/view';
 import PlanEdit from './components/edit';
 import PlanOpen from './components/open';
+import PlanCreate from './components/create';
 
 type ListProps = {
   location: {
@@ -27,8 +23,6 @@ type ListProps = {
 const PlanList: FC<ListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const { projectid } = porps.location.query;
-  const formRefCreate = useRef<ProFormInstance>();
-  const [drawerCreateVisible, handleDrawerCreateVisible] = useState(false);
   const columns: ProColumns<PlanInfo>[] = [
     {
       title: 'ID',
@@ -109,18 +103,7 @@ const PlanList: FC<ListProps> = (porps) => {
         search={{
           defaultCollapsed: false,
         }}
-        toolBarRender={() => [
-          <Tooltip title="Create">
-            <Button
-              size={'middle'}
-              type="text"
-              icon={<PlusOutlined />}
-              onClick={() => {
-                handleDrawerCreateVisible(true);
-              }}
-            />
-          </Tooltip>,
-        ]}
+        toolBarRender={() => [<PlanCreate projectId={projectid} actionRef={actionRef} />]}
         request={(
           params: {
             pageSize: number;
@@ -132,49 +115,6 @@ const PlanList: FC<ListProps> = (porps) => {
         }}
         columns={columns}
       />
-      <Drawer
-        title="Create Plan"
-        width="400px"
-        maskClosable={false}
-        visible={drawerCreateVisible}
-        onClose={() => handleDrawerCreateVisible(false)}
-        footer={
-          <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerCreateVisible(false)}>Cancel</Button>
-            <Button onClick={() => formRefCreate.current?.submit()} type="primary">
-              Submit
-            </Button>
-          </Space>
-        }
-      >
-        <ProForm
-          formRef={formRefCreate}
-          submitter={{
-            render: () => {
-              return [];
-            },
-          }}
-          onFinish={async (values) => {
-            createPlan({ ...values, projectId: projectid }).then(async (result) => {
-              if (result === 'ok') {
-                message.success('Create successfully!');
-                handleDrawerCreateVisible(false);
-                if (actionRef.current) {
-                  actionRef.current.reload();
-                }
-              } else {
-                message.error(result);
-              }
-            });
-            return true;
-          }}
-        >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="type" label="Type" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
-        </ProForm>
-      </Drawer>
     </PageContainer>
   );
 };
