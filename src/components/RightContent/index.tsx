@@ -1,5 +1,11 @@
-import { Space } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Space } from 'antd';
+import {
+  CloseOutlined,
+  FullscreenExitOutlined,
+  FullscreenOutlined,
+  MinusOutlined,
+  QuestionCircleOutlined,
+} from '@ant-design/icons';
 import React from 'react';
 import { useModel, SelectLang } from 'umi';
 import Avatar from './AvatarDropdown';
@@ -21,8 +27,9 @@ const GlobalHeaderRight: React.FC = () => {
     className = `${styles.right}  ${styles.dark}`;
   }
   return (
-    <Space className={className}>
-      {/* <HeaderSearch
+    <>
+      <Space className={className}>
+        {/* <HeaderSearch
         className={`${styles.action} ${styles.search}`}
         placeholder="站内搜索"
         defaultValue="umi ui"
@@ -45,17 +52,31 @@ const GlobalHeaderRight: React.FC = () => {
         //   console.log('input', value);
         // }}
       /> */}
-      <span
-        className={styles.action}
-        onClick={() => {
-          // window.open('https://pro.ant.design/docs/getting-started');
-        }}
-      >
-        <QuestionCircleOutlined />
-      </span>
-      <Avatar />
-      <SelectLang className={styles.action} />
-    </Space>
+        <span
+          className={styles.action}
+          onClick={() => {
+            // window.open('https://pro.ant.design/docs/getting-started');
+          }}
+        >
+          <QuestionCircleOutlined />
+        </span>
+        <Avatar />
+        <SelectLang className={styles.action} />
+      </Space>
+      <Space id="electron" className={styles.electron}>
+        |
+        <Button type="link" id="electron_minimize" icon={<MinusOutlined />} />
+        <Button type="link" id="electron_maximize" icon={<FullscreenExitOutlined />} />
+        <Button type="link" id="electron_restore" icon={<FullscreenOutlined />} />
+        <Button
+          type="link"
+          icon={<CloseOutlined />}
+          onClick={() => {
+            window.close();
+          }}
+        />
+      </Space>
+    </>
   );
 };
 export default GlobalHeaderRight;
