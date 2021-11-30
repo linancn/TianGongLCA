@@ -1,9 +1,8 @@
 import { Button, Space } from 'antd';
 import {
+  ExpandAltOutlined,
   CloseOutlined,
-  FullscreenExitOutlined,
-  FullscreenOutlined,
-  MinusOutlined,
+  LineOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
 import React from 'react';
@@ -64,10 +63,9 @@ const GlobalHeaderRight: React.FC = () => {
         <SelectLang className={styles.action} />
       </Space>
       <Space id="electron" className={styles.electron}>
-        |
-        <Button type="link" id="electron_minimize" icon={<MinusOutlined />} />
-        <Button type="link" id="electron_maximize" icon={<FullscreenExitOutlined />} />
-        <Button type="link" id="electron_restore" icon={<FullscreenOutlined />} />
+        <Button type="link" id="electron_minimize" icon={<LineOutlined />} />
+        {/* <Button type="link" id="electron_maximize" icon={<FullscreenExitOutlined />} /> */}
+        <Button type="link" id="electron_restore" icon={<ExpandAltOutlined />} />
         <Button
           type="link"
           icon={<CloseOutlined />}
