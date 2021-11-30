@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import styles from '../index.less';
+import styles from '@/style/custom.less';
 import { Button, Drawer, Space } from 'antd';
 import { getPlanParentGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';

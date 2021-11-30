@@ -13,7 +13,6 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 
 import Toolbox from './toolbox';
-// import Sidebar from './sidebar';
 import { getPlanModel } from '@/services/plan/api';
 
 type modelProps = {
@@ -46,7 +45,7 @@ const SaveRestore: FC<modelProps> = (props) => {
       }
     });
   }
-  // console.log(plan);
+
   const onConnect = (params: Connection | Edge) =>
     setElements((els) =>
       addEdge(

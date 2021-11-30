@@ -1,26 +1,19 @@
 import type { Dispatch, FC } from 'react';
 import React, { useCallback } from 'react';
 import type { OnLoadParams, Elements } from 'react-flow-renderer';
-import {
-  // useZoomPanHelper,
-  useStoreState,
-  // removeElements,
-  // isNode,
-  // isEdge,
-  // useStoreActions,
-} from 'react-flow-renderer';
+import { useStoreState } from 'react-flow-renderer';
 import localforage from 'localforage';
-import styles from './index.less';
+import styles from '@/style/custom.less';
 import { Button, Divider, Drawer, message } from 'antd';
 import { updatePlanChinlrenJson } from '@/services/plan/api';
-import Add from './toolbox/add';
-import View from './toolbox/view';
-import Reload from './toolbox/reload';
-import Remove from './toolbox/remove';
-import Edit from './toolbox/edit';
-import DrillDown from './toolbox/drilldown';
-import Design from './toolbox/design';
-import RollUp from './toolbox/rollup';
+import Add from './add';
+import View from './view';
+import Reload from './reload';
+import Remove from './remove';
+import Edit from './edit';
+import DrillDown from './drilldown';
+import Design from './design';
+import RollUp from './rollup';
 
 localforage.config({
   name: 'react-flow',
@@ -28,16 +21,6 @@ localforage.config({
 });
 
 const flowKey = 'flow';
-
-// const getTimeId = () => new Date().getTime() - 1577836800000;
-
-// const waitTime = (time: number = 100) => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(true);
-//     }, time);
-//   });
-// };
 
 type toolboxProps = {
   rfInstance?: OnLoadParams;

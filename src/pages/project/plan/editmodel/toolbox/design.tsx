@@ -3,7 +3,7 @@ import type { Dispatch, FC } from 'react';
 import { useRef, useState } from 'react';
 import type { Elements } from 'react-flow-renderer';
 import { isNode, isEdge } from 'react-flow-renderer';
-import styles from '../index.less';
+import styles from '@/style/custom.less';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { ProFormSelect } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';

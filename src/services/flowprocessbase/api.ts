@@ -36,9 +36,9 @@ export async function getFlowProcessBaseByPkid(pkid: number) {
     method: 'GET',
   });
 }
-export async function getFlowProcessBaseById(projectid: number, processid: string, id: string) {
+export async function getFlowProcessBaseById(projectid: number, id: string) {
   return request<FlowProcessBase>(
-    `http://localhost:8081/api/flowprocessbase/get/${projectid}/${processid}/${id}`,
+    `http://localhost:8081/api/flowprocessbase/get/${projectid}/${id}`,
     {
       method: 'GET',
     },

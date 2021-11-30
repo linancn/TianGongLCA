@@ -2,7 +2,7 @@ import type { Dispatch, FC } from 'react';
 import React, { useState, useCallback } from 'react';
 import type { Elements } from 'react-flow-renderer';
 import { useStoreActions } from 'react-flow-renderer';
-import styles from '../index.less';
+import styles from '@/style/custom.less';
 import { Button, Drawer, Space } from 'antd';
 import { getPlanInfoGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
