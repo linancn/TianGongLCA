@@ -1,14 +1,10 @@
-import { Button, Space } from 'antd';
-import {
-  ExpandAltOutlined,
-  CloseOutlined,
-  LineOutlined,
-  QuestionCircleOutlined,
-} from '@ant-design/icons';
+import { Space } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
 import { useModel, SelectLang } from 'umi';
 import Avatar from './AvatarDropdown';
 import styles from './index.less';
+import ElectronButton from './ElectronButton';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -61,18 +57,7 @@ const GlobalHeaderRight: React.FC = () => {
         </span>
         <Avatar />
         <SelectLang className={styles.action} />
-      </Space>
-      <Space id="electron" className={styles.electron}>
-        <Button type="link" id="electron_minimize" icon={<LineOutlined />} />
-        {/* <Button type="link" id="electron_maximize" icon={<FullscreenExitOutlined />} /> */}
-        <Button type="link" id="electron_restore" icon={<ExpandAltOutlined />} />
-        <Button
-          type="link"
-          icon={<CloseOutlined />}
-          onClick={() => {
-            window.close();
-          }}
-        />
+        <ElectronButton />
       </Space>
     </>
   );
