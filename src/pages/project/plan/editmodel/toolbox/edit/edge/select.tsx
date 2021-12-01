@@ -10,6 +10,8 @@ import type { ListPagination } from '@/services/home/data';
 import type { FlowProcessBase } from '@/services/flowprocessbase/data';
 import { getFlowProcessBaseGrid } from '@/services/flowprocessbase/api';
 import { SelectOutlined } from '@ant-design/icons';
+import ProcessFlowParameterView from '@/pages/project/process/components/detail/flow/parameter/view';
+import ProcessFlowView from './processflowview';
 
 type Props = {
   pkid: number;
@@ -31,12 +33,81 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
       search: false,
     },
     {
+      title: 'Amount',
+      dataIndex: 'amount',
+      search: false,
+    },
+    {
+      title: 'SD',
+      dataIndex: 'sd',
+      search: false,
+    },
+    {
+      title: 'Factor',
+      dataIndex: 'factor',
+      search: false,
+    },
+    {
       title: 'Name',
       dataIndex: 'name',
+      sorter: true,
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'creator',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Create Time',
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Last Update Time',
+      dataIndex: 'lastUpdateTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
     },
     {
       title: 'Comment',
       dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+      search: false,
+    },
+    {
+      title: 'Parameter',
+      search: false,
+      sorter: true,
+      render: (_, row) => [
+        <Space size={'small'} className={styles.footer_left}>
+          {row.parameterName}
+        </Space>,
+        <Space size={'small'} className={styles.footer_right}>
+          <ProcessFlowParameterView
+            projectId={projectId}
+            processId={processId}
+            id={row.parameterId}
+          />
+        </Space>,
+      ],
+    },
+    {
+      title: 'Option',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          <ProcessFlowView pkid={row.pkid} />
+        </Space>,
+      ],
     },
   ];
   const reload = useCallback(() => {
@@ -84,7 +155,7 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
       </Tooltip>
       <Drawer
         title="Select Source Flow"
-        width="750px"
+        width="100%"
         maskClosable={true}
         visible={drawerSourceVisible}
         onClose={() => handleDrawerSourceVisible(false)}
@@ -127,7 +198,7 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
       </Drawer>
       <Drawer
         title="Select Target Flow"
-        width="750px"
+        width="100%"
         maskClosable={true}
         visible={drawerTargetVisible}
         onClose={() => handleDrawerTargetVisible(false)}
