@@ -17,6 +17,6 @@ export type PlanModel = {
   projectId: number;
   id: string;
   parentCount: number;
-  // name: string;
+  name: string;
   childrenJson: string;
 };

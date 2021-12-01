@@ -67,7 +67,15 @@ const Toolbox: FC<toolboxProps> = ({
 
   return (
     <>
-      <Drawer visible={true} closable={false} mask={false} width="150px">
+      <Drawer
+        visible={true}
+        closable={false}
+        mask={false}
+        getContainer={false}
+        push={false}
+        style={{ position: 'absolute' }}
+        width="150px"
+      >
         <div className={styles.tools}>
           <RollUp projectId={projectId} planId={id} parentCount={parentCount} />
           <DrillDown projectId={projectId} selectedElements={selectedElements} />

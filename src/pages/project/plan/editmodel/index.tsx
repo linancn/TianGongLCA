@@ -14,6 +14,9 @@ import ReactFlow, {
 
 import Toolbox from './toolbox';
 import { getPlanModel } from '@/services/plan/api';
+import ProLayout from '@ant-design/pro-layout';
+import HeaderContent from '@/components/HeaderContent';
+import ElectronButton from '@/components/ElectronButton';
 
 type modelProps = {
   location: {
@@ -33,12 +36,14 @@ const SaveRestore: FC<modelProps> = (props) => {
   const onLoad = (reactFlowInstance: OnLoadParams) => setRfInstance(reactFlowInstance);
   const [elements, setElements] = useState<Elements>([]);
   const [parentCount, setParentCount] = useState<number>(-1);
+  const [planName, setPlanName] = useState('');
   // let reatedat = false;
   if (!isSetData) {
     getPlanModel(projectid, id).then((result) => {
       isSetData = true;
       // setPlan(result);
       setParentCount(result.parentCount);
+      setPlanName(result.name);
       const childrenJson = JSON.parse(result.childrenJson);
       if (childrenJson !== null) {
         setElements(childrenJson.data);
@@ -67,28 +72,41 @@ const SaveRestore: FC<modelProps> = (props) => {
     setElements((els) => updateEdge(oldEdge, newConnection, els));
 
   return (
-    <ReactFlowProvider>
-      <ReactFlow
-        onLoad={onLoad}
-        elements={elements}
-        onConnect={onConnect}
-        // onElementClick={onElementClick}
-        onElementsRemove={onElementsRemove}
-        onEdgeUpdate={onEdgeUpdate}
-      >
-        {/* <MiniMap /> */}
-        <Controls />
-        <Background />
-      </ReactFlow>
-      <Toolbox
-        rfInstance={rfInstance}
-        setElements={setElements}
-        elements={elements}
-        projectId={projectid}
-        id={id}
-        parentCount={parentCount}
-      />
-    </ReactFlowProvider>
+    <ProLayout
+      layout="mix"
+      title="CrystaLCA"
+      logo="/logo.svg"
+      contentStyle={{ margin: 0 }}
+      menuRender={false}
+      headerContentRender={() => <HeaderContent title={planName} />}
+      rightContentRender={() => <ElectronButton />}
+    >
+      <ReactFlowProvider>
+        <ReactFlow
+          onLoad={onLoad}
+          elements={elements}
+          onConnect={onConnect}
+          // onElementClick={onElementClick}
+          onElementsRemove={onElementsRemove}
+          onEdgeUpdate={onEdgeUpdate}
+          style={{
+            position: 'static',
+          }}
+        >
+          {/* <MiniMap /> */}
+          <Controls />
+          <Background />
+        </ReactFlow>
+        <Toolbox
+          rfInstance={rfInstance}
+          setElements={setElements}
+          elements={elements}
+          projectId={projectid}
+          id={id}
+          parentCount={parentCount}
+        />
+      </ReactFlowProvider>
+    </ProLayout>
   );
 };
 

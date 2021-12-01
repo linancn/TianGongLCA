@@ -1,5 +1,10 @@
 import styles from '@/style/custom.less';
+import type { FC } from 'react';
 
-export default () => {
-  return <div className={styles.electron_drag} />;
+type Props = {
+  title: string;
 };
+const HeaderContent: FC<Props> = ({ title }) => {
+  return <div className={styles.electron_drag}>{title}</div>;
+};
+export default HeaderContent;

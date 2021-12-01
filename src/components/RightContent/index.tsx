@@ -4,7 +4,7 @@ import React from 'react';
 import { useModel, SelectLang } from 'umi';
 import Avatar from './AvatarDropdown';
 import styles from './index.less';
-import ElectronButton from './ElectronButton';
+import ElectronButton from '../ElectronButton';
 
 export type SiderTheme = 'light' | 'dark';
 

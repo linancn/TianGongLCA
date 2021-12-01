@@ -141,7 +141,7 @@ export const layout = ({
       );
     },
     rightContentRender: () => <RightContent />,
-    headerContentRender: () => <HeaderContent />,
+    headerContentRender: () => <HeaderContent title={''} />,
     disableContentMargin: false,
     // waterMarkProps: {
     //   content: initialState?.currentUser?.name,
