@@ -90,7 +90,7 @@ const SaveRestore: FC<modelProps> = (props) => {
           onElementsRemove={onElementsRemove}
           onEdgeUpdate={onEdgeUpdate}
           style={{
-            position: 'static',
+            position: 'absolute',
           }}
         >
           {/* <MiniMap /> */}

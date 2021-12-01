@@ -27,16 +27,15 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
 
   const planInfoColumns: ProColumns<PlanInfo>[] = [
     {
-      title: 'Name',
-      key: 'name',
-      dataIndex: 'name',
-      sorter: true,
+      title: 'ID',
+      dataIndex: 'index',
+      valueType: 'index',
+      search: false,
     },
     {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
+      title: 'Name',
+      dataIndex: 'name',
+      sorter: true,
     },
     {
       title: 'Type',
@@ -49,29 +48,53 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
       sorter: true,
     },
     {
-      title: 'Last Update',
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'creator',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Create Time',
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Last Update Time',
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
+      search: false,
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
       search: false,
     },
   ];
   const ProcessColumns: ProColumns<Process>[] = [
     {
-      title: 'Name',
-      key: 'name',
-      dataIndex: 'name',
-      sorter: true,
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
+      title: 'ID',
+      dataIndex: 'index',
+      valueType: 'index',
       search: false,
     },
     {
-      title: 'Type',
-      dataIndex: 'type',
+      title: 'Name',
+      dataIndex: 'name',
       sorter: true,
     },
     {
@@ -80,10 +103,44 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
       sorter: true,
     },
     {
-      title: 'Last Update',
+      title: 'Source',
+      dataIndex: 'source',
+      sorter: true,
+    },
+    {
+      title: 'Type',
+      dataIndex: 'type',
+      sorter: true,
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'creator',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Create Time',
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Last Update Time',
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
+      search: false,
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
       search: false,
     },
   ];
@@ -162,7 +219,7 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
         width="800px"
         onClose={() => setDrawerAddPlanVisible(false)}
         footer={
-          <Space size={'middle'} className={styles.footer_space}>
+          <Space size={'middle'} className={styles.footer_right}>
             <Button onClick={() => setDrawerAddPlanVisible(false)}>Cancel</Button>
             <Button onClick={onAddPlanToModel} type="primary">
               Add
@@ -173,10 +230,6 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
         <ProTable<PlanInfo, ListPagination>
           search={{
             defaultCollapsed: false,
-            optionRender: (searchConfig, formProps, dom) => [
-              ...dom.reverse(),
-              <Button onClick={() => {}}>Create</Button>,
-            ],
           }}
           request={(
             params: {
@@ -189,7 +242,7 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
           }}
           columns={planInfoColumns}
           rowClassName={(record) => {
-            return record.name === addPlanToModel?.name ? styles['split-row-select-active'] : '';
+            return record.name === addPlanToModel?.name ? styles.split_row_select_active : '';
           }}
           onRow={(record) => {
             return {
@@ -206,9 +259,9 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
         visible={drawerAddProcessVisible}
         title="Add Process"
         width="800px"
-        onClose={() => setDrawerAddPlanVisible(false)}
+        onClose={() => setDrawerAddProcessVisible(false)}
         footer={
-          <Space size={'middle'} className={styles.footer_space}>
+          <Space size={'middle'} className={styles.footer_right}>
             <Button onClick={() => setDrawerAddProcessVisible(false)}>Cancel</Button>
             <Button onClick={onAddProcessToModel} type="primary">
               Add
@@ -219,10 +272,6 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
         <ProTable<Process, ListPagination>
           search={{
             defaultCollapsed: false,
-            optionRender: (searchConfig, formProps, dom) => [
-              ...dom.reverse(),
-              <Button onClick={() => {}}>Create</Button>,
-            ],
           }}
           request={(
             params: {
@@ -235,7 +284,7 @@ const Add: FC<addProps> = ({ setElements, projectId }) => {
           }}
           columns={ProcessColumns}
           rowClassName={(record) => {
-            return record.name === addProcessToModel?.name ? styles['split-row-select-active'] : '';
+            return record.name === addProcessToModel?.name ? styles.split_row_select_active : '';
           }}
           onRow={(record) => {
             return {
