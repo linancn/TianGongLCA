@@ -9,11 +9,7 @@ import ProjectDelete from '../components/delete';
 import ProjectEdit from '../components/edit';
 import ProjectView from '../components/view';
 import ProjectStar from '../components/star';
-/**
- * 更新节点
- *
- * @param fields
- */
+import ProjectOpen from '../components/open';
 
 type ProjectListProps = {
   location: {
@@ -38,18 +34,43 @@ const TableList: FC<ProjectListProps> = (porps) => {
   }
   const columns: ProColumns<Project>[] = [
     {
+      title: 'ID',
+      dataIndex: 'index',
+      valueType: 'index',
+    },
+    {
       title: 'Name',
       dataIndex: 'name',
       sorter: true,
     },
     {
-      title: 'Created At',
+      title: 'Type',
+      dataIndex: 'type',
+      sorter: true,
+    },
+    {
+      title: 'Nation',
+      dataIndex: 'nation',
+      sorter: true,
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'creator',
+      sorter: true,
+    },
+    {
+      title: 'Create Time',
       dataIndex: 'createTime',
       valueType: 'dateTime',
       sorter: true,
     },
     {
-      title: 'Last Update',
+      title: 'Last Update Time',
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
@@ -75,6 +96,7 @@ const TableList: FC<ProjectListProps> = (porps) => {
       valueType: 'option',
       render: (_, record: Project) => [
         <ProjectStar pkid={record.id} star={record.star} actionRef={actionRef} />,
+        <ProjectOpen pkid={record.id} />,
         <ProjectView pkid={record.id} />,
         <ProjectEdit pkid={record.id} actionRef={actionRef} />,
         <ProjectDelete pkid={record.id} actionRef={actionRef} />,
