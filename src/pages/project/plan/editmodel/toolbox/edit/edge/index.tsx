@@ -27,12 +27,6 @@ const EditEdge: FC<Props> = ({ projectId, planId, sourceId, targetId }) => {
       render: (_, row) => [<EdgeProcessDelete pkid={row.pkid} actionRef={actionRef} />],
     },
     {
-      title: 'ID',
-      dataIndex: 'index',
-      valueType: 'index',
-      sorter: true,
-    },
-    {
       title: 'Source Name',
       dataIndex: 'sourceFlowName',
       sorter: true,
