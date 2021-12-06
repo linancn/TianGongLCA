@@ -13,15 +13,17 @@ const ElectronButton: FC = () => {
   const [maxIcon, setMaxIcon] = useState<JSX.Element>();
   // equivalent to componentDidMount
   useEffect(() => {
-    // remain buttons status
-    window.ipcRenderer.send('status');
-    // listener to buttons
-    window.ipcRenderer.on('window-max', () => {
-      setMaxIcon(<FullscreenExitOutlined />);
-    });
-    window.ipcRenderer.on('window-unmax', () => {
-      setMaxIcon(<BorderOutlined />);
-    });
+    if (isElectron()) {
+      // remain buttons status
+      window.ipcRenderer.send('status');
+      // listener to buttons
+      window.ipcRenderer.on('window-max', () => {
+        setMaxIcon(<FullscreenExitOutlined />);
+      });
+      window.ipcRenderer.on('window-unmax', () => {
+        setMaxIcon(<BorderOutlined />);
+      });
+    }
   }, []);
   if (isElectron()) {
     return (

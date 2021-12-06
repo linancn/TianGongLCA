@@ -14,9 +14,11 @@ import ReactFlow, {
 
 import Toolbox from './toolbox';
 import { getPlanModel } from '@/services/plan/api';
-import ProLayout from '@ant-design/pro-layout';
-import HeaderContent from '@/components/HeaderContent';
-import ElectronButton from '@/components/ElectronButton';
+import { PageContainer } from '@ant-design/pro-layout';
+import { FormattedMessage } from 'umi';
+// import ProLayout from '@ant-design/pro-layout';
+// import HeaderContent from '@/components/HeaderContent';
+// import ElectronButton from '@/components/ElectronButton';
 
 type modelProps = {
   location: {
@@ -72,14 +74,24 @@ const SaveRestore: FC<modelProps> = (props) => {
     setElements((els) => updateEdge(oldEdge, newConnection, els));
 
   return (
-    <ProLayout
-      layout="mix"
-      title="CrystaLCA"
-      logo="/logo.svg"
-      contentStyle={{ margin: 0 }}
-      menuRender={false}
-      headerContentRender={() => <HeaderContent title={planName} />}
-      rightContentRender={() => <ElectronButton />}
+    // <ProLayout
+    //   layout="mix"
+    //   title="CrystaLCA"
+    //   logo="/logo.svg"
+    //   contentStyle={{ margin: 0 }}
+    //   menuRender={false}
+    //   headerContentRender={() => <HeaderContent title={planName} />}
+    //   rightContentRender={() => <ElectronButton />}
+    // >
+    <PageContainer
+      header={{
+        title: (
+          <>
+            <FormattedMessage id="pages.plan" defaultMessage="Plan: " />
+            {planName}
+          </>
+        ),
+      }}
     >
       <ReactFlowProvider>
         <ReactFlow
@@ -96,17 +108,18 @@ const SaveRestore: FC<modelProps> = (props) => {
           {/* <MiniMap /> */}
           <Controls />
           <Background />
+          <Toolbox
+            rfInstance={rfInstance}
+            setElements={setElements}
+            elements={elements}
+            projectId={projectid}
+            id={id}
+            parentCount={parentCount}
+          />
         </ReactFlow>
-        <Toolbox
-          rfInstance={rfInstance}
-          setElements={setElements}
-          elements={elements}
-          projectId={projectid}
-          id={id}
-          parentCount={parentCount}
-        />
       </ReactFlowProvider>
-    </ProLayout>
+    </PageContainer>
+    // </ProLayout>
   );
 };
 

@@ -12,7 +12,7 @@ const PlanOpen: FC<Props> = ({ projectId, id }) => {
       <Tooltip title="Open model">
         <Button
           href={`/project/plan/editmodel?projectid=${projectId}&id=${id}`}
-          target="_blank"
+          // target="_blank"
           shape="circle"
           icon={<ApartmentOutlined />}
           size="small"

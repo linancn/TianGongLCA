@@ -89,13 +89,11 @@ export default [
             name: 'editmodel',
             path: '/project/plan/editmodel',
             component: './project/plan/editmodel',
-            layout: false,
           },
           {
             name: 'viewmodel',
             path: '/project/plan/viewmodel',
             component: './project/plan/viewmodel',
-            layout: false,
           },
         ],
       },
@@ -140,6 +138,11 @@ export default [
         component: './project/welcome',
       },
     ],
+  },
+  {
+    path: '/result',
+    name: 'result',
+    component: './result',
   },
   {
     path: '/',
