@@ -1,9 +1,17 @@
 import { Button } from 'antd';
-import { CloseOutlined, LineOutlined, FullscreenOutlined } from '@ant-design/icons';
-import React from 'react';
+import {
+  CloseOutlined,
+  LineOutlined,
+  BorderOutlined,
+  FullscreenExitOutlined,
+} from '@ant-design/icons';
+import type { FC } from 'react';
+import { useState } from 'react';
 import isElectron from 'is-electron';
 
-const ElectronButton: React.FC = () => {
+const ElectronButton: FC = () => {
+  const [maxIcon, setMaxIcon] = useState<JSX.Element>();
+
   if (isElectron()) {
     return (
       <>
@@ -18,12 +26,17 @@ const ElectronButton: React.FC = () => {
         <Button
           type="link"
           id="electron_maximize"
-          icon={<FullscreenOutlined />}
+          icon={maxIcon || <BorderOutlined />}
           onClick={() => {
             window.ipcRenderer.send('max');
+            window.ipcRenderer.on('window-max', () => {
+              setMaxIcon(<FullscreenExitOutlined />);
+            });
+            window.ipcRenderer.on('window-unmax', () => {
+              setMaxIcon(<BorderOutlined />);
+            });
           }}
         />
-        {/* <Button type="link" id="electron_restore" icon={<ExpandAltOutlined />} /> */}
         <Button
           type="link"
           icon={<CloseOutlined />}
