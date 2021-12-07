@@ -8,6 +8,8 @@ import moment from 'moment';
 import ProjectStar from '../components/star';
 import ProjectDelete from '../components/delete';
 import ProjectOpen from '../components/open';
+import { BookOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
 type ProjectListProps = {
   location: {
@@ -46,6 +48,11 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
         xxl: 4,
       }}
       metas={{
+        avatar: {
+          render: () => {
+            return <Button shape="circle" icon={<BookOutlined />} size="small" />;
+          },
+        },
         subTitle: {
           dataIndex: 'name',
         },
