@@ -38,6 +38,17 @@ const TableList: FC<ListProps> = (porps) => {
       sorter: true,
     },
     {
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+      search: false,
+    },
+    {
       title: 'Nation',
       dataIndex: 'nation',
       sorter: true,
@@ -72,17 +83,7 @@ const TableList: FC<ListProps> = (porps) => {
       sorter: true,
       search: false,
     },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
-      search: false,
-    },
+
     {
       title: 'Detail',
       search: false,
