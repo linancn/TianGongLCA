@@ -76,10 +76,6 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processId, ioType, actionRef 
             return true;
           }}
         >
-          <ProFormText width="md" name="amount" label="Amount" />
-          <ProFormText width="md" name="sd" label="SD" />
-          <ProFormText width="md" name="factor" label="Factor" />
-          <ProFormText width="md" name="flowBaseId" label="FlowBaseId" hidden={true} />
           <Divider>
             Flow Base Info <ProcessFlowBaseSelect projectId={projectId} formRef={formRefCreate} />
           </Divider>
@@ -88,6 +84,10 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processId, ioType, actionRef 
           <ProFormText width="md" name="source" label="Source" disabled={true} />
           <ProFormText width="md" name="type" label="Type" disabled={true} />
           <ProFormTextArea width="md" name="comment" label="Comment" disabled={true} />
+          <ProFormText width="md" name="amount" label="Amount" />
+          <ProFormText width="md" name="sd" label="SD" />
+          <ProFormText width="md" name="factor" label="Factor" />
+          <ProFormText width="md" name="flowBaseId" label="FlowBaseId" hidden={true} />
         </ProForm>
       </Drawer>
     </>
