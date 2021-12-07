@@ -31,6 +31,22 @@ const FlowCard: FC<Props> = ({ projectId, processId, ioType }) => {
       search: false,
     },
     {
+      title: 'Name',
+      dataIndex: 'name',
+      sorter: true,
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+      search: false,
+    },
+    {
       title: 'Amount',
       dataIndex: 'amount',
       search: false,
@@ -44,11 +60,6 @@ const FlowCard: FC<Props> = ({ projectId, processId, ioType }) => {
       title: 'Factor',
       dataIndex: 'factor',
       search: false,
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      sorter: true,
     },
     {
       title: 'Creator',
@@ -68,17 +79,6 @@ const FlowCard: FC<Props> = ({ projectId, processId, ioType }) => {
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
-      search: false,
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
       search: false,
     },
     {
