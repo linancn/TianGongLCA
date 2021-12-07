@@ -34,6 +34,17 @@ const TableList: FC<ListProps> = (porps) => {
       sorter: true,
     },
     {
+      title: 'Comment',
+      dataIndex: 'comment',
+      valueType: 'textarea',
+      search: false,
+    },
+    {
+      title: 'Version',
+      dataIndex: 'version',
+      search: false,
+    },
+    {
       title: 'Unit',
       dataIndex: 'unit',
       sorter: true,
@@ -56,17 +67,6 @@ const TableList: FC<ListProps> = (porps) => {
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
-      search: false,
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
       search: false,
     },
     {

@@ -87,7 +87,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       onTabChange={handleTabChange}
     >
       <Drawer
-        title="Create Plan"
+        title="Create Project"
         width="400px"
         maskClosable={false}
         visible={drawerCreateVisible}
