@@ -57,11 +57,11 @@ export async function getProjectMenu(projectId: any) {
               component: './project/welcome',
             },
             {
-              path: '/project/assessment',
+              path: `/project/assessment?projectid=${projectId}`,
               name: 'assessment',
               icon: 'Reconciliation',
               locale: 'menu.assessment',
-              component: './project/welcome',
+              component: './project/assessment',
             },
           ],
         },

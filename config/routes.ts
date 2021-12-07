@@ -135,14 +135,9 @@ export default [
       {
         name: 'assessment',
         path: '/project/assessment',
-        component: './project/welcome',
+        component: './project/assessment',
       },
     ],
-  },
-  {
-    path: '/result',
-    name: 'result',
-    component: './result',
   },
   {
     path: '/',
