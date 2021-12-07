@@ -50,7 +50,7 @@ const GlobalHeaderRight: React.FC = () => {
         <span
           className={styles.action}
           onClick={() => {
-            // window.open('https://pro.ant.design/docs/getting-started');
+            window.open('https://www.crystalca.org');
           }}
         >
           <QuestionCircleOutlined />

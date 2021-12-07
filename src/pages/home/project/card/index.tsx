@@ -62,9 +62,9 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
           render: (_, row) => {
             return (
               <>
-                Created At: {moment(row.createTime).format('YYYY-MM-DD HH:mm:ss')}
+                Created: {moment(row.createTime).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
-                Last Update: {moment(row.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
+                Updated: {moment(row.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
                 Comment: {row.comment}
               </>
