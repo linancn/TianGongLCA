@@ -1,42 +1,130 @@
 import type { S2Options } from '@antv/s2';
 import { PivotSheet } from '@antv/s2';
 import type { FC } from 'react';
-import { getResultData } from '@/services/result/api';
+import { getResultData2 } from '@/services/result/api';
 import { PageContainer } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi';
 
 const PivotSheetTable: FC = () => {
   const createPivotSheet = () => {
     // getResultData().then(async (result: S2DataConfig) => {
-    const result = getResultData();
-    const pivotsheet = document.getElementById('pivotsheet');
-    if (pivotsheet !== null) {
-      const pivotsheetwidth =
-        pivotsheet.clientWidth || pivotsheet.offsetWidth || pivotsheet.scrollWidth;
-      const pivotsheetheight =
-        pivotsheet.clientHeight || pivotsheet.offsetHeight || pivotsheet.scrollHeight;
+    const result = getResultData2();
+    const pivotSheet = document.getElementById('pivotsheet');
+    if (pivotSheet !== null) {
+      const pivotSheetWidth =
+        pivotSheet.clientWidth || pivotSheet.offsetWidth || pivotSheet.scrollWidth;
+      const pivotSheetHeight =
+        pivotSheet.clientHeight || pivotSheet.offsetHeight || pivotSheet.scrollHeight;
       const s2Options: S2Options<Element> = {
-        width: pivotsheetwidth,
-        height: pivotsheetheight,
-        hierarchyType: 'tree',
+        width: pivotSheetWidth,
+        height: pivotSheetHeight,
+        // hierarchyType: 'tree',
+        hierarchyType: 'customTree',
         totals: {
           row: {
             showGrandTotals: true,
             showSubTotals: true,
             reverseLayout: true,
             reverseSubLayout: true,
-            subTotalsDimensions: ['f1', 'f2', 'f3', 'f4', 'f5'],
+            // subTotalsDimensions: ['f1', 'f2', 'f3', 'f4', 'f5'],
           },
           col: {
-            showGrandTotals: true,
+            // showGrandTotals: true,
             showSubTotals: true,
             reverseLayout: true,
             reverseSubLayout: true,
             subTotalsDimensions: ['p1', 'p2', 'p3'],
+            subLabel: 'SUM',
+          },
+        },
+        style: {
+          treeRowsWidth: 280,
+        },
+      };
+      const s2 = new PivotSheet(pivotSheet, result, s2Options);
+
+      // const borderColor = '#434343';
+      const textTheme = {
+        text: {
+          fill: '#fff',
+          opacity: 0.85,
+        },
+        bolderText: {
+          fill: '#fff',
+          opacity: 0.85,
+        },
+      };
+      const headerCellTheme = {
+        ...textTheme,
+        cell: {
+          padding: {},
+          horizontalBorderWidth: 1,
+          horizontalBorderColor: '#303030',
+          verticalBorderWidth: 0,
+          backgroundColor: '#1d1d1d',
+          interactionState: {
+            hover: {
+              backgroundColor: '#383838',
+            },
+            selected: {
+              backgroundColor: '#1765ad',
+              borderWidth: 0,
+              opacity: 0,
+            },
           },
         },
       };
-      const s2 = new PivotSheet(pivotsheet, result, s2Options);
+      const dataCellTheme = {
+        ...textTheme,
+        cell: {
+          padding: {},
+          horizontalBorderWidth: 1,
+          horizontalBorderColor: '#303030',
+          verticalBorderWidth: 0,
+          backgroundColor: '#141414',
+          crossBackgroundColor: '#141414',
+          interactionState: {
+            hover: {
+              backgroundColor: '#383838',
+            },
+            hoverFocus: {
+              backgroundColor: '#1765ad',
+              borderWidth: 0,
+              opacity: 0,
+            },
+            selected: {
+              backgroundColor: '#1765ad',
+              borderWidth: 0,
+              opacity: 0,
+            },
+          },
+        },
+      };
+      const customTheme = {
+        background: {
+          opacity: 0,
+        },
+        splitLine: {
+          showShadow: false,
+          horizontalBorderWidth: 1,
+          horizontalBorderColor: '#303030',
+          horizontalBorderColorOpacity: 1,
+          verticalBorderWidth: 0,
+        },
+        cornerCell: {
+          ...textTheme,
+          cell: {
+            padding: {},
+            horizontalBorderWidth: 0,
+            verticalBorderWidth: 0,
+            backgroundColor: '#1d1d1d',
+          },
+        },
+        colCell: headerCellTheme,
+        rowCell: headerCellTheme,
+        dataCell: dataCellTheme,
+      };
+      s2.setThemeCfg({ theme: customTheme });
       s2.render();
     }
   };
