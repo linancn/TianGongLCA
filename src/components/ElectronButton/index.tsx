@@ -1,10 +1,5 @@
 import { Button } from 'antd';
-import {
-  CloseOutlined,
-  LineOutlined,
-  BorderOutlined,
-  FullscreenExitOutlined,
-} from '@ant-design/icons';
+import { CloseOutlined, LineOutlined, BorderOutlined, SwitcherOutlined } from '@ant-design/icons';
 import type { FC } from 'react';
 import { useState, useEffect } from 'react';
 import isElectron from 'is-electron';
@@ -18,7 +13,7 @@ const ElectronButton: FC = () => {
       window.ipcRenderer.send('status');
       // listener to buttons
       window.ipcRenderer.on('window-max', () => {
-        setMaxIcon(<FullscreenExitOutlined />);
+        setMaxIcon(<SwitcherOutlined />);
       });
       window.ipcRenderer.on('window-unmax', () => {
         setMaxIcon(<BorderOutlined />);
