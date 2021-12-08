@@ -41,9 +41,9 @@ const PivotSheetTable: FC = () => {
           treeRowsWidth: 280,
         },
       };
+      pivotSheet.innerHTML = '';
       const s2 = new PivotSheet(pivotSheet, result, s2Options);
 
-      // const borderColor = '#434343';
       const textTheme = {
         text: {
           fill: '#fff',
@@ -74,32 +74,6 @@ const PivotSheetTable: FC = () => {
           },
         },
       };
-      const dataCellTheme = {
-        ...textTheme,
-        cell: {
-          padding: {},
-          horizontalBorderWidth: 1,
-          horizontalBorderColor: '#303030',
-          verticalBorderWidth: 0,
-          backgroundColor: '#141414',
-          crossBackgroundColor: '#141414',
-          interactionState: {
-            hover: {
-              backgroundColor: '#383838',
-            },
-            hoverFocus: {
-              backgroundColor: '#1765ad',
-              borderWidth: 0,
-              opacity: 0,
-            },
-            selected: {
-              backgroundColor: '#1765ad',
-              borderWidth: 0,
-              opacity: 0,
-            },
-          },
-        },
-      };
       const customTheme = {
         background: {
           opacity: 0,
@@ -111,6 +85,8 @@ const PivotSheetTable: FC = () => {
           horizontalBorderColorOpacity: 1,
           verticalBorderWidth: 0,
         },
+        colCell: headerCellTheme,
+        rowCell: headerCellTheme,
         cornerCell: {
           ...textTheme,
           cell: {
@@ -120,9 +96,32 @@ const PivotSheetTable: FC = () => {
             backgroundColor: '#1d1d1d',
           },
         },
-        colCell: headerCellTheme,
-        rowCell: headerCellTheme,
-        dataCell: dataCellTheme,
+        dataCell: {
+          ...textTheme,
+          cell: {
+            padding: {},
+            horizontalBorderWidth: 1,
+            horizontalBorderColor: '#303030',
+            verticalBorderWidth: 0,
+            backgroundColor: '#141414',
+            crossBackgroundColor: '#141414',
+            interactionState: {
+              hover: {
+                backgroundColor: '#383838',
+              },
+              hoverFocus: {
+                backgroundColor: '#1765ad',
+                borderWidth: 0,
+                opacity: 0,
+              },
+              selected: {
+                backgroundColor: '#1765ad',
+                borderWidth: 0,
+                opacity: 0,
+              },
+            },
+          },
+        },
       };
       s2.setThemeCfg({ theme: customTheme });
       s2.render();
