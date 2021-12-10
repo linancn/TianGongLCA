@@ -6,19 +6,17 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi';
 
 const PivotSheetTable: FC = () => {
-  const createPivotSheet = () => {
+  const createPivotSheet = (containerDiv: HTMLElement) => {
     // getResultData().then(async (result: S2DataConfig) => {
     const result = getResultData2();
-    const pivotSheet = document.getElementById('pivotsheet');
-    if (pivotSheet !== null) {
-      const pivotSheetWidth =
-        pivotSheet.clientWidth || pivotSheet.offsetWidth || pivotSheet.scrollWidth;
-      const pivotSheetHeight =
-        pivotSheet.clientHeight || pivotSheet.offsetHeight || pivotSheet.scrollHeight;
+    if (containerDiv !== null) {
+      const cWidth =
+        containerDiv.clientWidth || containerDiv.offsetWidth || containerDiv.scrollWidth;
+      const cHeight =
+        containerDiv.clientHeight || containerDiv.offsetHeight || containerDiv.scrollHeight;
       const s2Options: S2Options<Element> = {
-        width: pivotSheetWidth,
-        height: pivotSheetHeight,
-        // hierarchyType: 'tree',
+        width: cWidth,
+        height: cHeight,
         hierarchyType: 'customTree',
         totals: {
           row: {
@@ -41,8 +39,9 @@ const PivotSheetTable: FC = () => {
           treeRowsWidth: 280,
         },
       };
-      pivotSheet.innerHTML = '';
-      const s2 = new PivotSheet(pivotSheet, result, s2Options);
+      // eslint-disable-next-line no-param-reassign
+      containerDiv.innerHTML = '';
+      const s2 = new PivotSheet(containerDiv, result, s2Options);
 
       const textTheme = {
         text: {
@@ -130,12 +129,12 @@ const PivotSheetTable: FC = () => {
 
   let timer: NodeJS.Timeout | undefined;
   function check() {
-    const pivotsheetdiv = document.getElementById('pivotsheet');
-    if (pivotsheetdiv) {
+    const containerDiv = document.getElementById('container');
+    if (containerDiv !== null) {
       if (!timer) {
         clearTimeout(timer);
       }
-      createPivotSheet();
+      createPivotSheet(containerDiv);
     } else {
       timer = setTimeout(check, 500);
     }
@@ -153,7 +152,7 @@ const PivotSheetTable: FC = () => {
         ),
       }}
     >
-      <div id="pivotsheet" style={{ width: '100%', height: '100%', position: 'absolute' }} />
+      <div id="container" style={{ width: '100%', height: '100%', position: 'absolute' }} />
     </PageContainer>
   );
 };
