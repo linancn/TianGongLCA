@@ -31,7 +31,7 @@ type modelProps = {
 
 let isSetData = false;
 
-const SaveRestore: FC<modelProps> = (props) => {
+const PlanModel: FC<modelProps> = (props) => {
   const { projectid, id } = props.location.query;
   // const [plan, setPlan] = useState<PlanItem>();
   const [rfInstance, setRfInstance] = useState<OnLoadParams>();
@@ -123,4 +123,4 @@ const SaveRestore: FC<modelProps> = (props) => {
   );
 };
 
-export default SaveRestore;
+export default PlanModel;

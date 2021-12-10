@@ -72,12 +72,6 @@ const PlanList: FC<ListProps> = (porps) => {
       search: false,
     },
     {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
       title: 'Version',
       dataIndex: 'version',
       search: false,
