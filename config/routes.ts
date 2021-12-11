@@ -86,6 +86,11 @@ export default [
             component: './project/plan',
           },
           {
+            name: 'model',
+            path: '/project/plan/model',
+            component: './project/plan/model',
+          },
+          {
             name: 'editmodel',
             path: '/project/plan/editmodel',
             component: './project/plan/editmodel',
@@ -133,9 +138,19 @@ export default [
         component: './project/welcome',
       },
       {
-        name: 'assessment',
         path: '/project/assessment',
-        component: './project/assessment',
+        routes: [
+          {
+            name: 'assessment',
+            path: '/project/assessment',
+            component: './project/assessment',
+          },
+          {
+            name: 'assessment',
+            path: '/project/assessment/chart1',
+            component: './project/assessment/chart1',
+          },
+        ],
       },
     ],
   },

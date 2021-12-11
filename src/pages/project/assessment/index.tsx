@@ -3,9 +3,19 @@ import { PivotSheet } from '@antv/s2';
 import type { FC } from 'react';
 import { getResultData2 } from '@/services/assessment/api';
 import { PageContainer } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi';
+import { Button } from 'antd';
+import { BarChartOutlined } from '@ant-design/icons';
 
-const PivotSheetTable: FC = () => {
+type Props = {
+  location: {
+    query: {
+      projectid: number;
+    };
+  };
+};
+
+const PivotSheetTable: FC<Props> = (prop) => {
+  const { projectid } = prop.location.query;
   const createPivotSheet = (containerDiv: HTMLElement) => {
     // getResultData().then(async (result: S2DataConfig) => {
     const result = getResultData2();
@@ -143,14 +153,17 @@ const PivotSheetTable: FC = () => {
 
   return (
     <PageContainer
-      header={{
-        title: (
-          <>
-            <FormattedMessage id="pages.plan" defaultMessage="Plan: " />
-            test
-          </>
-        ),
-      }}
+      title={
+        <>
+          Assessment{' '}
+          <Button
+            shape="circle"
+            size="small"
+            icon={<BarChartOutlined />}
+            href={`/project/assessment/chart1?projectid=${projectid}`}
+          />
+        </>
+      }
     >
       <div id="container" style={{ width: '100%', height: '100%', position: 'absolute' }} />
     </PageContainer>

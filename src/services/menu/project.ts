@@ -63,6 +63,14 @@ export async function getProjectMenu(projectId: any) {
               locale: 'menu.assessment',
               component: './project/assessment',
             },
+            // {
+            //   hideInMenu: true,
+            //   name: 'assessment',
+            //   icon: 'Reconciliation',
+            //   path: '/project/assessment/chart1',
+            //   component: './project/assessment/chart1',
+            //   // parentKeys: ['/project/assessment'],
+            // },
           ],
         },
       ];
