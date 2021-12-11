@@ -1,7 +1,7 @@
 import type { S2Options } from '@antv/s2';
 import { PivotSheet } from '@antv/s2';
 import type { FC } from 'react';
-import { getResultData2 } from '@/services/result/api';
+import { getResultData2 } from '@/services/assessment/api';
 import { PageContainer } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi';
 
