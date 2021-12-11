@@ -54,6 +54,7 @@
     "@ant-design/pro-layout": "^6.15.3",
     "@ant-design/pro-list": "^1.10.9",
     "@ant-design/pro-table": "^2.30.8",
+    "@antv/layout": "^0.1.19",
     "@antv/s2": "^1.2.0",
     "@antv/xflow": "^1.0.8",
     "@umijs/route-utils": "^1.0.36",
