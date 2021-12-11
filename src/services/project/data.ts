@@ -2,7 +2,7 @@
 
 export type Project = {
   id: number;
-  name?: string;
+  name: string;
   createTime?: Date;
   lastUpdateTime?: Date;
   comment?: string;

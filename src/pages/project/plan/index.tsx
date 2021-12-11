@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -12,17 +12,20 @@ import PlanView from './components/view';
 import PlanEdit from './components/edit';
 import PlanOpen from './components/open';
 import PlanCreate from './components/create';
+import { FormattedMessage } from 'umi';
+import { getProject } from '@/services/project/api';
 
-type ListProps = {
+type Props = {
   location: {
     query: {
       projectid: number;
     };
   };
 };
-const PlanList: FC<ListProps> = (porps) => {
+const PlanList: FC<Props> = (props) => {
   const actionRef = useRef<ActionType>();
-  const { projectid } = porps.location.query;
+  const { projectid } = props.location.query;
+  const [projectName, setProjectName] = useState('');
   const columns: ProColumns<PlanInfo>[] = [
     {
       title: 'ID',
@@ -89,9 +92,21 @@ const PlanList: FC<ListProps> = (porps) => {
       ],
     },
   ];
+  useEffect(() => {
+    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
+  }, [projectid]);
 
   return (
-    <PageContainer>
+    <PageContainer
+      header={{
+        title: (
+          <>
+            {projectName}
+            <FormattedMessage id="menu.plans" defaultMessage="Plans" />
+          </>
+        ),
+      }}
+    >
       <ProTable<PlanInfo, ListPagination>
         actionRef={actionRef}
         search={{

@@ -1,10 +1,13 @@
 import type { S2Options } from '@antv/s2';
 import { PivotSheet } from '@antv/s2';
 import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { getResultData2 } from '@/services/assessment/api';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button } from 'antd';
 import { BarChartOutlined } from '@ant-design/icons';
+import { getProject } from '@/services/project/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   location: {
@@ -16,6 +19,7 @@ type Props = {
 
 const PivotSheetTable: FC<Props> = (prop) => {
   const { projectid } = prop.location.query;
+  const [projectName, setProjectName] = useState('');
   const createPivotSheet = (containerDiv: HTMLElement) => {
     // getResultData().then(async (result: S2DataConfig) => {
     const result = getResultData2();
@@ -150,20 +154,25 @@ const PivotSheetTable: FC<Props> = (prop) => {
     }
   }
   check();
-
+  useEffect(() => {
+    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
+  }, [projectid]);
   return (
     <PageContainer
-      title={
-        <>
-          Assessment{' '}
-          <Button
-            shape="circle"
-            size="small"
-            icon={<BarChartOutlined />}
-            href={`/project/assessment/chart1?projectid=${projectid}`}
-          />
-        </>
-      }
+      header={{
+        title: (
+          <>
+            {projectName}
+            <FormattedMessage id="menu.assessment" defaultMessage="Assessment" />{' '}
+            <Button
+              shape="circle"
+              size="small"
+              icon={<BarChartOutlined />}
+              href={`/project/assessment/chart1?projectid=${projectid}`}
+            />
+          </>
+        ),
+      }}
     >
       <div id="container" style={{ width: '100%', height: '100%', position: 'absolute' }} />
     </PageContainer>

@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -13,6 +13,8 @@ import ProcessView from './components/view';
 import ProcessEdit from './components/edit';
 import ProcessCreate from './components/create';
 import ProcessFlowSetting from './components/detail/setting';
+import { getProject } from '@/services/project/api';
+import { FormattedMessage } from 'umi';
 
 type ListProps = {
   location: {
@@ -22,9 +24,10 @@ type ListProps = {
   };
 };
 
-const TableList: FC<ListProps> = (porps) => {
+const TableList: FC<ListProps> = (props) => {
   const actionRef = useRef<ActionType>();
-  const { projectid } = porps.location.query;
+  const { projectid } = props.location.query;
+  const [projectName, setProjectName] = useState('');
   const columns: ProColumns<Process>[] = [
     {
       title: 'ID',
@@ -113,9 +116,20 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
   ];
-
+  useEffect(() => {
+    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
+  }, [projectid]);
   return (
-    <PageContainer>
+    <PageContainer
+      header={{
+        title: (
+          <>
+            {projectName}
+            <FormattedMessage id="menu.processes" defaultMessage="Processes" />
+          </>
+        ),
+      }}
+    >
       <ProTable<Process, ListPagination>
         actionRef={actionRef}
         search={{

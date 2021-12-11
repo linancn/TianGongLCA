@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useState } from 'react';
 import type { Elements, Connection, Edge, OnLoadParams } from 'react-flow-renderer';
 import { ArrowHeadType } from 'react-flow-renderer';
@@ -15,7 +15,7 @@ import ReactFlow, {
 import Toolbox from './toolbox';
 import { getPlanModel } from '@/services/plan/api';
 import { PageContainer } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi';
+import { getProject } from '@/services/project/api';
 // import ProLayout from '@ant-design/pro-layout';
 // import HeaderContent from '@/components/HeaderContent';
 // import ElectronButton from '@/components/ElectronButton';
@@ -29,29 +29,17 @@ type modelProps = {
   };
 };
 
-let isSetData = false;
+// let isSetData = false;
 
 const PlanModel: FC<modelProps> = (props) => {
   const { projectid, id } = props.location.query;
+  const [projectName, setProjectName] = useState('');
   // const [plan, setPlan] = useState<PlanItem>();
   const [rfInstance, setRfInstance] = useState<OnLoadParams>();
   const onLoad = (reactFlowInstance: OnLoadParams) => setRfInstance(reactFlowInstance);
   const [elements, setElements] = useState<Elements>([]);
   const [parentCount, setParentCount] = useState<number>(-1);
   const [planName, setPlanName] = useState('');
-  // let reatedat = false;
-  if (!isSetData) {
-    getPlanModel(projectid, id).then((result) => {
-      isSetData = true;
-      // setPlan(result);
-      setParentCount(result.parentCount);
-      setPlanName(result.name);
-      const childrenJson = JSON.parse(result.childrenJson);
-      if (childrenJson !== null) {
-        setElements(childrenJson.data);
-      }
-    });
-  }
 
   const onConnect = (params: Connection | Edge) =>
     setElements((els) =>
@@ -72,7 +60,19 @@ const PlanModel: FC<modelProps> = (props) => {
     setElements((els) => removeElements(elementsToRemove, els));
   const onEdgeUpdate = (oldEdge: Edge, newConnection: Connection) =>
     setElements((els) => updateEdge(oldEdge, newConnection, els));
-
+  useEffect(() => {
+    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
+    getPlanModel(projectid, id).then((result) => {
+      // isSetData = true;
+      // setPlan(result);
+      setParentCount(result.parentCount);
+      setPlanName(result.name);
+      const childrenJson = JSON.parse(result.childrenJson);
+      if (childrenJson !== null) {
+        setElements(childrenJson.data);
+      }
+    });
+  }, [id, projectid]);
   return (
     // <ProLayout
     //   layout="mix"
@@ -87,7 +87,7 @@ const PlanModel: FC<modelProps> = (props) => {
       header={{
         title: (
           <>
-            <FormattedMessage id="pages.plan" defaultMessage="Plan: " />
+            {projectName}
             {planName}
           </>
         ),

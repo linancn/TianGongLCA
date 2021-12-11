@@ -1,12 +1,22 @@
-import type { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Column } from '@ant-design/charts';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Typography } from 'antd';
+import { FormattedMessage } from 'umi';
+import { getProject } from '@/services/project/api';
 // import styles from '@/style/custom.less';
 
 const { Title } = Typography;
-
-const Chart1: FC = () => {
+type Props = {
+  location: {
+    query: {
+      projectid: number;
+    };
+  };
+};
+const Chart1: FC<Props> = (props) => {
+  const { projectid } = props.location.query;
+  const [projectName, setProjectName] = useState('');
   const data = JSON.parse(`
   [
     {
@@ -89,9 +99,20 @@ const Chart1: FC = () => {
     },
     theme: 'dark',
   };
-
+  useEffect(() => {
+    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
+  }, [projectid]);
   return (
-    <PageContainer title="Assessment">
+    <PageContainer
+      header={{
+        title: (
+          <>
+            {projectName}
+            <FormattedMessage id="menu.assessment" defaultMessage="Assessment" />
+          </>
+        ),
+      }}
+    >
       <Title level={5} style={{ textAlign: 'center' }}>
         Non renewable energy resources
       </Title>

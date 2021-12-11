@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -13,6 +13,8 @@ import FlowEdit from './components/edit';
 import FlowDelete from './components/delete';
 import FlowCreate from './components/create';
 import FlowMeasurementSetting from './components/measurement/setting';
+import { FormattedMessage } from 'umi';
+import { getProject } from '@/services/project/api';
 
 type ListProps = {
   location: {
@@ -24,6 +26,7 @@ type ListProps = {
 
 const TableList: FC<ListProps> = (porps) => {
   const { projectid } = porps.location.query;
+  const [projectName, setProjectName] = useState('');
   const actionRef = useRef<ActionType>();
   const flowBaseColumns: ProColumns<FlowBase>[] = [
     {
@@ -115,9 +118,20 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
   ];
-
+  useEffect(() => {
+    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
+  }, [projectid]);
   return (
-    <PageContainer>
+    <PageContainer
+      header={{
+        title: (
+          <>
+            {projectName}
+            <FormattedMessage id="menu.flows" defaultMessage="Flows" />
+          </>
+        ),
+      }}
+    >
       <ProTable<FlowBase, ListPagination>
         actionRef={actionRef}
         search={{
