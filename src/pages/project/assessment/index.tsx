@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getResultData2 } from '@/services/assessment/api';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button } from 'antd';
-import { BarChartOutlined } from '@ant-design/icons';
+import { BarChartOutlined, FileTextOutlined } from '@ant-design/icons';
 import { getProject } from '@/services/project/api';
 import { FormattedMessage } from 'umi';
 
@@ -169,6 +169,12 @@ const PivotSheetTable: FC<Props> = (prop) => {
               size="small"
               icon={<BarChartOutlined />}
               href={`/project/assessment/chart1?projectid=${projectid}`}
+            />{' '}
+            <Button
+              shape="circle"
+              size="small"
+              icon={<FileTextOutlined />}
+              href={`/file/report_paper_clip.docx`}
             />
           </>
         ),

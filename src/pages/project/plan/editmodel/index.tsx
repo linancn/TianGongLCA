@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react';
-import { useState } from 'react';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import type { Elements, Connection, Edge, OnLoadParams } from 'react-flow-renderer';
 import { ArrowHeadType } from 'react-flow-renderer';
 import ReactFlow, {

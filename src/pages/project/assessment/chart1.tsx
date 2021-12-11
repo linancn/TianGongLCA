@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { Column } from '@ant-design/charts';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Typography } from 'antd';

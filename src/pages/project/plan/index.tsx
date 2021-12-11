@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react';
-import { useRef } from 'react';
+import type { FC } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getPlanInfoGrid } from '@/services/plan/api';

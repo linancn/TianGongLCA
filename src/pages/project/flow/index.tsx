@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react';
-import { useRef } from 'react';
+import type { FC } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { getFlowBaseGrid } from '@/services/flowbase/api';
