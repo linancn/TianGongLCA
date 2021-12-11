@@ -5,7 +5,7 @@ import type {
 } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import { notification } from 'antd';
-import { history, Link } from 'umi';
+import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
@@ -127,19 +127,19 @@ export const layout = ({
   };
 }): BasicLayoutProps => {
   return {
-    menuItemRender: (menuItemProps, defaultDom) => {
-      if (menuItemProps.isUrl || !menuItemProps.path) {
-        return defaultDom;
-      }
-      return (
-        <Link to={menuItemProps.path}>
-          {menuItemProps.pro_layout_parentKeys &&
-            menuItemProps.pro_layout_parentKeys.length > 0 &&
-            menuItemProps.icon}
-          {defaultDom}
-        </Link>
-      );
-    },
+    // menuItemRender: (menuItemProps, defaultDom) => {
+    //   if (menuItemProps.isUrl || !menuItemProps.path) {
+    //     return defaultDom;
+    //   }
+    //   return (
+    //     <Link to={menuItemProps.path}>
+    //       {menuItemProps.pro_layout_parentKeys &&
+    //         menuItemProps.pro_layout_parentKeys.length > 0 &&
+    //         menuItemProps.icon}
+    //       {defaultDom}
+    //     </Link>
+    //   );
+    // },
     rightContentRender: () => <RightContent />,
     headerContentRender: () => <HeaderContent title={''} />,
     disableContentMargin: false,
