@@ -4,14 +4,17 @@ import {
   XFlow,
   createGraphConfig,
   XFlowCanvas,
-  CanvasScaleToolbar,
   XFlowGraphCommands,
+  CanvasToolbar,
 } from '@antv/xflow';
-// import { getGraphData } from './data'
 import { PageContainer } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi';
 import './index.css';
-import Toolbox from './toolbox';
+import { useToolbarConfig } from './toolbar/config';
+
+export interface Props {
+  anything: string;
+}
 
 export const useGraphConfig = createGraphConfig((graphConfig) => {
   graphConfig.setDefaultNodeRender((props) => {
@@ -19,7 +22,7 @@ export const useGraphConfig = createGraphConfig((graphConfig) => {
   });
 });
 
-const XFlowDemo: FC = () => {
+const XFlowDemo: FC<Props> = (props) => {
   const graphData: NsGraph.IGraphData = {
     nodes: [
       {
@@ -151,15 +154,15 @@ const XFlowDemo: FC = () => {
       },
     ],
   };
-  const graphConfig = useGraphConfig();
+  const graphConfig = useGraphConfig(props);
+  const toolbarConfig = useToolbarConfig(props);
   const onLoad: IAppLoad = async (app) => {
     await app.executeCommand<NsGraphCmd.GraphRender.IArgs>(XFlowGraphCommands.GRAPH_RENDER.id, {
       graphData,
     });
-    await app.executeCommand<NsGraphCmd.GraphZoom.IArgs>(XFlowGraphCommands.GRAPH_ZOOM.id, {
-      factor: 'real',
-    });
-    return app;
+    // await app.executeCommand<NsGraphCmd.GraphZoom.IArgs>(XFlowGraphCommands.GRAPH_ZOOM.id, {
+    //   factor: 'real',
+    // });
   };
 
   return (
@@ -174,12 +177,10 @@ const XFlowDemo: FC = () => {
       }}
     >
       <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
-        <XFlow onLoad={onLoad}>
-          <XFlowCanvas config={graphConfig} position={{ top: 0, bottom: 0, left: 0, right: 0 }}>
-            <CanvasScaleToolbar position={{ bottom: 10, left: 10 }} layout="vertical" />
-          </XFlowCanvas>
+        <XFlow onLoad={onLoad} className="xflow-workspace">
+          <CanvasToolbar layout="vertical" config={toolbarConfig} position={{ top: 0, right: 0 }} />
+          <XFlowCanvas config={graphConfig} position={{ top: 0, bottom: 0, left: 0, right: 0 }} />
         </XFlow>
-        <Toolbox />
       </div>
     </PageContainer>
   );
