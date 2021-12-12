@@ -1,20 +1,12 @@
 import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import type { IAppLoad, NsGraph, NsGraphCmd } from '@antv/xflow';
-import {
-  XFlow,
-  createGraphConfig,
-  XFlowCanvas,
-  XFlowGraphCommands,
-  CanvasToolbar,
-} from '@antv/xflow';
+import { XFlow, createGraphConfig, XFlowCanvas, XFlowGraphCommands } from '@antv/xflow';
 import { PageContainer } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi';
 import './index.css';
-import { useToolbarConfig } from './toolbar/config';
-
-export interface Props {
-  anything: string;
-}
+import Toolbar from './toolbar';
+import { getProject } from '@/services/project/api';
+import { getPlanModel } from '@/services/plan/api';
 
 export const useGraphConfig = createGraphConfig((graphConfig) => {
   graphConfig.setDefaultNodeRender((props) => {
@@ -22,7 +14,19 @@ export const useGraphConfig = createGraphConfig((graphConfig) => {
   });
 });
 
-const XFlowDemo: FC<Props> = (props) => {
+type Props = {
+  location: {
+    query: {
+      projectid: number;
+      id: string;
+    };
+  };
+};
+
+const PlanModel: FC<Props> = (props) => {
+  const { projectid, id } = props.location.query;
+  const [projectName, setProjectName] = useState('');
+  const [planName, setPlanName] = useState('');
   const graphData: NsGraph.IGraphData = {
     nodes: [
       {
@@ -154,31 +158,37 @@ const XFlowDemo: FC<Props> = (props) => {
       },
     ],
   };
-  const graphConfig = useGraphConfig(props);
-  const toolbarConfig = useToolbarConfig(props);
+  const graphConfig = useGraphConfig();
   const onLoad: IAppLoad = async (app) => {
     await app.executeCommand<NsGraphCmd.GraphRender.IArgs>(XFlowGraphCommands.GRAPH_RENDER.id, {
       graphData,
     });
-    // await app.executeCommand<NsGraphCmd.GraphZoom.IArgs>(XFlowGraphCommands.GRAPH_ZOOM.id, {
-    //   factor: 'real',
-    // });
   };
-
+  useEffect(() => {
+    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
+    getPlanModel(projectid, id).then((result) => {
+      // setParentCount(result.parentCount);
+      setPlanName(result.name);
+      const childrenJson = JSON.parse(result.childrenJson);
+      if (childrenJson !== null) {
+        // setElements(childrenJson.data);
+      }
+    });
+  }, [id, projectid]);
   return (
     <PageContainer
       header={{
         title: (
           <>
-            <FormattedMessage id="pages.plan" defaultMessage="Plan: " />
-            test
+            {projectName}
+            {planName}
           </>
         ),
       }}
     >
       <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
         <XFlow onLoad={onLoad} className="xflow-workspace">
-          <CanvasToolbar layout="vertical" config={toolbarConfig} position={{ top: 0, right: 0 }} />
+          <Toolbar projectId={projectid} id={id} />
           <XFlowCanvas config={graphConfig} position={{ top: 0, bottom: 0, left: 0, right: 0 }} />
         </XFlow>
       </div>
@@ -186,4 +196,4 @@ const XFlowDemo: FC<Props> = (props) => {
   );
 };
 
-export default XFlowDemo;
+export default PlanModel;
