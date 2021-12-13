@@ -1,6 +1,5 @@
 import type { Dispatch, FC } from 'react';
 import React, { useState, useCallback } from 'react';
-import styles from '@/style/custom.less';
 import { Button, Drawer, Space } from 'antd';
 import { getPlanInfoGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
@@ -11,7 +10,8 @@ import { getProcessGrid } from '@/services/process/api';
 import type { ListPagination } from '@/services/home/data';
 import type { IGraphCommandService, NsNodeCmd } from '@antv/xflow';
 import { XFlowNodeCommands } from '@antv/xflow';
-import { DndNode } from './config/dndnode';
+import { Attrs, Component, Ports } from './config/node';
+import styles from '@/style/custom.less';
 
 type addProps = {
   projectId: number;
@@ -153,114 +153,14 @@ const Add: FC<addProps> = ({ projectId, drawerVisible, setDrawerVisible, command
     if (addPlanToModel) {
       const newNode = {
         id: addPlanToModel.id,
-        component: DndNode,
+        name: addPlanToModel.name,
+        label: addPlanToModel.name,
+        component: Component,
         width: 100,
         height: 30,
-        label: addPlanToModel.name,
-        attrs: {
-          body: {
-            stroke: '#1890ff',
-            fill: '#fff',
-            strokeWidth: '1',
-            strokeLinejoin: 'round',
-          },
-        },
-        ports: {
-          groups: {
-            top: {
-              attrs: {
-                circle: {
-                  fill: '#fff',
-                  magnet: true,
-                  r: 4,
-                  stroke: '#31d0c6',
-                  strokeWidth: 2,
-                  style: {
-                    visibility: 'hidden',
-                  },
-                },
-              },
-              position: {
-                name: 'top',
-              },
-              zIndex: 10,
-            },
-            bottom: {
-              attrs: {
-                circle: {
-                  fill: '#fff',
-                  magnet: true,
-                  r: 4,
-                  stroke: '#31d0c6',
-                  strokeWidth: 2,
-                  style: {
-                    visibility: 'hidden',
-                  },
-                },
-              },
-              position: {
-                name: 'bottom',
-              },
-              zIndex: 10,
-            },
-            left: {
-              attrs: {
-                circle: {
-                  fill: '#fff',
-                  magnet: true,
-                  r: 4,
-                  stroke: '#31d0c6',
-                  strokeWidth: 2,
-                  style: {
-                    visibility: 'hidden',
-                  },
-                },
-              },
-              position: {
-                name: 'left',
-              },
-              zIndex: 10,
-            },
-            right: {
-              attrs: {
-                circle: {
-                  fill: '#fff',
-                  magnet: true,
-                  r: 4,
-                  stroke: '#31d0c6',
-                  strokeWidth: 2,
-                  style: {
-                    visibility: 'hidden',
-                  },
-                },
-              },
-              position: {
-                name: 'right',
-              },
-              zIndex: 10,
-            },
-          },
-          items: [
-            {
-              group: 'top',
-              id: addPlanToModel.id + '-t',
-            },
-            {
-              group: 'bottom',
-              id: addPlanToModel.id + '-b',
-            },
-            {
-              group: 'left',
-              id: addPlanToModel.id + '-l',
-            },
-            {
-              group: 'right',
-              id: addPlanToModel.id + '-r',
-            },
-          ],
-        },
+        attrs: Attrs(),
+        ports: Ports(addPlanToModel.id),
         info: {
-          name: addPlanToModel.name,
           type: 'plan',
         },
       };
@@ -275,20 +175,13 @@ const Add: FC<addProps> = ({ projectId, drawerVisible, setDrawerVisible, command
     if (addProcessToModel) {
       const newNode = {
         id: addProcessToModel.id,
+        name: addProcessToModel.name,
+        label: addProcessToModel.name,
+        component: Component,
         width: 100,
         height: 30,
-        attrs: {
-          body: {
-            stroke: '#1890ff',
-            fill: '#fff',
-            strokeWidth: '1',
-            strokeLinejoin: 'round',
-          },
-          label: {
-            text: addProcessToModel.name,
-            fill: '#333',
-          },
-        },
+        attrs: Attrs(),
+        ports: Ports(addProcessToModel.id),
         info: {
           type: 'process',
         },
