@@ -11,6 +11,7 @@ import { getProcessGrid } from '@/services/process/api';
 import type { ListPagination } from '@/services/home/data';
 import type { IGraphCommandService, NsNodeCmd } from '@antv/xflow';
 import { XFlowNodeCommands } from '@antv/xflow';
+import { DndNode } from './config/dndnode';
 
 type addProps = {
   projectId: number;
@@ -152,8 +153,10 @@ const Add: FC<addProps> = ({ projectId, drawerVisible, setDrawerVisible, command
     if (addPlanToModel) {
       const newNode = {
         id: addPlanToModel.id,
+        component: DndNode,
         width: 100,
         height: 30,
+        label: addPlanToModel.name,
         attrs: {
           body: {
             stroke: '#1890ff',
@@ -161,12 +164,103 @@ const Add: FC<addProps> = ({ projectId, drawerVisible, setDrawerVisible, command
             strokeWidth: '1',
             strokeLinejoin: 'round',
           },
-          label: {
-            text: addPlanToModel.name,
-            fill: '#333',
+        },
+        ports: {
+          groups: {
+            top: {
+              attrs: {
+                circle: {
+                  fill: '#fff',
+                  magnet: true,
+                  r: 4,
+                  stroke: '#31d0c6',
+                  strokeWidth: 2,
+                  style: {
+                    visibility: 'hidden',
+                  },
+                },
+              },
+              position: {
+                name: 'top',
+              },
+              zIndex: 10,
+            },
+            bottom: {
+              attrs: {
+                circle: {
+                  fill: '#fff',
+                  magnet: true,
+                  r: 4,
+                  stroke: '#31d0c6',
+                  strokeWidth: 2,
+                  style: {
+                    visibility: 'hidden',
+                  },
+                },
+              },
+              position: {
+                name: 'bottom',
+              },
+              zIndex: 10,
+            },
+            left: {
+              attrs: {
+                circle: {
+                  fill: '#fff',
+                  magnet: true,
+                  r: 4,
+                  stroke: '#31d0c6',
+                  strokeWidth: 2,
+                  style: {
+                    visibility: 'hidden',
+                  },
+                },
+              },
+              position: {
+                name: 'left',
+              },
+              zIndex: 10,
+            },
+            right: {
+              attrs: {
+                circle: {
+                  fill: '#fff',
+                  magnet: true,
+                  r: 4,
+                  stroke: '#31d0c6',
+                  strokeWidth: 2,
+                  style: {
+                    visibility: 'hidden',
+                  },
+                },
+              },
+              position: {
+                name: 'right',
+              },
+              zIndex: 10,
+            },
           },
+          items: [
+            {
+              group: 'top',
+              id: addPlanToModel.id + '-t',
+            },
+            {
+              group: 'bottom',
+              id: addPlanToModel.id + '-b',
+            },
+            {
+              group: 'left',
+              id: addPlanToModel.id + '-l',
+            },
+            {
+              group: 'right',
+              id: addPlanToModel.id + '-r',
+            },
+          ],
         },
         info: {
+          name: addPlanToModel.name,
           type: 'plan',
         },
       };
