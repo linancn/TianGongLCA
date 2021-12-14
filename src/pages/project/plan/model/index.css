@@ -1,5 +1,6 @@
 .xflow-default-node {
-  z-index: 10;
+  display: none;
+  /* z-index: 10;
   display: flex;
   width: 180px;
   height: 36px;
@@ -9,7 +10,7 @@
   border: 1px solid #1890ff;
   border-radius: 2px;
   box-shadow: -1px -1px 4px 0 rgba(223,223,223,0.50), -2px 2px 4px 0 rgba(244,244,244,0.50), 2px 3px 8px 2px rgba(151,151,151,0.05);
-  transition: all ease-in-out 0.15s;
+  transition: all ease-in-out 0.15s; */
 }
 .xflow-default-node:hover {
   background-color: #fff;
@@ -987,7 +988,7 @@
 }
 .flowchart-extension-container.xflow-app-workspace {
   overflow: hidden;
-  border: 1px solid #d9d9d9;
+  /* border: 1px solid #d9d9d9; */
 }
 .flowchart-extension-container.xflow-app-workspace .xflow-workspace-panel {
   z-index: 1;

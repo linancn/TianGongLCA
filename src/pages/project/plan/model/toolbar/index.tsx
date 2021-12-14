@@ -1,3 +1,4 @@
+import { updatePlanChinlrenJson } from '@/services/plan/api';
 import { DeleteOutlined, PlusCircleOutlined, SaveOutlined } from '@ant-design/icons';
 import type {
   IGraphCommandService,
@@ -23,7 +24,7 @@ type Props = {
   id: string;
 };
 
-const Toolbar: FC<Props> = ({ projectId }) => {
+const Toolbar: FC<Props> = ({ projectId, id }) => {
   const [graphCommandService, setGraphCommandService] = useState<IGraphCommandService>();
   const [drawerAddVisible, setAddDrawerVisible] = useState(false);
   IconStore.set('PlusCircleOutlined', PlusCircleOutlined);
@@ -47,7 +48,7 @@ const Toolbar: FC<Props> = ({ projectId }) => {
       {
         id: XFlowNodeCommands.ADD_NODE.id,
         iconName: 'PlusCircleOutlined',
-        tooltip: '添加节点',
+        tooltip: 'Add',
         onClick: async ({ commandService }) => {
           setGraphCommandService(commandService);
           setAddDrawerVisible(true);
@@ -56,14 +57,21 @@ const Toolbar: FC<Props> = ({ projectId }) => {
       {
         id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         iconName: 'SaveOutlined',
-        tooltip: '保存数据',
+        tooltip: 'Save',
         onClick: async ({ commandService }) => {
           commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
-              saveGraphDataService: async (meta, data) => {
-                console.log(data);
-                message.success('nodes count:' + data.nodes.length);
+              saveGraphDataService: async (_meta, data) => {
+                const updatePlan = {
+                  projectId,
+                  id,
+                  childrenJson: `{"data": ${JSON.stringify(data)}}`,
+                };
+                updatePlanChinlrenJson(updatePlan).then(() => {
+                  message.success('Save successfully!');
+                });
+                // console.log(data);
               },
             },
           );

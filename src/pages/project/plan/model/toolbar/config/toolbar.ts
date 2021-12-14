@@ -197,10 +197,10 @@ namespace NSToolbarConfig {
         commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
           TOOLBAR_ITEMS.SAVE_GRAPH_DATA,
           {
-            // saveGraphDataService: (_meta, graphData) => {
-            //   console.log(graphData)
-            //   return null
-            // },
+            saveGraphDataService: async (meta, graphData) => {
+              console.log(graphData);
+              // return null
+            },
           },
         );
       },
