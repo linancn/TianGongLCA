@@ -20,3 +20,10 @@ export type PlanModel = {
   name: string;
   childrenJson: string;
 };
+
+export type PlanModelState = {
+  isSelected: boolean;
+  cellType: string;
+  cellID: string;
+  cellConfig: any;
+};

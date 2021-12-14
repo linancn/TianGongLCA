@@ -1,4 +1,5 @@
 import { updatePlanChinlrenJson } from '@/services/plan/api';
+import type { PlanModelState } from '@/services/plan/data';
 import {
   DeleteOutlined,
   ExclamationCircleOutlined,
@@ -32,6 +33,7 @@ import { message, Modal } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
 import Add from './add';
+import View from './view';
 
 type Props = {
   projectId: number;
@@ -40,7 +42,14 @@ type Props = {
 
 const Toolbar: FC<Props> = ({ projectId, id }) => {
   const [graphCommandService, setGraphCommandService] = useState<IGraphCommandService>();
+  const [planModelState, setPlanModelState] = useState<PlanModelState>({
+    isSelected: false,
+    cellType: '',
+    cellID: '',
+    cellConfig: '',
+  });
   const [drawerAddVisible, setAddDrawerVisible] = useState(false);
+  const [drawerViewVisible, setViewDrawerVisible] = useState(false);
 
   IconStore.set('rollup', NodeCollapseOutlined);
   IconStore.set('drilldown', NodeExpandOutlined);
@@ -52,42 +61,36 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
   IconStore.set('remove', DeleteOutlined);
   IconStore.set('save', SaveOutlined);
 
-  interface IState {
-    isSelected: boolean;
-    cellType: string;
-    cellID: string;
-    cellConfig: any;
-  }
-
   const getToolbarState = async (modelService: IModelService) => {
-    const cell = await MODELS.SELECTED_CELL.useValue(modelService);
-    if (cell) {
-      if (cell.shape === 'react-shape') {
-        return {
-          isSelected: true,
-          cellType: 'node',
-          cellID: cell.id,
-          cellConfig: cell.data,
-        } as IState;
-      }
-      if (cell.shape === 'edge') {
-        return {
-          isSelected: true,
-          cellType: 'edge',
-          cellID: cell.id,
-          cellConfig: cell.data,
-        } as IState;
-      }
-    }
-    return {
+    let state = {
       isSelected: false,
       cellType: '',
       cellID: '',
       cellConfig: '',
-    } as IState;
+    };
+    const cell = await MODELS.SELECTED_CELL.useValue(modelService);
+    if (cell) {
+      if (cell.shape === 'react-shape') {
+        state = {
+          isSelected: true,
+          cellType: 'node',
+          cellID: cell.id,
+          cellConfig: cell.data,
+        };
+      } else if (cell.shape === 'edge') {
+        state = {
+          isSelected: true,
+          cellType: 'edge',
+          cellID: cell.id,
+          cellConfig: cell.data,
+        };
+      }
+    }
+    setPlanModelState(state);
+    return state;
   };
 
-  const getToolbarItems = async (state: IState) => {
+  const getToolbarItems = async (state: PlanModelState) => {
     const toolbarGroup1: IToolbarItemOptions[] = [];
     const toolbarGroup2: IToolbarItemOptions[] = [];
     const toolbarGroup3: IToolbarItemOptions[] = [];
@@ -118,10 +121,10 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         id: 'view',
         iconName: 'view',
         tooltip: 'View',
-        // onClick: async ({ commandService }) => {
-        // setGraphCommandService(commandService);
-        // setAddDrawerVisible(true);
-        // },
+        isEnabled: state.isSelected,
+        onClick: async () => {
+          setViewDrawerVisible(true);
+        },
       },
       {
         id: 'edit',
@@ -250,7 +253,7 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         });
       };
 
-      const model = await MODELS.SELECTED_NODES.getModel(modelService);
+      const model = await MODELS.SELECTED_CELLS.getModel(modelService);
       model.watch(() => {
         updateToolbarState();
       });
@@ -269,6 +272,12 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         drawerVisible={drawerAddVisible}
         setDrawerVisible={setAddDrawerVisible}
         commandService={graphCommandService}
+      />
+      <View
+        projectId={projectId}
+        drawerVisible={drawerViewVisible}
+        setDrawerVisible={setViewDrawerVisible}
+        planModelState={planModelState}
       />
     </>
   );

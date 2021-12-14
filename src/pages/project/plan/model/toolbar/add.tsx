@@ -13,14 +13,14 @@ import { XFlowNodeCommands } from '@antv/xflow';
 import { Attrs, Component, Ports } from './config/node';
 import styles from '@/style/custom.less';
 
-type addProps = {
+type Props = {
   projectId: number;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
   commandService: IGraphCommandService | undefined;
 };
 
-const Add: FC<addProps> = ({ projectId, drawerVisible, setDrawerVisible, commandService }) => {
+const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandService }) => {
   const [drawerAddPlanVisible, setDrawerAddPlanVisible] = useState(false);
   const [drawerAddProcessVisible, setDrawerAddProcessVisible] = useState(false);
   const [addPlanToModel, setAddPlanToModel] = useState<PlanInfo>();
