@@ -4,9 +4,12 @@ import type {
   IGraphCommandService,
   IModelService,
   IToolbarItemOptions,
+  NsEdgeCmd,
   NsGraphCmd,
+  NsNodeCmd,
 } from '@antv/xflow';
 import {
+  XFlowEdgeCommands,
   CanvasToolbar,
   createToolbarConfig,
   IconStore,
@@ -27,18 +30,43 @@ type Props = {
 const Toolbar: FC<Props> = ({ projectId, id }) => {
   const [graphCommandService, setGraphCommandService] = useState<IGraphCommandService>();
   const [drawerAddVisible, setAddDrawerVisible] = useState(false);
+
   IconStore.set('PlusCircleOutlined', PlusCircleOutlined);
   IconStore.set('DeleteOutlined', DeleteOutlined);
   IconStore.set('SaveOutlined', SaveOutlined);
 
   interface IState {
-    isNodeSelected: boolean;
+    isSelected: boolean;
+    cellType: string;
+    cellID: string;
+    cellConfig: any;
   }
 
   const getToolbarState = async (modelService: IModelService) => {
-    const nodes = await MODELS.SELECTED_NODES.useValue(modelService);
+    const cell = await MODELS.SELECTED_CELL.useValue(modelService);
+    if (cell) {
+      if (cell.shape === 'react-shape') {
+        return {
+          isSelected: true,
+          cellType: 'node',
+          cellID: cell.id,
+          cellConfig: cell.data,
+        } as IState;
+      }
+      if (cell.shape === 'edge') {
+        return {
+          isSelected: true,
+          cellType: 'edge',
+          cellID: cell.id,
+          cellConfig: cell.data,
+        } as IState;
+      }
+    }
     return {
-      isNodeSelected: nodes.length > 0,
+      isSelected: false,
+      cellType: '',
+      cellID: '',
+      cellConfig: '',
     } as IState;
   };
 
@@ -52,6 +80,23 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         onClick: async ({ commandService }) => {
           setGraphCommandService(commandService);
           setAddDrawerVisible(true);
+        },
+      },
+      {
+        id: XFlowNodeCommands.MOVE_NODE.id,
+        iconName: 'DeleteOutlined',
+        tooltip: 'Delete',
+        isEnabled: state.isSelected,
+        onClick: async ({ commandService }) => {
+          if (state.cellType === 'node')
+            commandService.executeCommand<NsNodeCmd.DelNode.IArgs>(XFlowNodeCommands.DEL_NODE.id, {
+              nodeConfig: state.cellConfig,
+            });
+          else if (state.cellType === 'edge') {
+            commandService.executeCommand<NsEdgeCmd.DelEdge.IArgs>(XFlowEdgeCommands.DEL_EDGE.id, {
+              edgeConfig: state.cellConfig,
+            });
+          }
         },
       },
       {
@@ -76,12 +121,6 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
             },
           );
         },
-      },
-      {
-        id: XFlowNodeCommands.MOVE_NODE.id,
-        iconName: 'DeleteOutlined',
-        tooltip: '删除节点',
-        isEnabled: state.isNodeSelected,
       },
     );
 
