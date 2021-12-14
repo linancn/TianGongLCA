@@ -33,6 +33,7 @@ import { message, Modal } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
 import Add from './add';
+import Edit from './edit';
 import View from './view';
 
 type Props = {
@@ -42,14 +43,9 @@ type Props = {
 
 const Toolbar: FC<Props> = ({ projectId, id }) => {
   const [graphCommandService, setGraphCommandService] = useState<IGraphCommandService>();
-  const [planModelState, setPlanModelState] = useState<PlanModelState>({
-    isSelected: false,
-    cellType: '',
-    cellID: '',
-    cellConfig: '',
-  });
   const [drawerAddVisible, setAddDrawerVisible] = useState(false);
   const [drawerViewVisible, setViewDrawerVisible] = useState(false);
+  const [drawerEditVisible, setEditDrawerVisible] = useState(false);
 
   IconStore.set('rollup', NodeCollapseOutlined);
   IconStore.set('drilldown', NodeExpandOutlined);
@@ -61,6 +57,12 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
   IconStore.set('remove', DeleteOutlined);
   IconStore.set('save', SaveOutlined);
 
+  const [planModelState, setPlanModelState] = useState<PlanModelState>({
+    isSelected: false,
+    cellType: '',
+    cellID: '',
+    cellConfig: '',
+  });
   const getToolbarState = async (modelService: IModelService) => {
     let state = {
       isSelected: false,
@@ -101,6 +103,7 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         id: 'rollup',
         iconName: 'rollup',
         tooltip: 'Roll Up',
+        isEnabled: false,
         // onClick: async ({ commandService }) => {
         // setGraphCommandService(commandService);
         // setAddDrawerVisible(true);
@@ -110,6 +113,7 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         id: 'drilldown',
         iconName: 'drilldown',
         tooltip: 'Drill Down',
+        isEnabled: false,
         // onClick: async ({ commandService }) => {
         // setGraphCommandService(commandService);
         // setAddDrawerVisible(true);
@@ -130,15 +134,17 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         id: 'edit',
         iconName: 'edit',
         tooltip: 'Edit',
-        // onClick: async ({ commandService }) => {
-        // setGraphCommandService(commandService);
-        // setAddDrawerVisible(true);
-        // },
+        isEnabled: state.isSelected,
+        onClick: async ({ commandService }) => {
+          setGraphCommandService(commandService);
+          setEditDrawerVisible(true);
+        },
       },
       {
         id: 'design',
         iconName: 'design',
         tooltip: 'Design',
+        isEnabled: state.isSelected,
         // onClick: async ({ commandService }) => {
         // setGraphCommandService(commandService);
         // setAddDrawerVisible(true);
@@ -228,7 +234,6 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
               updatePlanChinlrenJson(updatePlan).then(() => {
                 message.success('Save successfully!');
               });
-              // console.log(data);
             },
           },
         );
@@ -277,6 +282,13 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         projectId={projectId}
         drawerVisible={drawerViewVisible}
         setDrawerVisible={setViewDrawerVisible}
+        planModelState={planModelState}
+      />
+      <Edit
+        projectId={projectId}
+        planId={id}
+        drawerVisible={drawerEditVisible}
+        setDrawerVisible={setEditDrawerVisible}
         planModelState={planModelState}
       />
     </>

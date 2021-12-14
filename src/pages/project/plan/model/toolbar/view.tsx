@@ -17,7 +17,6 @@ let preid = '';
 
 const View: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, planModelState }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
-  // const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const callbackDrawerVisible = useCallback(() => {
     setDrawerVisible(false);
   }, [setDrawerVisible]);

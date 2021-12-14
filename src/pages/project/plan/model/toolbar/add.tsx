@@ -153,7 +153,6 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
     if (addPlanToModel) {
       const newNode = {
         id: addPlanToModel.id,
-        name: addPlanToModel.name,
         label: addPlanToModel.name,
         component: Component,
         width: 100,
@@ -175,7 +174,6 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
     if (addProcessToModel) {
       const newNode = {
         id: addProcessToModel.id,
-        name: addProcessToModel.name,
         label: addProcessToModel.name,
         component: Component,
         width: 100,
