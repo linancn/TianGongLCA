@@ -1,5 +1,16 @@
 import { updatePlanChinlrenJson } from '@/services/plan/api';
-import { DeleteOutlined, PlusCircleOutlined, SaveOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+  FormOutlined,
+  HighlightOutlined,
+  NodeCollapseOutlined,
+  NodeExpandOutlined,
+  PlusCircleOutlined,
+  ProfileOutlined,
+  ReloadOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
 import type {
   IGraphCommandService,
   IModelService,
@@ -17,7 +28,7 @@ import {
   XFlowGraphCommands,
   XFlowNodeCommands,
 } from '@antv/xflow';
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
 import Add from './add';
@@ -31,9 +42,15 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
   const [graphCommandService, setGraphCommandService] = useState<IGraphCommandService>();
   const [drawerAddVisible, setAddDrawerVisible] = useState(false);
 
-  IconStore.set('PlusCircleOutlined', PlusCircleOutlined);
-  IconStore.set('DeleteOutlined', DeleteOutlined);
-  IconStore.set('SaveOutlined', SaveOutlined);
+  IconStore.set('rollup', NodeCollapseOutlined);
+  IconStore.set('drilldown', NodeExpandOutlined);
+  IconStore.set('add', PlusCircleOutlined);
+  IconStore.set('view', ProfileOutlined);
+  IconStore.set('edit', FormOutlined);
+  IconStore.set('design', HighlightOutlined);
+  IconStore.set('reload', ReloadOutlined);
+  IconStore.set('remove', DeleteOutlined);
+  IconStore.set('save', SaveOutlined);
 
   interface IState {
     isSelected: boolean;
@@ -72,10 +89,63 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
 
   const getToolbarItems = async (state: IState) => {
     const toolbarGroup1: IToolbarItemOptions[] = [];
+    const toolbarGroup2: IToolbarItemOptions[] = [];
+    const toolbarGroup3: IToolbarItemOptions[] = [];
+    const toolbarGroup4: IToolbarItemOptions[] = [];
+    const toolbarGroup5: IToolbarItemOptions[] = [];
     toolbarGroup1.push(
       {
-        id: XFlowNodeCommands.ADD_NODE.id,
-        iconName: 'PlusCircleOutlined',
+        id: 'rollup',
+        iconName: 'rollup',
+        tooltip: 'Roll Up',
+        // onClick: async ({ commandService }) => {
+        // setGraphCommandService(commandService);
+        // setAddDrawerVisible(true);
+        // },
+      },
+      {
+        id: 'drilldown',
+        iconName: 'drilldown',
+        tooltip: 'Drill Down',
+        // onClick: async ({ commandService }) => {
+        // setGraphCommandService(commandService);
+        // setAddDrawerVisible(true);
+        // },
+      },
+    );
+    toolbarGroup2.push(
+      {
+        id: 'view',
+        iconName: 'view',
+        tooltip: 'View',
+        // onClick: async ({ commandService }) => {
+        // setGraphCommandService(commandService);
+        // setAddDrawerVisible(true);
+        // },
+      },
+      {
+        id: 'edit',
+        iconName: 'edit',
+        tooltip: 'Edit',
+        // onClick: async ({ commandService }) => {
+        // setGraphCommandService(commandService);
+        // setAddDrawerVisible(true);
+        // },
+      },
+      {
+        id: 'design',
+        iconName: 'design',
+        tooltip: 'Design',
+        // onClick: async ({ commandService }) => {
+        // setGraphCommandService(commandService);
+        // setAddDrawerVisible(true);
+        // },
+      },
+    );
+    toolbarGroup3.push(
+      {
+        id: 'add',
+        iconName: 'add',
         tooltip: 'Add',
         onClick: async ({ commandService }) => {
           setGraphCommandService(commandService);
@@ -83,48 +153,91 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         },
       },
       {
-        id: XFlowNodeCommands.MOVE_NODE.id,
-        iconName: 'DeleteOutlined',
-        tooltip: 'Delete',
+        id: 'remove',
+        iconName: 'remove',
+        tooltip: 'Remove',
         isEnabled: state.isSelected,
         onClick: async ({ commandService }) => {
-          if (state.cellType === 'node')
-            commandService.executeCommand<NsNodeCmd.DelNode.IArgs>(XFlowNodeCommands.DEL_NODE.id, {
-              nodeConfig: state.cellConfig,
+          if (state.cellType === 'node') {
+            Modal.confirm({
+              title: 'Are you sure to remove this node?',
+              icon: <ExclamationCircleOutlined />,
+              content: '',
+              onOk() {
+                commandService.executeCommand<NsNodeCmd.DelNode.IArgs>(
+                  XFlowNodeCommands.DEL_NODE.id,
+                  {
+                    nodeConfig: state.cellConfig,
+                  },
+                );
+              },
+              onCancel() {},
             });
-          else if (state.cellType === 'edge') {
-            commandService.executeCommand<NsEdgeCmd.DelEdge.IArgs>(XFlowEdgeCommands.DEL_EDGE.id, {
-              edgeConfig: state.cellConfig,
+          } else if (state.cellType === 'edge') {
+            Modal.confirm({
+              title: 'Are you sure to remove this edge?',
+              icon: <ExclamationCircleOutlined />,
+              content: '',
+              onOk() {
+                commandService.executeCommand<NsEdgeCmd.DelEdge.IArgs>(
+                  XFlowEdgeCommands.DEL_EDGE.id,
+                  {
+                    edgeConfig: state.cellConfig,
+                  },
+                );
+              },
+              onCancel() {},
             });
           }
         },
       },
-      {
-        id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-        iconName: 'SaveOutlined',
-        tooltip: 'Save',
-        onClick: async ({ commandService }) => {
-          commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
-            XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-            {
-              saveGraphDataService: async (_meta, data) => {
-                const updatePlan = {
-                  projectId,
-                  id,
-                  childrenJson: `{"data": ${JSON.stringify(data)}}`,
-                };
-                updatePlanChinlrenJson(updatePlan).then(() => {
-                  message.success('Save successfully!');
-                });
-                // console.log(data);
-              },
-            },
-          );
-        },
-      },
     );
-
-    return [{ name: 'toolbar', items: toolbarGroup1 }];
+    toolbarGroup4.push({
+      id: 'reload',
+      iconName: 'reload',
+      tooltip: 'Reload',
+      onClick: async () => {
+        Modal.confirm({
+          title: 'Are you sure to reload this model?',
+          icon: <ExclamationCircleOutlined />,
+          content: '',
+          onOk() {
+            window.location.reload();
+          },
+          onCancel() {},
+        });
+      },
+    });
+    toolbarGroup5.push({
+      id: 'save',
+      iconName: 'save',
+      tooltip: 'Save',
+      onClick: async ({ commandService }) => {
+        commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
+          XFlowGraphCommands.SAVE_GRAPH_DATA.id,
+          {
+            saveGraphDataService: async (_meta, data) => {
+              const updatePlan = {
+                projectId,
+                id,
+                childrenJson: `{"data": ${JSON.stringify(data)}}`,
+              };
+              updatePlanChinlrenJson(updatePlan).then(() => {
+                message.success('Save successfully!');
+              });
+              // console.log(data);
+            },
+          },
+        );
+      },
+    });
+    return [
+      { name: 'tg1', items: toolbarGroup1 },
+      { name: 'tg2', items: toolbarGroup2 },
+      { name: 'tg3', items: toolbarGroup3 },
+      { name: 'tg4', items: toolbarGroup4 },
+      { name: 'tg5', items: toolbarGroup5 },
+    ];
   };
 
   const useToolbarConfig = createToolbarConfig((config) => {

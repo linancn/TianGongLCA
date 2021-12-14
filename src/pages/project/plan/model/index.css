@@ -718,10 +718,10 @@
 }
 .x6-toolbar-group::before {
   align-self: center;
-  width: 1px;
-  height: 40%;
-  margin: 0 6px;
-  background-color: rgba(0, 0, 0, 0.15);
+  width: 60%;
+  height: 1px;
+  margin: 6px 0;
+  background-color: rgba(255, 255, 255, 0.5);
   content: ' ';
   pointer-events: none;
 }
@@ -1017,7 +1017,7 @@
   margin: 0;
   padding: 0;
   border: 2px solid #3572f9;
-  box-shadow: 0 4px 4px 0 #dbe6ff;
+  /* box-shadow: 0 4px 4px 0 #dbe6ff; */
 }
 .flowchart-extension-container.xflow-app-workspace .x6-widget-transform > div {
   width: 8px;
