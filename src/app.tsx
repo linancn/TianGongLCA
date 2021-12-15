@@ -82,13 +82,13 @@ export async function getInitialState(): Promise<{
   const fetchMenuData = async () => {
     try {
       const urlparam = getUrlParam();
-      if (urlparam.menuId === '' || urlparam.menuId === 'home' || urlparam.menuId === 'user') {
-        return getHomeMenu();
-      }
+      // if (urlparam.menuId === '' || urlparam.menuId === 'home' || urlparam.menuId === 'user') {
+      //   return getHomeMenu();
+      // }
       if (urlparam.menuId === 'project') {
         return getProjectMenu(urlparam.query?.projectid);
       }
-      return [];
+      return getHomeMenu();
     } catch (error) {
       history.push(loginPath);
       return undefined;
