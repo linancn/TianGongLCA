@@ -1,5 +1,28 @@
 export default [
   {
+    name: 'account',
+    icon: 'user',
+    path: '/account',
+    routes: [
+      {
+        path: '/account',
+        redirect: '/account/center',
+      },
+      {
+        name: 'center',
+        icon: 'smile',
+        path: '/account/center',
+        component: './account/center',
+      },
+      {
+        name: 'settings',
+        icon: 'smile',
+        path: '/account/settings',
+        component: './account/settings',
+      },
+    ],
+  },
+  {
     path: '/user',
     layout: false,
     routes: [
