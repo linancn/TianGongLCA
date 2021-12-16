@@ -72,7 +72,8 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
     };
     const cell = await MODELS.SELECTED_CELL.useValue(modelService);
     if (cell) {
-      if (cell.shape === 'react-shape') {
+      console.log(cell.shape);
+      if (cell.shape === 'react-shape' || cell.shape === 'rect') {
         state = {
           isSelected: true,
           cellType: 'node',
@@ -113,7 +114,8 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         id: 'drilldown',
         iconName: 'drilldown',
         tooltip: 'Drill Down',
-        isEnabled: false,
+        isEnabled:
+          state.isSelected && state.cellType === 'node' && state.cellConfig.info.type === 'plan',
         // onClick: async ({ commandService }) => {
         // setGraphCommandService(commandService);
         // setAddDrawerVisible(true);
