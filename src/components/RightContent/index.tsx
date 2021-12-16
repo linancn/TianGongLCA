@@ -1,5 +1,5 @@
 import { Space } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+// import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
 import { useModel, SelectLang } from 'umi';
 import Avatar from './AvatarDropdown';
@@ -48,14 +48,14 @@ const GlobalHeaderRight: React.FC = () => {
         //   console.log('input', value);
         // }}
       /> */}
-        <span
+        {/* <span
           className={styles.action}
           onClick={() => {
             window.open('https://www.crystalca.org');
           }}
         >
           <QuestionCircleOutlined />
-        </span>
+        </span> */}
         <NoticeIconView />
         <Avatar menu />
         <SelectLang className={styles.action} />

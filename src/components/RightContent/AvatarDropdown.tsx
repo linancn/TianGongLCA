@@ -1,7 +1,13 @@
 import React, { useCallback } from 'react';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  LogoutOutlined,
+  SettingOutlined,
+  UserOutlined,
+  QuestionCircleOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
-import { history, useModel } from 'umi';
+import { FormattedMessage, history, useModel } from 'umi';
 import { stringify } from 'querystring';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
@@ -40,8 +46,11 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         setInitialState((s) => ({ ...s!, currentUser: undefined }));
         loginOut();
         return;
+      } else if (key === 'help') {
+        window.open('https://www.crystalca.org');
+      } else {
+        history.push(`/account/${key}`);
       }
-      history.push(`/account/${key}`);
     },
     [setInitialState],
   );
@@ -72,21 +81,25 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
       {menu && (
         <Menu.Item key="center">
-          <UserOutlined />
-          个人中心
+          <InfoCircleOutlined />
+          <FormattedMessage id="component.messages" defaultMessage="Messages" />
         </Menu.Item>
       )}
       {menu && (
         <Menu.Item key="settings">
           <SettingOutlined />
-          个人设置
+          <FormattedMessage id="component.profile" defaultMessage="Profile" />
         </Menu.Item>
       )}
       {menu && <Menu.Divider />}
-
+      <Menu.Item key="help">
+        <QuestionCircleOutlined />
+        <FormattedMessage id="component.manual" defaultMessage="Manual" />
+      </Menu.Item>
+      {menu && <Menu.Divider />}
       <Menu.Item key="logout">
         <LogoutOutlined />
-        退出登录
+        <FormattedMessage id="component.logout" defaultMessage="Logout" />
       </Menu.Item>
     </Menu>
   );
