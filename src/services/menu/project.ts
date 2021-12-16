@@ -5,11 +5,18 @@ export async function getProjectMenu(projectId: any) {
     .then(async () => {
       return [
         {
-          path: '/home/project/card',
-          name: 'go_back',
+          name: 'home',
           icon: 'DoubleLeft',
+          path: '/home/project/card',
           component: './home/project/card',
         },
+        // {
+        //   name: 'back',
+        //   icon: 'Left',
+        //   path: `/project/plan?projectid=${projectId}`,
+        //   component: './project/plan',
+        //   parentKeys: [],
+        // },
         {
           name: 'plans',
           icon: 'Apartment',

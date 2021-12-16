@@ -12,6 +12,7 @@ export default {
   'menu.units': 'Units',
   'menu.global_parameters': 'Global Parameters',
   'menu.go_back': 'Go Back',
+  'menu.back': 'Back',
   'menu.assessment': 'Assessment',
   'menu.welcome': 'Welcome',
   'menu.more-blocks': 'More Blocks',
