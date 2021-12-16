@@ -9,7 +9,7 @@ import { updateEdgeProcess } from '@/services/edgeprocess/api';
 import type { ListPagination } from '@/services/home/data';
 import type { FlowProcessBase } from '@/services/flowprocessbase/data';
 import { getFlowProcessBaseGrid } from '@/services/flowprocessbase/api';
-import { SelectOutlined } from '@ant-design/icons';
+import { CloseOutlined, SelectOutlined } from '@ant-design/icons';
 import ProcessFlowParameterView from '@/pages/project/process/components/detail/flow/parameter/view';
 import ProcessFlowView from './processflowview';
 
@@ -156,6 +156,14 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
       <Drawer
         title="Select Source Flow"
         width="100%"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerSourceVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerSourceVisible}
         onClose={() => handleDrawerSourceVisible(false)}
@@ -199,6 +207,14 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
       <Drawer
         title="Select Target Flow"
         width="100%"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerTargetVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerTargetVisible}
         onClose={() => handleDrawerTargetVisible(false)}

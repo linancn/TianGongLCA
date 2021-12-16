@@ -7,6 +7,7 @@ import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { history } from 'umi';
 import styles from '@/style/custom.less';
+import { CloseOutlined } from '@ant-design/icons';
 
 type ListSearchProps = {
   match: {
@@ -89,6 +90,14 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       <Drawer
         title="Create Project"
         width="400px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerCreateVisible(false)}
+          />
+        }
         maskClosable={false}
         visible={drawerCreateVisible}
         onClose={() => handleDrawerCreateVisible(false)}

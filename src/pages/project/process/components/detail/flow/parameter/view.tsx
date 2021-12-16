@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useState } from 'react';
 import { Button, Descriptions, Drawer, Tooltip } from 'antd';
-import { ProfileOutlined } from '@ant-design/icons';
+import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import { getParameterById } from '@/services/parameter/api';
 
 type Props = {
@@ -36,6 +36,14 @@ const ProcessFlowParameterView: FC<Props> = ({ projectId, processId, id }) => {
       <Drawer
         title="Parameter View"
         width="400px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}

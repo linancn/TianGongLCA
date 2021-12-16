@@ -1,5 +1,5 @@
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { SelectOutlined } from '@ant-design/icons';
+import { CloseOutlined, SelectOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ProColumns } from '@ant-design/pro-table';
@@ -95,6 +95,14 @@ const FlowMeasurementSelect: FC<Props> = ({ projectId, formRef }) => {
       <Drawer
         title="Select Measurement Base Info"
         width="100%"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}

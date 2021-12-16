@@ -1,5 +1,5 @@
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { SelectOutlined } from '@ant-design/icons';
+import { CloseOutlined, SelectOutlined } from '@ant-design/icons';
 import styles from '@/style/custom.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -120,6 +120,14 @@ const ProcessFlowParameterSelect: FC<Props> = ({
       <Drawer
         title="Select Parameter"
         width="750px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}

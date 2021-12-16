@@ -1,4 +1,4 @@
-import { Drawer, Space } from 'antd';
+import { Button, Drawer, Space } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useCallback, useRef } from 'react';
 import styles from '@/style/custom.less';
@@ -10,6 +10,7 @@ import EdgeProcessCreate from './create';
 import EdgeProcessView from './view';
 import EdgeProcessSelect from './select';
 import EdgeProcessDelete from './delete';
+import { CloseOutlined } from '@ant-design/icons';
 
 type Props = {
   projectId: number;
@@ -88,6 +89,10 @@ const EditEdge: FC<Props> = ({
       maskClosable={false}
       title="Edit"
       width="750px"
+      closable={false}
+      extra={
+        <Button icon={<CloseOutlined />} style={{ border: 0 }} onClick={callbackDrawerVisible} />
+      }
       onClose={callbackDrawerVisible}
     >
       <ProTable

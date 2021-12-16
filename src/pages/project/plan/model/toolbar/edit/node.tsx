@@ -6,6 +6,7 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import { getProcessById, updateProcess } from '@/services/process/api';
+import { CloseOutlined } from '@ant-design/icons';
 
 type Props = {
   projectId: number;
@@ -98,6 +99,10 @@ const EditNode: FC<Props> = ({
   }, [projectId, id]);
   return (
     <Drawer
+      closable={false}
+      extra={
+        <Button icon={<CloseOutlined />} style={{ border: 0 }} onClick={callbackDrawerVisible} />
+      }
       visible={drawerVisible}
       maskClosable={false}
       title={`Edit ${typeName.toLocaleUpperCase()} (${label})`}

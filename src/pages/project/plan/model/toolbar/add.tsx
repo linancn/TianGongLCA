@@ -12,6 +12,7 @@ import type { IGraphCommandService, NsNodeCmd } from '@antv/xflow';
 import { XFlowNodeCommands } from '@antv/xflow';
 import { Attrs, Component, Ports } from './config/node';
 import styles from '@/style/custom.less';
+import { CloseOutlined } from '@ant-design/icons';
 
 type Props = {
   projectId: number;
@@ -193,7 +194,15 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
 
   return (
     <>
-      <Drawer visible={drawerVisible} title="Add" onClose={callbackDrawerVisible}>
+      <Drawer
+        closable={false}
+        extra={
+          <Button icon={<CloseOutlined />} style={{ border: 0 }} onClick={callbackDrawerVisible} />
+        }
+        visible={drawerVisible}
+        title="Add"
+        onClose={callbackDrawerVisible}
+      >
         <Button
           key="plan"
           onClick={() => {
@@ -218,6 +227,14 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
         visible={drawerAddPlanVisible}
         title="Add Plan"
         width="800px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => setDrawerAddPlanVisible(false)}
+          />
+        }
         onClose={() => setDrawerAddPlanVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
@@ -260,6 +277,14 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
         visible={drawerAddProcessVisible}
         title="Add Process"
         width="800px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => setDrawerAddProcessVisible(false)}
+          />
+        }
         onClose={() => setDrawerAddProcessVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>

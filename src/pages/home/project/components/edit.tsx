@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { FormOutlined } from '@ant-design/icons';
+import { CloseOutlined, FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { ProFormSelect } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
@@ -84,6 +84,14 @@ const ProjectEdit: FC<Props> = ({ pkid, actionRef }) => {
       <Drawer
         title="Edit"
         width="400px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}

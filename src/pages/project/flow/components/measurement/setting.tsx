@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import { Button, Drawer, Space, Tooltip } from 'antd';
-import { SettingOutlined } from '@ant-design/icons';
+import { CloseOutlined, SettingOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { MeasurementFlowBase } from '@/services/measurementflowbase/data';
@@ -131,6 +131,14 @@ const FlowMeasurementSetting: FC<Props> = ({ projectId, flowBaseId }) => {
       <Drawer
         title="Setting"
         width="100%"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={false}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}

@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 import { useState } from 'react';
 import { createMeasurementBase } from '@/services/measurementbase/api';
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
@@ -36,6 +36,14 @@ const MeasurementCreate: FC<Props> = ({ projectId, actionRef }) => {
       <Drawer
         title="Create"
         width="400px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={false}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}

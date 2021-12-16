@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useState } from 'react';
 import { Button, Descriptions, Divider, Drawer, Tooltip } from 'antd';
-import { ProfileOutlined } from '@ant-design/icons';
+import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getMeasurementFlowBaseByPkid } from '@/services/measurementflowbase/api';
 
@@ -45,6 +45,14 @@ const FlowMeasurementView: FC<Props> = ({ pkid }) => {
       <Drawer
         title="View"
         width="400px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}

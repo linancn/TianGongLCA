@@ -1,10 +1,11 @@
 import { getPlanInfo } from '@/services/plan/api';
-import { Descriptions, Drawer } from 'antd';
+import { Button, Descriptions, Drawer } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useState, useCallback } from 'react';
 import moment from 'moment';
 import { getProcessById } from '@/services/process/api';
 import type { PlanModelState } from '@/services/plan/data';
+import { CloseOutlined } from '@ant-design/icons';
 
 type Props = {
   projectId: number;
@@ -99,6 +100,10 @@ const View: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, planModel
       mask={false}
       title="View"
       width="400px"
+      closable={false}
+      extra={
+        <Button icon={<CloseOutlined />} style={{ border: 0 }} onClick={callbackDrawerVisible} />
+      }
       onClose={callbackDrawerVisible}
     >
       {viewDescriptions}

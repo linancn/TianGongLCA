@@ -1,5 +1,5 @@
 import { getFlowProcessBaseById } from '@/services/flowprocessbase/api';
-import { ProfileOutlined } from '@ant-design/icons';
+import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import { Button, Descriptions, Divider, Drawer, Tooltip } from 'antd';
 import moment from 'moment';
 import type { FC } from 'react';
@@ -52,6 +52,14 @@ const EdgeProcessView: FC<Props> = ({ projectId, id }) => {
       <Drawer
         title="View Flow"
         width="400px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerVisible(false)}
+          />
+        }
         maskClosable={true}
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}
