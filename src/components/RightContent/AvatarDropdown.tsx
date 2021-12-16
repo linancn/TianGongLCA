@@ -82,19 +82,19 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       {menu && (
         <Menu.Item key="center">
           <InfoCircleOutlined />
-          <FormattedMessage id="component.messages" defaultMessage="Messages" />
+          <FormattedMessage id="component.center" defaultMessage="Center" />
         </Menu.Item>
       )}
       {menu && (
         <Menu.Item key="settings">
           <SettingOutlined />
-          <FormattedMessage id="component.profile" defaultMessage="Profile" />
+          <FormattedMessage id="component.settings" defaultMessage="Settings" />
         </Menu.Item>
       )}
       {menu && <Menu.Divider />}
       <Menu.Item key="help">
         <QuestionCircleOutlined />
-        <FormattedMessage id="component.manual" defaultMessage="Manual" />
+        <FormattedMessage id="component.help" defaultMessage="Help" />
       </Menu.Item>
       {menu && <Menu.Divider />}
       <Menu.Item key="logout">
