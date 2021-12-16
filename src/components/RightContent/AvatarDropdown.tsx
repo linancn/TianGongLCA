@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  LogoutOutlined,
+  SettingOutlined,
+  UserOutlined,
+  QuestionCircleOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { history, useModel } from 'umi';
 import { stringify } from 'querystring';
@@ -40,8 +46,11 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         setInitialState((s) => ({ ...s!, currentUser: undefined }));
         loginOut();
         return;
+      } else if (key === 'help') {
+        window.open('https://www.crystalca.org');
+      } else {
+        history.push(`/account/${key}`);
       }
-      history.push(`/account/${key}`);
     },
     [setInitialState],
   );
@@ -72,18 +81,22 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
       {menu && (
         <Menu.Item key="center">
-          <UserOutlined />
-          个人中心
+          <InfoCircleOutlined />
+          消息中心
         </Menu.Item>
       )}
       {menu && (
         <Menu.Item key="settings">
           <SettingOutlined />
-          个人设置
+          用户设置
         </Menu.Item>
       )}
       {menu && <Menu.Divider />}
-
+      <Menu.Item key="help">
+        <QuestionCircleOutlined />
+        说明文档
+      </Menu.Item>
+      {menu && <Menu.Divider />}
       <Menu.Item key="logout">
         <LogoutOutlined />
         退出登录
