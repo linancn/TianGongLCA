@@ -84,7 +84,7 @@ declare namespace API {
     success?: boolean;
   };
 
-  type NoticeIconItemType = 'notification' | 'message' | 'event';
+  type NoticeIconItemType = 'notification' | 'update';
 
   type NoticeIconItem = {
     id?: string;

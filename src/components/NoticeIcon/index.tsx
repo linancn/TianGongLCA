@@ -130,19 +130,11 @@ const NoticeIconView = () => {
         showViewMore
       />
       <NoticeIcon.Tab
-        tabKey="message"
-        count={unreadMsg.message}
-        list={noticeData.message}
-        title="消息"
-        emptyText="您已读完所有消息"
-        showViewMore
-      />
-      <NoticeIcon.Tab
-        tabKey="event"
-        title="待办"
-        emptyText="你已完成所有待办"
-        count={unreadMsg.event}
-        list={noticeData.event}
+        tabKey="update"
+        title="更新"
+        emptyText="您已拥有最新数据和程序"
+        count={unreadMsg.update}
+        list={noticeData.update}
         showViewMore
       />
     </NoticeIcon>
