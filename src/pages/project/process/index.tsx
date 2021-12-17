@@ -15,6 +15,7 @@ import ProcessCreate from './components/create';
 import ProcessFlowSetting from './components/detail/setting';
 import { getProject } from '@/services/project/api';
 import { FormattedMessage } from 'umi';
+import ProcessSelect from './components/select';
 
 type ListProps = {
   location: {
@@ -135,7 +136,10 @@ const TableList: FC<ListProps> = (props) => {
         search={{
           defaultCollapsed: false,
         }}
-        toolBarRender={() => [<ProcessCreate projectId={projectid} actionRef={actionRef} />]}
+        toolBarRender={() => [
+          <ProcessCreate projectId={projectid} actionRef={actionRef} />,
+          <ProcessSelect />,
+        ]}
         request={(
           params: {
             pageSize: number;
