@@ -116,10 +116,9 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         tooltip: 'Drill Down',
         isEnabled:
           state.isSelected && state.cellType === 'node' && state.cellConfig.info.type === 'plan',
-        // onClick: async ({ commandService }) => {
-        // setGraphCommandService(commandService);
-        // setAddDrawerVisible(true);
-        // },
+        onClick: async () => {
+          window.location.href = `/project/plan/editmodel?projectid=${projectId}&id=${state.cellConfig.id}`;
+        },
       },
     );
     toolbarGroup2.push(
