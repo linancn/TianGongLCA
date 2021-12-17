@@ -1,5 +1,6 @@
 import component from './zh-TW/component';
 import globalHeader from './zh-TW/globalHeader';
+import homepage from './zh-TW/homepage';
 import menu from './zh-TW/menu';
 import pwa from './zh-TW/pwa';
 import settingDrawer from './zh-TW/settingDrawer';
@@ -17,4 +18,5 @@ export default {
   ...settings,
   ...pwa,
   ...component,
+  ...homepage,
 };
