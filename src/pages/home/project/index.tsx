@@ -5,7 +5,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Drawer, Input, message, Space } from 'antd';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
-import { history } from 'umi';
+import { FormattedMessage, history } from 'umi';
 import styles from '@/style/custom.less';
 import { CloseOutlined } from '@ant-design/icons';
 
@@ -22,11 +22,11 @@ type ListSearchProps = {
 const tabList = [
   {
     key: 'card',
-    tab: 'Card',
+    tab: <FormattedMessage id="homepage.card" />,
   },
   {
     key: 'table',
-    tab: 'Table',
+    tab: <FormattedMessage id="homepage.table" />,
   },
 ];
 let nameLike = '';
@@ -66,10 +66,10 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       content={
         <div style={{ textAlign: 'center' }}>
           <Space>
-            Name:
+            <FormattedMessage id="homepage.projectsearch" />
             <Input.Search
               placeholder=""
-              enterButton="Search"
+              enterButton={<FormattedMessage id="homepage.projectsearchbutton" />}
               onSearch={handleFormSubmit}
               style={{ maxWidth: 500, minWidth: 300 }}
             />
@@ -78,7 +78,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
                 handleDrawerCreateVisible(true);
               }}
             >
-              Create
+              <FormattedMessage id="homepage.projectcreate" />
             </Button>
           </Space>
         </div>
@@ -88,7 +88,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       onTabChange={handleTabChange}
     >
       <Drawer
-        title="Create Project"
+        title={<FormattedMessage id="homepage.projectcreate" />}
         width="400px"
         closable={false}
         extra={
@@ -103,9 +103,11 @@ const ListSearch: FC<ListSearchProps> = (props) => {
         onClose={() => handleDrawerCreateVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerCreateVisible(false)}>Cancel</Button>
+            <Button onClick={() => handleDrawerCreateVisible(false)}>
+              <FormattedMessage id="pages.cancel" />
+            </Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="pages.submit" />
             </Button>
           </Space>
         }
@@ -131,7 +133,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
+          <ProFormText width="md" name="name" label={'Name'} />
           <ProFormText width="md" name="nation" label="Nation" />
           <ProFormText width="md" name="type" label="Type" />
           <ProFormSelect

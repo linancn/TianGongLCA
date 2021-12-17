@@ -1,5 +1,6 @@
 import component from './en-US/component';
 import globalHeader from './en-US/globalHeader';
+import homepage from './en-US/homepage';
 import menu from './en-US/menu';
 import pages from './en-US/pages';
 import pwa from './en-US/pwa';
@@ -22,4 +23,5 @@ export default {
   ...pwa,
   ...component,
   ...pages,
+  ...homepage,
 };

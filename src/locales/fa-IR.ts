@@ -5,6 +5,7 @@ import pwa from './fa-IR/pwa';
 import settingDrawer from './fa-IR/settingDrawer';
 import settings from './fa-IR/settings';
 import pages from './fa-IR/pages';
+import homepage from './en-US/homepage';
 
 export default {
   'navBar.lang': 'زبان ها  ',
@@ -21,4 +22,5 @@ export default {
   ...pwa,
   ...component,
   ...pages,
+  ...homepage,
 };

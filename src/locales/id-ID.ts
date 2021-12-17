@@ -5,6 +5,7 @@ import pwa from './id-ID/pwa';
 import settingDrawer from './id-ID/settingDrawer';
 import settings from './id-ID/settings';
 import pages from './id-ID/pages';
+import homepage from './id-ID/homepage';
 
 export default {
   'navbar.lang': 'Bahasa',
@@ -22,4 +23,5 @@ export default {
   ...pwa,
   ...component,
   ...pages,
+  ...homepage,
 };
