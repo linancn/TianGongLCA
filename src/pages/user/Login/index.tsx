@@ -15,6 +15,9 @@ import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 
 import styles from './index.less';
+import ElectronButton from '@/components/ElectronButton';
+
+import CustomStyles from '@/style/custom.less';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -89,7 +92,12 @@ const Login: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.lang} data-lang>
+        <div
+          className={CustomStyles.electron_drag}
+          style={{ width: '60%', height: '42px', float: 'left' }}
+        />
         {SelectLang && <SelectLang />}
+        <ElectronButton />
       </div>
       <div className={styles.content}>
         <div className={styles.top}>
