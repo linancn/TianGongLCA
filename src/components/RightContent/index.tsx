@@ -6,6 +6,7 @@ import Avatar from './AvatarDropdown';
 import styles from './index.less';
 import NoticeIconView from '../NoticeIcon';
 import ElectronButton from '../ElectronButton';
+import ElectronUpgrade from '../ElectronButton/upgrade';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -56,6 +57,7 @@ const GlobalHeaderRight: React.FC = () => {
         >
           <QuestionCircleOutlined />
         </span> */}
+        <ElectronUpgrade />
         <NoticeIconView />
         <Avatar menu />
         <SelectLang className={styles.action} />
