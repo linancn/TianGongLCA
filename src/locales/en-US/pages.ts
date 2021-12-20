@@ -24,6 +24,8 @@ export default {
   'pages.login.registerAccount': 'Register',
   'pages.cancel': 'Cancel',
   'pages.submit': 'Submit',
+  'pages.true': 'Yes',
+  'pages.false': 'No',
   // 'pages.welcome.advancedComponent': 'Advanced Component',
   // 'pages.welcome.link': 'Welcome',
   // 'pages.welcome.advancedLayout': 'Advanced Layout',

@@ -133,25 +133,41 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label={'Name'} />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="type" label="Type" />
+          <ProFormText
+            width="md"
+            name="name"
+            label={<FormattedMessage id="homepage.projectcreate_name" />}
+          />
+          <ProFormText
+            width="md"
+            name="nation"
+            label={<FormattedMessage id="homepage.projectcreate_nation" />}
+          />
+          <ProFormText
+            width="md"
+            name="type"
+            label={<FormattedMessage id="homepage.projectcreate_type" />}
+          />
           <ProFormSelect
             options={[
               {
                 value: 'true',
-                label: 'true',
+                label: <FormattedMessage id="pages.true" />,
               },
               {
                 value: 'false',
-                label: 'false',
+                label: <FormattedMessage id="pages.false" />,
               },
             ]}
             width="md"
             name="star"
-            label="Star"
+            label={<FormattedMessage id="homepage.projectcreate_star" />}
           />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
+          <ProFormTextArea
+            width="md"
+            name="comment"
+            label={<FormattedMessage id="homepage.projectcreate_comment" />}
+          />
         </ProForm>
       </Drawer>
       {props.children}
