@@ -32,6 +32,7 @@ import {
 import { message, Modal } from 'antd';
 import type { FC } from 'react';
 import { useState } from 'react';
+import Design from './design';
 import Add from './add';
 import Edit from './edit';
 import View from './view';
@@ -46,6 +47,7 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
   const [drawerAddVisible, setAddDrawerVisible] = useState(false);
   const [drawerViewVisible, setViewDrawerVisible] = useState(false);
   const [drawerEditVisible, setEditDrawerVisible] = useState(false);
+  const [drawerDesignVisible, setDesignDrawerVisible] = useState(false);
 
   IconStore.set('rollup', NodeCollapseOutlined);
   IconStore.set('drilldown', NodeExpandOutlined);
@@ -72,7 +74,6 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
     };
     const cell = await MODELS.SELECTED_CELL.useValue(modelService);
     if (cell) {
-      console.log(cell.shape);
       if (cell.shape === 'react-shape' || cell.shape === 'rect') {
         state = {
           isSelected: true,
@@ -146,10 +147,10 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         iconName: 'design',
         tooltip: 'Design',
         isEnabled: state.isSelected,
-        // onClick: async ({ commandService }) => {
-        // setGraphCommandService(commandService);
-        // setAddDrawerVisible(true);
-        // },
+        onClick: async ({ commandService }) => {
+          setGraphCommandService(commandService);
+          setDesignDrawerVisible(true);
+        },
       },
     );
     toolbarGroup3.push(
@@ -259,8 +260,8 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         });
       };
 
-      const model = await MODELS.SELECTED_CELLS.getModel(modelService);
-      model.watch(() => {
+      const selectModel = await MODELS.SELECTED_CELLS.getModel(modelService);
+      selectModel.watch(() => {
         updateToolbarState();
       });
     });
@@ -290,6 +291,13 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         planId={id}
         drawerVisible={drawerEditVisible}
         setDrawerVisible={setEditDrawerVisible}
+        planModelState={planModelState}
+      />
+      <Design
+        projectId={projectId}
+        planId={id}
+        drawerVisible={drawerDesignVisible}
+        setDrawerVisible={setDesignDrawerVisible}
         planModelState={planModelState}
       />
     </>

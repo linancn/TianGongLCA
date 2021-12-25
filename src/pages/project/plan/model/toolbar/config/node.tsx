@@ -8,10 +8,14 @@ export const Component = () => {
 export const Attrs = () => {
   const attrs = {
     body: {
-      stroke: '#1890ff',
       fill: '#fff',
+      stroke: '#1890ff',
       strokeWidth: '1',
       strokeLinejoin: 'round',
+    },
+    text: {
+      fill: '#000',
+      fontSize: 12,
     },
   };
   return attrs;
