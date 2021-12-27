@@ -97,39 +97,39 @@ const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
   }, [setDrawerVisible]);
 
   const getNode = async () => {
-    const node = await (await MODELS.SELECTED_NODE.useValue(app.modelService)).data;
+    const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
     formRef.current?.setFieldsValue({
-      label: node.label,
-      width: node.width,
-      height: node.height,
-      background: node.attrs.body.fill,
-      borderColor: node.attrs.body.stroke,
-      borderWidth: node.attrs.body.strokeWidth,
-      fontSize: node.attrs.text.fontSize,
-      fontColor: node.attrs.text.fill,
+      label: cell.label,
+      width: cell.width,
+      height: cell.height,
+      background: cell.attrs.body.fill,
+      borderColor: cell.attrs.body.stroke,
+      borderWidth: cell.attrs.body.strokeWidth,
+      fontSize: cell.attrs.label.fontSize,
+      fontColor: cell.attrs.label.fill,
     });
-    setColorBGC(node.attrs.body.fill);
-    setColorBDC(node.attrs.body.stroke);
-    setColorFC(node.attrs.text.fill);
+    setColorBGC(cell.attrs.body.fill);
+    setColorBDC(cell.attrs.body.stroke);
+    setColorFC(cell.attrs.label.fill);
   };
 
   const updateNode = async (values: any) => {
-    const node = await (await MODELS.SELECTED_NODE.useValue(app.modelService)).data;
+    const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
     const config = {
-      ...node,
+      ...cell,
       label: values.label,
       width: values.width,
       height: values.height,
       attrs: {
-        ...node.attrs,
+        ...cell.attrs,
         body: {
-          ...node.body,
+          ...cell.body,
           fill: values.background,
           stroke: values.borderColor,
           strokeWidth: values.borderWidth,
         },
-        text: {
-          ...node.text,
+        label: {
+          ...cell.label,
           text: values.label,
           fontSize: values.fontSize,
           fill: values.fontColor,
@@ -205,7 +205,7 @@ const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
           </Form.Item>
         </Popover>
         <Form.Item name="borderWidth" label="Border Width">
-          <InputNumber style={{ width: '328px' }} addonAfter="px" />
+          <InputNumber style={{ width: '328px' }} />
         </Form.Item>
         <Popover
           title={

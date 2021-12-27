@@ -793,7 +793,9 @@
   color: #595959;
   background-color: transparent;
 }
-.x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item-disabled.x6-toolbar-item:hover .x6-toolbar-item-dropdown-arrow {
+.x6-toolbar.x6-toolbar-hover-effect
+  .x6-toolbar-item-disabled.x6-toolbar-item:hover
+  .x6-toolbar-item-dropdown-arrow {
   opacity: 0.4;
 }
 .x6-toolbar-item.x6-toolbar-item-active,
@@ -803,7 +805,9 @@
   background-color: #e0e0e0;
 }
 .x6-toolbar-item.x6-toolbar-item-active .x6-toolbar-item-dropdown-arrow,
-.x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item.x6-toolbar-item-active .x6-toolbar-item-dropdown-arrow,
+.x6-toolbar.x6-toolbar-hover-effect
+  .x6-toolbar-item.x6-toolbar-item-active
+  .x6-toolbar-item-dropdown-arrow,
 .x6-toolbar.x6-toolbar-hover-effect .x6-toolbar-item:hover .x6-toolbar-item-dropdown-arrow {
   opacity: 0.75;
 }
@@ -947,12 +951,13 @@
   animation: processing-line 30s infinite linear;
 }
 .flowchart-extension-container .x6-edge.x6-edge-selected path:nth-child(2) {
-  stroke: #1890ff;
-  stroke-width: 2px;
+  stroke-dasharray: 5, 5;
+  /* stroke: #1890ff; */
+  /* stroke-width: 2px; */
 }
 .flowchart-extension-container .x6-edge:hover path:nth-child(2) {
   stroke: #1890ff;
-  stroke-width: 2px;
+  /* stroke-width: 2px; */
 }
 .flowchart-extension-container .x6-edge.hoverHighlight path:nth-child(2) {
   stroke: #1890ff;
@@ -1000,9 +1005,9 @@
 .flowchart-extension-container.xflow-app-workspace .x6-edge {
   stroke-width: 1px;
 }
-.flowchart-extension-container.xflow-app-workspace .x6-edge.x6-edge-selected path:nth-child(2) {
-  stroke: #1890ff;
-}
+/* .flowchart-extension-container.xflow-app-workspace .x6-edge.x6-edge-selected path:nth-child(2) { */
+  /* stroke: #1890ff; */
+/* } */
 .flowchart-extension-container.xflow-app-workspace .x6-edge:hover path:nth-child(2) {
   stroke: #1890ff;
 }
@@ -1016,7 +1021,7 @@
   box-sizing: border-box !important;
   margin: 0;
   padding: 0;
-  border: 2px solid #3572f9;
+  border: 2px dashed #1890ff;
   /* box-shadow: 0 4px 4px 0 #dbe6ff; */
 }
 .flowchart-extension-container.xflow-app-workspace .x6-widget-transform > div {
@@ -1269,13 +1274,13 @@
   cursor: grab;
 }
 .flowchart-extension-container .xflow-node-panel-official {
+  display: grid;
   grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(24px, 1fr));
   overflow-x: hidden;
   overflow-y: auto;
   background: #fff;
   cursor: grab;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(24px, 1fr));
 }
 .flowchart-extension-container .xflow-node-panel-node-wrapper {
   display: flex;

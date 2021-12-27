@@ -1,25 +1,15 @@
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
-import type { IAppLoad, NsGraph, NsGraphCmd } from '@antv/xflow';
-import {
-  FlowchartExtension,
-  FlowchartCanvas,
-  XFlow,
-  createGraphConfig,
-  XFlowGraphCommands,
-} from '@antv/xflow';
+import type { IApplication, IAppLoad, NsEdgeCmd, NsGraph, NsGraphCmd } from '@antv/xflow';
+import { XFlowEdgeCommands, XFlowCanvas } from '@antv/xflow';
+import { XFlow, XFlowGraphCommands } from '@antv/xflow';
 import { PageContainer } from '@ant-design/pro-layout';
 import { getProject } from '@/services/project/api';
 import { getPlanModel } from '@/services/plan/api';
 import Toolbar from './toolbar';
 import './index.css';
 import './index.less';
-
-export const useGraphConfig = createGraphConfig((graphConfig) => {
-  graphConfig.setDefaultNodeRender((props) => {
-    return <div> {props.data.label} </div>;
-  });
-});
+import { useGraphConfig } from './toolbar/config/graph';
 
 type Props = {
   location: {
@@ -37,6 +27,71 @@ const PlanModel: FC<Props> = (props) => {
   const [planName, setPlanName] = useState('');
   const [isOnLoad, setIsOnLoad] = useState(false);
 
+  const changePortsVisible = (visible: boolean) => {
+    const ports = document.body.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+    for (let i = 0, len = ports.length; i < len; i = i + 1) {
+      ports[i].style.visibility = visible ? 'visible' : 'hidden';
+    }
+  };
+
+  const watchEvent = async (appRef: IApplication) => {
+    if (appRef) {
+      const graph = await appRef.getGraphInstance();
+      graph.on('edge:connected', ({ edge }) => {
+        const relationSourceData = edge?.getSourceNode()?.data;
+        const relationTargetData = edge?.getTargetNode()?.data;
+        const edgeData: NsGraph.IEdgeConfig = edge?.getData();
+        console.log(relationSourceData);
+        console.log(relationTargetData);
+        console.log(edgeData);
+
+        if (!edgeData) {
+          appRef.executeCommand(XFlowEdgeCommands.DEL_EDGE.id, {
+            x6Edge: edge as any,
+          } as NsEdgeCmd.DelEdge.IArgs);
+
+          appRef.executeCommand(XFlowEdgeCommands.ADD_EDGE.id, {
+            edgeConfig: {
+              id: relationSourceData.id + '_' + relationTargetData.id,
+              source: relationSourceData.id,
+              target: relationTargetData.id,
+              edgeContentWidth: 20,
+              edgeContentHeigt: 20,
+              router: {
+                name: 'manhattan',
+              },
+              connector: {
+                name: 'rounded',
+                args: {
+                  radius: 10,
+                },
+              },
+              attrs: {
+                line: {
+                  stroke: '#d8d8d8',
+                  strokeWidth: 1,
+                  targetMarker: {
+                    name: 'classic',
+                  },
+                },
+              },
+            },
+          } as NsEdgeCmd.AddEdge.IArgs);
+        }
+      });
+
+      graph.on('edge:click', ({ edge }) => {
+        edge.toFront();
+      });
+      graph.on('node:mouseenter', () => {
+        changePortsVisible(true);
+      });
+      graph.on('node:mouseleave', () => {
+        changePortsVisible(false);
+      });
+    }
+  };
+
   const onLoad: IAppLoad = async (app) => {
     if (!isOnLoad) {
       getPlanModel(projectid, id).then((result) => {
@@ -52,7 +107,7 @@ const PlanModel: FC<Props> = (props) => {
         }
       });
     }
-    return app;
+    await watchEvent(app);
   };
 
   useEffect(() => {
@@ -73,8 +128,10 @@ const PlanModel: FC<Props> = (props) => {
       <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
         <XFlow onLoad={onLoad}>
           <Toolbar projectId={projectid} id={id} />
-          <FlowchartExtension />
-          <FlowchartCanvas position={{ top: 0, left: 0, right: 0, bottom: 0 }} />
+          <XFlowCanvas
+            config={useGraphConfig()}
+            position={{ top: 0, left: 0, right: 0, bottom: 0 }}
+          />
         </XFlow>
       </div>
     </PageContainer>

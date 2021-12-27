@@ -10,7 +10,7 @@ import { getProcessGrid } from '@/services/process/api';
 import type { ListPagination } from '@/services/home/data';
 import type { IGraphCommandService, NsNodeCmd } from '@antv/xflow';
 import { XFlowNodeCommands } from '@antv/xflow';
-import { Attrs, Component, Ports } from './config/node';
+import { Attrs, Ports } from './config/node';
 import styles from '@/style/custom.less';
 import { CloseOutlined } from '@ant-design/icons';
 
@@ -154,11 +154,11 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
     if (addPlanToModel) {
       const newNode = {
         id: addPlanToModel.id,
-        label: addPlanToModel.name,
-        component: Component,
+        // label: addPlanToModel.name,
+        // component: Component,
         width: 100,
         height: 30,
-        attrs: Attrs(),
+        attrs: Attrs(addPlanToModel.name),
         ports: Ports(addPlanToModel.id),
         info: {
           type: 'plan',
@@ -175,11 +175,11 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
     if (addProcessToModel) {
       const newNode = {
         id: addProcessToModel.id,
-        label: addProcessToModel.name,
-        component: Component,
+        // label: ,
+        // component: Component,
         width: 100,
         height: 30,
-        attrs: Attrs(),
+        attrs: Attrs(addProcessToModel.name),
         ports: Ports(addProcessToModel.id),
         info: {
           type: 'process',

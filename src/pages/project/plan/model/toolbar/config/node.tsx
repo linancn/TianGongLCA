@@ -1,19 +1,16 @@
 import './index.less';
-import './dndnode.less';
+import './node.less';
 
-export const Component = () => {
-  return <div />;
-};
-
-export const Attrs = () => {
+export const Attrs = (text: string) => {
   const attrs = {
     body: {
       fill: '#fff',
-      stroke: '#1890ff',
+      stroke: '#177ddc',
       strokeWidth: '1',
       strokeLinejoin: 'round',
     },
-    text: {
+    label: {
+      text,
       fill: '#000',
       fontSize: 12,
     },
@@ -27,14 +24,8 @@ export const Ports = (nodeId: string) => {
       top: {
         attrs: {
           circle: {
-            fill: '#fff',
-            magnet: true,
             r: 4,
-            stroke: '#31d0c6',
-            strokeWidth: 2,
-            style: {
-              visibility: 'hidden',
-            },
+            magnet: true,
           },
         },
         position: {
@@ -45,14 +36,8 @@ export const Ports = (nodeId: string) => {
       bottom: {
         attrs: {
           circle: {
-            fill: '#fff',
-            magnet: true,
             r: 4,
-            stroke: '#31d0c6',
-            strokeWidth: 2,
-            style: {
-              visibility: 'hidden',
-            },
+            magnet: true,
           },
         },
         position: {
@@ -63,14 +48,8 @@ export const Ports = (nodeId: string) => {
       left: {
         attrs: {
           circle: {
-            fill: '#fff',
-            magnet: true,
             r: 4,
-            stroke: '#31d0c6',
-            strokeWidth: 2,
-            style: {
-              visibility: 'hidden',
-            },
+            magnet: true,
           },
         },
         position: {
@@ -81,14 +60,8 @@ export const Ports = (nodeId: string) => {
       right: {
         attrs: {
           circle: {
-            fill: '#fff',
-            magnet: true,
             r: 4,
-            stroke: '#31d0c6',
-            strokeWidth: 2,
-            style: {
-              visibility: 'hidden',
-            },
+            magnet: true,
           },
         },
         position: {
