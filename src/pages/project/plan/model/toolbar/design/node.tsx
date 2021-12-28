@@ -96,10 +96,10 @@ const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
-  const getNode = async () => {
+  const getCell = async () => {
     const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
     formRef.current?.setFieldsValue({
-      label: cell.label,
+      label: cell.attrs.label.text,
       width: cell.width,
       height: cell.height,
       background: cell.attrs.body.fill,
@@ -113,11 +113,10 @@ const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
     setColorFC(cell.attrs.label.fill);
   };
 
-  const updateNode = async (values: any) => {
+  const updateCell = async (values: any) => {
     const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
     const config = {
       ...cell,
-      label: values.label,
       width: values.width,
       height: values.height,
       attrs: {
@@ -145,7 +144,7 @@ const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
   };
 
   useEffect(() => {
-    getNode();
+    getCell();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -176,13 +175,17 @@ const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
           },
         }}
         onFinish={async (values) => {
-          updateNode(values);
+          updateCell(values);
           callbackDrawerVisible();
         }}
       >
         <ProFormText width="md" name="label" label="Label" />
-        <ProFormText width="md" name="width" label="Width" />
-        <ProFormText width="md" name="height" label="Height" />
+        <Form.Item name="width" label="Width">
+          <InputNumber style={{ width: '328px' }} />
+        </Form.Item>
+        <Form.Item name="height" label="Height">
+          <InputNumber style={{ width: '328px' }} />
+        </Form.Item>
         <Popover
           title={
             <>

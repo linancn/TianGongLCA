@@ -1,4 +1,4 @@
-import { updatePlanChinlrenJson } from '@/services/plan/api';
+import { getPlanParentGrid, updatePlanChinlrenJson } from '@/services/plan/api';
 import type { PlanModelState } from '@/services/plan/data';
 import {
   DeleteOutlined,
@@ -36,18 +36,21 @@ import Design from './design';
 import Add from './add';
 import Edit from './edit';
 import View from './view';
+import RollUp from './rollup';
 
 type Props = {
   projectId: number;
   id: string;
+  parentCount: number;
 };
 
-const Toolbar: FC<Props> = ({ projectId, id }) => {
+const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
   const [graphCommandService, setGraphCommandService] = useState<IGraphCommandService>();
-  const [drawerAddVisible, setAddDrawerVisible] = useState(false);
-  const [drawerViewVisible, setViewDrawerVisible] = useState(false);
-  const [drawerEditVisible, setEditDrawerVisible] = useState(false);
-  const [drawerDesignVisible, setDesignDrawerVisible] = useState(false);
+  const [addDrawerVisible, setAddDrawerVisible] = useState(false);
+  const [viewDrawerVisible, setViewDrawerVisible] = useState(false);
+  const [editDrawerVisible, setEditDrawerVisible] = useState(false);
+  const [rollupDrawerVisible, setRollUpDrawerVisible] = useState(false);
+  const [designDrawerVisible, setDesignDrawerVisible] = useState(false);
 
   IconStore.set('rollup', NodeCollapseOutlined);
   IconStore.set('drilldown', NodeExpandOutlined);
@@ -93,7 +96,6 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
     setPlanModelState(state);
     return state;
   };
-
   const getToolbarItems = async (state: PlanModelState) => {
     const toolbarGroup1: IToolbarItemOptions[] = [];
     const toolbarGroup2: IToolbarItemOptions[] = [];
@@ -105,11 +107,16 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
         id: 'rollup',
         iconName: 'rollup',
         tooltip: 'Roll Up',
-        isEnabled: false,
-        // onClick: async ({ commandService }) => {
-        // setGraphCommandService(commandService);
-        // setAddDrawerVisible(true);
-        // },
+        isEnabled: parentCount > 0,
+        onClick: async () => {
+          if (parentCount === 1) {
+            getPlanParentGrid({}, {}, projectId, id).then((result) => {
+              window.location.replace(
+                `/project/plan/editmodel?projectid=${projectId}&id=${result.data[0].id}`,
+              );
+            });
+          } else if (parentCount > 1) setRollUpDrawerVisible(true);
+        },
       },
       {
         id: 'drilldown',
@@ -231,7 +238,7 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
               const updatePlan = {
                 projectId,
                 id,
-                childrenJson: `{"data": ${JSON.stringify(data)}}`,
+                childrenJson: `{${JSON.stringify(data)}}`,
               };
               updatePlanChinlrenJson(updatePlan).then(() => {
                 message.success('Save successfully!');
@@ -276,29 +283,36 @@ const Toolbar: FC<Props> = ({ projectId, id }) => {
       />
       <Add
         projectId={projectId}
-        drawerVisible={drawerAddVisible}
+        drawerVisible={addDrawerVisible}
         setDrawerVisible={setAddDrawerVisible}
         commandService={graphCommandService}
       />
       <View
         projectId={projectId}
-        drawerVisible={drawerViewVisible}
+        drawerVisible={viewDrawerVisible}
         setDrawerVisible={setViewDrawerVisible}
         planModelState={planModelState}
       />
       <Edit
         projectId={projectId}
         planId={id}
-        drawerVisible={drawerEditVisible}
+        drawerVisible={editDrawerVisible}
         setDrawerVisible={setEditDrawerVisible}
         planModelState={planModelState}
       />
       <Design
         projectId={projectId}
         planId={id}
-        drawerVisible={drawerDesignVisible}
+        drawerVisible={designDrawerVisible}
         setDrawerVisible={setDesignDrawerVisible}
         planModelState={planModelState}
+      />
+      <RollUp
+        projectId={projectId}
+        planId={id}
+        parentCount={parentCount}
+        drawerVisible={rollupDrawerVisible}
+        setDrawerVisible={setRollUpDrawerVisible}
       />
     </>
   );

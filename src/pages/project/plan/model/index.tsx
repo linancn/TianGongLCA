@@ -26,6 +26,7 @@ const PlanModel: FC<Props> = (props) => {
   const { projectid, id } = props.location.query;
   const [projectName, setProjectName] = useState('');
   const [planName, setPlanName] = useState('');
+  const [parentCount, setParentCount] = useState(0);
   const [isOnLoad, setIsOnLoad] = useState(false);
 
   const changePortsVisible = (visible: boolean) => {
@@ -76,11 +77,11 @@ const PlanModel: FC<Props> = (props) => {
   const onLoad: IAppLoad = async (app) => {
     if (!isOnLoad) {
       getPlanModel(projectid, id).then((result) => {
-        // setParentCount(result.parentCount);
+        setParentCount(result.parentCount);
         setPlanName(result.name);
         const childrenJson = JSON.parse(result.childrenJson);
         if (childrenJson !== null) {
-          const graphData: NsGraph.IGraphData = childrenJson.data;
+          const graphData: NsGraph.IGraphData = childrenJson;
           app.executeCommand<NsGraphCmd.GraphRender.IArgs>(XFlowGraphCommands.GRAPH_RENDER.id, {
             graphData,
           });
@@ -108,7 +109,7 @@ const PlanModel: FC<Props> = (props) => {
     >
       <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
         <XFlow onLoad={onLoad}>
-          <Toolbar projectId={projectid} id={id} />
+          <Toolbar projectId={projectid} id={id} parentCount={parentCount} />
           <XFlowCanvas
             config={useGraphConfig()}
             position={{ top: 0, left: 0, right: 0, bottom: 0 }}

@@ -2,6 +2,7 @@ import { Button, Drawer, Form, Input, InputNumber, Popover, Space } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { ProFormInstance } from '@ant-design/pro-form';
+import { ProFormText } from '@ant-design/pro-form';
 import ProForm from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import { CloseOutlined } from '@ant-design/icons';
@@ -51,10 +52,10 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
-  const getNode = async () => {
+  const getCell = async () => {
     const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
-    console.log(cell);
     formRef.current?.setFieldsValue({
+      label: cell.attrs.label.text,
       lineColor: cell.attrs.line.stroke,
       lineWidth: cell.attrs.line.strokeWidth,
       markerWidth: cell.attrs.line.targetMarker.width,
@@ -64,9 +65,8 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
     setColorLC(cell.attrs.line.stroke);
   };
 
-  const updateNode = async (values: any) => {
+  const updateCell = async (values: any) => {
     const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
-    console.log(cell);
     const config = {
       ...cell,
       attrs: {
@@ -82,6 +82,10 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
             offset: values.markerOffset,
           },
         },
+        label: {
+          ...cell.attrs.label,
+          text: values.label,
+        },
       },
     };
     app.commandService.executeCommand<NsEdgeCmd.UpdateEdge.IArgs>(
@@ -93,7 +97,7 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
   };
 
   useEffect(() => {
-    getNode();
+    getCell();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -124,10 +128,11 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
           },
         }}
         onFinish={async (values) => {
-          updateNode(values);
+          updateCell(values);
           callbackDrawerVisible();
         }}
       >
+        <ProFormText width="md" name="label" label="Label" />
         <Form.Item name="lineWidth" label="Line Width">
           <InputNumber style={{ width: '328px' }} />
         </Form.Item>
