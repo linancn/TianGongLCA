@@ -1,7 +1,7 @@
 import './index.less';
 import './node.less';
 
-export const Attrs = (text: string) => {
+export const NodeAttrs = (text: string) => {
   const attrs = {
     body: {
       fill: '#fff',
@@ -18,7 +18,7 @@ export const Attrs = (text: string) => {
   return attrs;
 };
 
-export const Ports = (nodeId: string) => {
+export const NodePorts = (nodeId: string) => {
   const ports = {
     groups: {
       top: {

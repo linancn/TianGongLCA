@@ -10,6 +10,7 @@ import Toolbar from './toolbar';
 import './index.css';
 import './index.less';
 import { useGraphConfig } from './toolbar/config/graph';
+import { EdgeAttrs, EdgeConnector, EdgeRouter } from './toolbar/config/edge';
 
 type Props = {
   location: {
@@ -41,9 +42,6 @@ const PlanModel: FC<Props> = (props) => {
         const relationSourceData = edge?.getSourceNode()?.data;
         const relationTargetData = edge?.getTargetNode()?.data;
         const edgeData: NsGraph.IEdgeConfig = edge?.getData();
-        console.log(relationSourceData);
-        console.log(relationTargetData);
-        console.log(edgeData);
 
         if (!edgeData) {
           appRef.executeCommand(XFlowEdgeCommands.DEL_EDGE.id, {
@@ -55,26 +53,9 @@ const PlanModel: FC<Props> = (props) => {
               id: relationSourceData.id + '_' + relationTargetData.id,
               source: relationSourceData.id,
               target: relationTargetData.id,
-              edgeContentWidth: 20,
-              edgeContentHeigt: 20,
-              router: {
-                name: 'manhattan',
-              },
-              connector: {
-                name: 'rounded',
-                args: {
-                  radius: 10,
-                },
-              },
-              attrs: {
-                line: {
-                  stroke: '#d8d8d8',
-                  strokeWidth: 1,
-                  targetMarker: {
-                    name: 'classic',
-                  },
-                },
-              },
+              attrs: EdgeAttrs(),
+              router: EdgeRouter(),
+              connector: EdgeConnector(),
             },
           } as NsEdgeCmd.AddEdge.IArgs);
         }

@@ -57,17 +57,10 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
     formRef.current?.setFieldsValue({
       lineColor: cell.attrs.line.stroke,
       lineWidth: cell.attrs.line.strokeWidth,
-      // label: node.label,
-      // width: node.width,
-      // height: node.height,
-      // background: node.attrs.body.fill,
-      // borderColor: node.attrs.body.stroke,
-      // borderWidth: node.attrs.body.strokeWidth,
-      // fontSize: node.attrs.text.fontSize,
-      // fontColor: node.attrs.text.fill,
+      markerWidth: cell.attrs.line.targetMarker.width,
+      markerHeight: cell.attrs.line.targetMarker.height,
+      markerOffset: cell.attrs.line.targetMarker.offset,
     });
-    // setColorBGC(node.attrs.body.fill);
-    // setColorBDC(node.attrs.body.stroke);
     setColorLC(cell.attrs.line.stroke);
   };
 
@@ -79,9 +72,15 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
       attrs: {
         ...cell.attrs,
         line: {
-          ...cell.line,
+          ...cell.attrs.line,
           stroke: values.lineColor,
           strokeWidth: values.lineWidth,
+          targetMarker: {
+            ...cell.attrs.line.targetMarker,
+            width: values.markerWidth,
+            height: values.markerHeight,
+            offset: values.markerOffset,
+          },
         },
       },
     };
@@ -153,6 +152,15 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
             />
           </Form.Item>
         </Popover>
+        <Form.Item name="markerWidth" label="Marker Width">
+          <InputNumber style={{ width: '328px' }} />
+        </Form.Item>
+        <Form.Item name="markerHeight" label="Marker Height">
+          <InputNumber style={{ width: '328px' }} />
+        </Form.Item>
+        <Form.Item name="markerOffset" label="Marker Offset">
+          <InputNumber style={{ width: '328px' }} />
+        </Form.Item>
       </ProForm>
     </Drawer>
   );
