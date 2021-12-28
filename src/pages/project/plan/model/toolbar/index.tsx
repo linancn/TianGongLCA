@@ -112,7 +112,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
           if (parentCount === 1) {
             getPlanParentGrid({}, {}, projectId, id).then((result) => {
               window.location.replace(
-                `/project/plan/editmodel?projectid=${projectId}&id=${result.data[0].id}`,
+                `/project/plan/model?projectid=${projectId}&id=${result.data[0].id}`,
               );
             });
           } else if (parentCount > 1) setRollUpDrawerVisible(true);
@@ -125,7 +125,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         isEnabled:
           state.isSelected && state.cellType === 'node' && state.cellConfig.info.type === 'plan',
         onClick: async () => {
-          window.location.href = `/project/plan/editmodel?projectid=${projectId}&id=${state.cellConfig.id}`;
+          window.location.href = `/project/plan/model?projectid=${projectId}&id=${state.cellConfig.id}`;
         },
       },
     );
