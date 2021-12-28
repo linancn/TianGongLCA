@@ -22,6 +22,7 @@ export type PlanModel = {
 };
 
 export type PlanModelState = {
+  // parentCount: number;
   isSelected: boolean;
   cellType: string;
   cellID: string;

@@ -256,7 +256,6 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
       { name: 'tg5', items: toolbarGroup5 },
     ];
   };
-
   const useToolbarConfig = createToolbarConfig((config) => {
     config.setToolbarModelService(async (toolbarModel, modelService) => {
       const updateToolbarState = async () => {
