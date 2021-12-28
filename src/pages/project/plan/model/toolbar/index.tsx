@@ -238,7 +238,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
               const updatePlan = {
                 projectId,
                 id,
-                childrenJson: `{${JSON.stringify(data)}}`,
+                childrenJson: JSON.stringify(data),
               };
               updatePlanChinlrenJson(updatePlan).then(() => {
                 message.success('Save successfully!');
