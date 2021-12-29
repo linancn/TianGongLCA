@@ -26,6 +26,8 @@ export default {
   'pages.submit': '完成',
   'pages.true': '是',
   'pages.false': '否',
+  'pages.open': '打开',
+  'pages.delete': '删除',
   // 'pages.welcome.advancedComponent': '高级表格',
   // 'pages.welcome.link': '欢迎使用',
   // 'pages.welcome.advancedLayout': '高级布局',

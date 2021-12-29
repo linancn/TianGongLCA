@@ -10,4 +10,11 @@ export default {
   'homepage.projectcreate_type': 'Type',
   'homepage.projectcreate_star': 'Starred',
   'homepage.projectcreate_comment': 'Comment',
+  'homepage.projectcreate_index': 'No.',
+  'homepage.projectcreate_creator': 'Creator',
+  'homepage.projectcreate_createTime': 'Create time',
+  'homepage.projectcreate_lastUpdateTime': 'Last update',
+  'homepage.projectcreate_option': 'Options',
+  'homepage.projectcreate_set_star': 'Star',
+  'homepage.projectcreate_set_nostar': 'Unstar',
 };

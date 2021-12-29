@@ -10,6 +10,7 @@ import ProjectDelete from '../components/delete';
 import ProjectOpen from '../components/open';
 import { BookOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import { FormattedMessage } from 'umi';
 
 type ProjectListProps = {
   location: {
@@ -69,11 +70,13 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
           render: (_, row) => {
             return (
               <>
-                Created: {moment(row.createTime).format('YYYY-MM-DD HH:mm:ss')}
+                <FormattedMessage id="homepage.projectcreate_createTime" />:{' '}
+                {moment(row.createTime).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
-                Updated: {moment(row.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
+                <FormattedMessage id="homepage.projectcreate_lastUpdateTime" />:{' '}
+                {moment(row.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
-                Comment: {row.comment}
+                <FormattedMessage id="homepage.projectcreate_comment" />: {row.comment}
               </>
             );
           },

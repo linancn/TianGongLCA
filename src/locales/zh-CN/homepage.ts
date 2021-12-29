@@ -10,4 +10,11 @@ export default {
   'homepage.projectcreate_type': '项目类型',
   'homepage.projectcreate_star': '星标',
   'homepage.projectcreate_comment': '备注',
+  'homepage.projectcreate_index': '序号',
+  'homepage.projectcreate_creator': '创建者',
+  'homepage.projectcreate_createTime': '创建时间',
+  'homepage.projectcreate_lastUpdateTime': '最后修改',
+  'homepage.projectcreate_option': '操作选项',
+  'homepage.projectcreate_set_star': '星标',
+  'homepage.projectcreate_set_nostar': '去除星标',
 };

@@ -4,6 +4,7 @@ import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
 import { deleteProject } from '@/services/project/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -32,7 +33,7 @@ const ProjectDelete: FC<Props> = ({ pkid, actionRef }) => {
   }, [actionRef, pkid]);
   return (
     <>
-      <Tooltip title="Delete">
+      <Tooltip title={<FormattedMessage id="pages.delete" />}>
         <Button shape="circle" icon={<DeleteOutlined />} size="small" onClick={onDelete} />
       </Tooltip>
     </>

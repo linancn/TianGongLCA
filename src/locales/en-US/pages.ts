@@ -26,6 +26,8 @@ export default {
   'pages.submit': 'Submit',
   'pages.true': 'Yes',
   'pages.false': 'No',
+  'pages.open': 'Open',
+  'pages.delete': 'Delete',
   // 'pages.welcome.advancedComponent': 'Advanced Component',
   // 'pages.welcome.link': 'Welcome',
   // 'pages.welcome.advancedLayout': 'Advanced Layout',
