@@ -8,7 +8,8 @@ import type { PlanInfo } from '@/services/plan/data';
 import type { Process } from '@/services/process/data';
 import { getProcessGrid } from '@/services/process/api';
 import type { ListPagination } from '@/services/home/data';
-import type { IGraphCommandService, NsNodeCmd } from '@antv/xflow';
+import type { NsNodeCmd } from '@antv/xflow';
+import { useXFlowApp } from '@antv/xflow';
 import { XFlowNodeCommands } from '@antv/xflow';
 import { NodeAttrs, NodePorts } from './config/node';
 import styles from '@/style/custom.less';
@@ -18,14 +19,14 @@ type Props = {
   projectId: number;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
-  commandService: IGraphCommandService | undefined;
 };
 
-const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandService }) => {
+const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible }) => {
   const [drawerAddPlanVisible, setDrawerAddPlanVisible] = useState(false);
   const [drawerAddProcessVisible, setDrawerAddProcessVisible] = useState(false);
   const [addPlanToModel, setAddPlanToModel] = useState<PlanInfo>();
   const [addProcessToModel, setAddProcessToModel] = useState<Process>();
+  const app = useXFlowApp();
 
   const planInfoColumns: ProColumns<PlanInfo>[] = [
     {
@@ -146,11 +147,12 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
       search: false,
     },
   ];
+
   const callbackDrawerVisible = useCallback(() => {
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
-  const onAddPlanToModel = useCallback(() => {
+  const onAddPlanToModel = () => {
     if (addPlanToModel) {
       const newNode = {
         id: addPlanToModel.id,
@@ -162,14 +164,14 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
           type: 'plan',
         },
       };
-      commandService?.executeCommand<NsNodeCmd.AddNode.IArgs>(XFlowNodeCommands.ADD_NODE.id, {
+      app.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(XFlowNodeCommands.ADD_NODE.id, {
         nodeConfig: newNode,
       });
       setDrawerAddPlanVisible(false);
     }
-  }, [addPlanToModel, commandService]);
+  };
 
-  const onAddProcessToModel = useCallback(() => {
+  const onAddProcessToModel = () => {
     if (addProcessToModel) {
       const newNode = {
         id: addProcessToModel.id,
@@ -181,12 +183,12 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible, commandSer
           type: 'process',
         },
       };
-      commandService?.executeCommand<NsNodeCmd.AddNode.IArgs>(XFlowNodeCommands.ADD_NODE.id, {
+      app.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(XFlowNodeCommands.ADD_NODE.id, {
         nodeConfig: newNode,
       });
       setDrawerAddProcessVisible(false);
     }
-  }, [addProcessToModel, commandService]);
+  };
 
   return (
     <>

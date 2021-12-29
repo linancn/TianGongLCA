@@ -1,7 +1,7 @@
 import type { Dispatch, FC } from 'react';
-import EditNode from './node';
-import EditEdge from './edge';
+import ViewEdge from './edge';
 import type { PlanModelState } from '@/services/plan/data';
+import ViewNode from './node';
 
 type Props = {
   projectId: number;
@@ -10,7 +10,7 @@ type Props = {
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
   planModelState: PlanModelState;
 };
-const Edit: FC<Props> = ({
+const View: FC<Props> = ({
   projectId,
   planId,
   drawerVisible,
@@ -19,8 +19,9 @@ const Edit: FC<Props> = ({
 }) => {
   if (drawerVisible && planModelState.isSelected) {
     if (planModelState.cellType === 'node') {
+      console.log(planModelState);
       return (
-        <EditNode
+        <ViewNode
           projectId={projectId}
           planModelState={planModelState}
           drawerVisible={drawerVisible}
@@ -30,7 +31,7 @@ const Edit: FC<Props> = ({
     }
     if (planModelState.cellType === 'edge') {
       return (
-        <EditEdge
+        <ViewEdge
           projectId={projectId}
           planId={planId}
           sourceId={planModelState.cellConfig.source.cell}
@@ -43,4 +44,4 @@ const Edit: FC<Props> = ({
   }
   return <></>;
 };
-export default Edit;
+export default View;

@@ -13,7 +13,6 @@ import {
   SaveOutlined,
 } from '@ant-design/icons';
 import type {
-  IGraphCommandService,
   IModelService,
   IToolbarItemOptions,
   NsEdgeCmd,
@@ -45,7 +44,6 @@ type Props = {
 };
 
 const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
-  const [graphCommandService, setGraphCommandService] = useState<IGraphCommandService>();
   const [addDrawerVisible, setAddDrawerVisible] = useState(false);
   const [viewDrawerVisible, setViewDrawerVisible] = useState(false);
   const [editDrawerVisible, setEditDrawerVisible] = useState(false);
@@ -65,14 +63,14 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
   const [planModelState, setPlanModelState] = useState<PlanModelState>({
     isSelected: false,
     cellType: '',
-    cellID: '',
+    cellId: '',
     cellConfig: '',
   });
   const getToolbarState = async (modelService: IModelService) => {
     let state = {
       isSelected: false,
       cellType: '',
-      cellID: '',
+      cellId: '',
       cellConfig: '',
     };
     const cell = await MODELS.SELECTED_CELL.useValue(modelService);
@@ -81,14 +79,14 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         state = {
           isSelected: true,
           cellType: 'node',
-          cellID: cell.id,
+          cellId: cell.id,
           cellConfig: cell.data,
         };
       } else if (cell.shape === 'edge') {
         state = {
           isSelected: true,
           cellType: 'edge',
-          cellID: cell.id,
+          cellId: cell.id,
           cellConfig: cell.data,
         };
       }
@@ -144,8 +142,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         iconName: 'edit',
         tooltip: 'Edit',
         isEnabled: state.isSelected,
-        onClick: async ({ commandService }) => {
-          setGraphCommandService(commandService);
+        onClick: async () => {
           setEditDrawerVisible(true);
         },
       },
@@ -154,8 +151,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         iconName: 'design',
         tooltip: 'Design',
         isEnabled: state.isSelected,
-        onClick: async ({ commandService }) => {
-          setGraphCommandService(commandService);
+        onClick: async () => {
           setDesignDrawerVisible(true);
         },
       },
@@ -165,8 +161,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         id: 'add',
         iconName: 'add',
         tooltip: 'Add',
-        onClick: async ({ commandService }) => {
-          setGraphCommandService(commandService);
+        onClick: async () => {
           setAddDrawerVisible(true);
         },
       },
@@ -284,10 +279,10 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         projectId={projectId}
         drawerVisible={addDrawerVisible}
         setDrawerVisible={setAddDrawerVisible}
-        commandService={graphCommandService}
       />
       <View
         projectId={projectId}
+        planId={id}
         drawerVisible={viewDrawerVisible}
         setDrawerVisible={setViewDrawerVisible}
         planModelState={planModelState}

@@ -7,24 +7,16 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import { getProcessById, updateProcess } from '@/services/process/api';
 import { CloseOutlined } from '@ant-design/icons';
+import type { PlanModelState } from '@/services/plan/data';
 
 type Props = {
   projectId: number;
-  id: string;
-  typeName: string;
-  label: string;
+  planModelState: PlanModelState;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditNode: FC<Props> = ({
-  projectId,
-  id,
-  typeName,
-  label,
-  drawerVisible,
-  setDrawerVisible,
-}) => {
+const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDrawerVisible }) => {
   const [drawerEdit, setDrawerEdit] = useState<JSX.Element>();
   const formRef = useRef<ProFormInstance>();
 
@@ -33,8 +25,8 @@ const EditNode: FC<Props> = ({
   }, [setDrawerVisible]);
 
   function getData() {
-    if (typeName === 'plan') {
-      getPlanInfo(projectId, id).then(async (pi) => {
+    if (planModelState.cellConfig.info.type === 'plan') {
+      getPlanInfo(projectId, planModelState.cellId).then(async (pi) => {
         setDrawerEdit(
           <ProForm
             formRef={formRef}
@@ -62,8 +54,8 @@ const EditNode: FC<Props> = ({
         );
         formRef.current?.setFieldsValue(pi);
       });
-    } else if (typeName === 'process') {
-      getProcessById(projectId, id).then(async (pc) => {
+    } else if (planModelState.cellConfig.info.type === 'process') {
+      getProcessById(projectId, planModelState.cellId).then(async (pc) => {
         setDrawerEdit(
           <ProForm
             formRef={formRef}
@@ -96,7 +88,7 @@ const EditNode: FC<Props> = ({
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId, id]);
+  }, []);
   return (
     <Drawer
       closable={false}
@@ -105,7 +97,7 @@ const EditNode: FC<Props> = ({
       }
       visible={drawerVisible}
       maskClosable={false}
-      title={`Edit ${typeName.toLocaleUpperCase()} (${label})`}
+      title={`Edit (${planModelState.cellConfig.attrs.label.text})`}
       width="400px"
       onClose={callbackDrawerVisible}
       footer={
