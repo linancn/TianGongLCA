@@ -1,10 +1,8 @@
-import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
+import { useState } from 'react';
 import type { IApplication, IAppLoad, NsEdgeCmd, NsGraph, NsGraphCmd } from '@antv/xflow';
 import { XFlowEdgeCommands, XFlowCanvas } from '@antv/xflow';
 import { XFlow, XFlowGraphCommands } from '@antv/xflow';
-import { PageContainer } from '@ant-design/pro-layout';
-import { getProject } from '@/services/project/api';
 import { getPlanModel } from '@/services/plan/api';
 import Toolbar from './toolbar';
 import './index.css';
@@ -13,20 +11,21 @@ import { useGraphConfig } from './toolbar/config/graph';
 import { EdgeAttrs, EdgeConnector, EdgeRouter } from './toolbar/config/edge';
 
 type Props = {
-  location: {
-    query: {
-      projectid: number;
-      id: string;
-    };
-  };
+  projectId: number;
+  planId: string;
+  setModelId: Dispatch<SetStateAction<string>>;
 };
 
-const PlanModelBuilder: FC<Props> = (props) => {
-  const { projectid, id } = props.location.query;
-  const [projectName, setProjectName] = useState('');
-  const [planName, setPlanName] = useState('');
+const PlanModelBuilder: FC<Props> = ({ projectId, planId, setModelId }) => {
   const [isOnLoad, setIsOnLoad] = useState(false);
   const [toolbar, setToolbar] = useState<JSX.Element>(<></>);
+
+  // const updateModelId = useCallback(
+  //   (newModelId: string) => {
+  //     setModelId(newModelId);
+  //   },
+  //   [setModelId],
+  // );
 
   const changePortsVisible = (visible: boolean) => {
     const ports = document.body.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
@@ -75,9 +74,15 @@ const PlanModelBuilder: FC<Props> = (props) => {
 
   const onLoad: IAppLoad = async (app) => {
     if (!isOnLoad) {
-      getPlanModel(projectid, id).then((result) => {
-        setToolbar(<Toolbar projectId={projectid} id={id} parentCount={result.parentCount} />);
-        setPlanName(result.name);
+      getPlanModel(projectId, planId).then((result) => {
+        setToolbar(
+          <Toolbar
+            projectId={projectId}
+            planId={planId}
+            parentCount={result.parentCount}
+            setModelId={setModelId}
+          />,
+        );
         const childrenJson = JSON.parse(result.childrenJson);
         if (childrenJson !== null) {
           const graphData: NsGraph.IGraphData = childrenJson;
@@ -90,32 +95,11 @@ const PlanModelBuilder: FC<Props> = (props) => {
     }
     await watchEvent(app);
   };
-
-  useEffect(() => {
-    getProject(projectid).then((result) => setProjectName(result.name + ' - '));
-  }, [projectid]);
-
   return (
-    <PageContainer
-      header={{
-        title: (
-          <>
-            {projectName}
-            {planName}
-          </>
-        ),
-      }}
-    >
-      <div style={{ width: '100%', height: '100%', position: 'absolute' }}>
-        <XFlow onLoad={onLoad}>
-          {toolbar}
-          <XFlowCanvas
-            config={useGraphConfig()}
-            position={{ top: 0, left: 0, right: 0, bottom: 0 }}
-          />
-        </XFlow>
-      </div>
-    </PageContainer>
+    <XFlow onLoad={onLoad}>
+      {toolbar}
+      <XFlowCanvas config={useGraphConfig()} position={{ top: 0, left: 0, right: 0, bottom: 0 }} />
+    </XFlow>
   );
 };
 

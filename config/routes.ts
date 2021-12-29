@@ -108,11 +108,6 @@ export default [
             path: '/project/plan',
             component: './project/plan',
           },
-          {
-            name: 'model',
-            path: '/project/plan/model',
-            component: './project/plan/model',
-          },
         ],
       },
       {

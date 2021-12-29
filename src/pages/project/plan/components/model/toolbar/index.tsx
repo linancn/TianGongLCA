@@ -29,7 +29,7 @@ import {
   XFlowNodeCommands,
 } from '@antv/xflow';
 import { message, Modal } from 'antd';
-import type { FC } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
 import { useState } from 'react';
 import Design from './design';
 import Add from './add';
@@ -39,11 +39,12 @@ import RollUp from './rollup';
 
 type Props = {
   projectId: number;
-  id: string;
+  planId: string;
   parentCount: number;
+  setModelId: Dispatch<SetStateAction<string>>;
 };
 
-const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
+const Toolbar: FC<Props> = ({ projectId, planId, parentCount, setModelId }) => {
   const [addDrawerVisible, setAddDrawerVisible] = useState(false);
   const [viewDrawerVisible, setViewDrawerVisible] = useState(false);
   const [editDrawerVisible, setEditDrawerVisible] = useState(false);
@@ -75,7 +76,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
     };
     const cell = await MODELS.SELECTED_CELL.useValue(modelService);
     if (cell) {
-      if (cell.shape === 'react-shape' || cell.shape === 'rect') {
+      if (cell.shape === 'react-shape') {
         state = {
           isSelected: true,
           cellType: 'node',
@@ -108,10 +109,11 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         isEnabled: parentCount > 0,
         onClick: async () => {
           if (parentCount === 1) {
-            getPlanParentGrid({}, {}, projectId, id).then((result) => {
-              window.location.replace(
-                `/project/plan/model?projectid=${projectId}&id=${result.data[0].id}`,
-              );
+            getPlanParentGrid({}, {}, projectId, planId).then((result) => {
+              setModelId(result.data[0].id);
+              // window.location.replace(
+              //   `/project/plan/model?projectid=${projectId}&id=${result.data[0].id}`,
+              // );
             });
           } else if (parentCount > 1) setRollUpDrawerVisible(true);
         },
@@ -123,7 +125,8 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
         isEnabled:
           state.isSelected && state.cellType === 'node' && state.cellConfig.info.type === 'plan',
         onClick: async () => {
-          window.location.href = `/project/plan/model?projectid=${projectId}&id=${state.cellConfig.id}`;
+          setModelId(state.cellConfig.id);
+          // window.location.href = `/project/plan/model?projectid=${projectId}&id=${state.cellConfig.id}`;
         },
       },
     );
@@ -232,7 +235,7 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
             saveGraphDataService: async (_meta, data) => {
               const updatePlan = {
                 projectId,
-                id,
+                planId,
                 childrenJson: JSON.stringify(data),
               };
               updatePlanChinlrenJson(updatePlan).then(() => {
@@ -282,28 +285,28 @@ const Toolbar: FC<Props> = ({ projectId, id, parentCount }) => {
       />
       <View
         projectId={projectId}
-        planId={id}
+        planId={planId}
         drawerVisible={viewDrawerVisible}
         setDrawerVisible={setViewDrawerVisible}
         planModelState={planModelState}
       />
       <Edit
         projectId={projectId}
-        planId={id}
+        planId={planId}
         drawerVisible={editDrawerVisible}
         setDrawerVisible={setEditDrawerVisible}
         planModelState={planModelState}
       />
       <Design
         projectId={projectId}
-        planId={id}
+        planId={planId}
         drawerVisible={designDrawerVisible}
         setDrawerVisible={setDesignDrawerVisible}
         planModelState={planModelState}
       />
       <RollUp
         projectId={projectId}
-        planId={id}
+        planId={planId}
         parentCount={parentCount}
         drawerVisible={rollupDrawerVisible}
         setDrawerVisible={setRollUpDrawerVisible}

@@ -84,7 +84,7 @@ const PlanList: FC<Props> = (props) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <PlanOpen projectId={row.projectId} id={row.id} />
+          <PlanOpen projectId={row.projectId} planId={row.id} name={row.name} />
           <PlanView pkid={row.pkid} />
           <PlanEdit pkid={row.pkid} actionRef={actionRef} />
           <PlanDelete pkid={row.pkid} actionRef={actionRef} />

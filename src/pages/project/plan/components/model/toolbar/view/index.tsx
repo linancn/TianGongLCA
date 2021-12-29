@@ -19,7 +19,6 @@ const View: FC<Props> = ({
 }) => {
   if (drawerVisible && planModelState.isSelected) {
     if (planModelState.cellType === 'node') {
-      console.log(planModelState);
       return (
         <ViewNode
           projectId={projectId}
