@@ -113,16 +113,6 @@ export default [
             path: '/project/plan/model',
             component: './project/plan/model',
           },
-          {
-            name: 'editmodel',
-            path: '/project/plan/editmodel',
-            component: './project/plan/editmodel',
-          },
-          {
-            name: 'viewmodel',
-            path: '/project/plan/viewmodel',
-            component: './project/plan/viewmodel',
-          },
         ],
       },
       {
