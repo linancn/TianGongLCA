@@ -29,9 +29,9 @@ const ProjectStar: FC<Props> = ({ pkid, star, actionRef }) => {
       <Tooltip
         title={
           star === true ? (
-            <FormattedMessage id="homepage.projectcreate_set_nostar" />
+            <FormattedMessage id="project.set_unstar" />
           ) : (
-            <FormattedMessage id="homepage.projectcreate_set_star" />
+            <FormattedMessage id="project.set_star" />
           )
         }
       >

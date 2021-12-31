@@ -70,13 +70,13 @@ const ListSearchApplications: FC<ProjectListProps> = (porps) => {
           render: (_, row) => {
             return (
               <>
-                <FormattedMessage id="homepage.projectcreate_createTime" />:{' '}
+                <FormattedMessage id="project.createTime" />:{' '}
                 {moment(row.createTime).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
-                <FormattedMessage id="homepage.projectcreate_lastUpdateTime" />:{' '}
+                <FormattedMessage id="project.lastUpdateTime" />:{' '}
                 {moment(row.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
-                <FormattedMessage id="homepage.projectcreate_comment" />: {row.comment}
+                <FormattedMessage id="project.comment" />: {row.comment}
               </>
             );
           },

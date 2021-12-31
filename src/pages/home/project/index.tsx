@@ -133,21 +133,9 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             return true;
           }}
         >
-          <ProFormText
-            width="md"
-            name="name"
-            label={<FormattedMessage id="homepage.projectcreate_name" />}
-          />
-          <ProFormText
-            width="md"
-            name="nation"
-            label={<FormattedMessage id="homepage.projectcreate_nation" />}
-          />
-          <ProFormText
-            width="md"
-            name="type"
-            label={<FormattedMessage id="homepage.projectcreate_type" />}
-          />
+          <ProFormText width="md" name="name" label={<FormattedMessage id="project.name" />} />
+          <ProFormText width="md" name="nation" label={<FormattedMessage id="project.nation" />} />
+          <ProFormText width="md" name="type" label={<FormattedMessage id="project.type" />} />
           <ProFormSelect
             options={[
               {
@@ -161,12 +149,12 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             ]}
             width="md"
             name="star"
-            label={<FormattedMessage id="homepage.projectcreate_star" />}
+            label={<FormattedMessage id="project.star" />}
           />
           <ProFormTextArea
             width="md"
             name="comment"
-            label={<FormattedMessage id="homepage.projectcreate_comment" />}
+            label={<FormattedMessage id="project.comment" />}
           />
         </ProForm>
       </Drawer>

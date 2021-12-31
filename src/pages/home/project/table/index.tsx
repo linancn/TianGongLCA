@@ -35,49 +35,49 @@ const TableList: FC<ProjectListProps> = (porps) => {
   }
   const columns: ProColumns<Project>[] = [
     {
-      title: <FormattedMessage id="homepage.projectcreate_index" />,
+      title: <FormattedMessage id="project.index" />,
       dataIndex: 'index',
       valueType: 'index',
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_name" />,
+      title: <FormattedMessage id="project.name" />,
       dataIndex: 'name',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_type" />,
+      title: <FormattedMessage id="project.type" />,
       dataIndex: 'type',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_nation" />,
+      title: <FormattedMessage id="project.nation" />,
       dataIndex: 'nation',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_comment" />,
+      title: <FormattedMessage id="project.comment" />,
       dataIndex: 'comment',
       valueType: 'textarea',
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_creator" />,
+      title: <FormattedMessage id="project.creator" />,
       dataIndex: 'creator',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_createTime" />,
+      title: <FormattedMessage id="project.createTime" />,
       dataIndex: 'createTime',
       valueType: 'dateTime',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_lastUpdateTime" />,
+      title: <FormattedMessage id="project.lastUpdateTime" />,
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="homepage.projectcreate_comment" />,
+      title: <FormattedMessage id="project.comment" />,
       dataIndex: 'comment',
       valueType: 'textarea',
     },
@@ -93,7 +93,7 @@ const TableList: FC<ProjectListProps> = (porps) => {
     //   ],
     // },
     {
-      title: <FormattedMessage id="homepage.projectcreate_option" />,
+      title: <FormattedMessage id="project.option" />,
       valueType: 'option',
       render: (_, record: Project) => [
         <ProjectStar pkid={record.id} star={record.star} actionRef={actionRef} />,

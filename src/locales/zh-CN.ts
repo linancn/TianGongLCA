@@ -6,6 +6,8 @@ import settingDrawer from './zh-CN/settingDrawer';
 import settings from './zh-CN/settings';
 import pages from './zh-CN/pages';
 import homepage from './zh-CN/homepage';
+import plan from './zh-CN/plan';
+import project from './zh-CN/project';
 
 export default {
   'navBar.lang': '语言',
@@ -24,4 +26,6 @@ export default {
   ...pwa,
   ...component,
   ...homepage,
+  ...plan,
+  ...project,
 };

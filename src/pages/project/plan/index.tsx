@@ -28,59 +28,59 @@ const PlanList: FC<Props> = (props) => {
   const [projectName, setProjectName] = useState('');
   const columns: ProColumns<PlanInfo>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="plan.index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Name',
+      title: <FormattedMessage id="plan.name" />,
       dataIndex: 'name',
       sorter: true,
     },
     {
-      title: 'Type',
+      title: <FormattedMessage id="plan.type" />,
       dataIndex: 'type',
       sorter: true,
     },
     {
-      title: 'Nation',
+      title: <FormattedMessage id="plan.nation" />,
       dataIndex: 'nation',
       sorter: true,
     },
     {
-      title: 'Comment',
+      title: <FormattedMessage id="plan.comment" />,
       dataIndex: 'comment',
       valueType: 'textarea',
       search: false,
     },
     {
-      title: 'Creator',
+      title: <FormattedMessage id="plan.creator" />,
       dataIndex: 'creator',
       sorter: true,
       search: false,
     },
     {
-      title: 'Create Time',
+      title: <FormattedMessage id="plan.createTime" />,
       dataIndex: 'createTime',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Last Update Time',
+      title: <FormattedMessage id="plan.lastUpdateTime" />,
       dataIndex: 'lastUpdateTime',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Version',
+      title: <FormattedMessage id="plan.version" />,
       dataIndex: 'version',
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="plan.option" />,
       search: false,
       render: (_, row) => [
         <Space size={'small'}>

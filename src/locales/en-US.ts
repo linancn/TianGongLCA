@@ -6,6 +6,8 @@ import pages from './en-US/pages';
 import pwa from './en-US/pwa';
 import settingDrawer from './en-US/settingDrawer';
 import settings from './en-US/settings';
+import plan from './en-US/plan';
+import project from './en-US/project';
 
 export default {
   'navBar.lang': 'Languages',
@@ -24,4 +26,6 @@ export default {
   ...component,
   ...pages,
   ...homepage,
+  ...plan,
+  ...project,
 };
