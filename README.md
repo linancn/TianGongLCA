@@ -45,3 +45,11 @@ yarn lint:fix
 ```bash
 yarn test
 ```
+
+### Docker build
+
+After yarn build
+
+```bash
+docker build --file Dockerfile --tag cystalca .
+```

@@ -1,5 +1,5 @@
 server {
-    listen 8000;
+    listen 80;
     # gzip config
     gzip on;
     gzip_min_length 1k;
@@ -17,5 +17,9 @@ server {
         proxy_set_header   X-Forwarded-Proto $scheme;
         proxy_set_header   Host              $http_host;
         proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_ssl_session_reuse off;
+        proxy_ssl_protocols TLSv1.2;
+        proxy_ssl_server_name on;
+        proxy_pass http://localhost:8001;
     }
 }

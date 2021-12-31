@@ -1,7 +1,0 @@
-FROM node:14-alpine
-
-RUN yarn
-RUN yarn config set registry https://mirrors.huaweicloud.com/repository/npm/
-RUN yarn config set disturl https://mirrors.huaweicloud.com/nodejs/
-RUN yarn config set electron_mirror https://mirrors.huaweicloud.com/electron/
-RUN yarn global add umi-serve
