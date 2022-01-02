@@ -148,24 +148,16 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
     if (!isOnLoad) {
       getPlanModel(projectId, modelId).then((pm) => {
         const childrenJson = JSON.parse(pm.childrenJson);
-        if (xflowApp) {
-          if (childrenJson !== null) {
-            const graphData: NsGraph.IGraphData = childrenJson;
-            xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-              XFlowGraphCommands.GRAPH_RENDER.id,
-              {
-                graphData,
-              },
-            );
-          } else {
-            const graphData: NsGraph.IGraphData = { edges: [], nodes: [] };
-            xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-              XFlowGraphCommands.GRAPH_RENDER.id,
-              {
-                graphData,
-              },
-            );
-          }
+        if (childrenJson !== null) {
+          const graphData: NsGraph.IGraphData = childrenJson;
+          app.executeCommand<NsGraphCmd.GraphRender.IArgs>(XFlowGraphCommands.GRAPH_RENDER.id, {
+            graphData,
+          });
+        } else {
+          const graphData: NsGraph.IGraphData = { edges: [], nodes: [] };
+          app.executeCommand<NsGraphCmd.GraphRender.IArgs>(XFlowGraphCommands.GRAPH_RENDER.id, {
+            graphData,
+          });
         }
         setModelId(pm.id);
         setModelName(pm.name);
