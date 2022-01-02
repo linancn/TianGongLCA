@@ -94,9 +94,6 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
               attrs: EdgeAttrs(),
               router: EdgeRouter(),
               connector: EdgeConnector(),
-              info: {
-                type: 'process',
-              },
             },
           } as NsEdgeCmd.AddEdge.IArgs);
         }
@@ -256,7 +253,11 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
                 <Button
                   icon={<NodeExpandOutlined />}
                   disabled={
-                    !(planModelState.isSelected && planModelState.cellConfig.info.type === 'plan')
+                    !(
+                      planModelState.isSelected &&
+                      planModelState.cellType === 'node' &&
+                      planModelState.cellConfig.info.type === 'plan'
+                    )
                   }
                   onClick={() => {
                     getPlanModel(projectId, planModelState.cellConfig.id).then((pm) => {
