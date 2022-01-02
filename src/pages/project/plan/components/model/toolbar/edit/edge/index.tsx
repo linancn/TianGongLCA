@@ -14,7 +14,7 @@ import { CloseOutlined } from '@ant-design/icons';
 
 type Props = {
   projectId: number;
-  planId: string;
+  modelId: string;
   sourceId: string;
   targetId: string;
   drawerVisible: boolean;
@@ -23,7 +23,7 @@ type Props = {
 
 const EditEdge: FC<Props> = ({
   projectId,
-  planId,
+  modelId,
   sourceId,
   targetId,
   drawerVisible,
@@ -103,7 +103,7 @@ const EditEdge: FC<Props> = ({
         toolBarRender={() => [
           <EdgeProcessCreate
             projectId={projectId}
-            planId={planId}
+            modelId={modelId}
             sourceId={sourceId}
             targetId={targetId}
             actionRef={actionRef}
@@ -116,7 +116,7 @@ const EditEdge: FC<Props> = ({
           },
           sort,
         ) => {
-          return getEdgeProcessFlowGrid(params, sort, projectId, planId, sourceId, targetId);
+          return getEdgeProcessFlowGrid(params, sort, projectId, modelId, sourceId, targetId);
         }}
       />
     </Drawer>

@@ -1,25 +1,40 @@
 import type { Dispatch, FC } from 'react';
+import { useCallback } from 'react';
 import { useState } from 'react';
 import styles from '@/style/custom.less';
 import { Button, Drawer, Space } from 'antd';
-import { getPlanParentGrid } from '@/services/plan/api';
+import { getPlanModel, getPlanParentGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { PlanInfo } from '@/services/plan/data';
 import type { ListPagination } from '@/services/home/data';
+import type { IApplication, NsGraph, NsGraphCmd } from '@antv/xflow';
+import { XFlowGraphCommands } from '@antv/xflow';
 
 type Props = {
+  xflowApp: IApplication | undefined;
   projectId: number;
-  planId: string;
+  modelId: string;
+  setModelId: Dispatch<React.SetStateAction<string>>;
+  setModelName: Dispatch<React.SetStateAction<string>>;
   parentCount: number;
+  setParentCount: Dispatch<React.SetStateAction<number>>;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const RollUp: FC<Props> = ({ projectId, planId, parentCount }) => {
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+const RollUp: FC<Props> = ({
+  xflowApp,
+  projectId,
+  modelId,
+  setModelId,
+  setModelName,
+  parentCount,
+  setParentCount,
+  drawerVisible,
+  setDrawerVisible,
+}) => {
   const [selectParent, setSelectParent] = useState<PlanInfo>();
-
   const columns: ProColumns<PlanInfo>[] = [
     {
       title: 'ID',
@@ -58,22 +73,58 @@ const RollUp: FC<Props> = ({ projectId, planId, parentCount }) => {
     },
   ];
 
+  const callbackDrawerVisible = useCallback(() => {
+    setDrawerVisible(false);
+  }, [setDrawerVisible]);
+
+  const callbackValues = useCallback(
+    (id: string, name: string, pc: number) => {
+      setModelId(id);
+      setModelName(name);
+      setParentCount(pc);
+      setDrawerVisible(false);
+    },
+    [setDrawerVisible, setModelId, setModelName, setParentCount],
+  );
+
   const onOpen = () => {
     if (selectParent) {
-      window.location.replace(`/project/plan/model?projectid=${projectId}&id=${selectParent.id}`);
+      getPlanModel(projectId, selectParent.id).then((pm) => {
+        const childrenJson = JSON.parse(pm.childrenJson);
+        if (xflowApp) {
+          if (childrenJson !== null) {
+            const graphData: NsGraph.IGraphData = childrenJson;
+            xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
+              XFlowGraphCommands.GRAPH_RENDER.id,
+              {
+                graphData,
+              },
+            );
+          } else {
+            const graphData: NsGraph.IGraphData = { edges: [], nodes: [] };
+            xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
+              XFlowGraphCommands.GRAPH_RENDER.id,
+              {
+                graphData,
+              },
+            );
+          }
+        }
+        callbackValues(pm.id, pm.name, pm.parentCount);
+      });
     }
   };
 
   if (parentCount > 1) {
     return (
       <Drawer
-        visible={isDrawerVisible}
+        visible={drawerVisible}
         title="Roll Up"
         width="800px"
-        onClose={() => setIsDrawerVisible(false)}
+        onClose={callbackDrawerVisible}
         footer={
           <Space size={'middle'} className={styles.footer_space}>
-            <Button onClick={() => setIsDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={callbackDrawerVisible}>Cancel</Button>
             <Button onClick={onOpen} type="primary">
               Open
             </Button>
@@ -89,7 +140,7 @@ const RollUp: FC<Props> = ({ projectId, planId, parentCount }) => {
             },
             sort,
           ) => {
-            return getPlanParentGrid(params, sort, projectId, planId);
+            return getPlanParentGrid(params, sort, projectId, modelId);
           }}
           columns={columns}
           rowClassName={(record) => {

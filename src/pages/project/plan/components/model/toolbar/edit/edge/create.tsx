@@ -7,13 +7,13 @@ import { createEdgeProcess } from '@/services/edgeprocess/api';
 
 type Props = {
   projectId: number;
-  planId: string;
+  modelId: string;
   sourceId: string;
   targetId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const EdgeProcessCreate: FC<Props> = ({ projectId, planId, sourceId, targetId, actionRef }) => {
+const EdgeProcessCreate: FC<Props> = ({ projectId, modelId, sourceId, targetId, actionRef }) => {
   const reload = useCallback(() => {
     actionRef.current?.reload();
   }, [actionRef]);
@@ -27,7 +27,7 @@ const EdgeProcessCreate: FC<Props> = ({ projectId, planId, sourceId, targetId, a
         onClick={() => {
           createEdgeProcess({
             projectId,
-            planId,
+            planId: modelId,
             sourceProcessId: sourceId,
             targetProcessId: targetId,
           }).then(async (result) => {

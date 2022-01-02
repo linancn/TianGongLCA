@@ -109,7 +109,13 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
           >
             Reset
           </Button>
-          <Button onClick={() => formRef.current?.submit()} type="primary">
+          <Button
+            onClick={() => {
+              formRef.current?.submit();
+              callbackDrawerVisible();
+            }}
+            type="primary"
+          >
             Submit
           </Button>
         </Space>

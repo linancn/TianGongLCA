@@ -5,14 +5,14 @@ import ViewNode from './node';
 
 type Props = {
   projectId: number;
-  planId: string;
+  modelId: string;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
   planModelState: PlanModelState;
 };
 const View: FC<Props> = ({
   projectId,
-  planId,
+  modelId,
   drawerVisible,
   setDrawerVisible,
   planModelState,
@@ -32,7 +32,7 @@ const View: FC<Props> = ({
       return (
         <ViewEdge
           projectId={projectId}
-          planId={planId}
+          modelId={modelId}
           sourceId={planModelState.cellConfig.source.cell}
           targetId={planModelState.cellConfig.target.cell}
           drawerVisible={drawerVisible}

@@ -6,22 +6,21 @@ import { ProFormText } from '@ant-design/pro-form';
 import ProForm from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import { CloseOutlined } from '@ant-design/icons';
-import type { NsEdgeCmd } from '@antv/xflow';
+import type { IApplication, NsEdgeCmd } from '@antv/xflow';
 import { XFlowEdgeCommands } from '@antv/xflow';
 import { MODELS } from '@antv/xflow';
-import { useXFlowApp } from '@antv/xflow';
 import { SketchPicker } from 'react-color';
 import reactCSS from 'reactcss';
 
 type Props = {
+  xflowApp: IApplication | undefined;
   label: string;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
   config: any;
 };
 
-const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
-  const app = useXFlowApp();
+const DesignEdge: FC<Props> = ({ xflowApp, label, drawerVisible, setDrawerVisible }) => {
   const formRef = useRef<ProFormInstance>();
   const [isPopoverVisibleLC, setIsPopoverVisibleLC] = useState(false);
   const [colorLC, setColorLC] = useState('#000000');
@@ -53,47 +52,51 @@ const DesignEdge: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
   }, [setDrawerVisible]);
 
   const getCell = async () => {
-    const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
-    formRef.current?.setFieldsValue({
-      label: cell.attrs.label.text,
-      lineColor: cell.attrs.line.stroke,
-      lineWidth: cell.attrs.line.strokeWidth,
-      markerWidth: cell.attrs.line.targetMarker.width,
-      markerHeight: cell.attrs.line.targetMarker.height,
-      markerOffset: cell.attrs.line.targetMarker.offset,
-    });
-    setColorLC(cell.attrs.line.stroke);
+    if (xflowApp) {
+      const cell = await (await MODELS.SELECTED_CELL.useValue(xflowApp.modelService)).data;
+      formRef.current?.setFieldsValue({
+        label: cell.attrs.label.text,
+        lineColor: cell.attrs.line.stroke,
+        lineWidth: cell.attrs.line.strokeWidth,
+        markerWidth: cell.attrs.line.targetMarker.width,
+        markerHeight: cell.attrs.line.targetMarker.height,
+        markerOffset: cell.attrs.line.targetMarker.offset,
+      });
+      setColorLC(cell.attrs.line.stroke);
+    }
   };
 
   const updateCell = async (values: any) => {
-    const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
-    const config = {
-      ...cell,
-      attrs: {
-        ...cell.attrs,
-        line: {
-          ...cell.attrs.line,
-          stroke: values.lineColor,
-          strokeWidth: values.lineWidth,
-          targetMarker: {
-            ...cell.attrs.line.targetMarker,
-            width: values.markerWidth,
-            height: values.markerHeight,
-            offset: values.markerOffset,
+    if (xflowApp) {
+      const cell = await (await MODELS.SELECTED_CELL.useValue(xflowApp.modelService)).data;
+      const config = {
+        ...cell,
+        attrs: {
+          ...cell.attrs,
+          line: {
+            ...cell.attrs.line,
+            stroke: values.lineColor,
+            strokeWidth: values.lineWidth,
+            targetMarker: {
+              ...cell.attrs.line.targetMarker,
+              width: values.markerWidth,
+              height: values.markerHeight,
+              offset: values.markerOffset,
+            },
+          },
+          label: {
+            ...cell.attrs.label,
+            text: values.label,
           },
         },
-        label: {
-          ...cell.attrs.label,
-          text: values.label,
+      };
+      xflowApp.commandService.executeCommand<NsEdgeCmd.UpdateEdge.IArgs>(
+        XFlowEdgeCommands.UPDATE_EDGE.id,
+        {
+          edgeConfig: config,
         },
-      },
-    };
-    app.commandService.executeCommand<NsEdgeCmd.UpdateEdge.IArgs>(
-      XFlowEdgeCommands.UPDATE_EDGE.id,
-      {
-        edgeConfig: config,
-      },
-    );
+      );
+    }
   };
 
   useEffect(() => {

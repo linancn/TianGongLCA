@@ -11,7 +11,7 @@ import { CloseOutlined } from '@ant-design/icons';
 
 type Props = {
   projectId: number;
-  planId: string;
+  modelId: string;
   sourceId: string;
   targetId: string;
   drawerVisible: boolean;
@@ -20,7 +20,7 @@ type Props = {
 
 const ViewEdge: FC<Props> = ({
   projectId,
-  planId,
+  modelId,
   sourceId,
   targetId,
   drawerVisible,
@@ -87,7 +87,7 @@ const ViewEdge: FC<Props> = ({
           },
           sort,
         ) => {
-          return getEdgeProcessFlowGrid(params, sort, projectId, planId, sourceId, targetId);
+          return getEdgeProcessFlowGrid(params, sort, projectId, modelId, sourceId, targetId);
         }}
       />
     </Drawer>

@@ -8,25 +8,25 @@ import type { PlanInfo } from '@/services/plan/data';
 import type { Process } from '@/services/process/data';
 import { getProcessGrid } from '@/services/process/api';
 import type { ListPagination } from '@/services/home/data';
-import type { NsNodeCmd } from '@antv/xflow';
-import { useXFlowApp } from '@antv/xflow';
+import type { IApplication, NsNodeCmd } from '@antv/xflow';
 import { XFlowNodeCommands } from '@antv/xflow';
 import { NodeAttrs, NodePorts } from './config/node';
 import styles from '@/style/custom.less';
 import { CloseOutlined } from '@ant-design/icons';
 
 type Props = {
+  xflowApp: IApplication | undefined;
   projectId: number;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible }) => {
+const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }) => {
   const [drawerAddPlanVisible, setDrawerAddPlanVisible] = useState(false);
   const [drawerAddProcessVisible, setDrawerAddProcessVisible] = useState(false);
   const [addPlanToModel, setAddPlanToModel] = useState<PlanInfo>();
   const [addProcessToModel, setAddProcessToModel] = useState<Process>();
-  const app = useXFlowApp();
+  // const app = useXFlowApp();
 
   const planInfoColumns: ProColumns<PlanInfo>[] = [
     {
@@ -164,9 +164,14 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible }) => {
           type: 'plan',
         },
       };
-      app.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(XFlowNodeCommands.ADD_NODE.id, {
-        nodeConfig: newNode,
-      });
+      if (xflowApp) {
+        xflowApp.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(
+          XFlowNodeCommands.ADD_NODE.id,
+          {
+            nodeConfig: newNode,
+          },
+        );
+      }
       setDrawerAddPlanVisible(false);
     }
   };
@@ -183,9 +188,14 @@ const Add: FC<Props> = ({ projectId, drawerVisible, setDrawerVisible }) => {
           type: 'process',
         },
       };
-      app.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(XFlowNodeCommands.ADD_NODE.id, {
-        nodeConfig: newNode,
-      });
+      if (xflowApp) {
+        xflowApp.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(
+          XFlowNodeCommands.ADD_NODE.id,
+          {
+            nodeConfig: newNode,
+          },
+        );
+      }
       setDrawerAddProcessVisible(false);
     }
   };

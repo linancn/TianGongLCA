@@ -5,14 +5,14 @@ import type { PlanModelState } from '@/services/plan/data';
 
 type Props = {
   projectId: number;
-  planId: string;
+  modelId: string;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
   planModelState: PlanModelState;
 };
 const Edit: FC<Props> = ({
   projectId,
-  planId,
+  modelId,
   drawerVisible,
   setDrawerVisible,
   planModelState,
@@ -32,7 +32,7 @@ const Edit: FC<Props> = ({
       return (
         <EditEdge
           projectId={projectId}
-          planId={planId}
+          modelId={modelId}
           sourceId={planModelState.cellConfig.source.cell}
           targetId={planModelState.cellConfig.target.cell}
           drawerVisible={drawerVisible}

@@ -5,21 +5,21 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import { CloseOutlined } from '@ant-design/icons';
-import type { NsNodeCmd } from '@antv/xflow';
+import type { IApplication, NsNodeCmd } from '@antv/xflow';
 import { MODELS } from '@antv/xflow';
-import { useXFlowApp, XFlowNodeCommands } from '@antv/xflow';
+import { XFlowNodeCommands } from '@antv/xflow';
 import { SketchPicker } from 'react-color';
 import reactCSS from 'reactcss';
 
 type Props = {
+  xflowApp: IApplication | undefined;
   label: string;
   drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
   config: any;
 };
 
-const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
-  const app = useXFlowApp();
+const DesignNode: FC<Props> = ({ xflowApp, label, drawerVisible, setDrawerVisible }) => {
   const formRef = useRef<ProFormInstance>();
   const [isPopoverVisibleBGC, setIsPopoverVisibleBGC] = useState(false);
   const [colorBGC, setColorBGC] = useState('#000000');
@@ -97,50 +97,55 @@ const DesignNode: FC<Props> = ({ label, drawerVisible, setDrawerVisible }) => {
   }, [setDrawerVisible]);
 
   const getCell = async () => {
-    const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
-    formRef.current?.setFieldsValue({
-      label: cell.attrs.label.text,
-      width: cell.width,
-      height: cell.height,
-      background: cell.attrs.body.fill,
-      borderColor: cell.attrs.body.stroke,
-      borderWidth: cell.attrs.body.strokeWidth,
-      fontSize: cell.attrs.label.fontSize,
-      fontColor: cell.attrs.label.fill,
-    });
-    setColorBGC(cell.attrs.body.fill);
-    setColorBDC(cell.attrs.body.stroke);
-    setColorFC(cell.attrs.label.fill);
+    if (xflowApp) {
+      const cell = await (await MODELS.SELECTED_CELL.useValue(xflowApp.modelService)).data;
+      formRef.current?.setFieldsValue({
+        label: cell.attrs.label.text,
+        width: cell.width,
+        height: cell.height,
+        background: cell.attrs.body.fill,
+        borderColor: cell.attrs.body.stroke,
+        borderWidth: cell.attrs.body.strokeWidth,
+        fontSize: cell.attrs.label.fontSize,
+        fontColor: cell.attrs.label.fill,
+      });
+      setColorBGC(cell.attrs.body.fill);
+      setColorBDC(cell.attrs.body.stroke);
+      setColorFC(cell.attrs.label.fill);
+    }
   };
 
   const updateCell = async (values: any) => {
-    const cell = await (await MODELS.SELECTED_CELL.useValue(app.modelService)).data;
-    const config = {
-      ...cell,
-      width: values.width,
-      height: values.height,
-      attrs: {
-        ...cell.attrs,
-        body: {
-          ...cell.body,
-          fill: values.background,
-          stroke: values.borderColor,
-          strokeWidth: values.borderWidth,
+    if (xflowApp) {
+      const cell = await (await MODELS.SELECTED_CELL.useValue(xflowApp.modelService)).data;
+      const config = {
+        ...cell,
+        width: values.width,
+        height: values.height,
+        attrs: {
+          ...cell.attrs,
+          body: {
+            ...cell.body,
+            fill: values.background,
+            stroke: values.borderColor,
+            strokeWidth: values.borderWidth,
+          },
+          label: {
+            ...cell.label,
+            text: values.label,
+            fontSize: values.fontSize,
+            fill: values.fontColor,
+          },
         },
-        label: {
-          ...cell.label,
-          text: values.label,
-          fontSize: values.fontSize,
-          fill: values.fontColor,
+      };
+
+      xflowApp.commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
+        XFlowNodeCommands.UPDATE_NODE.id,
+        {
+          nodeConfig: config,
         },
-      },
-    };
-    app.commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
-      XFlowNodeCommands.UPDATE_NODE.id,
-      {
-        nodeConfig: config,
-      },
-    );
+      );
+    }
   };
 
   useEffect(() => {
