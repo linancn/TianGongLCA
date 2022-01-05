@@ -168,7 +168,6 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
     await watchEvent(app);
     setxflowApp(app);
   };
-
   return (
     <>
       <Tooltip title="Open model">
@@ -427,7 +426,6 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
                               id: modelId,
                               childrenJson: JSON.stringify(data),
                             };
-                            console.log(updatePlan);
                             updatePlanChinlrenJson(updatePlan).then(() => {
                               message.success('Save successfully!');
                             });

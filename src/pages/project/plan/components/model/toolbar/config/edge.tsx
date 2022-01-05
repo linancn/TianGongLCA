@@ -22,7 +22,7 @@ export const EdgeAttrs = () => {
 
 export const EdgeConnector = () => {
   const connector = {
-    name: 'jumpover',
+    name: 'rounded',
     args: {
       type: 'arc',
     },
@@ -32,7 +32,7 @@ export const EdgeConnector = () => {
 
 export const EdgeRouter = () => {
   const router = {
-    name: 'manhattan',
+    name: 'orth',
   };
   return router;
 };
