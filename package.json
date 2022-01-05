@@ -57,7 +57,7 @@
     "@antv/auto-chart": "^2.0.2",
     "@antv/layout": "^0.1.19",
     "@antv/s2": "^1.2.0",
-    "@antv/xflow": "^1.0.8",
+    "@antv/xflow": "^1.0.21",
     "@umijs/route-utils": "^1.0.36",
     "ahooks": "^3.0.1",
     "antd": "^4.14.0",
