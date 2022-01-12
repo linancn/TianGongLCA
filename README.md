@@ -4,6 +4,15 @@ This project is initialized with [Ant Design Pro](https://pro.ant.design). Follo
 
 ## Environment Prepare
 
+Install Node.js 16
+
+```bash
+apt update
+apt upgrade
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+apt install -y nodejs
+```
+
 Install `node_modules`:
 
 ```bash
