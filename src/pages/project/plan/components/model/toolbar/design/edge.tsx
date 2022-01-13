@@ -11,6 +11,7 @@ import { XFlowEdgeCommands } from '@antv/xflow';
 import { MODELS } from '@antv/xflow';
 import { SketchPicker } from 'react-color';
 import reactCSS from 'reactcss';
+import { presetColors } from '../config/sketchpicker';
 
 type Props = {
   xflowApp: IApplication | undefined;
@@ -148,7 +149,12 @@ const DesignEdge: FC<Props> = ({ xflowApp, label, drawerVisible, setDrawerVisibl
           }
           placement="bottomLeft"
           content={
-            <SketchPicker width={'230px'} color={colorLC} onChange={onSketchPickerChangeLC} />
+            <SketchPicker
+              presetColors={presetColors}
+              width={'230px'}
+              color={colorLC}
+              onChange={onSketchPickerChangeLC}
+            />
           }
           visible={isPopoverVisibleLC}
         >
