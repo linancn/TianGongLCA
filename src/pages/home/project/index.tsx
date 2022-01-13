@@ -124,6 +124,13 @@ const ListSearch: FC<ListSearchProps> = (props) => {
               if (result === 'ok') {
                 message.success('Create successfully!');
                 handleDrawerCreateVisible(false);
+                formRefCreate.current?.setFieldsValue({
+                  name: null,
+                  nation: null,
+                  type: null,
+                  star: 'false',
+                  comment: null,
+                });
                 reload += 1;
                 handleTabChange(getTabKey());
               } else {
@@ -150,6 +157,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             width="md"
             name="star"
             label={<FormattedMessage id="project.star" />}
+            initialValue="false"
           />
           <ProFormTextArea
             width="md"

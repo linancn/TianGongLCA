@@ -5,10 +5,11 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Drawer, Input, message, Space } from 'antd';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
-import { history } from 'umi';
+import { FormattedMessage, history } from 'umi';
 import styles from '@/style/custom.less';
+import { CloseOutlined } from '@ant-design/icons';
 
-type ListSearchProps = {
+type Props = {
   match: {
     url: string;
     path: string;
@@ -21,16 +22,16 @@ type ListSearchProps = {
 const tabList = [
   {
     key: 'card',
-    tab: 'Card',
+    tab: <FormattedMessage id="homepage.card" />,
   },
   {
     key: 'table',
-    tab: 'Table',
+    tab: <FormattedMessage id="homepage.table" />,
   },
 ];
 let nameLike = '';
 let reload = 0;
-const ListSearch: FC<ListSearchProps> = (props) => {
+const StarredProjectIndex: FC<Props> = (props) => {
   const [drawerCreateVisible, handleDrawerCreateVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
   const handleTabChange = (key: string) => {
@@ -65,10 +66,10 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       content={
         <div style={{ textAlign: 'center' }}>
           <Space>
-            Name:
+            <FormattedMessage id="homepage.projectsearch" />
             <Input.Search
               placeholder=""
-              enterButton="Search"
+              enterButton={<FormattedMessage id="homepage.projectsearchbutton" />}
               onSearch={handleFormSubmit}
               style={{ maxWidth: 500, minWidth: 300 }}
             />
@@ -77,7 +78,7 @@ const ListSearch: FC<ListSearchProps> = (props) => {
                 handleDrawerCreateVisible(true);
               }}
             >
-              Create
+              <FormattedMessage id="homepage.projectcreate" />
             </Button>
           </Space>
         </div>
@@ -87,16 +88,26 @@ const ListSearch: FC<ListSearchProps> = (props) => {
       onTabChange={handleTabChange}
     >
       <Drawer
-        title="Create Plan"
+        title={<FormattedMessage id="homepage.projectcreate" />}
         width="400px"
+        closable={false}
+        extra={
+          <Button
+            icon={<CloseOutlined />}
+            style={{ border: 0 }}
+            onClick={() => handleDrawerCreateVisible(false)}
+          />
+        }
         maskClosable={false}
         visible={drawerCreateVisible}
         onClose={() => handleDrawerCreateVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerCreateVisible(false)}>Cancel</Button>
+            <Button onClick={() => handleDrawerCreateVisible(false)}>
+              <FormattedMessage id="pages.cancel" />
+            </Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="pages.submit" />
             </Button>
           </Space>
         }
@@ -113,6 +124,13 @@ const ListSearch: FC<ListSearchProps> = (props) => {
               if (result === 'ok') {
                 message.success('Create successfully!');
                 handleDrawerCreateVisible(false);
+                formRefCreate.current?.setFieldsValue({
+                  name: null,
+                  nation: null,
+                  type: null,
+                  star: 'true',
+                  comment: null,
+                });
                 reload += 1;
                 handleTabChange(getTabKey());
               } else {
@@ -122,25 +140,30 @@ const ListSearch: FC<ListSearchProps> = (props) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="type" label="Type" />
+          <ProFormText width="md" name="name" label={<FormattedMessage id="project.name" />} />
+          <ProFormText width="md" name="nation" label={<FormattedMessage id="project.nation" />} />
+          <ProFormText width="md" name="type" label={<FormattedMessage id="project.type" />} />
           <ProFormSelect
             options={[
               {
                 value: 'true',
-                label: 'true',
+                label: <FormattedMessage id="pages.true" />,
               },
               {
                 value: 'false',
-                label: 'false',
+                label: <FormattedMessage id="pages.false" />,
               },
             ]}
             width="md"
             name="star"
-            label="Star"
+            label={<FormattedMessage id="project.star" />}
+            initialValue="true"
           />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
+          <ProFormTextArea
+            width="md"
+            name="comment"
+            label={<FormattedMessage id="project.comment" />}
+          />
         </ProForm>
       </Drawer>
       {props.children}
@@ -148,4 +171,4 @@ const ListSearch: FC<ListSearchProps> = (props) => {
   );
 };
 
-export default ListSearch;
+export default StarredProjectIndex;

@@ -10,7 +10,7 @@ export async function getProjectList(
   sort: Record<string, SortOrder>,
   // filter: Record<string, React.ReactText[] | null>,
   name: string,
-  star?: boolean,
+  star: boolean | null,
   // options?: { [key: string]: any },
 ) {
   const sortBy = Object.keys(sort)[0];
