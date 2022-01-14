@@ -152,50 +152,40 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
-  const onAddPlanToModel = () => {
-    if (addPlanToModel) {
-      const newNode = {
-        id: addPlanToModel.id,
-        width: 100,
-        height: 30,
-        attrs: NodeAttrs(addPlanToModel.name),
-        ports: NodePorts(addPlanToModel.id),
-        info: {
-          type: 'plan',
-        },
-      };
-      if (xflowApp) {
+  const onAddToModel = (id: string, name: string, type: string) => {
+    if (xflowApp) {
+      xflowApp.getGraphInstance().then(async (graph) => {
+        const area = graph.getGraphArea();
+        const newNode = {
+          id: id,
+          x: (area.x + area.width) / 2 - 50,
+          y: (area.y + area.height) / 2 - 15,
+          width: 100,
+          height: 30,
+          attrs: NodeAttrs(name),
+          ports: NodePorts(id),
+          info: {
+            type: type,
+          },
+        };
         xflowApp.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(
           XFlowNodeCommands.ADD_NODE.id,
           {
             nodeConfig: newNode,
           },
         );
-      }
+      });
+    }
+  };
+  const onAddPlanToModel = () => {
+    if (addPlanToModel) {
+      onAddToModel(addPlanToModel.id, addPlanToModel.name, 'plan');
       setDrawerAddPlanVisible(false);
     }
   };
-
   const onAddProcessToModel = () => {
     if (addProcessToModel) {
-      const newNode = {
-        id: addProcessToModel.id,
-        width: 100,
-        height: 30,
-        attrs: NodeAttrs(addProcessToModel.name),
-        ports: NodePorts(addProcessToModel.id),
-        info: {
-          type: 'process',
-        },
-      };
-      if (xflowApp) {
-        xflowApp.commandService.executeCommand<NsNodeCmd.AddNode.IArgs>(
-          XFlowNodeCommands.ADD_NODE.id,
-          {
-            nodeConfig: newNode,
-          },
-        );
-      }
+      onAddToModel(addProcessToModel.id, addProcessToModel.name, 'process');
       setDrawerAddProcessVisible(false);
     }
   };
