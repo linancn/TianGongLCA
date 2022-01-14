@@ -4,7 +4,7 @@ import type {
   Settings as LayoutSettings,
 } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import { notification } from 'antd';
+import { message } from 'antd';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
@@ -184,13 +184,16 @@ export const request = {
   errorHandler: (error: any) => {
     const { response } = error;
     if (!response) {
-      notification.error({
-        // description: '您的网络发生异常，无法连接服务器',
-        description: 'Your network is abnormal and you cannot connect to the server',
-        // message: '网络异常',
-        message: 'Network Anomaly',
-      });
+      message.error('Your network is abnormal and you cannot connect to the server!');
+      // notification.error({
+      //   // description: '您的网络发生异常，无法连接服务器',
+      //   description: 'Your network is abnormal and you cannot connect to the server',
+      //   // message: '网络异常',
+      //   message: 'Network Anomaly',
+      //   placement: 'bottomRight',
+      // });
     }
+
     throw error;
   },
 };
