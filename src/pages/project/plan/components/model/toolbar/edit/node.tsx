@@ -18,18 +18,21 @@ type Props = {
 
 const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDrawerVisible }) => {
   const [drawerEdit, setDrawerEdit] = useState<JSX.Element>();
-  const formRef = useRef<ProFormInstance>();
+  const [sumitButton, setSumitButton] = useState<JSX.Element>();
+  const formRefPlan = useRef<ProFormInstance>();
+  const formRefProcess = useRef<ProFormInstance>();
+  const cellType = planModelState.cellConfig.info.type;
 
   const callbackDrawerVisible = useCallback(() => {
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
   function getData() {
-    if (planModelState.cellConfig.info.type === 'plan') {
+    if (cellType === 'plan') {
       getPlanInfo(projectId, planModelState.cellId).then(async (pi) => {
         setDrawerEdit(
           <ProForm
-            formRef={formRef}
+            formRef={formRefPlan}
             submitter={{
               render: () => {
                 return [];
@@ -52,20 +55,31 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
             <ProFormText width="md" name="comment" label="Comment" />
           </ProForm>,
         );
-        formRef.current?.setFieldsValue(pi);
+        formRefPlan.current?.setFieldsValue(pi);
+        setSumitButton(
+          <Button
+            onClick={() => {
+              formRefPlan.current?.submit();
+              callbackDrawerVisible();
+            }}
+            type="primary"
+          >
+            Submit
+          </Button>,
+        );
       });
-    } else if (planModelState.cellConfig.info.type === 'process') {
-      getProcessById(projectId, planModelState.cellId).then(async (pc) => {
+    } else if (cellType === 'process') {
+      getProcessById(projectId, planModelState.cellId).then(async (pi) => {
         setDrawerEdit(
           <ProForm
-            formRef={formRef}
+            formRef={formRefProcess}
             submitter={{
               render: () => {
                 return [];
               },
             }}
             onFinish={async (values) => {
-              updateProcess({ ...values, pkid: pc.pkid }).then(async (result) => {
+              updateProcess({ ...values, pkid: pi.pkid }).then(async (result) => {
                 if (result === 'ok') {
                   message.success('Edit successfully!');
                 } else {
@@ -81,7 +95,18 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
             <ProFormText width="md" name="comment" label="Comment" />
           </ProForm>,
         );
-        formRef.current?.setFieldsValue(pc);
+        formRefProcess.current?.setFieldsValue(pi);
+        setSumitButton(
+          <Button
+            onClick={() => {
+              formRefProcess.current?.submit();
+              callbackDrawerVisible();
+            }}
+            type="primary"
+          >
+            Submit
+          </Button>,
+        );
       });
     }
   }
@@ -109,15 +134,7 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
           >
             Reset
           </Button>
-          <Button
-            onClick={() => {
-              formRef.current?.submit();
-              callbackDrawerVisible();
-            }}
-            type="primary"
-          >
-            Submit
-          </Button>
+          {sumitButton}
         </Space>
       }
     >
