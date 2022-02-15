@@ -2,8 +2,6 @@ import type { FC } from 'react';
 import { useRef, useEffect, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getFlowBaseGrid } from '@/services/flowbase/api';
-import type { FlowBase } from '@/services/flowbase/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Space, Tooltip } from 'antd';
 import { OrderedListOutlined } from '@ant-design/icons';
@@ -16,6 +14,8 @@ import FlowMeasurementSetting from './components/measurement/setting';
 import { FormattedMessage } from 'umi';
 import { getProject } from '@/services/project/api';
 import FlowSelect from './components/select';
+import type { FlowsView } from '@/services/flowsview/data';
+import { getFlowsViewGrid } from '@/services/flowsview/api';
 
 type ListProps = {
   location: {
@@ -29,7 +29,7 @@ const TableList: FC<ListProps> = (porps) => {
   const { projectid } = porps.location.query;
   const [projectName, setProjectName] = useState('');
   const actionRef = useRef<ActionType>();
-  const flowBaseColumns: ProColumns<FlowBase>[] = [
+  const flowsColumns: ProColumns<FlowsView>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -37,57 +37,41 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Data Name',
+      dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
-      search: false,
-    },
-    {
-      title: 'Nation',
-      dataIndex: 'nation',
-      sorter: true,
-    },
-    {
-      title: 'Source',
-      dataIndex: 'source',
-      sorter: true,
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      sorter: true,
-    },
-    {
-      title: 'Creator',
-      dataIndex: 'creator',
+      title: 'Location Name',
+      dataIndex: 'locationName',
       sorter: true,
       search: false,
     },
     {
-      title: 'Create Time',
-      dataIndex: 'createTime',
+      title: 'Flow Type',
+      dataIndex: 'flowType',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: 'Last Change',
+      dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Last Update Time',
-      dataIndex: 'lastUpdateTime',
-      valueType: 'dateTime',
+      title: 'Database',
+      dataIndex: 'database',
       sorter: true,
       search: false,
     },
-
+    {
+      title: 'Release',
+      dataIndex: 'release',
+      sorter: true,
+      search: false,
+    },
     {
       title: 'Measurements',
       dataIndex: 'measurements',
@@ -133,7 +117,7 @@ const TableList: FC<ListProps> = (porps) => {
         ),
       }}
     >
-      <ProTable<FlowBase, ListPagination>
+      <ProTable<FlowsView, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
@@ -149,9 +133,9 @@ const TableList: FC<ListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getFlowBaseGrid(params, sort, projectid);
+          return getFlowsViewGrid(params, sort, projectid);
         }}
-        columns={flowBaseColumns}
+        columns={flowsColumns}
       />
     </PageContainer>
   );
