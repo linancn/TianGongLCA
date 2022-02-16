@@ -2,7 +2,7 @@ import type { Dispatch, FC } from 'react';
 import DesignNode from './node';
 import DesignEdge from './edge';
 import type { PlanModelState } from '@/services/plan/data';
-import { IApplication } from '@antv/xflow';
+import type { IApplication } from '@antv/xflow';
 
 type Props = {
   xflowApp: IApplication | undefined;

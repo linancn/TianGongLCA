@@ -34,42 +34,24 @@ const PlanList: FC<Props> = (props) => {
       search: false,
     },
     {
-      title: <FormattedMessage id="plan.name" />,
-      dataIndex: 'name',
+      title: <FormattedMessage id="plan.dataName" />,
+      dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="plan.type" />,
-      dataIndex: 'type',
+      title: <FormattedMessage id="plan.planType" />,
+      dataIndex: 'planType',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="plan.nation" />,
-      dataIndex: 'nation',
-      sorter: true,
-    },
-    {
-      title: <FormattedMessage id="plan.comment" />,
-      dataIndex: 'comment',
+      title: <FormattedMessage id="plan.description" />,
+      dataIndex: 'description',
       valueType: 'textarea',
       search: false,
     },
     {
-      title: <FormattedMessage id="plan.creator" />,
-      dataIndex: 'creator',
-      sorter: true,
-      search: false,
-    },
-    {
-      title: <FormattedMessage id="plan.createTime" />,
-      dataIndex: 'createTime',
-      valueType: 'dateTime',
-      sorter: true,
-      search: false,
-    },
-    {
-      title: <FormattedMessage id="plan.lastUpdateTime" />,
-      dataIndex: 'lastUpdateTime',
+      title: <FormattedMessage id="plan.lastChange" />,
+      dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
@@ -84,7 +66,7 @@ const PlanList: FC<Props> = (props) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <PlanOpen projectId={row.projectId} planId={row.id} name={row.name} />
+          <PlanOpen projectId={row.projectId} planId={row.id} name={row.dataName} />
           <PlanView pkid={row.pkid} />
           <PlanEdit pkid={row.pkid} actionRef={actionRef} />
           <PlanDelete pkid={row.pkid} actionRef={actionRef} />

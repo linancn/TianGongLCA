@@ -44,10 +44,9 @@ const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="type" label="Type" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
+          <ProFormText width="md" name="dataName" label="Data Name" />
+          <ProFormText width="md" name="planType" label="Plan Type" />
+          <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);

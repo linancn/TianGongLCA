@@ -16,7 +16,7 @@ export async function getPlanInfoGrid(
     data: PlanInfo[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/plan/getgrid', {
+  }>('http://localhost:8081/api/plans/getgrid', {
     method: 'GET',
     params: {
       ...params,
@@ -42,7 +42,7 @@ export async function getPlanParentGrid(
     data: PlanInfo[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/plan/getparentgrid', {
+  }>('http://localhost:8081/api/plans/getparentgrid', {
     method: 'GET',
     params: {
       ...params,
@@ -55,94 +55,51 @@ export async function getPlanParentGrid(
 }
 
 export async function getPlanInfo(projectId: number, id: string) {
-  return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${projectId}/${id}`, {
+  return request<PlanInfo>(`http://localhost:8081/api/plans/getinfo/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 export async function getPlanInfoByPkid(pkid: number) {
-  return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${pkid}`, {
+  return request<PlanInfo>(`http://localhost:8081/api/plans/getinfo/${pkid}`, {
     method: 'GET',
   });
 }
 
 export async function updatePlanInfo(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/plan/updateinfo', {
+  return request<string>('http://localhost:8081/api/plans/updateinfo', {
     method: 'PUT',
     data,
   });
 }
 
 export async function getPlanModel(projectId: number, id: string) {
-  return request<PlanModel>(`http://localhost:8081/api/plan/getmodel/${projectId}/${id}`, {
+  return request<PlanModel>(`http://localhost:8081/api/plans/getmodel/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
 export async function updatePlanChinlrenJson(data?: Record<string, any>) {
-  return request<PlanInfo>('http://localhost:8081/api/plan/updatechinlrenjson', {
+  return request<PlanInfo>('http://localhost:8081/api/plans/updatechinlrenjson', {
     method: 'PUT',
     data,
   });
 }
 
 export async function getPlanParentCount(projectId: number, id: string) {
-  return request<number>(`http://localhost:8081/api/plan/getparentcount/${projectId}/${id}`, {
+  return request<number>(`http://localhost:8081/api/plans/getparentcount/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
-// export async function getParents(projectId: number, id: string) {
-//   return request<PlanInfo[]>('http://localhost:8081/api/plan/getparents/' + projectId + '/' + id, {
-//     method: 'GET'
-//   });
-// }
-
 export async function createPlan(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/plan/create', {
+  return request<string>('http://localhost:8081/api/plans/create', {
     method: 'POST',
     data,
   });
 }
 
-// /** Put /api/plan */
-// export async function starPlan(id: number) {
-//   return request<PlanListItem>('http://localhost:8081/api/plan/starred/' + id, {
-//     method: 'PUT',
-//   });
-// }
-
-/** Delete /api/plan */
 export async function deletePlan(pkid: number) {
-  return request<string>(`http://localhost:8081/api/plan/delete/${pkid}`, {
+  return request<string>(`http://localhost:8081/api/plans/delete/${pkid}`, {
     method: 'DELETE',
-  });
-}
-
-// export async function getPlanCardList(
-//   params: {
-//     current?: number;
-//     pageSize?: number;
-//   },
-//   sort: Record<string, SortOrder>,
-//   // filter: Record<string, React.ReactText[] | null>,
-//   searchvalue: string,
-//   data?: { [key: string]: any },
-// ) {
-//   return request('http://localhost:8081/api/plan/cardlist', {
-//     method: 'GET',
-//     params: {
-//       ...params,
-//       sort,
-//       searchvalue,
-//     },
-//     data: data,
-//   });
-// }
-
-/** DELETE /api/plan */
-export async function removeplan(options?: Record<string, any>) {
-  return request<Record<string, any>>('/api/plan', {
-    method: 'DELETE',
-    ...(options || {}),
   });
 }

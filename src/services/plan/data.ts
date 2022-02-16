@@ -2,27 +2,29 @@ export type PlanInfo = {
   pkid: number;
   id: string;
   projectId: number;
-  name: string;
-  creator: string;
-  createTime: Date;
-  lastUpdateTime: Date;
-  comment: string;
-  type: string;
-  nation: string;
+  dataName: string;
+  lastChange: Date;
+  description: string;
+  planType: string;
+  locationId: string;
+  locationName: string;
+  categoryId: string;
+  categoryPath: string;
+  categoryName: string;
+  fixedProcessId: string;
+  scalingFactor: string;
   version: string;
 };
 
 export type PlanModel = {
-  // pkid: number;
   projectId: number;
   id: string;
   parentCount: number;
-  name: string;
+  dataName: string;
   childrenJson: string;
 };
 
 export type PlanModelState = {
-  // parentCount: number;
   isSelected: boolean;
   cellType: string;
   cellId: string;

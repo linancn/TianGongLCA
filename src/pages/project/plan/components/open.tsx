@@ -157,7 +157,7 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
           });
         }
         setModelId(pm.id);
-        setModelName(pm.name);
+        setModelName(pm.dataName);
         setParentCount(pm.parentCount);
         setIsOnLoad(true);
       });
@@ -240,7 +240,7 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
                             }
                           }
                           setModelId(pm.id);
-                          setModelName(pm.name);
+                          setModelName(pm.dataName);
                           setParentCount(pm.parentCount);
                         });
                       });
@@ -281,7 +281,7 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
                         }
                       }
                       setModelId(pm.id);
-                      setModelName(pm.name);
+                      setModelName(pm.dataName);
                       setParentCount(pm.parentCount);
                     });
                   }}
@@ -401,7 +401,7 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
                             }
                           }
                           setModelId(pm.id);
-                          setModelName(pm.name);
+                          setModelName(pm.dataName);
                           setParentCount(pm.parentCount);
                         });
                       },
