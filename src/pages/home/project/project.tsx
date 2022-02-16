@@ -138,7 +138,11 @@ const Project: FC<Props> = (props) => {
         >
           <ProFormText width="md" name="name" label={<FormattedMessage id="project.name" />} />
           <ProFormText width="md" name="nation" label={<FormattedMessage id="project.nation" />} />
-          <ProFormText width="md" name="type" label={<FormattedMessage id="project.type" />} />
+          <ProFormText
+            width="md"
+            name="projectType"
+            label={<FormattedMessage id="project.projectType" />}
+          />
           <ProFormSelect
             options={[
               {
@@ -157,8 +161,8 @@ const Project: FC<Props> = (props) => {
           />
           <ProFormTextArea
             width="md"
-            name="comment"
-            label={<FormattedMessage id="project.comment" />}
+            name="description"
+            label={<FormattedMessage id="project.description" />}
           />
         </ProForm>
       </Drawer>

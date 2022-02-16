@@ -41,8 +41,8 @@ const ProjectTable: FC<Props> = ({ nl, r, star }) => {
       sorter: true,
     },
     {
-      title: <FormattedMessage id="project.type" />,
-      dataIndex: 'type',
+      title: <FormattedMessage id="project.projectType" />,
+      dataIndex: 'projectType',
       sorter: true,
     },
     {
@@ -51,8 +51,8 @@ const ProjectTable: FC<Props> = ({ nl, r, star }) => {
       sorter: true,
     },
     {
-      title: <FormattedMessage id="project.comment" />,
-      dataIndex: 'comment',
+      title: <FormattedMessage id="project.description" />,
+      dataIndex: 'description',
       valueType: 'textarea',
     },
     {
@@ -67,15 +67,10 @@ const ProjectTable: FC<Props> = ({ nl, r, star }) => {
       sorter: true,
     },
     {
-      title: <FormattedMessage id="project.lastUpdateTime" />,
-      dataIndex: 'lastUpdateTime',
+      title: <FormattedMessage id="project.lastChange" />,
+      dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
-    },
-    {
-      title: <FormattedMessage id="project.comment" />,
-      dataIndex: 'comment',
-      valueType: 'textarea',
     },
     // {
     //   title: 'Star',

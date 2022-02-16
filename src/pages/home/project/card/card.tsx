@@ -33,7 +33,7 @@ const ProjectCard: FC<Props> = ({ nl, r, star }) => {
     <ProList<Project>
       actionRef={actionRef}
       request={(params) => {
-        return getProjectList(params, { lastUpdateTime: 'descend' }, nl, star);
+        return getProjectList(params, { lastChange: 'descend' }, nl, star);
       }}
       grid={{
         gutter: 16,
@@ -69,10 +69,10 @@ const ProjectCard: FC<Props> = ({ nl, r, star }) => {
                 <FormattedMessage id="project.createTime" />:{' '}
                 {moment(row.createTime).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
-                <FormattedMessage id="project.lastUpdateTime" />:{' '}
-                {moment(row.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
+                <FormattedMessage id="project.lastChange" />:{' '}
+                {moment(row.lastChange).format('YYYY-MM-DD HH:mm:ss')}
                 <br />
-                <FormattedMessage id="project.comment" />: {row.comment}
+                <FormattedMessage id="project.description" />: {row.description}
               </>
             );
           },

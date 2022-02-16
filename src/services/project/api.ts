@@ -8,10 +8,8 @@ export async function getProjectList(
     pageSize?: number;
   },
   sort: Record<string, SortOrder>,
-  // filter: Record<string, React.ReactText[] | null>,
   name: string,
   star: boolean | null,
-  // options?: { [key: string]: any },
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -19,7 +17,7 @@ export async function getProjectList(
     data: Project[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/project/grid', {
+  }>('http://localhost:8081/api/projects/grid', {
     method: 'GET',
     params: {
       ...params,
@@ -28,52 +26,37 @@ export async function getProjectList(
       name,
       star,
     },
-    // ...(options || {}),
   });
 }
 
-/** PUT /api/project */
-// export async function updateProject(options?: Record<string, any>) {
-//   return request<ProjectListItem>('/api/project', {
-//     method: 'PUT',
-//     ...(options || {}),
-//   });
-// }
-
 export async function getProject(id: number) {
-  return request<Project>(`http://localhost:8081/api/project/get/${id}`, {
+  return request<Project>(`http://localhost:8081/api/projects/get/${id}`, {
     method: 'GET',
   });
 }
 
 export async function updateProject(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/project/update', {
+  return request<string>('http://localhost:8081/api/projects/update', {
     method: 'PUT',
     data,
   });
 }
-/** POST /api/project */
-// export async function createProject(data?: Record<string, any>) {
-//   return request<ProjectListItem>('http://localhost:8081/api/project/create', {
-//     method: 'POST',
-//     data,
-//   });
-// }
+
 export async function createProject(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/project/create', {
+  return request<string>('http://localhost:8081/api/projects/create', {
     method: 'POST',
     data,
   });
 }
-/** Put /api/project */
+
 export async function starProject(id: number) {
-  return request<string>(`http://localhost:8081/api/project/flag/${id}`, {
+  return request<string>(`http://localhost:8081/api/projects/flag/${id}`, {
     method: 'PUT',
   });
 }
-/** Delete /api/project */
+
 export async function deleteProject(id: number) {
-  return request<string>(`http://localhost:8081/api/project/delete/${id}`, {
+  return request<string>(`http://localhost:8081/api/projects/delete/${id}`, {
     method: 'DELETE',
   });
 }
@@ -84,11 +67,10 @@ export async function getProjectCardList(
     pageSize?: number;
   },
   sort: Record<string, SortOrder>,
-  // filter: Record<string, React.ReactText[] | null>,
   searchvalue: string,
   data?: Record<string, any>,
 ) {
-  return request('http://localhost:8081/api/project/cardlist', {
+  return request('http://localhost:8081/api/projects/cardlist', {
     method: 'GET',
     params: {
       ...params,
@@ -96,12 +78,5 @@ export async function getProjectCardList(
       searchvalue,
     },
     data,
-  });
-}
-/** DELETE /api/project */
-export async function removeProject(options?: Record<string, any>) {
-  return request<Record<string, any>>('/api/project', {
-    method: 'DELETE',
-    ...(options || {}),
   });
 }

@@ -47,7 +47,7 @@ const ProjectEdit: FC<Props> = ({ pkid, actionRef }) => {
         >
           <ProFormText width="md" name="name" label="Name" />
           <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="type" label="Type" />
+          <ProFormText width="md" name="projectType" label="Project Type" />
           <ProFormSelect
             options={[
               {
@@ -63,7 +63,7 @@ const ProjectEdit: FC<Props> = ({ pkid, actionRef }) => {
             name="star"
             label="Star"
           />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
+          <ProFormTextArea width="md" name="description" label="description" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);

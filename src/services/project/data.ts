@@ -4,22 +4,11 @@ export type Project = {
   id: number;
   name: string;
   createTime?: Date;
-  lastUpdateTime?: Date;
-  comment?: string;
+  lastChange?: Date;
+  description?: string;
   star?: boolean;
   creator?: string;
   nation?: string;
-  type?: string;
+  projectType?: string;
+  roleId: number;
 };
-
-// export type ProjectListData = {
-//   list: ProjectListItem[];
-//   pagination: Partial<ListPagination>;
-// };
-
-// export type ProjectListParams = {
-//   pageSize?: number;
-//   currentPage?: number;
-//   sort?: Record<string, any>;
-//   searchvalue?: string;
-// };

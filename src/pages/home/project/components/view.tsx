@@ -21,10 +21,10 @@ const ProjectView: FC<Props> = ({ pkid }) => {
           <Descriptions.Item label="Star">
             {result?.star === true ? 'true' : 'false'}
           </Descriptions.Item>
-          <Descriptions.Item label="Last Update">
-            {moment(result?.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
+          <Descriptions.Item label="Last Change">
+            {moment(result?.lastChange).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
-          <Descriptions.Item label="Comment">{result?.comment}</Descriptions.Item>
+          <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
         </Descriptions>,
       );
     });
