@@ -10,10 +10,11 @@ export type FlowsView = {
   flowType: string;
   cas: string;
   categoryId: string;
+  categoryPath: string;
+  categoryName: string;
   flowProperties: string;
   locationId: string;
+  locationName: string;
   version: string;
   release: string;
-  tags: string;
-  library: string;
 };

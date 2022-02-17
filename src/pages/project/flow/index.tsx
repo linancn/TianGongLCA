@@ -54,6 +54,12 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
     },
     {
+      title: 'category',
+      dataIndex: 'categoryId',
+      sorter: true,
+      search: false,
+    },
+    {
       title: 'Last Change',
       dataIndex: 'lastChange',
       valueType: 'dateTime',
