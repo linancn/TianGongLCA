@@ -16,6 +16,7 @@ import FlowSelect from './components/select';
 import type { Flow } from '@/services/flow/data';
 import { getFlowGrid } from '@/services/flow/api';
 import LocationViewByParent from '../location/components/viewbyparent';
+import CategoryViewByParent from '../category/components/viewbyparent';
 
 type ListProps = {
   location: {
@@ -53,7 +54,7 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          {row.locationName == null ? '-' : row.locationName}
+          {row.locationId == null ? '-' : row.locationName}
           <LocationViewByParent
             projectId={row.projectId}
             id={row.locationId}
@@ -66,8 +67,20 @@ const TableList: FC<ListProps> = (porps) => {
     },
     {
       title: 'Category',
-      dataIndex: 'categoryId',
+      dataIndex: 'categoryName',
       search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.categoryId == null ? '-' : row.categoryName}
+          <CategoryViewByParent
+            projectId={row.projectId}
+            id={row.categoryId}
+            parentType={'flow'}
+            parentPkid={row.pkid}
+            actionRef={actionRef}
+          />
+        </Space>,
+      ],
     },
     {
       title: 'Measurements',
