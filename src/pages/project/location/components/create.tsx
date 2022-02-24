@@ -7,13 +7,13 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { createFlow } from '@/services/flow/api';
+import { createLocation } from '@/services/location/api';
 
 type Props = {
   projectId: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
+const LocationCreate: FC<Props> = ({ projectId, actionRef }) => {
   const [drawerVisible, handleDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
@@ -64,7 +64,7 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            createFlow({ ...values, projectId }).then(async (result) => {
+            createLocation({ ...values, projectId }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Successfully Created!');
                 handleDrawerVisible(false);
@@ -77,7 +77,6 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
           }}
         >
           <ProFormText width="md" name="dataName" label="Data Name" />
-          <ProFormText width="md" name="flowType" label="Flow Type" />
           <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>
       </Drawer>
@@ -85,4 +84,4 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
   );
 };
 
-export default FlowCreate;
+export default LocationCreate;

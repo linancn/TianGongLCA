@@ -1,4 +1,4 @@
-export type Flows = {
+export type Flow = {
   pkid: number;
   id: string;
   projectId: number;
@@ -10,8 +10,11 @@ export type Flows = {
   flowType: string;
   cas: string;
   categoryId: string;
+  categoryPath: string;
+  categoryName: string;
   flowProperties: string;
   locationId: string;
+  locationName: string;
   version: string;
   release: string;
   tags: string;

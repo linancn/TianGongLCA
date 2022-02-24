@@ -3,8 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Space, Tooltip } from 'antd';
-import { OrderedListOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 import type { ListPagination } from '@/services/home/data';
 import FlowView from './components/view';
 import FlowEdit from './components/edit';
@@ -14,8 +13,9 @@ import FlowMeasurementSetting from './components/measurement/setting';
 import { FormattedMessage } from 'umi';
 import { getProject } from '@/services/project/api';
 import FlowSelect from './components/select';
-import type { FlowsView } from '@/services/flowsview/data';
-import { getFlowsViewGrid } from '@/services/flowsview/api';
+import type { Flow } from '@/services/flow/data';
+import { getFlowGrid } from '@/services/flow/api';
+import LocationViewByParent from '../location/components/viewbyparent';
 
 type ListProps = {
   location: {
@@ -29,7 +29,7 @@ const TableList: FC<ListProps> = (porps) => {
   const { projectid } = porps.location.query;
   const [projectName, setProjectName] = useState('');
   const actionRef = useRef<ActionType>();
-  const flowsColumns: ProColumns<FlowsView>[] = [
+  const flowColumns: ProColumns<Flow>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -42,22 +42,50 @@ const TableList: FC<ListProps> = (porps) => {
       sorter: true,
     },
     {
-      title: 'Location Name',
-      dataIndex: 'locationName',
-      sorter: true,
-      search: false,
-    },
-    {
       title: 'Flow Type',
       dataIndex: 'flowType',
       sorter: true,
       search: false,
     },
     {
-      title: 'category',
-      dataIndex: 'categoryId',
-      sorter: true,
+      title: 'Location Name',
+      dataIndex: 'locationName',
       search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.locationName == null ? '-' : row.locationName}
+          <LocationViewByParent
+            projectId={row.projectId}
+            id={row.locationId}
+            parentType={'flow'}
+            parentPkid={row.pkid}
+            actionRef={actionRef}
+          />
+        </Space>,
+      ],
+    },
+    {
+      title: 'Category',
+      dataIndex: 'categoryId',
+      search: false,
+    },
+    {
+      title: 'Measurements',
+      dataIndex: 'measurements',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {/* <Tooltip title="List">
+            <Button
+              shape="circle"
+              icon={<OrderedListOutlined />}
+              size="small"
+              // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
+            />
+          </Tooltip> */}
+          <FlowMeasurementSetting projectId={row.projectId} flowBaseId={row.id} />
+        </Space>,
+      ],
     },
     {
       title: 'Last Change',
@@ -77,24 +105,6 @@ const TableList: FC<ListProps> = (porps) => {
       dataIndex: 'release',
       sorter: true,
       search: false,
-    },
-    {
-      title: 'Measurements',
-      dataIndex: 'measurements',
-      search: false,
-      render: (_, row) => [
-        <Space size={'small'}>
-          <Tooltip title="List">
-            <Button
-              shape="circle"
-              icon={<OrderedListOutlined />}
-              size="small"
-              // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
-            />
-          </Tooltip>
-          <FlowMeasurementSetting projectId={row.projectId} flowBaseId={row.id} />
-        </Space>,
-      ],
     },
     {
       title: 'Option',
@@ -123,7 +133,7 @@ const TableList: FC<ListProps> = (porps) => {
         ),
       }}
     >
-      <ProTable<FlowsView, ListPagination>
+      <ProTable<Flow, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
@@ -139,9 +149,9 @@ const TableList: FC<ListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getFlowsViewGrid(params, sort, projectid);
+          return getFlowGrid(params, sort, projectid);
         }}
-        columns={flowsColumns}
+        columns={flowColumns}
       />
     </PageContainer>
   );
