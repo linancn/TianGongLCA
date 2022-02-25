@@ -12,7 +12,7 @@ export type Flow = {
   categoryId: string;
   categoryPath: string;
   categoryName: string;
-  flowProperties: string;
+  flowPropertyCount: number;
   locationId: string;
   locationName: string;
   version: string;

@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { CloseOutlined, FormOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
@@ -11,9 +11,10 @@ import { getCategoryByPkid, updateCategory } from '@/services/category/api';
 
 type Props = {
   pkid: number;
-  actionRef: React.MutableRefObject<ActionType | undefined>;
+  parentActionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
+const CategoryEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawerVisible }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, handleDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -34,7 +35,8 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
                 handleDrawerVisible(false);
-                actionRef.current?.reload();
+                setViewDrawerVisible(false);
+                parentActionRef.current?.reload();
               } else {
                 message.error(result);
               }
@@ -48,7 +50,7 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [parentActionRef, pkid, setViewDrawerVisible]);
 
   const onReset = () => {
     getCategoryByPkid(pkid).then(async (result) => {
@@ -59,7 +61,7 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
   return (
     <>
       <Tooltip title="Edit">
-        <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        <Button onClick={onEdit}>Edit</Button>
       </Tooltip>
       <Drawer
         title="Edit"
@@ -91,4 +93,4 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
   );
 };
 
-export default CategoryEdit;
+export default CategoryEditByParent;

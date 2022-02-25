@@ -4,10 +4,11 @@ import { Button, Descriptions, Drawer, Space, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import styles from '@/style/custom.less';
-import LocationSelect from './select';
 import type { ActionType } from '@ant-design/pro-table';
-import LocationRemove from './remove';
 import { getCategoryById } from '@/services/category/api';
+import CategorySelect from './select';
+import CategoryRemove from './remove';
+import CategoryEditByParent from './editbyparent';
 
 type Props = {
   projectId: number;
@@ -33,7 +34,7 @@ const CategoryViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
         </Descriptions>,
       );
       setFooterButtons(
-        <LocationSelect
+        <CategorySelect
           projectId={projectId}
           parentPkid={parentPkid}
           parentType={parentType}
@@ -55,14 +56,19 @@ const CategoryViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
         );
         setFooterButtons(
           <>
-            <LocationRemove
+            <CategoryRemove
               projectId={projectId}
               parentPkid={parentPkid}
               parentType={parentType}
               parentActionRef={actionRef}
               setViewDrawerVisible={setDrawerVisible}
             />
-            <LocationSelect
+            <CategoryEditByParent
+              pkid={result.pkid}
+              parentActionRef={actionRef}
+              setViewDrawerVisible={setDrawerVisible}
+            />
+            <CategorySelect
               projectId={projectId}
               parentPkid={parentPkid}
               parentType={parentType}

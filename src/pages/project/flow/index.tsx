@@ -83,11 +83,12 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
     {
-      title: 'Measurements',
-      dataIndex: 'measurements',
+      title: 'Measurement Count',
+      dataIndex: 'flowPropertyCount',
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
+          {row.flowPropertyCount}
           {/* <Tooltip title="List">
             <Button
               shape="circle"

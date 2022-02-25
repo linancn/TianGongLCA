@@ -1,5 +1,5 @@
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, DatabaseOutlined } from '@ant-design/icons';
 import styles from '@/style/custom.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -111,7 +111,10 @@ const LocationSelect: FC<Props> = ({
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => setDrawerVisible(false)}
+            onClick={() => {
+              setDrawerVisible(false);
+              reload();
+            }}
           />
         }
         maskClosable={true}
@@ -138,7 +141,19 @@ const LocationSelect: FC<Props> = ({
           search={{
             defaultCollapsed: false,
           }}
-          toolBarRender={() => [<LocationCreate projectId={projectId} actionRef={actionRef} />]}
+          toolBarRender={() => [
+            <LocationCreate projectId={projectId} actionRef={actionRef} />,
+            <Tooltip title="Select From Database">
+              <Button
+                size={'middle'}
+                type="text"
+                icon={<DatabaseOutlined />}
+                onClick={() => {
+                  // handleDrawerVisible(true);
+                }}
+              />
+            </Tooltip>,
+          ]}
           request={(
             params: {
               pageSize: number;

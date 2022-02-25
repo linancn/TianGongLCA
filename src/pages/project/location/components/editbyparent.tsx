@@ -2,25 +2,26 @@ import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { CloseOutlined, FormOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
-import ProForm, { ProFormText } from '@ant-design/pro-form';
+import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { getCategoryByPkid, updateCategory } from '@/services/category/api';
+import { getLocationByPkid, updateLocation } from '@/services/location/api';
 
 type Props = {
   pkid: number;
-  actionRef: React.MutableRefObject<ActionType | undefined>;
+  parentActionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
+const LocationEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawerVisible }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, handleDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
     handleDrawerVisible(true);
-    getCategoryByPkid(pkid).then(async (pi) => {
+    getLocationByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -30,11 +31,12 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            updateCategory({ ...values, pkid: pi.pkid }).then(async (result) => {
+            updateLocation({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
                 handleDrawerVisible(false);
-                actionRef.current?.reload();
+                setViewDrawerVisible(false);
+                parentActionRef.current?.reload();
               } else {
                 message.error(result);
               }
@@ -43,15 +45,15 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
           }}
         >
           <ProFormText width="md" name="dataName" label="Data Name" />
-          {/* <ProFormTextArea width="md" name="description" label="Description" /> */}
+          <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [parentActionRef, pkid, setViewDrawerVisible]);
 
   const onReset = () => {
-    getCategoryByPkid(pkid).then(async (result) => {
+    getLocationByPkid(pkid).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };
@@ -59,7 +61,7 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
   return (
     <>
       <Tooltip title="Edit">
-        <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        <Button onClick={onEdit}>Edit</Button>
       </Tooltip>
       <Drawer
         title="Edit"
@@ -91,4 +93,4 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
   );
 };
 
-export default CategoryEdit;
+export default LocationEditByParent;
