@@ -7,8 +7,8 @@ import { getLocationById } from '@/services/location/api';
 import styles from '@/style/custom.less';
 import LocationSelect from './select';
 import type { ActionType } from '@ant-design/pro-table';
-import LocationRemove from './remove';
 import LocationEditByParent from './editbyparent';
+import LocationDeleteByParent from './deletebyparent';
 
 type Props = {
   projectId: number;
@@ -56,7 +56,7 @@ const LocationViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
         );
         setFooterButtons(
           <>
-            <LocationRemove
+            <LocationDeleteByParent
               projectId={projectId}
               parentPkid={parentPkid}
               parentType={parentType}
