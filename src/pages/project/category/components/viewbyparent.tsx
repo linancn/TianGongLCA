@@ -7,8 +7,8 @@ import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getCategoryById } from '@/services/category/api';
 import CategorySelect from './select';
-import CategoryRemove from './remove';
 import CategoryEditByParent from './editbyparent';
+import CategoryDeleteByParent from './deletebyparent';
 
 type Props = {
   projectId: number;
@@ -56,7 +56,7 @@ const CategoryViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
         );
         setFooterButtons(
           <>
-            <CategoryRemove
+            <CategoryDeleteByParent
               projectId={projectId}
               parentPkid={parentPkid}
               parentType={parentType}
