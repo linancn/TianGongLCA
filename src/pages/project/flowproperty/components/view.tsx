@@ -3,18 +3,18 @@ import { useState } from 'react';
 import { Button, Descriptions, Drawer, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
-import { getLocationByPkid } from '@/services/location/api';
+import { getFlowPropertyByPkid } from '@/services/flowproperty/api';
 
 type Props = {
   pkid: number;
 };
-const LocationView: FC<Props> = ({ pkid }) => {
+const FlowPropertyView: FC<Props> = ({ pkid }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onView = () => {
     setDrawerVisible(true);
-    getLocationByPkid(pkid).then(async (result) => {
+    getFlowPropertyByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>
@@ -53,4 +53,4 @@ const LocationView: FC<Props> = ({ pkid }) => {
   );
 };
 
-export default LocationView;
+export default FlowPropertyView;

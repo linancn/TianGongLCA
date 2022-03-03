@@ -7,20 +7,20 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { getLocationByPkid, updateLocation } from '@/services/location/api';
+import { getFlowPropertyByPkid, updateFlowProperty } from '@/services/flowproperty/api';
 
 type Props = {
   pkid: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
+const FlowPropertyEdit: FC<Props> = ({ pkid, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
-    handleDrawerVisible(true);
-    getLocationByPkid(pkid).then(async (pi) => {
+    setDrawerVisible(true);
+    getFlowPropertyByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -30,10 +30,10 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            updateLocation({ ...values, pkid: pi.pkid }).then(async (result) => {
+            updateFlowProperty({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -53,7 +53,7 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
   }, [actionRef, pkid]);
 
   const onReset = () => {
-    getLocationByPkid(pkid).then(async (result) => {
+    getFlowPropertyByPkid(pkid).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };
@@ -71,15 +71,15 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={onReset}>Reset</Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
               Submit
@@ -93,4 +93,4 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
   );
 };
 
-export default LocationEdit;
+export default FlowPropertyEdit;

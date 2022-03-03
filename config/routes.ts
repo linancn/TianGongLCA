@@ -132,8 +132,8 @@ export default [
       },
       {
         name: 'measurements',
-        path: '/project/measurement',
-        component: './project/measurement',
+        path: '/project/flowproperty',
+        component: './project/flowproperty',
       },
       {
         name: 'units',

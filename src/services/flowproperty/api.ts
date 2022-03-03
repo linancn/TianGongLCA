@@ -27,6 +27,12 @@ export async function getFlowPropertyGrid(
   });
 }
 
+export async function getFlowPropertyByPkid(pkid: number) {
+  return request<FlowProperty>(`http://localhost:8081/api/flowproperty/get/${pkid}`, {
+    method: 'GET',
+  });
+}
+
 export async function createFlowProperty(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/flowproperty/create', {
     method: 'POST',
@@ -34,9 +40,15 @@ export async function createFlowProperty(data?: Record<string, any>) {
   });
 }
 
-/** Delete /api/plan */
 export async function deleteFlowProperty(pkid: number) {
   return request<string>(`http://localhost:8081/api/flowproperty/delete/${pkid}`, {
     method: 'DELETE',
+  });
+}
+
+export async function updateFlowProperty(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/flowproperty/update', {
+    method: 'PUT',
+    data,
   });
 }

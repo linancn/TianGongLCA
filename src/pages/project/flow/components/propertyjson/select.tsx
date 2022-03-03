@@ -1,14 +1,15 @@
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import { CloseOutlined, SelectOutlined } from '@ant-design/icons';
+import { CloseOutlined, DatabaseOutlined, SelectOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
-import type { ProColumns } from '@ant-design/pro-table';
+import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { ListPagination } from '@/services/home/data';
 import type { FC, MutableRefObject } from 'react';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import type { FlowProperty } from '@/services/flowproperty/data';
 import { getFlowPropertyGrid } from '@/services/flowproperty/api';
+import FlowPropertyCreate from '@/pages/project/flowproperty/components/create';
 
 type Props = {
   projectId: number;
@@ -17,6 +18,7 @@ type Props = {
 const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
   const [drawerVisible, handleDrawerVisible] = useState(false);
   const [selectRow, setSelectRow] = useState<FlowProperty>();
+  const actionRef = useRef<ActionType>();
   const flowPropertyColumns: ProColumns<FlowProperty>[] = [
     {
       title: 'ID',
@@ -109,9 +111,23 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
         }
       >
         <ProTable<FlowProperty, ListPagination>
+          actionRef={actionRef}
           search={{
             defaultCollapsed: false,
           }}
+          toolBarRender={() => [
+            <FlowPropertyCreate projectId={projectId} actionRef={actionRef} />,
+            <Tooltip title="Select From Database">
+              <Button
+                size={'middle'}
+                type="text"
+                icon={<DatabaseOutlined />}
+                onClick={() => {
+                  // handleDrawerVisible(true);
+                }}
+              />
+            </Tooltip>,
+          ]}
           request={(
             params: {
               pageSize: number;

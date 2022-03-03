@@ -42,8 +42,8 @@ export async function getProjectMenu(projectId: any) {
           name: 'measurements',
           icon: 'Profile',
           locale: 'menu.measurements',
-          path: `/project/measurement?projectid=${projectId}`,
-          component: './project/measurement',
+          path: `/project/flowproperty?projectid=${projectId}`,
+          component: './project/flowproperty',
         },
         {
           path: '/project/units',
