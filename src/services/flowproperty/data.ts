@@ -1,20 +1,15 @@
-export type Flow = {
+export type FlowProperty = {
   pkid: number;
   id: string;
   projectId: number;
   dataName: string;
   lastChange: Date;
   description: string;
-  synonyms: string;
-  formula: string;
-  flowType: string;
+  flowPropertyType: string;
   cas: string;
   categoryId: string;
   categoryPath: string;
   categoryName: string;
-  flowPropertyCount: number;
-  locationId: string;
-  locationName: string;
   version: string;
   release: string;
   tags: string;

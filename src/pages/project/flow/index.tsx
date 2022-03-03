@@ -9,7 +9,6 @@ import FlowView from './components/view';
 import FlowEdit from './components/edit';
 import FlowDelete from './components/delete';
 import FlowCreate from './components/create';
-import FlowMeasurementSetting from './components/measurement/setting';
 import { FormattedMessage } from 'umi';
 import { getProject } from '@/services/project/api';
 import FlowSelect from './components/select';
@@ -17,6 +16,7 @@ import type { Flow } from '@/services/flow/data';
 import { getFlowGrid } from '@/services/flow/api';
 import LocationViewByParent from '../location/components/viewbyparent';
 import CategoryViewByParent from '../category/components/viewbyparent';
+import FlowPropertyJsonList from './components/propertyjson/list';
 
 type ListProps = {
   location: {
@@ -97,7 +97,11 @@ const TableList: FC<ListProps> = (porps) => {
               // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
             />
           </Tooltip> */}
-          <FlowMeasurementSetting projectId={row.projectId} flowBaseId={row.id} />
+          <FlowPropertyJsonList
+            projectId={row.projectId}
+            flowPkid={row.pkid}
+            parentActionRef={actionRef}
+          />
         </Space>,
       ],
     },
