@@ -136,6 +136,11 @@ export default [
         component: './project/flowproperty',
       },
       {
+        name: 'categories',
+        path: '/project/category',
+        component: './project/category',
+      },
+      {
         name: 'units',
         path: '/project/units',
         component: './project/welcome',

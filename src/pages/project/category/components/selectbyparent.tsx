@@ -21,7 +21,7 @@ type Props = {
   setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const CategorySelect: FC<Props> = ({
+const CategorySelectByParent: FC<Props> = ({
   projectId,
   parentPkid,
   parentType,
@@ -176,4 +176,4 @@ const CategorySelect: FC<Props> = ({
   );
 };
 
-export default CategorySelect;
+export default CategorySelectByParent;

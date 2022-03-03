@@ -6,9 +6,9 @@ import moment from 'moment';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getCategoryById } from '@/services/category/api';
-import CategorySelect from './select';
 import CategoryEditByParent from './editbyparent';
 import CategoryDeleteByParent from './deletebyparent';
+import CategorySelectByParent from './selectbyparent';
 
 type Props = {
   projectId: number;
@@ -34,7 +34,7 @@ const CategoryViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
         </Descriptions>,
       );
       setFooterButtons(
-        <CategorySelect
+        <CategorySelectByParent
           projectId={projectId}
           parentPkid={parentPkid}
           parentType={parentType}
@@ -68,7 +68,7 @@ const CategoryViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
               parentActionRef={actionRef}
               setViewDrawerVisible={setDrawerVisible}
             />
-            <CategorySelect
+            <CategorySelectByParent
               projectId={projectId}
               parentPkid={parentPkid}
               parentType={parentType}

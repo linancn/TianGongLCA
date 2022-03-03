@@ -46,6 +46,13 @@ export async function getProjectMenu(projectId: any) {
           component: './project/flowproperty',
         },
         {
+          name: 'categories',
+          icon: 'Profile',
+          locale: 'menu.categories',
+          path: `/project/category?projectid=${projectId}`,
+          component: './project/category',
+        },
+        {
           path: '/project/units',
           name: 'units',
           icon: 'Swap',
