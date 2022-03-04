@@ -31,7 +31,7 @@ const LocationSelect: FC<Props> = ({
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [selectRow, setSelectRow] = useState<Location>();
   const actionRef = useRef<ActionType>();
-  const LocationColumns: ProColumns<Location>[] = [
+  const locationColumns: ProColumns<Location>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -163,7 +163,7 @@ const LocationSelect: FC<Props> = ({
           ) => {
             return getLocationGrid(params, sort, projectId);
           }}
-          columns={LocationColumns}
+          columns={locationColumns}
           rowClassName={(record) => {
             return record.pkid === selectRow?.pkid ? styles.split_row_select_active : '';
           }}
