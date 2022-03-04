@@ -141,6 +141,11 @@ export default [
         component: './project/category',
       },
       {
+        name: 'locations',
+        path: '/project/location',
+        component: './project/location',
+      },
+      {
         name: 'units',
         path: '/project/units',
         component: './project/welcome',

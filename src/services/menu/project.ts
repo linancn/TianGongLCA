@@ -53,6 +53,13 @@ export async function getProjectMenu(projectId: any) {
           component: './project/category',
         },
         {
+          name: 'locations',
+          icon: 'Profile',
+          locale: 'menu.locations',
+          path: `/project/location?projectid=${projectId}`,
+          component: './project/location',
+        },
+        {
           path: '/project/units',
           name: 'units',
           icon: 'Swap',
