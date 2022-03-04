@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
-import { deleteFlowBase } from '@/services/flowbase/api';
+import { deleteFlow } from '@/services/flow/api';
 
 type Props = {
   pkid: number;
@@ -16,7 +16,7 @@ const FlowDelete: FC<Props> = ({ pkid, actionRef }) => {
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deleteFlowBase(pkid).then(async (result) => {
+        deleteFlow(pkid).then(async (result) => {
           if (result === 'ok') {
             message.success('Successfully deleted!');
             actionRef.current?.reload();

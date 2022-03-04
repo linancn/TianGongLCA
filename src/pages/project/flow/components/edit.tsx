@@ -7,7 +7,7 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { getFlowBaseByPkid, updateFlowBase } from '@/services/flowbase/api';
+import { getFlowByPkid, updateFlow } from '@/services/flow/api';
 
 type Props = {
   pkid: number;
@@ -15,12 +15,12 @@ type Props = {
 };
 const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
-    handleDrawerVisible(true);
-    getFlowBaseByPkid(pkid).then(async (pi) => {
+    setDrawerVisible(true);
+    getFlowByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -30,10 +30,10 @@ const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            updateFlowBase({ ...values, pkid: pi.pkid }).then(async (result) => {
+            updateFlow({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -44,11 +44,8 @@ const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="source" label="Source" />
-          <ProFormText width="md" name="type" label="Type" />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
+          <ProFormText width="md" name="dataName" label="Data Name" />
+          <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -56,7 +53,7 @@ const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
   }, [actionRef, pkid]);
 
   const onReset = () => {
-    getFlowBaseByPkid(pkid).then(async (result) => {
+    getFlowByPkid(pkid).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };
@@ -74,15 +71,15 @@ const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={onReset}>Reset</Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
               Submit

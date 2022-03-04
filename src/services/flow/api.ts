@@ -54,6 +54,12 @@ export async function getFlowPropertyJsonViewGrid(
   });
 }
 
+export async function getFlowByPkid(pkid: number) {
+  return request<Flow>(`http://localhost:8081/api/flow/get/${pkid}`, {
+    method: 'GET',
+  });
+}
+
 export async function createFlow(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/flow/create', {
     method: 'POST',
@@ -61,8 +67,15 @@ export async function createFlow(data?: Record<string, any>) {
   });
 }
 
+export async function updateFlow(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/flow/update', {
+    method: 'PUT',
+    data,
+  });
+}
+
 export async function createFlowPropertyJson(data?: Record<string, any>) {
-  return request<string>(`http://localhost:8081/api/flow/createpropertyjson`, {
+  return request<string>('http://localhost:8081/api/flow/createpropertyjson', {
     method: 'POST',
     data,
   });
