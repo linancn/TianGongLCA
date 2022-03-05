@@ -130,9 +130,19 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <FlowView pkid={row.pkid} />
-          <FlowEdit pkid={row.pkid} actionRef={actionRef} />
-          <FlowDelete pkid={row.pkid} actionRef={actionRef} />
+          <FlowView pkid={row.pkid} actionRef={actionRef} />
+          <FlowEdit
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
+          <FlowDelete
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
         </Space>,
       ],
     },

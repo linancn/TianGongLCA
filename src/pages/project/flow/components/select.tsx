@@ -9,7 +9,7 @@ import CrystaLCA from './crystalca';
 import USLCI from './uslci';
 
 const FlowSelect: FC = () => {
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
   return (
@@ -20,7 +20,7 @@ const FlowSelect: FC = () => {
           type="text"
           icon={<DatabaseOutlined />}
           onClick={() => {
-            handleDrawerVisible(true);
+            setDrawerVisible(true);
           }}
         />
       </Tooltip>
@@ -32,15 +32,15 @@ const FlowSelect: FC = () => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={false}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
               Submit
             </Button>

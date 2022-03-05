@@ -97,7 +97,7 @@ const CrystaLCA: FC<Props> = ({ projectId }) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <FlowView pkid={row.pkid} />
+          <FlowView pkid={row.pkid} actionRef={actionRef} />
         </Space>,
       ],
     },

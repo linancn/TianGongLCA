@@ -16,7 +16,7 @@ type Props = {
   formRef: MutableRefObject<ProFormInstance<Record<string, any>> | undefined>;
 };
 const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const [selectRow, setSelectRow] = useState<FlowProperty>();
   const actionRef = useRef<ActionType>();
   const flowPropertyColumns: ProColumns<FlowProperty>[] = [
@@ -64,7 +64,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
         dataName: selectRow.dataName,
         description: selectRow.description,
       });
-      handleDrawerVisible(false);
+      setDrawerVisible(false);
     } else {
       message.error('Select nothing');
     }
@@ -77,7 +77,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
           size="small"
           icon={<SelectOutlined />}
           onClick={() => {
-            handleDrawerVisible(true);
+            setDrawerVisible(true);
           }}
         />
       </Tooltip>
@@ -90,15 +90,15 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button
               onClick={() => {
                 setFormValue();
@@ -123,7 +123,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
                 type="text"
                 icon={<DatabaseOutlined />}
                 onClick={() => {
-                  // handleDrawerVisible(true);
+                  // setDrawerVisible(true);
                 }}
               />
             </Tooltip>,

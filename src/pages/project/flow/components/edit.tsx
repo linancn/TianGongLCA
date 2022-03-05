@@ -1,19 +1,24 @@
 import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
-import { Button, Drawer, message, Space, Tooltip } from 'antd';
+import { Button, Drawer, Form, Input, message, Space, Tooltip } from 'antd';
 import { CloseOutlined, FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getFlowByPkid, updateFlow } from '@/services/flow/api';
+import LocationViewByParent from '../../location/components/viewbyparent';
+import CategoryViewByParent from '../../category/components/viewbyparent';
+import FlowPropertyJsonList from './propertyjson/list';
 
 type Props = {
   pkid: number;
+  buttonType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
+const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -34,6 +39,7 @@ const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
                 setDrawerVisible(false);
+                setViewDrawerVisible(false);
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -45,12 +51,55 @@ const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
           }}
         >
           <ProFormText width="md" name="dataName" label="Data Name" />
+          <Form.Item name="locationName" label="Location Name">
+            <Input
+              disabled={true}
+              style={{ width: '328px' }}
+              addonAfter={
+                <LocationViewByParent
+                  projectId={pi.projectId}
+                  id={pi.locationId}
+                  parentType={'flow'}
+                  parentPkid={pkid}
+                  actionRef={actionRef}
+                />
+              }
+            />
+          </Form.Item>
+          <Form.Item name="categoryName" label="Category">
+            <Input
+              disabled={true}
+              style={{ width: '328px' }}
+              addonAfter={
+                <CategoryViewByParent
+                  projectId={pi.projectId}
+                  id={pi.categoryId}
+                  parentType={'flow'}
+                  parentPkid={pkid}
+                  actionRef={actionRef}
+                />
+              }
+            />
+          </Form.Item>
+          <Form.Item name="flowPropertyCount" label="Measurement Count">
+            <Input
+              disabled={true}
+              style={{ width: '328px' }}
+              addonAfter={
+                <FlowPropertyJsonList
+                  projectId={pi.projectId}
+                  flowPkid={pkid}
+                  parentActionRef={actionRef}
+                />
+              }
+            />
+          </Form.Item>
           <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, pkid, setViewDrawerVisible]);
 
   const onReset = () => {
     getFlowByPkid(pkid).then(async (result) => {
@@ -61,7 +110,11 @@ const FlowEdit: FC<Props> = ({ pkid, actionRef }) => {
   return (
     <>
       <Tooltip title="Edit">
-        <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        {buttonType === 'icon' ? (
+          <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        ) : (
+          <Button onClick={onEdit}>Edit</Button>
+        )}
       </Tooltip>
       <Drawer
         title="Edit"
