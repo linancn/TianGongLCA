@@ -57,14 +57,11 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
                 value: 'true',
                 label: 'true',
               },
-              {
-                value: 'false',
-                label: 'false',
-              },
             ]}
             width="md"
             name="referenceFlowProperty"
             label="Reference Flow Property"
+            disabled={pi.referenceFlowProperty}
           />
           <Divider>
             Flow Property Base Info{' '}
