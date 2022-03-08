@@ -95,6 +95,13 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
             />
           </Form.Item>
           <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormText width="md" name="version" label="Version" />
+          <ProFormText width="md" name="synonyms" label="Synonyms" />
+          <ProFormText width="md" name="formula" label="Formula" />
+          <ProFormText width="md" name="flowType" label="Flow Type" />
+          <ProFormText width="md" name="cas" label="Cas" />
+          <ProFormText width="md" name="database" label="Database" />
+          <ProFormText width="md" name="release" label="Release" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);

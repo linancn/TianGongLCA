@@ -37,7 +37,7 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
               actionRef={actionRef}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Category">
+          <Descriptions.Item label="Category Name">
             {result.categoryName}
             <CategoryViewByParent
               projectId={result.projectId}
@@ -60,6 +60,12 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
           </Descriptions.Item>
           <Descriptions.Item label="Description">{result.description}</Descriptions.Item>
           <Descriptions.Item label="Version">{result.version}</Descriptions.Item>
+          <Descriptions.Item label="Synonyms">{result.synonyms}</Descriptions.Item>
+          <Descriptions.Item label="Formula">{result.formula}</Descriptions.Item>
+          <Descriptions.Item label="Flow Type">{result.flowType}</Descriptions.Item>
+          <Descriptions.Item label="Cas">{result.cas}</Descriptions.Item>
+          <Descriptions.Item label="Database">{result.database}</Descriptions.Item>
+          <Descriptions.Item label="Release">{result.release}</Descriptions.Item>
         </Descriptions>,
       );
       setFooterButtons(
