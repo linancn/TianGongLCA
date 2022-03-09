@@ -16,6 +16,7 @@ export type Flow = {
   locationId: string;
   locationName: string;
   version: string;
+  database: string;
   release: string;
   tags: string;
   library: string;
