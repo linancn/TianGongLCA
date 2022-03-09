@@ -46,6 +46,13 @@ export async function getProjectMenu(projectId: any) {
           component: './project/flowproperty',
         },
         {
+          name: 'units',
+          icon: 'Swap',
+          locale: 'menu.units',
+          path: `/project/unitgroup?projectid=${projectId}`,
+          component: './project/unitgroup',
+        },
+        {
           name: 'categories',
           icon: 'Profile',
           locale: 'menu.categories',
@@ -58,13 +65,6 @@ export async function getProjectMenu(projectId: any) {
           locale: 'menu.locations',
           path: `/project/location?projectid=${projectId}`,
           component: './project/location',
-        },
-        {
-          path: '/project/units',
-          name: 'units',
-          icon: 'Swap',
-          locale: 'menu.units',
-          component: './project/welcome',
         },
         {
           path: '/project/global_parameters',

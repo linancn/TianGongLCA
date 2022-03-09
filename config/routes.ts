@@ -136,6 +136,11 @@ export default [
         component: './project/flowproperty',
       },
       {
+        name: 'units',
+        path: '/project/unitgroup',
+        component: './project/unitgroup',
+      },
+      {
         name: 'categories',
         path: '/project/category',
         component: './project/category',
@@ -144,11 +149,6 @@ export default [
         name: 'locations',
         path: '/project/location',
         component: './project/location',
-      },
-      {
-        name: 'units',
-        path: '/project/units',
-        component: './project/welcome',
       },
       {
         name: 'global_parameters',
