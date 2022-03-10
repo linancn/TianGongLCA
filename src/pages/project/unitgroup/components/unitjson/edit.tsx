@@ -1,30 +1,28 @@
 import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
-import { Button, Divider, Drawer, message, Space, Tooltip } from 'antd';
+import { Button, Drawer, message, Space, Tooltip } from 'antd';
 import { CloseOutlined, FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { ProFormSelect } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { getFlowPropertyJsonView, updateFlowPropertyJson } from '@/services/flow/api';
-import FlowPropertyJsonSelect from './select';
+import { getUnitJson, updateUnitJson } from '@/services/unitgroup/api';
 
 type Props = {
-  projectId: number;
-  flowPkid: number;
-  propertyId: string;
+  unitGroupPkid: number;
+  id: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, actionRef }) => {
+const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
     setDrawerVisible(true);
-    getFlowPropertyJsonView(flowPkid, propertyId).then(async (pi) => {
+    getUnitJson(unitGroupPkid, id).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -34,10 +32,10 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
             },
           }}
           onFinish={async (values) => {
-            updateFlowPropertyJson(propertyId, {
+            updateUnitJson({
               ...values,
-              flowPkid,
-              propertyId,
+              unitGroupPkid,
+              id,
             }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
@@ -50,6 +48,7 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
             return true;
           }}
         >
+          <ProFormText width="md" name="name" label="Name" />
           <ProFormText width="md" name="conversionFactor" label="Conversion Factor" />
           <ProFormSelect
             options={[
@@ -59,31 +58,25 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
               },
             ]}
             width="md"
-            name="referenceFlowProperty"
-            label="Reference Flow Property"
-            disabled={pi.referenceFlowProperty}
+            name="referenceUnit"
+            label="Reference Unit"
+            disabled={pi.referenceUnit}
           />
-          <Divider>
-            Flow Property Base Info{' '}
-            <FlowPropertyJsonSelect projectId={projectId} formRef={formRefEdit} />
-          </Divider>
-          <ProFormText width="md" name="flowPropertyId" label="Flow Property Id" hidden={true} />
-          <ProFormText width="md" name="dataName" label="Data Name" disabled={true} />
-          <ProFormTextArea width="md" name="description" label="Description" disabled={true} />
+          <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
       formRefEdit.current?.setFieldsValue({
-        referenceFlowProperty: pi.referenceFlowProperty === true ? 'true' : 'false',
+        referenceUnit: pi.referenceUnit === true ? 'true' : 'false',
       });
     });
-  }, [actionRef, flowPkid, projectId, propertyId]);
+  }, [actionRef, id, unitGroupPkid]);
 
   const onReset = () => {
-    getFlowPropertyJsonView(flowPkid, propertyId).then(async (result) => {
+    getUnitJson(unitGroupPkid, id).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
       formRefEdit.current?.setFieldsValue({
-        referenceFlowProperty: result.referenceFlowProperty === true ? 'true' : 'false',
+        referenceUnit: result.referenceUnit === true ? 'true' : 'false',
       });
     });
   };
@@ -123,4 +116,4 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
   );
 };
 
-export default FlowPropertyJsonEdit;
+export default UnitJsonEdit;

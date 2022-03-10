@@ -96,18 +96,18 @@ export async function createUnitJson(data?: Record<string, any>) {
   });
 }
 
-// export async function updateFlowPropertyJson(propertyId: string, data?: Record<string, any>) {
-//   return request<string>(`http://localhost:8081/api/flow/updatepropertyjson/${propertyId}`, {
-//     method: 'PUT',
-//     data,
-//   });
-// }
+export async function updateUnitJson(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/unitgroup/updateunitjson', {
+    method: 'PUT',
+    data,
+  });
+}
 
-// export async function deleteFlowPropertyJson(flowPkid: number, propertyId: string) {
-//   return request<string>(
-//     `http://localhost:8081/api/flow/deletepropertyjson/${flowPkid}/${propertyId}`,
-//     {
-//       method: 'DELETE',
-//     },
-//   );
-// }
+export async function deleteUnitJson(unitGroupPkid: number, id: string) {
+  return request<string>(
+    `http://localhost:8081/api/unitgroup/deleteunitjson/${unitGroupPkid}/${id}`,
+    {
+      method: 'DELETE',
+    },
+  );
+}

@@ -3,21 +3,21 @@ import { useCallback } from 'react';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
-import { deleteFlowPropertyJson } from '@/services/flow/api';
+import { deleteUnitJson } from '@/services/unitgroup/api';
 
 type Props = {
-  flowPkid: number;
-  propertyId: string;
+  unitGroupPkid: number;
+  id: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowPropertyJsonDelete: FC<Props> = ({ flowPkid, propertyId, actionRef }) => {
+const UnitJsonDelete: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
-      title: 'Are you sure to delete this flow property?',
+      title: 'Are you sure to delete this unit?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deleteFlowPropertyJson(flowPkid, propertyId).then(async (result) => {
+        deleteUnitJson(unitGroupPkid, id).then(async (result) => {
           if (result === 'ok') {
             message.success('Delete successfully!');
             actionRef.current?.reload();
@@ -28,7 +28,7 @@ const FlowPropertyJsonDelete: FC<Props> = ({ flowPkid, propertyId, actionRef }) 
       },
       onCancel() {},
     });
-  }, [actionRef, flowPkid, propertyId]);
+  }, [actionRef, id, unitGroupPkid]);
   return (
     <>
       <Tooltip title="Delete">
@@ -38,4 +38,4 @@ const FlowPropertyJsonDelete: FC<Props> = ({ flowPkid, propertyId, actionRef }) 
   );
 };
 
-export default FlowPropertyJsonDelete;
+export default UnitJsonDelete;

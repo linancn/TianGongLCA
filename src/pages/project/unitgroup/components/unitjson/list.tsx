@@ -9,6 +9,8 @@ import type { UnitJson } from '@/services/unitgroup/data';
 import { getUnitJsonGrid } from '@/services/unitgroup/api';
 import UnitJsonView from './view';
 import UnitJsonCreate from './create';
+import UnitJsonEdit from './edit';
+import UnitJsonDelete from './delete';
 
 type Props = {
   projectId: number;
@@ -49,17 +51,8 @@ const UnitJsonList: FC<Props> = ({ projectId, unitGroupPkid, parentActionRef }) 
       render: (_, row) => [
         <Space size={'small'}>
           <UnitJsonView unitGroupPkid={unitGroupPkid} id={row.id} />
-          {/* <FlowPropertyJsonEdit
-            projectId={projectId}
-            flowPkid={flowPkid}
-            propertyId={row.flowPropertyId}
-            actionRef={actionRef}
-          />
-          <FlowPropertyJsonDelete
-            flowPkid={flowPkid}
-            propertyId={row.flowPropertyId}
-            actionRef={actionRef}
-          /> */}
+          <UnitJsonEdit unitGroupPkid={unitGroupPkid} id={row.id} actionRef={actionRef} />
+          <UnitJsonDelete unitGroupPkid={unitGroupPkid} id={row.id} actionRef={actionRef} />
         </Space>,
       ],
     },
