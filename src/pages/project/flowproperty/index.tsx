@@ -14,6 +14,7 @@ import { Space } from 'antd';
 import FlowPropertyView from './components/view';
 import FlowPropertyEdit from './components/edit';
 import FlowPropertyDelete from './components/delete';
+import CategoryViewByParent from '../category/components/viewbyparent';
 
 type ListProps = {
   location: {
@@ -39,44 +40,27 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       sorter: true,
     },
     {
-      title: 'Flow Type',
-      dataIndex: 'flowType',
+      title: 'Flow Property Type',
+      dataIndex: 'flowPropertyType',
       sorter: true,
       search: false,
-    },
-    {
-      title: 'Location Name',
-      dataIndex: 'locationName',
-      search: false,
-      // render: (_, row) => [
-      //   <Space size={'small'}>
-      //     {row.locationId == null ? '-' : row.locationName}
-      //     <LocationViewByParent
-      //       projectId={row.projectId}
-      //       id={row.locationId}
-      //       parentType={'flow'}
-      //       parentPkid={row.pkid}
-      //       actionRef={actionRef}
-      //     />
-      //   </Space>,
-      // ],
     },
     {
       title: 'Category',
       dataIndex: 'categoryName',
       search: false,
-      // render: (_, row) => [
-      //   <Space size={'small'}>
-      //     {row.categoryId == null ? '-' : row.categoryName}
-      //     <CategoryViewByParent
-      //       projectId={row.projectId}
-      //       id={row.categoryId}
-      //       parentType={'flow'}
-      //       parentPkid={row.pkid}
-      //       actionRef={actionRef}
-      //     />
-      //   </Space>,
-      // ],
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.categoryId == null ? '-' : row.categoryName}
+          <CategoryViewByParent
+            projectId={row.projectId}
+            id={row.categoryId}
+            parentType={'flowproperty'}
+            parentPkid={row.pkid}
+            actionRef={actionRef}
+          />
+        </Space>,
+      ],
     },
     {
       title: 'Last Change',
