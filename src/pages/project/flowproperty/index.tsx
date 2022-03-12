@@ -15,6 +15,8 @@ import FlowPropertyView from './components/view';
 import FlowPropertyEdit from './components/edit';
 import FlowPropertyDelete from './components/delete';
 import CategoryViewByParent from '../category/components/viewbyparent';
+import UnitJsonList from '../unitgroup/components/unitjson/list';
+import UnitGroupViewByParent from '../unitgroup/components/viewbyparent';
 
 type ListProps = {
   location: {
@@ -44,6 +46,38 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       dataIndex: 'flowPropertyType',
       sorter: true,
       search: false,
+    },
+    {
+      title: 'Unit Group',
+      dataIndex: 'unitGroupName',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.unitGroupName == null ? '-' : row.unitGroupName}
+          <UnitGroupViewByParent
+            projectId={row.projectId}
+            id={row.unitGroupId}
+            parentPkid={row.pkid}
+            parentType={'flowproperty'}
+            actionRef={actionRef}
+          />
+        </Space>,
+      ],
+    },
+    {
+      title: 'Reference Unit',
+      dataIndex: 'referenceUnit',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.referenceUnit == null ? '-' : row.referenceUnit}
+          <UnitJsonList
+            projectId={row.projectId}
+            unitGroupPkid={row.unitGroupPkid}
+            parentActionRef={actionRef}
+          />
+        </Space>,
+      ],
     },
     {
       title: 'Category',

@@ -60,6 +60,12 @@ export async function getUnitGroupByPkid(pkid: number) {
   });
 }
 
+export async function getUnitGroupById(projectId: number, id: string) {
+  return request<UnitGroup>(`http://localhost:8081/api/unitgroup/get/${projectId}/${id}`, {
+    method: 'GET',
+  });
+}
+
 export async function createUnitGroup(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/unitgroup/create', {
     method: 'POST',
@@ -71,6 +77,20 @@ export async function updateUnitGroup(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/unitgroup/update', {
     method: 'PUT',
     data,
+  });
+}
+
+export async function updateParentUnitGroup(
+  parentType: string,
+  parentPkid: number,
+  unitGroupId: string,
+) {
+  return request<string>(`http://localhost:8081/api/${parentType}/updateunitgroup`, {
+    method: 'PUT',
+    data: {
+      pkid: parentPkid,
+      unitGroupId: unitGroupId,
+    },
   });
 }
 

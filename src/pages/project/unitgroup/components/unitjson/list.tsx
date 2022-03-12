@@ -61,60 +61,63 @@ const UnitJsonList: FC<Props> = ({ projectId, unitGroupPkid, parentActionRef }) 
   const reload = useCallback(() => {
     parentActionRef.current?.reload();
   }, [parentActionRef]);
-
-  return (
-    <>
-      <Tooltip title="List">
-        <Button
-          shape="circle"
-          icon={<ProfileOutlined />}
-          size="small"
-          onClick={() => setDrawerVisible(true)}
-        />
-      </Tooltip>
-      <Drawer
-        title="List"
-        width="100%"
-        closable={false}
-        extra={
+  if (unitGroupPkid) {
+    return (
+      <>
+        <Tooltip title="List">
           <Button
-            icon={<CloseOutlined />}
-            style={{ border: 0 }}
-            onClick={() => {
-              setDrawerVisible(false);
-              reload();
-            }}
+            shape="circle"
+            icon={<ProfileOutlined />}
+            size="small"
+            onClick={() => setDrawerVisible(true)}
           />
-        }
-        maskClosable={true}
-        visible={drawerVisible}
-        onClose={() => {
-          setDrawerVisible(false);
-          reload();
-        }}
-      >
-        <ProTable<UnitJson, ListPagination>
-          actionRef={actionRef}
-          search={{
-            defaultCollapsed: false,
+        </Tooltip>
+        <Drawer
+          title="List"
+          width="100%"
+          closable={false}
+          extra={
+            <Button
+              icon={<CloseOutlined />}
+              style={{ border: 0 }}
+              onClick={() => {
+                setDrawerVisible(false);
+                reload();
+              }}
+            />
+          }
+          maskClosable={true}
+          visible={drawerVisible}
+          onClose={() => {
+            setDrawerVisible(false);
+            reload();
           }}
-          toolBarRender={() => [
-            <UnitJsonCreate unitGroupPkid={unitGroupPkid} actionRef={actionRef} />,
-          ]}
-          request={(
-            params: {
-              pageSize: number;
-              current: number;
-            },
-            sort,
-          ) => {
-            return getUnitJsonGrid(params, sort, projectId, unitGroupPkid);
-          }}
-          columns={unitJsonColumns}
-        />
-      </Drawer>
-    </>
-  );
+        >
+          <ProTable<UnitJson, ListPagination>
+            actionRef={actionRef}
+            search={{
+              defaultCollapsed: false,
+            }}
+            toolBarRender={() => [
+              <UnitJsonCreate unitGroupPkid={unitGroupPkid} actionRef={actionRef} />,
+            ]}
+            request={(
+              params: {
+                pageSize: number;
+                current: number;
+              },
+              sort,
+            ) => {
+              return getUnitJsonGrid(params, sort, projectId, unitGroupPkid);
+            }}
+            columns={unitJsonColumns}
+          />
+        </Drawer>
+      </>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default UnitJsonList;

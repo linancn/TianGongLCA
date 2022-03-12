@@ -6,7 +6,10 @@ export type FlowProperty = {
   lastChange: Date;
   description: string;
   flowPropertyType: string;
-  cas: string;
+  unitGroupPkid: number;
+  unitGroupId: string;
+  unitGroupName: string;
+  referenceUnit: string;
   categoryId: string;
   categoryPath: string;
   categoryName: string;
@@ -14,20 +17,4 @@ export type FlowProperty = {
   release: string;
   tags: string;
   library: string;
-};
-
-export type FlowPropertyJson = {
-  projectId: number;
-  flowPkid: number;
-  flowId: string;
-  conversionFactor: number;
-  referenceFlowProperty: boolean;
-  flowPropertyId: string;
-  dataName: string;
-  lastChange: Date;
-  description: string;
-  flowPropertyType: string;
-  categoryId: string;
-  version: string;
-  release: string;
 };
