@@ -11,15 +11,17 @@ import { getCategoryByPkid, updateCategory } from '@/services/category/api';
 
 type Props = {
   pkid: number;
+  buttonType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
+const CategoryEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     getCategoryByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
@@ -33,7 +35,8 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
             updateCategory({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
+                setViewDrawerVisible(false);
                 actionRef.current?.reload();
               } else {
                 message.error(result);
@@ -48,7 +51,7 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, pkid, setViewDrawerVisible]);
 
   const onReset = () => {
     getCategoryByPkid(pkid).then(async (result) => {
@@ -59,7 +62,11 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
   return (
     <>
       <Tooltip title="Edit">
-        <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        {buttonType === 'icon' ? (
+          <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        ) : (
+          <Button onClick={onEdit}>Edit</Button>
+        )}
       </Tooltip>
       <Drawer
         title="Edit"
@@ -69,15 +76,15 @@ const CategoryEdit: FC<Props> = ({ pkid, actionRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={onReset}>Reset</Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
               Submit
