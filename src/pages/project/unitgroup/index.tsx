@@ -99,9 +99,19 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <UnitGroupView pkid={row.pkid} />
-          <UnitGroupEdit pkid={row.pkid} actionRef={actionRef} />
-          <UnitGroupDelete pkid={row.pkid} actionRef={actionRef} />
+          <UnitGroupView pkid={row.pkid} actionRef={actionRef} />
+          <UnitGroupEdit
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
+          <UnitGroupDelete
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
         </Space>,
       ],
     },

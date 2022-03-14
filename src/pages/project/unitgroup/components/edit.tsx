@@ -11,9 +11,11 @@ import { getUnitGroupByPkid, updateUnitGroup } from '@/services/unitgroup/api';
 
 type Props = {
   pkid: number;
+  buttonType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const UnitGroupEdit: FC<Props> = ({ pkid, actionRef }) => {
+const UnitGroupEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -34,6 +36,7 @@ const UnitGroupEdit: FC<Props> = ({ pkid, actionRef }) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
                 setDrawerVisible(false);
+                setViewDrawerVisible(false);
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -50,7 +53,7 @@ const UnitGroupEdit: FC<Props> = ({ pkid, actionRef }) => {
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, pkid, setViewDrawerVisible]);
 
   const onReset = () => {
     getUnitGroupByPkid(pkid).then(async (result) => {
@@ -61,7 +64,11 @@ const UnitGroupEdit: FC<Props> = ({ pkid, actionRef }) => {
   return (
     <>
       <Tooltip title="Edit">
-        <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        {buttonType === 'icon' ? (
+          <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        ) : (
+          <Button onClick={onEdit}>Edit</Button>
+        )}{' '}
       </Tooltip>
       <Drawer
         title="Edit"
