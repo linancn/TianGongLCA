@@ -11,15 +11,17 @@ import { getLocationByPkid, updateLocation } from '@/services/location/api';
 
 type Props = {
   pkid: number;
+  buttonType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
+const LocationEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     getLocationByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
@@ -33,7 +35,8 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
             updateLocation({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
+                setViewDrawerVisible(false);
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -50,7 +53,7 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, pkid, setViewDrawerVisible]);
 
   const onReset = () => {
     getLocationByPkid(pkid).then(async (result) => {
@@ -61,7 +64,11 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
   return (
     <>
       <Tooltip title="Edit">
-        <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        {buttonType === 'icon' ? (
+          <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        ) : (
+          <Button onClick={onEdit}>Edit</Button>
+        )}
       </Tooltip>
       <Drawer
         title="Edit"
@@ -71,15 +78,15 @@ const LocationEdit: FC<Props> = ({ pkid, actionRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={onReset}>Reset</Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
               Submit

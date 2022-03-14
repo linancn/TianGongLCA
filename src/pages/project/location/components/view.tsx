@@ -1,16 +1,21 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Drawer, Tooltip } from 'antd';
+import { Button, Descriptions, Drawer, Space, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getLocationByPkid } from '@/services/location/api';
-
+import type { ActionType } from '@ant-design/pro-table';
+import LocationDelete from './delete';
+import LocationEdit from './edit';
+import styles from '@/style/custom.less';
 type Props = {
   pkid: number;
+  actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const LocationView: FC<Props> = ({ pkid }) => {
+const LocationView: FC<Props> = ({ pkid, actionRef }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [footerButtons, setFooterButtons] = useState<JSX.Element>();
 
   const onView = () => {
     setDrawerVisible(true);
@@ -24,6 +29,22 @@ const LocationView: FC<Props> = ({ pkid }) => {
           <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
           <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
         </Descriptions>,
+      );
+      setFooterButtons(
+        <>
+          <LocationEdit
+            pkid={pkid}
+            buttonType={'text'}
+            actionRef={actionRef}
+            setViewDrawerVisible={setDrawerVisible}
+          />
+          <LocationDelete
+            pkid={pkid}
+            buttonType={'text'}
+            actionRef={actionRef}
+            setViewDrawerVisible={setDrawerVisible}
+          />
+        </>,
       );
     });
   };
@@ -42,6 +63,11 @@ const LocationView: FC<Props> = ({ pkid }) => {
             style={{ border: 0 }}
             onClick={() => setDrawerVisible(false)}
           />
+        }
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            {footerButtons}
+          </Space>
         }
         maskClosable={true}
         visible={drawerVisible}

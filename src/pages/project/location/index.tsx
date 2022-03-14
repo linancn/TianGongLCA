@@ -62,9 +62,19 @@ const LocationIndex: FC<ListProps> = (props) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <LocationView pkid={row.pkid} />
-          <LocationEdit pkid={row.pkid} actionRef={actionRef} />
-          <LocationDelete pkid={row.pkid} actionRef={actionRef} />
+          <LocationView pkid={row.pkid} actionRef={actionRef} />
+          <LocationEdit
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
+          <LocationDelete
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
         </Space>,
       ],
     },
