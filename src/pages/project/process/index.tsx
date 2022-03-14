@@ -5,14 +5,13 @@ import ProTable from '@ant-design/pro-table';
 import { getProcessGrid } from '@/services/process/api';
 import type { Process } from '@/services/process/data';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Space, Tooltip } from 'antd';
-import { OrderedListOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 import type { ListPagination } from '@/services/home/data';
 import ProcessDelete from './components/delete';
 import ProcessView from './components/view';
 import ProcessEdit from './components/edit';
 import ProcessCreate from './components/create';
-import ProcessFlowSetting from './components/detail/setting';
+import ProcessFlowSetting from './components/setting';
 import { getProject } from '@/services/project/api';
 import { FormattedMessage } from 'umi';
 import ProcessSelect from './components/select';
@@ -37,73 +36,28 @@ const TableList: FC<ListProps> = (props) => {
       search: false,
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Data Name',
+      dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
-      search: false,
-    },
-    {
-      title: 'Nation',
-      dataIndex: 'nation',
-      sorter: true,
-    },
-    {
-      title: 'Source',
-      dataIndex: 'source',
-      sorter: true,
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      sorter: true,
-    },
-    {
-      title: 'Creator',
-      dataIndex: 'creator',
+      title: 'Process Type',
+      dataIndex: 'processType',
       sorter: true,
       search: false,
     },
     {
-      title: 'Create Time',
-      dataIndex: 'createTime',
+      title: 'Last Change',
+      dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Last Update Time',
-      dataIndex: 'lastUpdateTime',
-      valueType: 'dateTime',
+      title: 'Release',
+      dataIndex: 'release',
       sorter: true,
       search: false,
-    },
-
-    {
-      title: 'Detail',
-      search: false,
-      render: (_, row) => [
-        <Space size={'small'}>
-          <Tooltip title="List">
-            <Button
-              shape="circle"
-              icon={<OrderedListOutlined />}
-              size="small"
-              // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
-            />
-          </Tooltip>
-          <ProcessFlowSetting projectId={row.projectId} processId={row.id} />
-        </Space>,
-      ],
     },
     {
       title: 'Option',
@@ -112,6 +66,7 @@ const TableList: FC<ListProps> = (props) => {
         <Space size={'small'}>
           <ProcessView pkid={row.pkid} />
           <ProcessEdit pkid={row.pkid} actionRef={actionRef} />
+          <ProcessFlowSetting projectId={row.projectId} processId={row.id} />
           <ProcessDelete pkid={row.pkid} actionRef={actionRef} />
         </Space>,
       ],

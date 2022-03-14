@@ -15,11 +15,11 @@ type Props = {
 };
 const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     getProcessByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
@@ -33,7 +33,7 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
             updateProcess({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Successfully Edited!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -44,11 +44,9 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="source" label="Source" />
-          <ProFormText width="md" name="type" label="Type" />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
+          <ProFormText width="md" name="dataName" label="Data Name" />
+          <ProFormText width="md" name="processType" label="Process Type" />
+          <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -74,15 +72,15 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={onReset}>Reset</Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
               Submit

@@ -10,7 +10,7 @@ import type { ListPagination } from '@/services/home/data';
 import type { FlowProcessBase } from '@/services/flowprocessbase/data';
 import { getFlowProcessBaseGrid } from '@/services/flowprocessbase/api';
 import { CloseOutlined, SelectOutlined } from '@ant-design/icons';
-import ProcessFlowParameterView from '@/pages/project/process/components/detail/flow/parameter/view';
+import ProcessFlowParameterView from '@/pages/project/process/components/setting/flow/parameter/view';
 import ProcessFlowView from './processflowview';
 
 type Props = {

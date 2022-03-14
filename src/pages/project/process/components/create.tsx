@@ -14,7 +14,7 @@ type Props = {
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
   const reload = useCallback(() => {
@@ -29,7 +29,7 @@ const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
           type="text"
           icon={<PlusOutlined />}
           onClick={() => {
-            handleDrawerVisible(true);
+            setDrawerVisible(true);
           }}
         />
       </Tooltip>
@@ -41,15 +41,15 @@ const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={false}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
               Submit
             </Button>
@@ -67,7 +67,7 @@ const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
             createProcess({ ...values, projectId }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Successfully Created!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
                 reload();
               } else {
                 message.error(result);
@@ -76,11 +76,9 @@ const ProcessCreate: FC<Props> = ({ projectId, actionRef }) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="nation" label="Nation" />
-          <ProFormText width="md" name="source" label="Source" />
-          <ProFormText width="md" name="type" label="Type" />
-          <ProFormTextArea width="md" name="comment" label="Comment" />
+          <ProFormText width="md" name="dataName" label="Data Name" />
+          <ProFormText width="md" name="processType" label="Process Type" />
+          <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>
       </Drawer>
     </>

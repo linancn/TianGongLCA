@@ -10,25 +10,19 @@ type Props = {
 };
 const ProcessView: FC<Props> = ({ pkid }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onView = () => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     getProcessByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>
-          <Descriptions.Item label="Nation">{result?.nation}</Descriptions.Item>
-          <Descriptions.Item label="Source">{result?.source}</Descriptions.Item>
-          <Descriptions.Item label="Type">{result?.type}</Descriptions.Item>
-          <Descriptions.Item label="Creator">{result?.creator}</Descriptions.Item>
-          <Descriptions.Item label="Create Time">
-            {moment(result?.createTime).format('YYYY-MM-DD HH:mm:ss')}
+          <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>
+          <Descriptions.Item label="Process Type">{result?.processType}</Descriptions.Item>
+          <Descriptions.Item label="Last Change">
+            {moment(result?.lastChange).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
-          <Descriptions.Item label="Last Update Time">
-            {moment(result?.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss')}
-          </Descriptions.Item>
-          <Descriptions.Item label="Comment">{result?.comment}</Descriptions.Item>
+          <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
           <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
         </Descriptions>,
       );
@@ -47,12 +41,12 @@ const ProcessView: FC<Props> = ({ pkid }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
       >
         {viewDescriptions}
       </Drawer>
