@@ -7,9 +7,11 @@ import { deleteFlowProperty } from '@/services/flowproperty/api';
 
 type Props = {
   pkid: number;
+  buttonType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const FlowPropertyDelete: FC<Props> = ({ pkid, actionRef }) => {
+const FlowPropertyDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
       title: 'Are you sure to delete this flow property?',
@@ -19,6 +21,7 @@ const FlowPropertyDelete: FC<Props> = ({ pkid, actionRef }) => {
         deleteFlowProperty(pkid).then(async (result) => {
           if (result === 'ok') {
             message.success('Successfully deleted!');
+            setViewDrawerVisible(false);
             actionRef.current?.reload();
           } else {
             message.error(result);
@@ -27,11 +30,15 @@ const FlowPropertyDelete: FC<Props> = ({ pkid, actionRef }) => {
       },
       onCancel() {},
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, pkid, setViewDrawerVisible]);
   return (
     <>
       <Tooltip title="Delete">
-        <Button shape="circle" icon={<DeleteOutlined />} size="small" onClick={onDelete} />
+        {buttonType === 'icon' ? (
+          <Button shape="circle" icon={<DeleteOutlined />} size="small" onClick={onDelete} />
+        ) : (
+          <Button onClick={onDelete}>Delete</Button>
+        )}
       </Tooltip>
     </>
   );

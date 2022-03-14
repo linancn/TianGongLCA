@@ -121,9 +121,19 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <FlowPropertyView pkid={row.pkid} />
-          <FlowPropertyEdit pkid={row.pkid} actionRef={actionRef} />
-          <FlowPropertyDelete pkid={row.pkid} actionRef={actionRef} />
+          <FlowPropertyView pkid={row.pkid} actionRef={actionRef} />
+          <FlowPropertyEdit
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
+          <FlowPropertyDelete
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
         </Space>,
       ],
     },
