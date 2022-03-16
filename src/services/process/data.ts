@@ -10,3 +10,17 @@ export type Process = {
   release: string;
   version: string;
 };
+
+export type ParameterJson = {
+  id: string;
+  projectId: number;
+  processPkid: number;
+  processId: string;
+  name: string;
+  formula: string;
+  value: number;
+  uncertaintyGeomMean: number;
+  uncertaintyGeomSd: number;
+  version: string;
+  description: string;
+};

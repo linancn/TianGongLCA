@@ -66,7 +66,7 @@ const TableList: FC<ListProps> = (props) => {
         <Space size={'small'}>
           <ProcessView pkid={row.pkid} />
           <ProcessEdit pkid={row.pkid} actionRef={actionRef} />
-          <ProcessFlowSetting projectId={row.projectId} processId={row.id} />
+          <ProcessFlowSetting projectId={row.projectId} processPkid={row.pkid} processId={row.id} />
           <ProcessDelete pkid={row.pkid} actionRef={actionRef} />
         </Space>,
       ],

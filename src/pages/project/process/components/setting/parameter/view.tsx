@@ -2,26 +2,28 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { Button, Descriptions, Drawer, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
-import { getParameterByPkid } from '@/services/parameter/api';
+import { getParameterJson } from '@/services/process/api';
 
 type Props = {
-  pkid: number;
+  processPkid: number;
+  id: string;
 };
-const ProcessParameterView: FC<Props> = ({ pkid }) => {
+const ParameterJsonView: FC<Props> = ({ processPkid, id }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onView = () => {
-    handleDrawerVisible(true);
-    getParameterByPkid(pkid).then(async (result) => {
+    setDrawerVisible(true);
+    getParameterJson(processPkid, id).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Name">{result?.name}</Descriptions.Item>
-          <Descriptions.Item label="Formula">{result?.formula}</Descriptions.Item>
-          <Descriptions.Item label="Value">{result?.value}</Descriptions.Item>
-          <Descriptions.Item label="Min">{result?.min}</Descriptions.Item>
-          <Descriptions.Item label="Max">{result?.max}</Descriptions.Item>
-          <Descriptions.Item label="SD">{result?.sd}</Descriptions.Item>
+          <Descriptions.Item label="Name">{result.name}</Descriptions.Item>
+          <Descriptions.Item label="Formula">{result.formula}</Descriptions.Item>
+          <Descriptions.Item label="Value">{result.value}</Descriptions.Item>
+          <Descriptions.Item label="SD">{result.uncertaintyGeomSd}</Descriptions.Item>
+          <Descriptions.Item label="Mean">{result.uncertaintyGeomMean}</Descriptions.Item>
+          <Descriptions.Item label="Version">{result.version}</Descriptions.Item>
+          <Descriptions.Item label="Description">{result.description}</Descriptions.Item>
         </Descriptions>,
       );
     });
@@ -39,12 +41,12 @@ const ProcessParameterView: FC<Props> = ({ pkid }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
       >
         {viewDescriptions}
       </Drawer>
@@ -52,4 +54,4 @@ const ProcessParameterView: FC<Props> = ({ pkid }) => {
   );
 };
 
-export default ProcessParameterView;
+export default ParameterJsonView;

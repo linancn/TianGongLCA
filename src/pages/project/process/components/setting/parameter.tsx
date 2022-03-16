@@ -1,25 +1,24 @@
 import type { FC } from 'react';
 import { useRef } from 'react';
 import ProCard from '@ant-design/pro-card';
-import type { Parameter } from '@/services/parameter/data';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getParameterGrid } from '@/services/parameter/api';
+import { getParameterJsonGrid } from '@/services/process/api';
 import { Space } from 'antd';
 import type { ListPagination } from '@/services/home/data';
-import ProcessParameterDelete from './parameter/delete';
-import ProcessParameterEdit from './parameter/edit';
-import ProcessParameterView from './parameter/view';
-import ProcessParameterCreate from './parameter/create';
+import type { ParameterJson } from '@/services/process/data';
+import ParameterJsonCreate from './parameter/create';
+import ParameterJsonView from './parameter/view';
+import ParameterJsonEdit from './parameter/edit';
+import ParameterJsonDelete from './parameter/delete';
 
-type ParameterProps = {
-  projectId: number;
-  processId: string;
+type Props = {
+  processPkid: number;
 };
 
-const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
+const ParameterJsonCard: FC<Props> = ({ processPkid }) => {
   const actionRef = useRef<ActionType>();
-  const columns: ProColumns<Parameter>[] = [
+  const columns: ProColumns<ParameterJson>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -41,19 +40,24 @@ const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
       dataIndex: 'value',
       search: false,
     },
-    {
-      title: 'Min',
-      dataIndex: 'min',
-      search: false,
-    },
-    {
-      title: 'Max',
-      dataIndex: 'max',
-      search: false,
-    },
+    // {
+    //   title: 'Min',
+    //   dataIndex: 'min',
+    //   search: false,
+    // },
+    // {
+    //   title: 'Max',
+    //   dataIndex: 'max',
+    //   search: false,
+    // },
     {
       title: 'SD',
-      dataIndex: 'sd',
+      dataIndex: 'uncertaintyGeomSd',
+      search: false,
+    },
+    {
+      title: 'Mean',
+      dataIndex: 'uncertaintyGeomMean',
       search: false,
     },
     {
@@ -61,9 +65,9 @@ const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <ProcessParameterView pkid={row.pkid} />
-          <ProcessParameterEdit pkid={row.pkid} actionRef={actionRef} />
-          <ProcessParameterDelete pkid={row.pkid} actionRef={actionRef} />
+          <ParameterJsonView processPkid={row.processPkid} id={row.id} />
+          <ParameterJsonEdit processPkid={row.processPkid} id={row.id} actionRef={actionRef} />
+          <ParameterJsonDelete processPkid={row.processPkid} id={row.id} actionRef={actionRef} />
         </Space>,
       ],
     },
@@ -72,17 +76,13 @@ const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
   actionRef.current?.reload();
   return (
     <ProCard title="Parameters" bordered={false} collapsible>
-      <ProTable<Parameter, ListPagination>
+      <ProTable<ParameterJson, ListPagination>
         actionRef={actionRef}
         search={{
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <ProcessParameterCreate
-            projectId={projectId}
-            processId={processId}
-            actionRef={actionRef}
-          />,
+          <ParameterJsonCreate processPkid={processPkid} actionRef={actionRef} />,
         ]}
         request={(
           params: {
@@ -91,11 +91,11 @@ const ParameterCard: FC<ParameterProps> = ({ projectId, processId }) => {
           },
           sort,
         ) => {
-          return getParameterGrid(params, sort, projectId, processId);
+          return getParameterJsonGrid(params, sort, processPkid);
         }}
         columns={columns}
       />
     </ProCard>
   );
 };
-export default ParameterCard;
+export default ParameterJsonCard;

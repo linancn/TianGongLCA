@@ -3,21 +3,22 @@ import { useCallback } from 'react';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
-import { deleteParameter } from '@/services/parameter/api';
+import { deleteParameterJson } from '@/services/process/api';
 
 type Props = {
-  pkid: number;
+  processPkid: number;
+  id: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const ProcessParameterDelete: FC<Props> = ({ pkid, actionRef }) => {
+const ParameterJsonDelete: FC<Props> = ({ processPkid, id, actionRef }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
       title: 'Are you sure to delete this flow?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deleteParameter(pkid).then(async (result) => {
+        deleteParameterJson(processPkid, id).then(async (result) => {
           if (result === 'ok') {
             message.success('Delete successfully!');
             actionRef.current?.reload();
@@ -28,7 +29,7 @@ const ProcessParameterDelete: FC<Props> = ({ pkid, actionRef }) => {
       },
       onCancel() {},
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, id, processPkid]);
   return (
     <>
       <Tooltip title="Delete">
@@ -38,4 +39,4 @@ const ProcessParameterDelete: FC<Props> = ({ pkid, actionRef }) => {
   );
 };
 
-export default ProcessParameterDelete;
+export default ParameterJsonDelete;

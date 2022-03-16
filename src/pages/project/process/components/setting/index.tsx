@@ -3,22 +3,23 @@ import { useState } from 'react';
 import { Button, Drawer, Space, Tooltip } from 'antd';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons';
 import styles from '@/style/custom.less';
-import ParameterCard from './parameter';
 import FlowCard from './flow';
+import ParameterJsonCard from './parameter';
 
 type Props = {
   projectId: number;
+  processPkid: number;
   processId: string;
 };
-const ProcessFlowSetting: FC<Props> = ({ projectId, processId }) => {
+const ProcessFlowSetting: FC<Props> = ({ projectId, processPkid, processId }) => {
   const [setting, setSetting] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onSetting = () => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     setSetting(
       <>
-        <ParameterCard projectId={projectId} processId={processId} />
+        <ParameterJsonCard processPkid={processPkid} />
         <FlowCard projectId={projectId} processId={processId} ioType="input" />
         <FlowCard projectId={projectId} processId={processId} ioType="output" />
       </>,
@@ -37,15 +38,15 @@ const ProcessFlowSetting: FC<Props> = ({ projectId, processId }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={false}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)} type="primary">
+            <Button onClick={() => setDrawerVisible(false)} type="primary">
               Finish
             </Button>
           </Space>

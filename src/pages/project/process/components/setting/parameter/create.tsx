@@ -4,18 +4,18 @@ import { useState } from 'react';
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
+import { ProFormTextArea } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { createParameter } from '@/services/parameter/api';
+import { createParameterJson } from '@/services/process/api';
 
 type Props = {
-  projectId: number;
-  processId: string;
+  processPkid: number;
   actionRef: MutableRefObject<ActionType | undefined>;
 };
-const ProcessParameterCreate: FC<Props> = ({ projectId, processId, actionRef }) => {
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+const ParameterJsonCreate: FC<Props> = ({ processPkid, actionRef }) => {
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
   const reload = useCallback(() => {
@@ -30,7 +30,7 @@ const ProcessParameterCreate: FC<Props> = ({ projectId, processId, actionRef }) 
           type="text"
           icon={<PlusOutlined />}
           onClick={() => {
-            handleDrawerVisible(true);
+            setDrawerVisible(true);
           }}
         />
       </Tooltip>
@@ -42,15 +42,15 @@ const ProcessParameterCreate: FC<Props> = ({ projectId, processId, actionRef }) 
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={false}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
               Submit
             </Button>
@@ -65,10 +65,10 @@ const ProcessParameterCreate: FC<Props> = ({ projectId, processId, actionRef }) 
             },
           }}
           onFinish={async (values) => {
-            createParameter({ ...values, projectId, processId }).then(async (result) => {
+            createParameterJson({ ...values, processPkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Successfully Created!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
                 reload();
               } else {
                 message.error(result);
@@ -80,13 +80,13 @@ const ProcessParameterCreate: FC<Props> = ({ projectId, processId, actionRef }) 
           <ProFormText width="md" name="name" label="Name" />
           <ProFormText width="md" name="formula" label="Formula" />
           <ProFormText width="md" name="value" label="Value" />
-          <ProFormText width="md" name="min" label="Min" />
-          <ProFormText width="md" name="max" label="Max" />
-          <ProFormText width="md" name="sd" label="SD" />
+          <ProFormText width="md" name="uncertaintyGeomSd" label="SD" />
+          <ProFormText width="md" name="uncertaintyGeomMean" label="Mean" />
+          <ProFormTextArea width="md" name="description" label="Description" />
         </ProForm>
       </Drawer>
     </>
   );
 };
 
-export default ProcessParameterCreate;
+export default ParameterJsonCreate;
