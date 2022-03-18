@@ -4,14 +4,13 @@ import { Button, Drawer, Space, Tooltip } from 'antd';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons';
 import styles from '@/style/custom.less';
 import FlowCard from './flow';
-import ParameterJsonCard from './parameter';
+import ParameterCard from './parameter';
 
 type Props = {
   projectId: number;
   processPkid: number;
-  processId: string;
 };
-const ProcessFlowSetting: FC<Props> = ({ projectId, processPkid, processId }) => {
+const ProcessSetting: FC<Props> = ({ projectId, processPkid }) => {
   const [setting, setSetting] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -19,9 +18,9 @@ const ProcessFlowSetting: FC<Props> = ({ projectId, processPkid, processId }) =>
     setDrawerVisible(true);
     setSetting(
       <>
-        <ParameterJsonCard processPkid={processPkid} />
-        <FlowCard projectId={projectId} processId={processId} ioType="input" />
-        <FlowCard projectId={projectId} processId={processId} ioType="output" />
+        <ParameterCard processPkid={processPkid} />
+        <FlowCard projectId={projectId} processPkid={processPkid} input={true} />
+        <FlowCard projectId={projectId} processPkid={processPkid} input={false} />
       </>,
     );
   };
@@ -58,4 +57,4 @@ const ProcessFlowSetting: FC<Props> = ({ projectId, processPkid, processId }) =>
   );
 };
 
-export default ProcessFlowSetting;
+export default ProcessSetting;

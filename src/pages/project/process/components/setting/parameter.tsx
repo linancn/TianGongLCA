@@ -16,7 +16,7 @@ type Props = {
   processPkid: number;
 };
 
-const ParameterJsonCard: FC<Props> = ({ processPkid }) => {
+const ParameterCard: FC<Props> = ({ processPkid }) => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<ParameterJson>[] = [
     {
@@ -98,4 +98,4 @@ const ParameterJsonCard: FC<Props> = ({ processPkid }) => {
     </ProCard>
   );
 };
-export default ParameterJsonCard;
+export default ParameterCard;

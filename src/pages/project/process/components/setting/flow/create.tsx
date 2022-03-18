@@ -4,20 +4,20 @@ import { useState } from 'react';
 import { Button, Divider, Drawer, message, Space, Tooltip } from 'antd';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
-import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
+import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { createFlowProcess } from '@/services/flowprocess/api';
-import ProcessFlowBaseSelect from './select';
+import ProcessFlowSelect from './select';
+import { createExchangeJson } from '@/services/process/api';
 
 type Props = {
   projectId: number;
-  processId: string;
-  ioType: string;
+  processPkid: number;
+  input: boolean;
   actionRef: MutableRefObject<ActionType | undefined>;
 };
-const ProcessFlowCreate: FC<Props> = ({ projectId, processId, ioType, actionRef }) => {
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef }) => {
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
   const reload = useCallback(() => {
@@ -32,27 +32,27 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processId, ioType, actionRef 
           type="text"
           icon={<PlusOutlined />}
           onClick={() => {
-            handleDrawerVisible(true);
+            setDrawerVisible(true);
           }}
         />
       </Tooltip>
       <Drawer
-        title={ioType === 'input' ? 'Create Input Flow' : 'Create Output Flow'}
+        title={input ? 'Create Input Flow' : 'Create Output Flow'}
         width="400px"
         closable={false}
         extra={
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={false}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
               Submit
             </Button>
@@ -67,15 +67,14 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processId, ioType, actionRef 
             },
           }}
           onFinish={async (values) => {
-            createFlowProcess({
+            createExchangeJson({
               ...values,
-              projectId,
-              processId,
-              ioType,
+              processPkid,
+              input,
             }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Successfully Created!');
-                handleDrawerVisible(false);
+                setDrawerVisible(false);
                 reload();
               } else {
                 message.error(result);
@@ -84,18 +83,13 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processId, ioType, actionRef 
             return true;
           }}
         >
-          <Divider>
-            Flow Base Info <ProcessFlowBaseSelect projectId={projectId} formRef={formRefCreate} />
-          </Divider>
-          <ProFormText width="md" name="name" label="Name" disabled={true} />
-          <ProFormText width="md" name="nation" label="Nation" disabled={true} />
-          <ProFormText width="md" name="source" label="Source" disabled={true} />
-          <ProFormText width="md" name="type" label="Type" disabled={true} />
-          <ProFormTextArea width="md" name="comment" label="Comment" disabled={true} />
           <ProFormText width="md" name="amount" label="Amount" />
-          <ProFormText width="md" name="sd" label="SD" />
-          <ProFormText width="md" name="factor" label="Factor" />
-          <ProFormText width="md" name="flowBaseId" label="FlowBaseId" hidden={true} />
+          <ProFormText width="md" name="amountFormula" label="Amount Formula" />
+          <Divider>
+            Flow Info <ProcessFlowSelect projectId={projectId} formRef={formRefCreate} />
+          </Divider>
+          <ProFormText width="md" name="flowName" label="Name" disabled={true} />
+          <ProFormText width="md" name="flowId" label="Flow Id" hidden={true} />
         </ProForm>
       </Drawer>
     </>

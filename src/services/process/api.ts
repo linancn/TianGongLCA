@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { ParameterJson, Process } from './data';
+import type { ExchangeJson, ParameterJson, Process } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getProcessGrid(
@@ -48,6 +48,33 @@ export async function getParameterJsonGrid(
       sortBy,
       orderBy,
       processPkid,
+    },
+  });
+}
+
+export async function getExchangeJsonGrid(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  sort: Record<string, SortOrder>,
+  processPkid: number,
+  input: boolean,
+) {
+  const sortBy = Object.keys(sort)[0];
+  const orderBy = sort[sortBy]?.replace('end', '');
+  return request<{
+    data: ExchangeJson[];
+    total?: number;
+    success?: boolean;
+  }>('http://localhost:8081/api/process/getexchangejsongrid', {
+    method: 'GET',
+    params: {
+      ...params,
+      sortBy,
+      orderBy,
+      processPkid,
+      input,
     },
   });
 }
@@ -116,6 +143,38 @@ export async function updateParameterJson(data?: Record<string, any>) {
 export async function deleteParameterJson(processPkid: number, id: string) {
   return request<string>(
     `http://localhost:8081/api/process/deleteparameterjson/${processPkid}/${id}`,
+    {
+      method: 'DELETE',
+    },
+  );
+}
+
+export async function getExchangeJson(processPkid: number, flowId: string, input: boolean) {
+  return request<ExchangeJson>(
+    `http://localhost:8081/api/process/getexchangejson/${processPkid}/${flowId}/${input}`,
+    {
+      method: 'GET',
+    },
+  );
+}
+
+export async function createExchangeJson(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/process/createexchangejson', {
+    method: 'POST',
+    data,
+  });
+}
+
+export async function updateExchangeJson(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/process/updateexchangejson', {
+    method: 'PUT',
+    data,
+  });
+}
+
+export async function deleteExchangeJson(processPkid: number, flowId: string, input: boolean) {
+  return request<string>(
+    `http://localhost:8081/api/process/deleteexchangejson/${processPkid}/${flowId}/${input}`,
     {
       method: 'DELETE',
     },

@@ -24,3 +24,19 @@ export type ParameterJson = {
   version: string;
   description: string;
 };
+
+export type ExchangeJson = {
+  projectId: number;
+  processPkid: number;
+  processId: string;
+  internalId: number;
+  input: boolean;
+  amount: number;
+  amountFormula: string;
+  description: string;
+  avoidedProduct: boolean;
+  quantitativeReference: boolean;
+  flowPkid: number;
+  flowId: string;
+  flowName: string;
+};

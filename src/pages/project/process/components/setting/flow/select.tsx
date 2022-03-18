@@ -7,17 +7,17 @@ import ProTable from '@ant-design/pro-table';
 import type { ListPagination } from '@/services/home/data';
 import type { FC, MutableRefObject } from 'react';
 import { useCallback, useState } from 'react';
-import { getFlowBaseGrid } from '@/services/flowbase/api';
-import type { FlowBase } from '@/services/flowbase/data';
+import type { Flow } from '@/services/flow/data';
+import { getFlowGrid } from '@/services/flow/api';
 
 type Props = {
   projectId: number;
   formRef: MutableRefObject<ProFormInstance<Record<string, any>> | undefined>;
 };
-const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
-  const [drawerVisible, handleDrawerVisible] = useState(false);
-  const [selectRow, setSelectRow] = useState<FlowBase>();
-  const flowBaseColumns: ProColumns<FlowBase>[] = [
+const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [selectRow, setSelectRow] = useState<Flow>();
+  const flowColumns: ProColumns<Flow>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -25,54 +25,90 @@ const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
       search: false,
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Data Name',
+      dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Nation',
-      dataIndex: 'nation',
-      search: false,
-    },
-    {
-      title: 'Source',
-      dataIndex: 'Source',
-      search: false,
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      search: false,
-    },
-    {
-      title: 'Creator',
-      dataIndex: 'creator',
+      title: 'Flow Type',
+      dataIndex: 'flowType',
       sorter: true,
       search: false,
     },
     {
-      title: 'Create Time',
-      dataIndex: 'createTime',
+      title: 'Location Name',
+      dataIndex: 'locationName',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.locationId == null ? '-' : row.locationName}
+          {/* <LocationViewByParent
+            projectId={row.projectId}
+            id={row.locationId}
+            parentType={'flow'}
+            parentPkid={row.pkid}
+            actionRef={actionRef}
+          /> */}
+        </Space>,
+      ],
+    },
+    {
+      title: 'Category',
+      dataIndex: 'categoryName',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.categoryId == null ? '-' : row.categoryName}
+          {/* <CategoryViewByParent
+            projectId={row.projectId}
+            id={row.categoryId}
+            parentType={'flow'}
+            parentPkid={row.pkid}
+            actionRef={actionRef}
+          /> */}
+        </Space>,
+      ],
+    },
+    {
+      title: 'Measurement Count',
+      dataIndex: 'flowPropertyCount',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          {row.flowPropertyCount}
+          {/* <Tooltip title="List">
+            <Button
+              shape="circle"
+              icon={<OrderedListOutlined />}
+              size="small"
+              // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
+            />
+          </Tooltip> */}
+          {/* <FlowPropertyJsonList
+            projectId={row.projectId}
+            flowPkid={row.pkid}
+            parentActionRef={actionRef}
+          /> */}
+        </Space>,
+      ],
+    },
+    {
+      title: 'Last Change',
+      dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Last Update Time',
-      dataIndex: 'lastUpdateTime',
-      valueType: 'dateTime',
+      title: 'Database',
+      dataIndex: 'database',
       sorter: true,
       search: false,
     },
     {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
+      title: 'Release',
+      dataIndex: 'release',
+      sorter: true,
       search: false,
     },
   ];
@@ -80,14 +116,10 @@ const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
   const setFormValue = useCallback(() => {
     if (selectRow) {
       formRef.current?.setFieldsValue({
-        flowBaseId: selectRow.id,
-        name: selectRow.name,
-        nation: selectRow.nation,
-        source: selectRow.source,
-        type: selectRow.type,
-        comment: selectRow.comment,
+        flowId: selectRow.id,
+        flowName: selectRow.dataName,
       });
-      handleDrawerVisible(false);
+      setDrawerVisible(false);
     } else {
       message.error('Select nothing');
     }
@@ -100,7 +132,7 @@ const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
           size="small"
           icon={<SelectOutlined />}
           onClick={() => {
-            handleDrawerVisible(true);
+            setDrawerVisible(true);
           }}
         />
       </Tooltip>
@@ -112,15 +144,15 @@ const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button
               onClick={() => {
                 setFormValue();
@@ -132,7 +164,7 @@ const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
           </Space>
         }
       >
-        <ProTable<FlowBase, ListPagination>
+        <ProTable<Flow, ListPagination>
           search={{
             defaultCollapsed: false,
           }}
@@ -143,9 +175,9 @@ const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
             },
             sort,
           ) => {
-            return getFlowBaseGrid(params, sort, projectId);
+            return getFlowGrid(params, sort, projectId);
           }}
-          columns={flowBaseColumns}
+          columns={flowColumns}
           rowClassName={(record) => {
             return record.pkid === selectRow?.pkid ? styles.split_row_select_active : '';
           }}
@@ -164,4 +196,4 @@ const ProcessFlowBaseSelect: FC<Props> = ({ projectId, formRef }) => {
   );
 };
 
-export default ProcessFlowBaseSelect;
+export default ProcessFlowSelect;

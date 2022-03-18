@@ -11,10 +11,10 @@ import ProcessDelete from './components/delete';
 import ProcessView from './components/view';
 import ProcessEdit from './components/edit';
 import ProcessCreate from './components/create';
-import ProcessFlowSetting from './components/setting';
 import { getProject } from '@/services/project/api';
 import { FormattedMessage } from 'umi';
 import ProcessSelect from './components/select';
+import ProcessSetting from './components/setting';
 
 type ListProps = {
   location: {
@@ -66,7 +66,7 @@ const TableList: FC<ListProps> = (props) => {
         <Space size={'small'}>
           <ProcessView pkid={row.pkid} />
           <ProcessEdit pkid={row.pkid} actionRef={actionRef} />
-          <ProcessFlowSetting projectId={row.projectId} processPkid={row.pkid} processId={row.id} />
+          <ProcessSetting projectId={row.projectId} processPkid={row.pkid} />
           <ProcessDelete pkid={row.pkid} actionRef={actionRef} />
         </Space>,
       ],
