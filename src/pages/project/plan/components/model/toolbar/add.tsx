@@ -13,6 +13,7 @@ import { XFlowNodeCommands } from '@antv/xflow';
 import { NodeAttrs, NodePorts } from './config/node';
 import styles from '@/style/custom.less';
 import { CloseOutlined } from '@ant-design/icons';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   xflowApp: IApplication | undefined;
@@ -30,65 +31,41 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
 
   const planInfoColumns: ProColumns<PlanInfo>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="plan.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: <FormattedMessage id="plan.dataName" defaultMessage="Index" />,
+      dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Type',
-      dataIndex: 'type',
+      title: <FormattedMessage id="plan.planType" defaultMessage="Plan Type" />,
+      dataIndex: 'planType',
       sorter: true,
     },
     {
-      title: 'Nation',
-      dataIndex: 'nation',
-      sorter: true,
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
+      title: <FormattedMessage id="plan.description" defaultMessage="Description" />,
+      dataIndex: 'description',
       valueType: 'textarea',
       search: false,
     },
     {
-      title: 'Creator',
-      dataIndex: 'creator',
-      sorter: true,
-      search: false,
-    },
-    {
-      title: 'Create Time',
-      dataIndex: 'createTime',
+      title: <FormattedMessage id="plan.lastChange" defaultMessage="Last Change" />,
+      dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Last Update Time',
-      dataIndex: 'lastUpdateTime',
-      valueType: 'dateTime',
-      sorter: true,
-      search: false,
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
+      title: <FormattedMessage id="plan.version" defaultMessage="Version" />,
       dataIndex: 'version',
       search: false,
     },
   ];
-  const ProcessColumns: ProColumns<Process>[] = [
+  const processColumns: ProColumns<Process>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -96,54 +73,27 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
       search: false,
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Data Name',
+      dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Nation',
-      dataIndex: 'nation',
-      sorter: true,
-    },
-    {
-      title: 'Source',
-      dataIndex: 'source',
-      sorter: true,
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      sorter: true,
-    },
-    {
-      title: 'Creator',
-      dataIndex: 'creator',
+      title: 'Process Type',
+      dataIndex: 'processType',
       sorter: true,
       search: false,
     },
     {
-      title: 'Create Time',
-      dataIndex: 'createTime',
+      title: 'Last Change',
+      dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Last Update Time',
-      dataIndex: 'lastUpdateTime',
-      valueType: 'dateTime',
+      title: 'Release',
+      dataIndex: 'release',
       sorter: true,
-      search: false,
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
       search: false,
     },
   ];
@@ -179,13 +129,13 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
   };
   const onAddPlanToModel = () => {
     if (addPlanToModel) {
-      onAddToModel(addPlanToModel.id, addPlanToModel.name, 'plan');
+      onAddToModel(addPlanToModel.id, addPlanToModel.dataName, 'plan');
       setDrawerAddPlanVisible(false);
     }
   };
   const onAddProcessToModel = () => {
     if (addProcessToModel) {
-      onAddToModel(addProcessToModel.id, addProcessToModel.name, 'process');
+      onAddToModel(addProcessToModel.id, addProcessToModel.dataName, 'process');
       setDrawerAddProcessVisible(false);
     }
   };
@@ -258,7 +208,9 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
           }}
           columns={planInfoColumns}
           rowClassName={(record) => {
-            return record.name === addPlanToModel?.name ? styles.split_row_select_active : '';
+            return record.dataName === addPlanToModel?.dataName
+              ? styles.split_row_select_active
+              : '';
           }}
           onRow={(record) => {
             return {
@@ -306,9 +258,11 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
           ) => {
             return getProcessGrid(params, sort, projectId);
           }}
-          columns={ProcessColumns}
+          columns={processColumns}
           rowClassName={(record) => {
-            return record.name === addProcessToModel?.name ? styles.split_row_select_active : '';
+            return record.dataName === addProcessToModel?.dataName
+              ? styles.split_row_select_active
+              : '';
           }}
           onRow={(record) => {
             return {

@@ -38,13 +38,15 @@ import type { PlanModelState } from '@/services/plan/data';
 
 import './model/index.css';
 import './model/index.less';
+import type { ActionType } from '@ant-design/pro-table';
 
 type Props = {
   projectId: number;
   planId: string;
   name: string;
+  actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
+const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
   const [xflowApp, setxflowApp] = useState<IApplication>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [addDrawerVisible, setAddDrawerVisible] = useState(false);
@@ -183,17 +185,23 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name }) => {
         title={`Model Builder (${modelName})`}
         width="100%"
         closable={false}
-        destroyOnClose={true}
+        destroyOnClose={false}
         extra={
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => setDrawerVisible(false)}
+            onClick={() => {
+              actionRef.current?.reload();
+              setDrawerVisible(false);
+            }}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => setDrawerVisible(false)}
+        onClose={() => {
+          actionRef.current?.reload();
+          setDrawerVisible(false);
+        }}
       >
         <XFlow onLoad={onLoad}>
           <XFlowCanvas

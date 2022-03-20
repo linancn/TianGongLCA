@@ -15,11 +15,11 @@ type Props = {
 };
 const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     getPlanInfoByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
@@ -33,10 +33,8 @@ const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
             updatePlanInfo({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
-                handleDrawerVisible(false);
-                if (actionRef.current) {
-                  actionRef.current.reload();
-                }
+                setDrawerVisible(false);
+                actionRef.current?.reload();
               } else {
                 message.error(result);
               }
@@ -72,15 +70,15 @@ const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
             <Button onClick={onReset}>Reset</Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
               Submit

@@ -28,45 +28,50 @@ const PlanList: FC<Props> = (props) => {
   const [projectName, setProjectName] = useState('');
   const columns: ProColumns<PlanInfo>[] = [
     {
-      title: <FormattedMessage id="plan.index" />,
+      title: <FormattedMessage id="plan.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: <FormattedMessage id="plan.dataName" />,
+      title: <FormattedMessage id="plan.dataName" defaultMessage="Index" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="plan.planType" />,
+      title: <FormattedMessage id="plan.planType" defaultMessage="Plan Type" />,
       dataIndex: 'planType',
       sorter: true,
     },
     {
-      title: <FormattedMessage id="plan.description" />,
+      title: <FormattedMessage id="plan.description" defaultMessage="Description" />,
       dataIndex: 'description',
       valueType: 'textarea',
       search: false,
     },
     {
-      title: <FormattedMessage id="plan.lastChange" />,
+      title: <FormattedMessage id="plan.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: <FormattedMessage id="plan.version" />,
+      title: <FormattedMessage id="plan.version" defaultMessage="Version" />,
       dataIndex: 'version',
       search: false,
     },
     {
-      title: <FormattedMessage id="plan.option" />,
+      title: <FormattedMessage id="plan.option" defaultMessage="Option" />,
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <PlanOpen projectId={row.projectId} planId={row.id} name={row.dataName} />
+          <PlanOpen
+            projectId={row.projectId}
+            planId={row.id}
+            name={row.dataName}
+            actionRef={actionRef}
+          />
           <PlanView pkid={row.pkid} />
           <PlanEdit pkid={row.pkid} actionRef={actionRef} />
           <PlanDelete pkid={row.pkid} actionRef={actionRef} />

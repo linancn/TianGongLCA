@@ -3,6 +3,7 @@ import { Button, Drawer, message, Space } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { ProFormInstance } from '@ant-design/pro-form';
+import { ProFormTextArea } from '@ant-design/pro-form';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import { getProcessById, updateProcess } from '@/services/process/api';
@@ -42,6 +43,7 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
               updatePlanInfo({ ...values, pkid: pi.pkid }).then(async (result) => {
                 if (result === 'ok') {
                   message.success('Successfully Edited!');
+                  callbackDrawerVisible();
                 } else {
                   message.error(result);
                 }
@@ -49,21 +51,14 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
               return true;
             }}
           >
-            <ProFormText width="md" name="name" label="Name" />
-            <ProFormText width="md" name="type" label="Type" />
-            <ProFormText width="md" name="nation" label="Nation" />
-            <ProFormText width="md" name="comment" label="Comment" />
+            <ProFormText width="md" name="dataName" label="Data Name" />
+            <ProFormText width="md" name="planType" label="Plan Type" />
+            <ProFormTextArea width="md" name="description" label="Description" />
           </ProForm>,
         );
         formRefPlan.current?.setFieldsValue(pi);
         setSumitButton(
-          <Button
-            onClick={() => {
-              formRefPlan.current?.submit();
-              callbackDrawerVisible();
-            }}
-            type="primary"
-          >
+          <Button onClick={() => formRefPlan.current?.submit()} type="primary">
             Submit
           </Button>,
         );
@@ -82,6 +77,7 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
               updateProcess({ ...values, pkid: pi.pkid }).then(async (result) => {
                 if (result === 'ok') {
                   message.success('Edit successfully!');
+                  callbackDrawerVisible();
                 } else {
                   message.error(result);
                 }
@@ -89,21 +85,14 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
               return true;
             }}
           >
-            <ProFormText width="md" name="name" label="Name" />
-            <ProFormText width="md" name="type" label="Type" />
-            <ProFormText width="md" name="nation" label="Nation" />
-            <ProFormText width="md" name="comment" label="Comment" />
+            <ProFormText width="md" name="dataName" label="Data Name" />
+            <ProFormText width="md" name="processType" label="Process Type" />
+            <ProFormTextArea width="md" name="description" label="Description" />
           </ProForm>,
         );
         formRefProcess.current?.setFieldsValue(pi);
         setSumitButton(
-          <Button
-            onClick={() => {
-              formRefProcess.current?.submit();
-              callbackDrawerVisible();
-            }}
-            type="primary"
-          >
+          <Button onClick={() => formRefProcess.current?.submit()} type="primary">
             Submit
           </Button>,
         );
