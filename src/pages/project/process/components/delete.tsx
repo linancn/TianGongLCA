@@ -7,9 +7,11 @@ import { deleteProcess } from '@/services/process/api';
 
 type Props = {
   pkid: number;
+  buttonType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const ProcessDelete: FC<Props> = ({ pkid, actionRef }) => {
+const ProcessDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
       title: 'Are you sure to delete this process?',
@@ -19,6 +21,7 @@ const ProcessDelete: FC<Props> = ({ pkid, actionRef }) => {
         deleteProcess(pkid).then(async (result) => {
           if (result === 'ok') {
             message.success('Successfully deleted!');
+            setViewDrawerVisible(false);
             actionRef.current?.reload();
           } else {
             message.error(result);
@@ -27,11 +30,15 @@ const ProcessDelete: FC<Props> = ({ pkid, actionRef }) => {
       },
       onCancel() {},
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, pkid, setViewDrawerVisible]);
   return (
     <>
       <Tooltip title="Delete">
-        <Button shape="circle" icon={<DeleteOutlined />} size="small" onClick={onDelete} />
+        {buttonType === 'icon' ? (
+          <Button shape="circle" icon={<DeleteOutlined />} size="small" onClick={onDelete} />
+        ) : (
+          <Button onClick={onDelete}>Delete</Button>
+        )}
       </Tooltip>
     </>
   );

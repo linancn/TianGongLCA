@@ -1,16 +1,22 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Drawer, Tooltip } from 'antd';
+import { Button, Descriptions, Drawer, Space, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getProcessByPkid } from '@/services/process/api';
+import { ActionType } from '@ant-design/pro-table';
+import ProcessDelete from './delete';
+import ProcessEdit from './edit';
+import styles from '@/style/custom.less';
 
 type Props = {
   pkid: number;
+  actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const ProcessView: FC<Props> = ({ pkid }) => {
+const ProcessView: FC<Props> = ({ pkid, actionRef }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [footerButtons, setFooterButtons] = useState<JSX.Element>();
 
   const onView = () => {
     setDrawerVisible(true);
@@ -25,6 +31,22 @@ const ProcessView: FC<Props> = ({ pkid }) => {
           <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
           <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
         </Descriptions>,
+      );
+      setFooterButtons(
+        <>
+          <ProcessEdit
+            pkid={pkid}
+            buttonType={'text'}
+            actionRef={actionRef}
+            setViewDrawerVisible={setDrawerVisible}
+          />
+          <ProcessDelete
+            pkid={pkid}
+            buttonType={'text'}
+            actionRef={actionRef}
+            setViewDrawerVisible={setDrawerVisible}
+          />
+        </>,
       );
     });
   };
@@ -43,6 +65,11 @@ const ProcessView: FC<Props> = ({ pkid }) => {
             style={{ border: 0 }}
             onClick={() => setDrawerVisible(false)}
           />
+        }
+        footer={
+          <Space size={'middle'} className={styles.footer_right}>
+            {footerButtons}
+          </Space>
         }
         maskClosable={true}
         visible={drawerVisible}

@@ -11,9 +11,11 @@ import { getProcessByPkid, updateProcess } from '@/services/process/api';
 
 type Props = {
   pkid: number;
+  buttonType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
+  setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
+const ProcessEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -34,6 +36,7 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
               if (result === 'ok') {
                 message.success('Successfully Edited!');
                 setDrawerVisible(false);
+                setViewDrawerVisible(false);
                 if (actionRef.current) {
                   actionRef.current.reload();
                 }
@@ -51,7 +54,7 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [actionRef, pkid]);
+  }, [actionRef, pkid, setViewDrawerVisible]);
 
   const onReset = () => {
     getProcessByPkid(pkid).then(async (result) => {
@@ -62,7 +65,11 @@ const ProcessEdit: FC<Props> = ({ pkid, actionRef }) => {
   return (
     <>
       <Tooltip title="Edit">
-        <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        {buttonType === 'icon' ? (
+          <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
+        ) : (
+          <Button onClick={onEdit}>Edit</Button>
+        )}
       </Tooltip>
       <Drawer
         title="Edit"

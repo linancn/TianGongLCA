@@ -64,10 +64,20 @@ const TableList: FC<ListProps> = (props) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <ProcessView pkid={row.pkid} />
-          <ProcessEdit pkid={row.pkid} actionRef={actionRef} />
+          <ProcessView pkid={row.pkid} actionRef={actionRef} />
+          <ProcessEdit
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
           <ProcessSetting projectId={row.projectId} processPkid={row.pkid} />
-          <ProcessDelete pkid={row.pkid} actionRef={actionRef} />
+          <ProcessDelete
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
         </Space>,
       ],
     },
