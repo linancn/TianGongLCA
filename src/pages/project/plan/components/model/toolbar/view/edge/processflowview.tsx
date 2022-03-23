@@ -10,10 +10,10 @@ type Props = {
 };
 const ProcessFlowView: FC<Props> = ({ pkid }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onView = () => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     getFlowProcessBaseByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
@@ -51,12 +51,12 @@ const ProcessFlowView: FC<Props> = ({ pkid }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
       >
         {viewDescriptions}
       </Drawer>

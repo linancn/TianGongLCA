@@ -7,7 +7,7 @@ import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
-import { getPlanInfoByPkid, updatePlanInfo } from '@/services/plan/api';
+import { getPlanByPkid, updatePlan } from '@/services/plan/api';
 
 type Props = {
   pkid: number;
@@ -20,7 +20,7 @@ const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
 
   const onEdit = useCallback(() => {
     setDrawerVisible(true);
-    getPlanInfoByPkid(pkid).then(async (pi) => {
+    getPlanByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -30,7 +30,7 @@ const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            updatePlanInfo({ ...values, pkid: pi.pkid }).then(async (result) => {
+            updatePlan({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Edit successfully!');
                 setDrawerVisible(false);
@@ -52,7 +52,7 @@ const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
   }, [actionRef, pkid]);
 
   const onReset = () => {
-    getPlanInfoByPkid(pkid).then(async (result) => {
+    getPlanByPkid(pkid).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };

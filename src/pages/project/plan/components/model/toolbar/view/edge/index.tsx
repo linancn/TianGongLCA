@@ -4,10 +4,9 @@ import { useCallback, useRef } from 'react';
 import styles from '@/style/custom.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getEdgeProcessFlowGrid } from '@/services/edgeprocessflow/api';
-import type { EdgeProcessFlow } from '@/services/edgeprocessflow/data';
-import EdgeProcessView from './view';
 import { CloseOutlined } from '@ant-design/icons';
+import { getPlanModelFlowGrid } from '@/services/plan/api';
+import type { PlanModelFlow } from '@/services/plan/data';
 
 type Props = {
   projectId: number;
@@ -31,17 +30,30 @@ const ViewEdge: FC<Props> = ({
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
-  const edgeColumns: ProColumns<EdgeProcessFlow>[] = [
+  const columns: ProColumns<PlanModelFlow>[] = [
+    {
+      title: '',
+      // render: (_, row) => [
+      // <EdgeProcessDelete pkid={row.pkid} actionRef={actionRef} />
+      // ],
+    },
     {
       title: 'Source Name',
-      dataIndex: 'sourceFlowName',
+      dataIndex: 'flowSourceId',
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.sourceFlowName}
+          {row.flowSourceId}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
-          <EdgeProcessView projectId={projectId} id={row.sourceFlowId} />
+          {/* <EdgeProcessView projectId={projectId} id={row.flowSourceId} /> */}
+          {/* <EdgeProcessSelect
+            pkid={row.pkid}
+            projectId={projectId}
+            processId={sourceId}
+            st={'source'}
+            actionRef={actionRef}
+          /> */}
         </Space>,
       ],
     },
@@ -50,18 +62,26 @@ const ViewEdge: FC<Props> = ({
     },
     {
       title: 'Target Name',
-      dataIndex: 'targetFlowName',
+      dataIndex: 'flowTargetId',
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.targetFlowName}
+          {row.flowTargetId}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
-          <EdgeProcessView projectId={projectId} id={row.targetFlowId} />
+          {/* <EdgeProcessView projectId={projectId} id={row.flowTargetId} /> */}
+          {/* <EdgeProcessSelect
+            pkid={row.pkid}
+            projectId={projectId}
+            processId={targetId}
+            st={'target'}
+            actionRef={actionRef}
+          /> */}
         </Space>,
       ],
     },
   ];
+
   return (
     <Drawer
       visible={drawerVisible}
@@ -78,7 +98,7 @@ const ViewEdge: FC<Props> = ({
         actionRef={actionRef}
         search={false}
         pagination={false}
-        columns={edgeColumns}
+        columns={columns}
         toolBarRender={() => []}
         request={(
           params: {
@@ -87,7 +107,7 @@ const ViewEdge: FC<Props> = ({
           },
           sort,
         ) => {
-          return getEdgeProcessFlowGrid(params, sort, projectId, modelId, sourceId, targetId);
+          return getPlanModelFlowGrid(params, sort, projectId, modelId, sourceId, targetId);
         }}
       />
     </Drawer>

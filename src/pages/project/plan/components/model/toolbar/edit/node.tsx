@@ -1,4 +1,4 @@
-import { getPlanInfo, updatePlanInfo } from '@/services/plan/api';
+import { getPlan, updatePlan } from '@/services/plan/api';
 import { Button, Drawer, message, Space } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useState, useRef, useCallback, useEffect } from 'react';
@@ -30,7 +30,7 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
 
   function getData() {
     if (cellType === 'plan') {
-      getPlanInfo(projectId, planModelState.cellId).then(async (pi) => {
+      getPlan(projectId, planModelState.cellId).then(async (pi) => {
         setDrawerEdit(
           <ProForm
             formRef={formRefPlan}
@@ -40,7 +40,7 @@ const EditNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
               },
             }}
             onFinish={async (values) => {
-              updatePlanInfo({ ...values, pkid: pi.pkid }).then(async (result) => {
+              updatePlan({ ...values, pkid: pi.pkid }).then(async (result) => {
                 if (result === 'ok') {
                   message.success('Successfully Edited!');
                   callbackDrawerVisible();

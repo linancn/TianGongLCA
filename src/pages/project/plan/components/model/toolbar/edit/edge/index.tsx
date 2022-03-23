@@ -31,7 +31,7 @@ const EditEdge: FC<Props> = ({
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
-  const edgeColumns: ProColumns<PlanModelFlow>[] = [
+  const columns: ProColumns<PlanModelFlow>[] = [
     {
       title: '',
       // render: (_, row) => [
@@ -98,7 +98,7 @@ const EditEdge: FC<Props> = ({
         actionRef={actionRef}
         search={false}
         pagination={false}
-        columns={edgeColumns}
+        columns={columns}
         toolBarRender={() => [
           <CreateEdgeFlow
             projectId={projectId}

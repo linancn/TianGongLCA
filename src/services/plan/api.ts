@@ -2,7 +2,7 @@ import { request } from 'umi';
 import type { PlanInfo, PlanModel, PlanModelFlow } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
-export async function getPlanInfoGrid(
+export async function getPlanGrid(
   params: {
     current?: number;
     pageSize?: number;
@@ -62,8 +62,8 @@ export async function getPlanModelFlowGrid(
   sort: Record<string, SortOrder>,
   projectId: number,
   planId: string,
-  sourceNodeId: string,
-  targetNodeId: string,
+  edgeSourceId: string,
+  edgeTargetId: string,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -79,26 +79,26 @@ export async function getPlanModelFlowGrid(
       orderBy,
       projectId,
       planId,
-      sourceNodeId,
-      targetNodeId,
+      edgeSourceId,
+      edgeTargetId,
     },
   });
 }
 
-export async function getPlanInfo(projectId: number, id: string) {
-  return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${projectId}/${id}`, {
+export async function getPlan(projectId: number, id: string) {
+  return request<PlanInfo>(`http://localhost:8081/api/plan/get/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
-export async function getPlanInfoByPkid(pkid: number) {
-  return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${pkid}`, {
+export async function getPlanByPkid(pkid: number) {
+  return request<PlanInfo>(`http://localhost:8081/api/plan/get/${pkid}`, {
     method: 'GET',
   });
 }
 
-export async function updatePlanInfo(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/plan/updateinfo', {
+export async function updatePlan(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/plan/update', {
     method: 'PUT',
     data,
   });

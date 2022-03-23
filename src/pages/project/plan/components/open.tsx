@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { Button, Divider, Drawer, message, Modal, Space, Tooltip } from 'antd';
 import {
@@ -143,6 +144,34 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
     setPlanModelState(state);
     return state;
   };
+  const loadModel = (loadModelId: string) => {
+    getPlanModelCells(projectId, loadModelId).then((pm) => {
+      setParentCount(pm.parentCount);
+      const modelCells = JSON.parse(pm.modelCells);
+      if (xflowApp) {
+        if (modelCells !== null) {
+          const graphData: NsGraph.IGraphData = modelCells;
+          xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
+            XFlowGraphCommands.GRAPH_RENDER.id,
+            {
+              graphData,
+            },
+          );
+        } else {
+          const graphData: NsGraph.IGraphData = { edges: [], nodes: [] };
+          xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
+            XFlowGraphCommands.GRAPH_RENDER.id,
+            {
+              graphData,
+            },
+          );
+        }
+      }
+      setModelId(pm.id);
+      setModelName(pm.dataName);
+      setParentCount(pm.parentCount);
+    });
+  };
   const onLoad: IAppLoad = async (app) => {
     if (!isOnLoad) {
       getPlanModelCells(projectId, modelId).then((pm) => {
@@ -170,6 +199,14 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
     await watchEvent(app);
     setxflowApp(app);
   };
+
+  useEffect(() => {
+    if (drawerVisible) {
+      loadModel(modelId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawerVisible]);
+
   return (
     <>
       <Tooltip title="Open model">
@@ -226,31 +263,7 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
                   onClick={() => {
                     if (parentCount === 1) {
                       getPlanParentGrid({}, {}, projectId, modelId).then((ppg) => {
-                        getPlanModelCells(projectId, ppg.data[0].id).then((pm) => {
-                          const modelCells = JSON.parse(pm.modelCells);
-                          if (xflowApp) {
-                            if (modelCells !== null) {
-                              const graphData: NsGraph.IGraphData = modelCells;
-                              xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-                                XFlowGraphCommands.GRAPH_RENDER.id,
-                                {
-                                  graphData,
-                                },
-                              );
-                            } else {
-                              const graphData: NsGraph.IGraphData = { edges: [], nodes: [] };
-                              xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-                                XFlowGraphCommands.GRAPH_RENDER.id,
-                                {
-                                  graphData,
-                                },
-                              );
-                            }
-                          }
-                          setModelId(pm.id);
-                          setModelName(pm.dataName);
-                          setParentCount(pm.parentCount);
-                        });
+                        loadModel(ppg.data[0].id);
                       });
                     } else if (parentCount > 1) setRollUpDrawerVisible(true);
                   }}
@@ -267,31 +280,7 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
                     )
                   }
                   onClick={() => {
-                    getPlanModelCells(projectId, planModelState.cellConfig.id).then((pm) => {
-                      const modelCells = JSON.parse(pm.modelCells);
-                      if (xflowApp) {
-                        if (modelCells !== null) {
-                          const graphData: NsGraph.IGraphData = modelCells;
-                          xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-                            XFlowGraphCommands.GRAPH_RENDER.id,
-                            {
-                              graphData,
-                            },
-                          );
-                        } else {
-                          const graphData: NsGraph.IGraphData = { edges: [], nodes: [] };
-                          xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-                            XFlowGraphCommands.GRAPH_RENDER.id,
-                            {
-                              graphData,
-                            },
-                          );
-                        }
-                      }
-                      setModelId(pm.id);
-                      setModelName(pm.dataName);
-                      setParentCount(pm.parentCount);
-                    });
+                    loadModel(planModelState.cellConfig.id);
                   }}
                 />
               </Tooltip>
@@ -386,32 +375,7 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
                       icon: <ExclamationCircleOutlined />,
                       content: '',
                       onOk() {
-                        getPlanModelCells(projectId, modelId).then((pm) => {
-                          setParentCount(pm.parentCount);
-                          const modelCells = JSON.parse(pm.modelCells);
-                          if (xflowApp) {
-                            if (modelCells !== null) {
-                              const graphData: NsGraph.IGraphData = modelCells;
-                              xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-                                XFlowGraphCommands.GRAPH_RENDER.id,
-                                {
-                                  graphData,
-                                },
-                              );
-                            } else {
-                              const graphData: NsGraph.IGraphData = { edges: [], nodes: [] };
-                              xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-                                XFlowGraphCommands.GRAPH_RENDER.id,
-                                {
-                                  graphData,
-                                },
-                              );
-                            }
-                          }
-                          setModelId(pm.id);
-                          setModelName(pm.dataName);
-                          setParentCount(pm.parentCount);
-                        });
+                        loadModel(modelId);
                       },
                       onCancel() {},
                     });

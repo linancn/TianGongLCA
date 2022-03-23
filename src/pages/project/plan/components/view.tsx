@@ -3,18 +3,18 @@ import { useState } from 'react';
 import { Button, Descriptions, Drawer, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
-import { getPlanInfoByPkid } from '@/services/plan/api';
+import { getPlanByPkid } from '@/services/plan/api';
 
 type Props = {
   pkid: number;
 };
 const PlanView: FC<Props> = ({ pkid }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onView = () => {
-    handleDrawerVisible(true);
-    getPlanInfoByPkid(pkid).then(async (result) => {
+    setDrawerVisible(true);
+    getPlanByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>
@@ -41,12 +41,12 @@ const PlanView: FC<Props> = ({ pkid }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
       >
         {viewDescriptions}
       </Drawer>

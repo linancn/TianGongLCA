@@ -1,7 +1,7 @@
 import type { Dispatch, FC } from 'react';
 import React, { useState, useCallback } from 'react';
 import { Button, Drawer, Space } from 'antd';
-import { getPlanInfoGrid } from '@/services/plan/api';
+import { getPlanGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { PlanInfo } from '@/services/plan/data';
@@ -204,7 +204,7 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
             },
             sort,
           ) => {
-            return getPlanInfoGrid(params, sort, projectId);
+            return getPlanGrid(params, sort, projectId);
           }}
           columns={planInfoColumns}
           rowClassName={(record) => {

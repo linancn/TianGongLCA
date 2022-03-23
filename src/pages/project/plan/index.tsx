@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useEffect, useState, useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getPlanInfoGrid } from '@/services/plan/api';
+import { getPlanGrid } from '@/services/plan/api';
 import type { PlanInfo } from '@/services/plan/data';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Space } from 'antd';
@@ -107,7 +107,7 @@ const PlanList: FC<Props> = (props) => {
           },
           sort,
         ) => {
-          return getPlanInfoGrid(params, sort, projectid);
+          return getPlanGrid(params, sort, projectid);
         }}
         columns={columns}
       />

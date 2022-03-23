@@ -94,6 +94,7 @@ const DesignEdge: FC<Props> = ({ xflowApp, label, drawerVisible, setDrawerVisibl
       xflowApp.commandService.executeCommand<NsEdgeCmd.UpdateEdge.IArgs>(
         XFlowEdgeCommands.UPDATE_EDGE.id,
         {
+          options: {},
           edgeConfig: config,
         },
       );

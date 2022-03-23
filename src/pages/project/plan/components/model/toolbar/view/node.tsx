@@ -1,4 +1,4 @@
-import { getPlanInfo } from '@/services/plan/api';
+import { getPlan } from '@/services/plan/api';
 import { Button, Descriptions, Drawer } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useEffect } from 'react';
@@ -23,7 +23,7 @@ const ViewNode: FC<Props> = ({ projectId, planModelState, drawerVisible, setDraw
 
   function getData() {
     if (planModelState.cellConfig.info.type === 'plan') {
-      getPlanInfo(projectId, planModelState.cellId).then(async (result) => {
+      getPlan(projectId, planModelState.cellId).then(async (result) => {
         setViewDescriptions(
           <Descriptions column={1}>
             <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>

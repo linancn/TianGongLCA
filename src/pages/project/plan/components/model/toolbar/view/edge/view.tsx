@@ -11,11 +11,11 @@ type Props = {
 };
 
 const EdgeProcessView: FC<Props> = ({ projectId, id }) => {
-  const [drawerVisible, handleDrawerVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
 
   const onView = () => {
-    handleDrawerVisible(true);
+    setDrawerVisible(true);
     getFlowProcessBaseById(projectId, id)
       .then(async (result) => {
         setViewDescriptions(
@@ -57,12 +57,12 @@ const EdgeProcessView: FC<Props> = ({ projectId, id }) => {
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
         visible={drawerVisible}
-        onClose={() => handleDrawerVisible(false)}
+        onClose={() => setDrawerVisible(false)}
       >
         {viewDescriptions}
       </Drawer>
