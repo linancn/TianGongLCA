@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useState } from 'react';
 import styles from '@/style/custom.less';
 import { Button, Drawer, Space } from 'antd';
-import { getPlanModel, getPlanParentGrid } from '@/services/plan/api';
+import { getPlanModelCells, getPlanParentGrid } from '@/services/plan/api';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { PlanInfo } from '@/services/plan/data';
@@ -89,11 +89,11 @@ const RollUp: FC<Props> = ({
 
   const onOpen = () => {
     if (selectParent) {
-      getPlanModel(projectId, selectParent.id).then((pm) => {
-        const childrenJson = JSON.parse(pm.childrenJson);
+      getPlanModelCells(projectId, selectParent.id).then((pm) => {
+        const modelCells = JSON.parse(pm.modelCells);
         if (xflowApp) {
-          if (childrenJson !== null) {
-            const graphData: NsGraph.IGraphData = childrenJson;
+          if (modelCells !== null) {
+            const graphData: NsGraph.IGraphData = modelCells;
             xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
               XFlowGraphCommands.GRAPH_RENDER.id,
               {
@@ -110,7 +110,7 @@ const RollUp: FC<Props> = ({
             );
           }
         }
-        callbackValues(pm.id, pm.name, pm.parentCount);
+        callbackValues(pm.id, pm.dataName, pm.parentCount);
       });
     }
   };
@@ -144,7 +144,9 @@ const RollUp: FC<Props> = ({
           }}
           columns={columns}
           rowClassName={(record) => {
-            return record.name === selectParent?.name ? styles['split-row-select-active'] : '';
+            return record.dataName === selectParent?.dataName
+              ? styles['split-row-select-active']
+              : '';
           }}
           onRow={(record) => {
             return {

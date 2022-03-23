@@ -21,7 +21,7 @@ export type PlanModel = {
   id: string;
   parentCount: number;
   dataName: string;
-  childrenJson: string;
+  modelCells: string;
 };
 
 export type PlanModelState = {
@@ -29,4 +29,18 @@ export type PlanModelState = {
   cellType: string;
   cellId: string;
   cellConfig: any;
+};
+
+export type PlanModelFlow = {
+  projectId: number;
+  planPkid: number;
+  planId: string;
+  edgeSourceId: string;
+  edgeSourceName: string;
+  flowSourceId: string;
+  flowSourceName: string;
+  edgeTargetId: string;
+  edgeTargetName: string;
+  flowTargetId: string;
+  flowTargetName: string;
 };

@@ -1,31 +1,27 @@
 import { Button, Drawer, message, Space, Tooltip } from 'antd';
-import type { FC } from 'react';
+import type { FC, MutableRefObject } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
 import styles from '@/style/custom.less';
-import type { ActionType, ProColumns } from '@ant-design/pro-table';
+import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { updateEdgeProcess } from '@/services/edgeprocess/api';
 import type { ListPagination } from '@/services/home/data';
-import type { FlowProcessBase } from '@/services/flowprocessbase/data';
-import { getFlowProcessBaseGrid } from '@/services/flowprocessbase/api';
 import { CloseOutlined, SelectOutlined } from '@ant-design/icons';
-import ProcessFlowParameterView from '@/pages/project/process/components/setting/flow/parameter/view';
-import ProcessFlowView from './processflowview';
+import type { ExchangeJson } from '@/services/process/data';
+import { getExchangeJsonGridById } from '@/services/process/api';
+import type { ProFormInstance } from '@ant-design/pro-form';
 
 type Props = {
-  pkid: number;
   projectId: number;
   processId: string;
-  st: string;
-  actionRef: React.MutableRefObject<ActionType | undefined>;
+  input: boolean;
+  formRef: MutableRefObject<ProFormInstance<Record<string, any>> | undefined>;
 };
 
-const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRef }) => {
-  const [drawerSourceVisible, handleDrawerSourceVisible] = useState(false);
-  const [drawerTargetVisible, handleDrawerTargetVisible] = useState(false);
-  const [selectRow, setSelectRow] = useState<FlowProcessBase>();
-  const flowProcessBaseColumns: ProColumns<FlowProcessBase>[] = [
+const ModelFlowSelect: FC<Props> = ({ projectId, processId, input, formRef }) => {
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [selectRow, setSelectRow] = useState<ExchangeJson>();
+  const columns: ProColumns<ExchangeJson>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
@@ -38,145 +34,70 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
       search: false,
     },
     {
-      title: 'SD',
-      dataIndex: 'sd',
+      title: 'Amount Formula',
+      dataIndex: 'amountFormula',
       search: false,
     },
     {
-      title: 'Factor',
-      dataIndex: 'factor',
-      search: false,
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Flow Name',
+      dataIndex: 'flowName',
       sorter: true,
-    },
-    {
-      title: 'Creator',
-      dataIndex: 'creator',
-      sorter: true,
-      search: false,
-    },
-    {
-      title: 'Create Time',
-      dataIndex: 'createTime',
-      valueType: 'dateTime',
-      sorter: true,
-      search: false,
-    },
-    {
-      title: 'Last Update Time',
-      dataIndex: 'lastUpdateTime',
-      valueType: 'dateTime',
-      sorter: true,
-      search: false,
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      valueType: 'textarea',
-      search: false,
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
-      search: false,
-    },
-    {
-      title: 'Parameter',
-      search: false,
-      sorter: true,
-      render: (_, row) => [
-        <Space size={'small'} className={styles.footer_left}>
-          {row.parameterName}
-        </Space>,
-        <Space size={'small'} className={styles.footer_right}>
-          <ProcessFlowParameterView
-            projectId={projectId}
-            processId={processId}
-            id={row.parameterId}
-          />
-        </Space>,
-      ],
-    },
-    {
-      title: 'Option',
-      search: false,
-      render: (_, row) => [
-        <Space size={'small'}>
-          <ProcessFlowView pkid={row.pkid} />
-        </Space>,
-      ],
     },
   ];
-  const reload = useCallback(() => {
-    actionRef.current?.reload();
-  }, [actionRef]);
 
-  const onSelect = () => {
-    if (st === 'source') {
-      handleDrawerSourceVisible(true);
-    } else if (st === 'target') {
-      handleDrawerTargetVisible(true);
+  const setFormValue = useCallback(() => {
+    if (selectRow) {
+      if (input) {
+        formRef.current?.setFieldsValue({
+          flowTargetId: selectRow.flowId,
+          flowTargetName: selectRow.flowName,
+        });
+      } else {
+        formRef.current?.setFieldsValue({
+          flowSourceId: selectRow.flowId,
+          flowSourceName: selectRow.flowName,
+        });
+      }
+      setDrawerVisible(false);
+    } else {
+      message.error('Select nothing');
     }
-  };
-
-  const onSelectFlowProcessToEdgeProcess = () => {
-    if (st === 'source') {
-      updateEdgeProcess({ pkid, sourceFlowId: selectRow?.id }).then((result) => {
-        if (result === 'ok') {
-          handleDrawerSourceVisible(false);
-          reload();
-        } else {
-          message.error(result);
-        }
-      });
-      return true;
-    }
-    if (st === 'target') {
-      updateEdgeProcess({ pkid, targetFlowId: selectRow?.id }).then((result) => {
-        if (result === 'ok') {
-          handleDrawerTargetVisible(false);
-          reload();
-        } else {
-          message.error(result);
-        }
-      });
-      return true;
-    }
-    return true;
-  };
+  }, [formRef, input, selectRow]);
 
   return (
     <>
       <Tooltip title="Select">
-        <Button shape="circle" icon={<SelectOutlined />} size="small" onClick={onSelect} />
+        <Button
+          shape="circle"
+          icon={<SelectOutlined />}
+          size="small"
+          onClick={() => setDrawerVisible(true)}
+        />
       </Tooltip>
       <Drawer
-        title="Select Source Flow"
+        title="Select Flow"
         width="100%"
         closable={false}
         extra={
           <Button
             icon={<CloseOutlined />}
             style={{ border: 0 }}
-            onClick={() => handleDrawerSourceVisible(false)}
+            onClick={() => setDrawerVisible(false)}
           />
         }
         maskClosable={true}
-        visible={drawerSourceVisible}
-        onClose={() => handleDrawerSourceVisible(false)}
+        visible={drawerVisible}
+        onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerSourceVisible(false)}>Cancel</Button>
-            <Button onClick={onSelectFlowProcessToEdgeProcess} type="primary">
+            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={setFormValue} type="primary">
               Select
             </Button>
           </Space>
         }
       >
-        <ProTable<FlowProcessBase, ListPagination>
+        <ProTable<ExchangeJson, ListPagination>
           search={{
             defaultCollapsed: false,
           }}
@@ -187,62 +108,13 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
             },
             sort,
           ) => {
-            return getFlowProcessBaseGrid(params, sort, projectId, processId, 'output');
+            return getExchangeJsonGridById(params, sort, projectId, processId, input);
           }}
-          columns={flowProcessBaseColumns}
+          columns={columns}
           rowClassName={(record) => {
-            return record.pkid === selectRow?.pkid ? styles.split_row_select_active : '';
-          }}
-          onRow={(record) => {
-            return {
-              onClick: () => {
-                if (record) {
-                  setSelectRow(record);
-                }
-              },
-            };
-          }}
-        />
-      </Drawer>
-      <Drawer
-        title="Select Target Flow"
-        width="100%"
-        closable={false}
-        extra={
-          <Button
-            icon={<CloseOutlined />}
-            style={{ border: 0 }}
-            onClick={() => handleDrawerTargetVisible(false)}
-          />
-        }
-        maskClosable={true}
-        visible={drawerTargetVisible}
-        onClose={() => handleDrawerTargetVisible(false)}
-        footer={
-          <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => handleDrawerTargetVisible(false)}>Cancel</Button>
-            <Button onClick={onSelectFlowProcessToEdgeProcess} type="primary">
-              Select
-            </Button>
-          </Space>
-        }
-      >
-        <ProTable<FlowProcessBase, ListPagination>
-          search={{
-            defaultCollapsed: false,
-          }}
-          request={(
-            params: {
-              pageSize: number;
-              current: number;
-            },
-            sort,
-          ) => {
-            return getFlowProcessBaseGrid(params, sort, projectId, processId, 'input');
-          }}
-          columns={flowProcessBaseColumns}
-          rowClassName={(record) => {
-            return record.pkid === selectRow?.pkid ? styles.split_row_select_active : '';
+            return record.processPkid === selectRow?.processPkid
+              ? styles.split_row_select_active
+              : '';
           }}
           onRow={(record) => {
             return {
@@ -258,4 +130,4 @@ const EdgeProcessSelect: FC<Props> = ({ pkid, projectId, processId, st, actionRe
     </>
   );
 };
-export default EdgeProcessSelect;
+export default ModelFlowSelect;

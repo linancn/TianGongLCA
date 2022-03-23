@@ -79,6 +79,35 @@ export async function getExchangeJsonGrid(
   });
 }
 
+export async function getExchangeJsonGridById(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  sort: Record<string, SortOrder>,
+  projectId: number,
+  processId: string,
+  input: boolean,
+) {
+  const sortBy = Object.keys(sort)[0];
+  const orderBy = sort[sortBy]?.replace('end', '');
+  return request<{
+    data: ExchangeJson[];
+    total?: number;
+    success?: boolean;
+  }>('http://localhost:8081/api/process/getexchangejsongrid', {
+    method: 'GET',
+    params: {
+      ...params,
+      sortBy,
+      orderBy,
+      projectId,
+      processId,
+      input,
+    },
+  });
+}
+
 export async function getProcessById(projectId: number, id: string) {
   return request<Process>(`http://localhost:8081/api/process/get/${projectId}/${id}`, {
     method: 'GET',

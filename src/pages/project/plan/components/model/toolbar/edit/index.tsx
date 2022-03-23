@@ -33,8 +33,8 @@ const Edit: FC<Props> = ({
         <EditEdge
           projectId={projectId}
           modelId={modelId}
-          sourceId={planModelState.cellConfig.source.cell}
-          targetId={planModelState.cellConfig.target.cell}
+          sourceId={planModelState.cellConfig.source}
+          targetId={planModelState.cellConfig.target}
           drawerVisible={drawerVisible}
           setDrawerVisible={setDrawerVisible}
         />

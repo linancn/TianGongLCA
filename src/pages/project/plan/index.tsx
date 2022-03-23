@@ -34,7 +34,7 @@ const PlanList: FC<Props> = (props) => {
       search: false,
     },
     {
-      title: <FormattedMessage id="plan.dataName" defaultMessage="Index" />,
+      title: <FormattedMessage id="plan.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },

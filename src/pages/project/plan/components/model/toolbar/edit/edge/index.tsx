@@ -4,13 +4,10 @@ import { useCallback, useRef } from 'react';
 import styles from '@/style/custom.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { getEdgeProcessFlowGrid } from '@/services/edgeprocessflow/api';
-import type { EdgeProcessFlow } from '@/services/edgeprocessflow/data';
-import EdgeProcessCreate from './create';
-import EdgeProcessView from './view';
-import EdgeProcessSelect from './select';
-import EdgeProcessDelete from './delete';
+import CreateEdgeFlow from './create';
 import { CloseOutlined } from '@ant-design/icons';
+import { getPlanModelFlowGrid } from '@/services/plan/api';
+import type { PlanModelFlow } from '@/services/plan/data';
 
 type Props = {
   projectId: number;
@@ -34,28 +31,30 @@ const EditEdge: FC<Props> = ({
     setDrawerVisible(false);
   }, [setDrawerVisible]);
 
-  const edgeColumns: ProColumns<EdgeProcessFlow>[] = [
+  const edgeColumns: ProColumns<PlanModelFlow>[] = [
     {
       title: '',
-      render: (_, row) => [<EdgeProcessDelete pkid={row.pkid} actionRef={actionRef} />],
+      // render: (_, row) => [
+      // <EdgeProcessDelete pkid={row.pkid} actionRef={actionRef} />
+      // ],
     },
     {
       title: 'Source Name',
-      dataIndex: 'sourceFlowName',
+      dataIndex: 'flowSourceId',
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.sourceFlowName}
+          {row.flowSourceId}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
-          <EdgeProcessView projectId={projectId} id={row.sourceFlowId} />
-          <EdgeProcessSelect
+          {/* <EdgeProcessView projectId={projectId} id={row.flowSourceId} /> */}
+          {/* <EdgeProcessSelect
             pkid={row.pkid}
             projectId={projectId}
             processId={sourceId}
             st={'source'}
             actionRef={actionRef}
-          />
+          /> */}
         </Space>,
       ],
     },
@@ -64,21 +63,21 @@ const EditEdge: FC<Props> = ({
     },
     {
       title: 'Target Name',
-      dataIndex: 'targetFlowName',
+      dataIndex: 'flowTargetId',
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.targetFlowName}
+          {row.flowTargetId}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
-          <EdgeProcessView projectId={projectId} id={row.targetFlowId} />
-          <EdgeProcessSelect
+          {/* <EdgeProcessView projectId={projectId} id={row.flowTargetId} /> */}
+          {/* <EdgeProcessSelect
             pkid={row.pkid}
             projectId={projectId}
             processId={targetId}
             st={'target'}
             actionRef={actionRef}
-          />
+          /> */}
         </Space>,
       ],
     },
@@ -101,9 +100,9 @@ const EditEdge: FC<Props> = ({
         pagination={false}
         columns={edgeColumns}
         toolBarRender={() => [
-          <EdgeProcessCreate
+          <CreateEdgeFlow
             projectId={projectId}
-            modelId={modelId}
+            planId={modelId}
             sourceId={sourceId}
             targetId={targetId}
             actionRef={actionRef}
@@ -116,7 +115,7 @@ const EditEdge: FC<Props> = ({
           },
           sort,
         ) => {
-          return getEdgeProcessFlowGrid(params, sort, projectId, modelId, sourceId, targetId);
+          return getPlanModelFlowGrid(params, sort, projectId, modelId, sourceId, targetId);
         }}
       />
     </Drawer>

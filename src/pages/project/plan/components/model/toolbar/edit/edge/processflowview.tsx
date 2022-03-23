@@ -8,7 +8,7 @@ import { getFlowProcessBaseByPkid } from '@/services/flowprocessbase/api';
 type Props = {
   pkid: number;
 };
-const ProcessFlowView: FC<Props> = ({ pkid }) => {
+const ProcessFlowView0: FC<Props> = ({ pkid }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, handleDrawerVisible] = useState(false);
 
@@ -64,4 +64,4 @@ const ProcessFlowView: FC<Props> = ({ pkid }) => {
   );
 };
 
-export default ProcessFlowView;
+export default ProcessFlowView0;

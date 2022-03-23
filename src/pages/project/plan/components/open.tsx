@@ -27,7 +27,7 @@ import type {
 import { MODELS, XFlowNodeCommands } from '@antv/xflow';
 import { XFlow, XFlowCanvas, XFlowEdgeCommands, XFlowGraphCommands } from '@antv/xflow';
 import { useGraphConfig } from './model/toolbar/config/graph';
-import { getPlanModel, getPlanParentGrid, updatePlanChinlrenJson } from '@/services/plan/api';
+import { getPlanModelCells, getPlanParentGrid, updatePlanModelCells } from '@/services/plan/api';
 import { EdgeAttrs, EdgeConnector, EdgeRouter } from './model/toolbar/config/edge';
 import Add from './model/toolbar/add';
 import View from './model/toolbar/view';
@@ -145,10 +145,10 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
   };
   const onLoad: IAppLoad = async (app) => {
     if (!isOnLoad) {
-      getPlanModel(projectId, modelId).then((pm) => {
-        const childrenJson = JSON.parse(pm.childrenJson);
-        if (childrenJson !== null) {
-          const graphData: NsGraph.IGraphData = childrenJson;
+      getPlanModelCells(projectId, modelId).then((pm) => {
+        const modelCells = JSON.parse(pm.modelCells);
+        if (modelCells !== null) {
+          const graphData: NsGraph.IGraphData = modelCells;
           app.executeCommand<NsGraphCmd.GraphRender.IArgs>(XFlowGraphCommands.GRAPH_RENDER.id, {
             graphData,
           });
@@ -226,11 +226,11 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
                   onClick={() => {
                     if (parentCount === 1) {
                       getPlanParentGrid({}, {}, projectId, modelId).then((ppg) => {
-                        getPlanModel(projectId, ppg.data[0].id).then((pm) => {
-                          const childrenJson = JSON.parse(pm.childrenJson);
+                        getPlanModelCells(projectId, ppg.data[0].id).then((pm) => {
+                          const modelCells = JSON.parse(pm.modelCells);
                           if (xflowApp) {
-                            if (childrenJson !== null) {
-                              const graphData: NsGraph.IGraphData = childrenJson;
+                            if (modelCells !== null) {
+                              const graphData: NsGraph.IGraphData = modelCells;
                               xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
                                 XFlowGraphCommands.GRAPH_RENDER.id,
                                 {
@@ -267,11 +267,11 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
                     )
                   }
                   onClick={() => {
-                    getPlanModel(projectId, planModelState.cellConfig.id).then((pm) => {
-                      const childrenJson = JSON.parse(pm.childrenJson);
+                    getPlanModelCells(projectId, planModelState.cellConfig.id).then((pm) => {
+                      const modelCells = JSON.parse(pm.modelCells);
                       if (xflowApp) {
-                        if (childrenJson !== null) {
-                          const graphData: NsGraph.IGraphData = childrenJson;
+                        if (modelCells !== null) {
+                          const graphData: NsGraph.IGraphData = modelCells;
                           xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
                             XFlowGraphCommands.GRAPH_RENDER.id,
                             {
@@ -386,12 +386,12 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
                       icon: <ExclamationCircleOutlined />,
                       content: '',
                       onOk() {
-                        getPlanModel(projectId, modelId).then((pm) => {
+                        getPlanModelCells(projectId, modelId).then((pm) => {
                           setParentCount(pm.parentCount);
-                          const childrenJson = JSON.parse(pm.childrenJson);
+                          const modelCells = JSON.parse(pm.modelCells);
                           if (xflowApp) {
-                            if (childrenJson !== null) {
-                              const graphData: NsGraph.IGraphData = childrenJson;
+                            if (modelCells !== null) {
+                              const graphData: NsGraph.IGraphData = modelCells;
                               xflowApp.executeCommand<NsGraphCmd.GraphRender.IArgs>(
                                 XFlowGraphCommands.GRAPH_RENDER.id,
                                 {
@@ -432,9 +432,9 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
                             const updatePlan = {
                               projectId,
                               id: modelId,
-                              childrenJson: JSON.stringify(data),
+                              modelCells: JSON.stringify(data),
                             };
-                            updatePlanChinlrenJson(updatePlan).then(() => {
+                            updatePlanModelCells(updatePlan).then(() => {
                               message.success('Save successfully!');
                             });
                           },

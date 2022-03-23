@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { PlanInfo, PlanModel } from './data';
+import type { PlanInfo, PlanModel, PlanModelFlow } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getPlanInfoGrid(
@@ -54,11 +54,43 @@ export async function getPlanParentGrid(
   });
 }
 
+export async function getPlanModelFlowGrid(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  sort: Record<string, SortOrder>,
+  projectId: number,
+  planId: string,
+  sourceNodeId: string,
+  targetNodeId: string,
+) {
+  const sortBy = Object.keys(sort)[0];
+  const orderBy = sort[sortBy]?.replace('end', '');
+  return request<{
+    data: PlanModelFlow[];
+    total?: number;
+    success?: boolean;
+  }>('http://localhost:8081/api/plan/getmodelflowgrid', {
+    method: 'GET',
+    params: {
+      ...params,
+      sortBy,
+      orderBy,
+      projectId,
+      planId,
+      sourceNodeId,
+      targetNodeId,
+    },
+  });
+}
+
 export async function getPlanInfo(projectId: number, id: string) {
   return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${projectId}/${id}`, {
     method: 'GET',
   });
 }
+
 export async function getPlanInfoByPkid(pkid: number) {
   return request<PlanInfo>(`http://localhost:8081/api/plan/getinfo/${pkid}`, {
     method: 'GET',
@@ -72,15 +104,22 @@ export async function updatePlanInfo(data?: Record<string, any>) {
   });
 }
 
-export async function getPlanModel(projectId: number, id: string) {
-  return request<PlanModel>(`http://localhost:8081/api/plan/getmodel/${projectId}/${id}`, {
+export async function getPlanModelCells(projectId: number, id: string) {
+  return request<PlanModel>(`http://localhost:8081/api/plan/getmodelcells/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
-export async function updatePlanChinlrenJson(data?: Record<string, any>) {
-  return request<PlanInfo>('http://localhost:8081/api/plan/updatechinlrenjson', {
+export async function updatePlanModelCells(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/plan/updatemodelcells', {
     method: 'PUT',
+    data,
+  });
+}
+
+export async function createPlanModelFlow(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/plan/createmodelflow', {
+    method: 'POST',
     data,
   });
 }
