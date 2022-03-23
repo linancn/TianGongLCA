@@ -5,7 +5,7 @@ import { CloseOutlined, DatabaseOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import TabPane from '@ant-design/pro-card/lib/components/TabPane';
-import CrystaLCA from './crystalca';
+// import CrystaLCA from './crystalca';
 import USLCI from './uslci';
 
 const ProcessSelect: FC = () => {
@@ -49,7 +49,7 @@ const ProcessSelect: FC = () => {
       >
         <Tabs type="card" size="large">
           <TabPane tab="CrystaLCA" key="CrystaLCA">
-            <CrystaLCA projectId={16} />
+            {/* <CrystaLCA projectId={16} /> */}
           </TabPane>
           <TabPane tab="USLCI" key="USLCI">
             <USLCI />
