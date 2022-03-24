@@ -8,6 +8,8 @@ import type { ActionType } from '@ant-design/pro-table';
 import FlowPropertyEdit from './edit';
 import FlowPropertyDelete from './delete';
 import styles from '@/style/custom.less';
+import UnitGroupViewByParent from '../../unitgroup/components/viewbyparent';
+import CategoryViewByParent from '../../category/components/viewbyparent';
 type Props = {
   pkid: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
@@ -23,11 +25,35 @@ const FlowPropertyView: FC<Props> = ({ pkid, actionRef }) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>
+          <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
+          <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
           <Descriptions.Item label="Last Change">
             {moment(result?.lastChange).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
-          <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
-          <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
+          <Descriptions.Item label="Flow Property Type">
+            {result?.flowPropertyType}
+          </Descriptions.Item>
+          <Descriptions.Item label="Unit Group">
+            {result?.unitGroupName}
+            <UnitGroupViewByParent
+              projectId={result.projectId}
+              id={result.unitGroupId}
+              parentPkid={result.pkid}
+              parentType={'flowproperty'}
+              actionRef={actionRef}
+            />
+          </Descriptions.Item>
+          <Descriptions.Item label="Category Name">
+            {result.categoryName}
+            <CategoryViewByParent
+              projectId={result.projectId}
+              id={result.categoryId}
+              parentType={'flowproperty'}
+              parentPkid={pkid}
+              actionRef={actionRef}
+            />
+          </Descriptions.Item>
+          <Descriptions.Item label="Release">{result?.release}</Descriptions.Item>
         </Descriptions>,
       );
     });
