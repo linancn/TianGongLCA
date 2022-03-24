@@ -33,7 +33,6 @@ export async function getUnitJsonGrid(
     pageSize?: number;
   },
   sort: Record<string, SortOrder>,
-  projectId: number,
   unitGroupPkid: number,
 ) {
   const sortBy = Object.keys(sort)[0];
@@ -48,7 +47,6 @@ export async function getUnitJsonGrid(
       ...params,
       sortBy,
       orderBy,
-      projectId,
       unitGroupPkid,
     },
   });

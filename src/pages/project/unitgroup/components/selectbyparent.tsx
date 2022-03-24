@@ -9,9 +9,9 @@ import { useState, useRef, useCallback } from 'react';
 import { getUnitGroupGrid, updateParentUnitGroup } from '@/services/unitgroup/api';
 import UnitJsonList from './unitjson/list';
 import CategoryViewByParent from '../../category/components/viewbyparent';
-import UnitGroupView from './view';
-import UnitGroupEdit from './edit';
-import UnitGroupDelete from './delete';
+// import UnitGroupView from './view';
+// import UnitGroupEdit from './edit';
+// import UnitGroupDelete from './delete';
 import type { UnitGroup } from '@/services/unitgroup/data';
 import UnitGroupCreate from './create';
 
@@ -60,11 +60,7 @@ const UnitGroupSelectByParent: FC<Props> = ({
               // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
             />
           </Tooltip> */}
-          <UnitJsonList
-            projectId={row.projectId}
-            unitGroupPkid={row.pkid}
-            parentActionRef={actionRef}
-          />
+          <UnitJsonList unitGroupPkid={row.pkid} parentActionRef={actionRef} />
         </Space>,
       ],
     },
@@ -102,13 +98,13 @@ const UnitGroupSelectByParent: FC<Props> = ({
       title: 'Option',
       dataIndex: 'option',
       search: false,
-      render: (_, row) => [
-        <Space size={'small'}>
-          <UnitGroupView pkid={row.pkid} />
-          <UnitGroupEdit pkid={row.pkid} actionRef={actionRef} />
-          <UnitGroupDelete pkid={row.pkid} actionRef={actionRef} />
-        </Space>,
-      ],
+      // render: (_, row) => [
+      //   <Space size={'small'}>
+      //     <UnitGroupView pkid={row.pkid} />
+      //     <UnitGroupEdit pkid={row.pkid} actionRef={actionRef} />
+      //     <UnitGroupDelete pkid={row.pkid} actionRef={actionRef} />
+      //   </Space>,
+      // ],
     },
   ];
 

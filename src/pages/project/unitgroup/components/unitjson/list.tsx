@@ -13,11 +13,10 @@ import UnitJsonEdit from './edit';
 import UnitJsonDelete from './delete';
 
 type Props = {
-  projectId: number;
   unitGroupPkid: number;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const UnitJsonList: FC<Props> = ({ projectId, unitGroupPkid, parentActionRef }) => {
+const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const actionRef = useRef<ActionType>();
 
@@ -108,7 +107,7 @@ const UnitJsonList: FC<Props> = ({ projectId, unitGroupPkid, parentActionRef }) 
               },
               sort,
             ) => {
-              return getUnitJsonGrid(params, sort, projectId, unitGroupPkid);
+              return getUnitJsonGrid(params, sort, unitGroupPkid);
             }}
             columns={unitJsonColumns}
           />

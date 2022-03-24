@@ -6,7 +6,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import type { ListPagination } from '@/services/home/data';
 import { FormattedMessage } from 'umi';
 import { getProject } from '@/services/project/api';
-import FlowPropertyCreate from './components/create';
+import UnitGroupCreate from './components/create';
 import { Space } from 'antd';
 import UnitGroupView from './components/view';
 import UnitGroupEdit from './components/edit';
@@ -55,11 +55,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
               // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
             />
           </Tooltip> */}
-          <UnitJsonList
-            projectId={row.projectId}
-            unitGroupPkid={row.pkid}
-            parentActionRef={actionRef}
-          />
+          <UnitJsonList unitGroupPkid={row.pkid} parentActionRef={actionRef} />
         </Space>,
       ],
     },
@@ -136,8 +132,8 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <FlowPropertyCreate projectId={projectid} actionRef={actionRef} />,
-          <UnitGroupSelect />,
+          <UnitGroupCreate projectId={projectid} actionRef={actionRef} />,
+          <UnitGroupSelect projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {
