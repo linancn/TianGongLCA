@@ -2,6 +2,7 @@ export type UnitGroup = {
   pkid: number;
   id: string;
   projectId: number;
+  projectName: string;
   dataName: string;
   lastChange: Date;
   description: string;

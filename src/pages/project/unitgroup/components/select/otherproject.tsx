@@ -3,12 +3,12 @@ import { useState, useCallback } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { ListPagination } from '@/services/home/data';
-import type { PubUnitGroup } from '@/services/pub/unitgroup/data';
-import { getPubUnitGroupGrid, savePubUnitGroup } from '@/services/pub/unitgroup/api';
 
 import styles from '@/style/custom.less';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message, Space } from 'antd';
+import { getUnitGroupGrid, saveUnitGroup } from '@/services/unitgroup/api';
+import type { UnitGroup } from '@/services/unitgroup/data';
 
 type Props = {
   projectId: number;
@@ -16,13 +16,19 @@ type Props = {
   setDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawerVisible }) => {
-  const [selectRow, setSelectRow] = useState<PubUnitGroup>();
-  const columns: ProColumns<PubUnitGroup>[] = [
+const UnitGroupOtherProject: FC<Props> = ({ projectId, parentActionRef, setDrawerVisible }) => {
+  const [selectRow, setSelectRow] = useState<UnitGroup>();
+  const columns: ProColumns<UnitGroup>[] = [
     {
       title: 'ID',
       dataIndex: 'index',
       valueType: 'index',
+      search: false,
+    },
+    {
+      title: 'Project Name',
+      dataIndex: 'projectName',
+      sorter: true,
       search: false,
     },
     {
@@ -50,7 +56,7 @@ const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawer
 
   const submitSelectId = () => {
     if (selectRow) {
-      savePubUnitGroup({ projectId, saveId: selectRow.id }).then(async (result) => {
+      saveUnitGroup({ projectId, savePkid: selectRow.pkid }).then(async (result) => {
         if (result === 'ok') {
           message.success('Successfully Selected!');
           setDrawerVisible(false);
@@ -76,7 +82,7 @@ const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawer
         </Space>,
       ]}
     >
-      <ProTable<PubUnitGroup, ListPagination>
+      <ProTable<UnitGroup, ListPagination>
         search={{
           defaultCollapsed: false,
         }}
@@ -87,7 +93,7 @@ const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawer
           },
           sort,
         ) => {
-          return getPubUnitGroupGrid(params, sort);
+          return getUnitGroupGrid(params, sort, projectId, true);
         }}
         columns={columns}
         rowClassName={(record) => {
@@ -107,4 +113,4 @@ const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawer
   );
 };
 
-export default UnitGroupPubDatabase;
+export default UnitGroupOtherProject;

@@ -9,6 +9,7 @@ export async function getUnitGroupGrid(
   },
   sort: Record<string, SortOrder>,
   projectId: number,
+  otherProject: boolean,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -23,6 +24,7 @@ export async function getUnitGroupGrid(
       sortBy,
       orderBy,
       projectId,
+      otherProject,
     },
   });
 }
@@ -73,6 +75,13 @@ export async function createUnitGroup(data?: Record<string, any>) {
 
 export async function updateUnitGroup(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/unitgroup/update', {
+    method: 'PUT',
+    data,
+  });
+}
+
+export async function saveUnitGroup(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/unitgroup/save', {
     method: 'PUT',
     data,
   });

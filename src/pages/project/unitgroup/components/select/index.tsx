@@ -2,9 +2,10 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { Button, Drawer, Tooltip } from 'antd';
 import { CloseOutlined, DatabaseOutlined } from '@ant-design/icons';
-import PubDatabase from './pubdatabase';
+import UnitGroupPubDatabase from './pubdatabase';
 import ProCard from '@ant-design/pro-card';
 import type { ActionType } from '@ant-design/pro-table';
+import UnitGroupOtherProject from './otherproject';
 
 type Props = {
   projectId: number;
@@ -13,7 +14,6 @@ type Props = {
 
 const UnitGroupSelect: FC<Props> = ({ projectId, parentActionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
-  // const formRefCreate = useRef<ProFormInstance>();
 
   return (
     <>
@@ -47,14 +47,15 @@ const UnitGroupSelect: FC<Props> = ({ projectId, parentActionRef }) => {
             type: 'card',
           }}
         >
-          <ProCard.TabPane key="thisProject" tab="This Project">
-            内容一
-          </ProCard.TabPane>
           <ProCard.TabPane key="otherProjects" tab="Other Projects">
-            内容二
+            <UnitGroupOtherProject
+              projectId={projectId}
+              parentActionRef={parentActionRef}
+              setDrawerVisible={setDrawerVisible}
+            />
           </ProCard.TabPane>
           <ProCard.TabPane key="publicDatabase" tab="Public Database">
-            <PubDatabase
+            <UnitGroupPubDatabase
               projectId={projectId}
               parentActionRef={parentActionRef}
               setDrawerVisible={setDrawerVisible}

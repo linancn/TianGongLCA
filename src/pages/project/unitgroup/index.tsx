@@ -142,7 +142,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
           },
           sort,
         ) => {
-          return getUnitGroupGrid(params, sort, projectid);
+          return getUnitGroupGrid(params, sort, projectid, false);
         }}
         columns={unitGroupColumns}
       />
