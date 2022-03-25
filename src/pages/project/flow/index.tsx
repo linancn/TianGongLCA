@@ -32,24 +32,24 @@ const TableList: FC<ListProps> = (porps) => {
   const actionRef = useRef<ActionType>();
   const flowColumns: ProColumns<Flow>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="flow.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="flow.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Flow Type',
+      title: <FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />,
       dataIndex: 'flowType',
       sorter: true,
       search: false,
     },
     {
-      title: 'Location Name',
+      title: <FormattedMessage id="flow.locationName" defaultMessage="Location Name" />,
       dataIndex: 'locationName',
       search: false,
       render: (_, row) => [
@@ -66,7 +66,7 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
     {
-      title: 'Category',
+      title: <FormattedMessage id="flow.categoryName" defaultMessage="Category" />,
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
@@ -83,7 +83,7 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
     {
-      title: 'Measurement Count',
+      title: <FormattedMessage id="flow.flowPropertyCount" defaultMessage="Measurement Count" />,
       dataIndex: 'flowPropertyCount',
       search: false,
       render: (_, row) => [
@@ -106,26 +106,26 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Database',
+      title: <FormattedMessage id="flow.database" defaultMessage="Database" />,
       dataIndex: 'database',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="flow.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [

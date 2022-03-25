@@ -11,6 +11,7 @@ import { getFlowByPkid, updateFlow } from '@/services/flow/api';
 import LocationViewByParent from '../../location/components/viewbyparent';
 import CategoryViewByParent from '../../category/components/viewbyparent';
 import FlowPropertyJsonList from './propertyjson/list';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -50,8 +51,15 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
             return true;
           }}
         >
-          <ProFormText width="md" name="dataName" label="Data Name" />
-          <Form.Item name="locationName" label="Location Name">
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="flow.dataName" defaultMessage="Data Name" />}
+          />
+          <Form.Item
+            name="locationName"
+            label={<FormattedMessage id="flow.locationName" defaultMessage="Location Name" />}
+          >
             <Input
               disabled={true}
               style={{ width: '328px' }}
@@ -66,7 +74,10 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
               }
             />
           </Form.Item>
-          <Form.Item name="categoryName" label="Category">
+          <Form.Item
+            name="categoryName"
+            label={<FormattedMessage id="flow.categoryName" defaultMessage="Category" />}
+          >
             <Input
               disabled={true}
               style={{ width: '328px' }}
@@ -81,7 +92,12 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
               }
             />
           </Form.Item>
-          <Form.Item name="flowPropertyCount" label="Measurement Count">
+          <Form.Item
+            name="flowPropertyCount"
+            label={
+              <FormattedMessage id="flow.flowPropertyCount" defaultMessage="Measurement Count" />
+            }
+          >
             <Input
               disabled={true}
               style={{ width: '328px' }}
@@ -94,14 +110,46 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
               }
             />
           </Form.Item>
-          <ProFormTextArea width="md" name="description" label="Description" />
-          <ProFormText width="md" name="version" label="Version" />
-          <ProFormText width="md" name="synonyms" label="Synonyms" />
-          <ProFormText width="md" name="formula" label="Formula" />
-          <ProFormText width="md" name="flowType" label="Flow Type" />
-          <ProFormText width="md" name="cas" label="Cas" />
-          <ProFormText width="md" name="database" label="Database" />
-          <ProFormText width="md" name="release" label="Release" />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="flow.description" defaultMessage="Description" />}
+          />
+          <ProFormText
+            width="md"
+            name="version"
+            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
+          />
+          <ProFormText
+            width="md"
+            name="synonyms"
+            label={<FormattedMessage id="flow.synonyms" defaultMessage="Synonyms" />}
+          />
+          <ProFormText
+            width="md"
+            name="formula"
+            label={<FormattedMessage id="flow.formula" defaultMessage="Formula" />}
+          />
+          <ProFormText
+            width="md"
+            name="flowType"
+            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
+          />
+          <ProFormText
+            width="md"
+            name="cas"
+            label={<FormattedMessage id="flow.cas" defaultMessage="Cas" />}
+          />
+          <ProFormText
+            width="md"
+            name="database"
+            label={<FormattedMessage id="flow.database" defaultMessage="Database" />}
+          />
+          <ProFormText
+            width="md"
+            name="release"
+            label={<FormattedMessage id="flow.release" defaultMessage="Release" />}
+          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -116,15 +164,17 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         {buttonType === 'icon' ? (
           <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
         ) : (
-          <Button onClick={onEdit}>Edit</Button>
+          <Button onClick={onEdit}>
+            <FormattedMessage id="options.edit" defaultMessage="Edit" />
+          </Button>
         )}
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={

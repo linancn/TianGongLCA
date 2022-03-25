@@ -7,6 +7,7 @@ import styles from '@/style/custom.less';
 import TabPane from '@ant-design/pro-card/lib/components/TabPane';
 // import CrystaLCA from './crystalca';
 import USLCI from './uslci';
+import { FormattedMessage } from 'umi';
 
 const FlowSelect: FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -14,7 +15,9 @@ const FlowSelect: FC = () => {
 
   return (
     <>
-      <Tooltip title="Select From Database">
+      <Tooltip
+        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+      >
         <Button
           size={'middle'}
           type="text"
@@ -25,7 +28,7 @@ const FlowSelect: FC = () => {
         />
       </Tooltip>
       <Drawer
-        title="Select From Database"
+        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
         width="100%"
         closable={false}
         extra={

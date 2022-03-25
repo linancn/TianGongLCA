@@ -11,6 +11,7 @@ import type { ActionType } from '@ant-design/pro-table';
 import LocationViewByParent from '../../location/components/viewbyparent';
 import CategoryViewByParent from '../../category/components/viewbyparent';
 import FlowPropertyJsonList from './propertyjson/list';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -26,8 +27,14 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
     getFlowByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Data Name">{result.dataName}</Descriptions.Item>
-          <Descriptions.Item label="Location Name">
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.dataName" defaultMessage="Data Name" />}
+          >
+            {result.dataName}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.locationName" defaultMessage="Location Name" />}
+          >
             {result.locationName}
             <LocationViewByParent
               projectId={result.projectId}
@@ -37,7 +44,9 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
               actionRef={actionRef}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Category Name">
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.categoryName" defaultMessage="Category" />}
+          >
             {result.categoryName}
             <CategoryViewByParent
               projectId={result.projectId}
@@ -47,7 +56,11 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
               actionRef={actionRef}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Measurement Count">
+          <Descriptions.Item
+            label={
+              <FormattedMessage id="flow.flowPropertyCount" defaultMessage="Measurement Count" />
+            }
+          >
             {result.flowPropertyCount}
             <FlowPropertyJsonList
               projectId={result.projectId}
@@ -55,17 +68,49 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
               parentActionRef={actionRef}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Last Change">
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />}
+          >
             {moment(result.lastChange).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
-          <Descriptions.Item label="Description">{result.description}</Descriptions.Item>
-          <Descriptions.Item label="Version">{result.version}</Descriptions.Item>
-          <Descriptions.Item label="Synonyms">{result.synonyms}</Descriptions.Item>
-          <Descriptions.Item label="Formula">{result.formula}</Descriptions.Item>
-          <Descriptions.Item label="Flow Type">{result.flowType}</Descriptions.Item>
-          <Descriptions.Item label="Cas">{result.cas}</Descriptions.Item>
-          <Descriptions.Item label="Database">{result.database}</Descriptions.Item>
-          <Descriptions.Item label="Release">{result.release}</Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.description" defaultMessage="Description" />}
+          >
+            {result.description}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
+          >
+            {result.version}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.synonyms" defaultMessage="Synonyms" />}
+          >
+            {result.synonyms}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.formula" defaultMessage="Formula" />}
+          >
+            {result.formula}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
+          >
+            {result.flowType}
+          </Descriptions.Item>
+          <Descriptions.Item label={<FormattedMessage id="flow.cas" defaultMessage="Cas" />}>
+            {result.cas}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.database" defaultMessage="Database" />}
+          >
+            {result.database}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.release" defaultMessage="Release" />}
+          >
+            {result.release}
+          </Descriptions.Item>
         </Descriptions>,
       );
       setFooterButtons(
@@ -88,11 +133,11 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
   };
   return (
     <>
-      <Tooltip title="View">
+      <Tooltip title={<FormattedMessage id="options.view" defaultMessage="View" />}>
         <Button shape="circle" icon={<ProfileOutlined />} size="small" onClick={onView} />
       </Tooltip>
       <Drawer
-        title="View"
+        title={<FormattedMessage id="options.view" defaultMessage="View" />}
         width="400px"
         closable={false}
         extra={

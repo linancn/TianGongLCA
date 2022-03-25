@@ -4,6 +4,7 @@ import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
 import { deleteFlow } from '@/services/flow/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -33,11 +34,13 @@ const FlowDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisib
   }, [actionRef, pkid, setViewDrawerVisible]);
   return (
     <>
-      <Tooltip title="Delete">
+      <Tooltip title={<FormattedMessage id="options.delete" defaultMessage="Delete" />}>
         {buttonType === 'icon' ? (
           <Button shape="circle" icon={<DeleteOutlined />} size="small" onClick={onDelete} />
         ) : (
-          <Button onClick={onDelete}>Delete</Button>
+          <Button onClick={onDelete}>
+            <FormattedMessage id="options.delete" defaultMessage="Delete" />
+          </Button>
         )}
       </Tooltip>
     </>

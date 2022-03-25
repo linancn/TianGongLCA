@@ -7,50 +7,51 @@ import type { ListPagination } from '@/services/home/data';
 import { getUslciFlowGrid } from '@/services/uslciflows/api';
 import type { UslciFlow } from '@/services/uslciflows/data';
 import { ProfileOutlined } from '@ant-design/icons';
+import { FormattedMessage } from 'umi';
 
 const USLCI: FC = () => {
   const actionRef = useRef<ActionType>();
   const dataColumns: ProColumns<UslciFlow>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="flow.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Name',
+      title: <FormattedMessage id="flow.dataName" defaultMessage="Data Name" />,
       dataIndex: 'name',
       sorter: true,
     },
     {
-      title: 'Flow Type',
+      title: <FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />,
       dataIndex: 'flowtype',
       sorter: true,
     },
     {
-      title: 'Description',
+      title: <FormattedMessage id="flow.description" defaultMessage="Description" />,
       dataIndex: 'description',
       valueType: 'textarea',
     },
     {
-      title: 'Version',
+      title: <FormattedMessage id="flow.version" defaultMessage="Version" />,
       dataIndex: 'version',
       search: false,
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastchange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: () => [
         <Space size={'small'}>
-          <Tooltip title="View">
+          <Tooltip title={<FormattedMessage id="options.view" defaultMessage="View" />}>
             <Button shape="circle" icon={<ProfileOutlined />} size="small" />
           </Tooltip>
         </Space>,

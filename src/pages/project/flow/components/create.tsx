@@ -8,6 +8,7 @@ import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { createFlow } from '@/services/flow/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -23,7 +24,7 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
 
   return (
     <>
-      <Tooltip title="Create">
+      <Tooltip title={<FormattedMessage id="options.create" defaultMessage="Create" />}>
         <Button
           size={'middle'}
           type="text"
@@ -34,7 +35,7 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
         />
       </Tooltip>
       <Drawer
-        title="Create"
+        title={<FormattedMessage id="options.create" defaultMessage="Create" />}
         width="400px"
         closable={false}
         extra={
@@ -76,9 +77,51 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="dataName" label="Data Name" />
-          <ProFormText width="md" name="flowType" label="Flow Type" />
-          <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="flow.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="flow.description" defaultMessage="Description" />}
+          />
+          <ProFormText
+            width="md"
+            name="version"
+            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
+          />
+          <ProFormText
+            width="md"
+            name="synonyms"
+            label={<FormattedMessage id="flow.synonyms" defaultMessage="Synonyms" />}
+          />
+          <ProFormText
+            width="md"
+            name="formula"
+            label={<FormattedMessage id="flow.formula" defaultMessage="Formula" />}
+          />
+          <ProFormText
+            width="md"
+            name="flowType"
+            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
+          />
+          <ProFormText
+            width="md"
+            name="cas"
+            label={<FormattedMessage id="flow.cas" defaultMessage="Cas" />}
+          />
+          <ProFormText
+            width="md"
+            name="database"
+            label={<FormattedMessage id="flow.database" defaultMessage="Database" />}
+          />
+          <ProFormText
+            width="md"
+            name="release"
+            label={<FormattedMessage id="flow.release" defaultMessage="Release" />}
+          />
         </ProForm>
       </Drawer>
     </>
