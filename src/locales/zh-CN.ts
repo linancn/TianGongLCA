@@ -8,7 +8,8 @@ import pages from './zh-CN/pages';
 import homepage from './zh-CN/homepage';
 import plan from './zh-CN/plan';
 import project from './zh-CN/project';
-
+import flow from './zh-CN/flow';
+import options from './zh-CN/options';
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -28,4 +29,6 @@ export default {
   ...homepage,
   ...plan,
   ...project,
+  ...flow,
+  ...options,
 };

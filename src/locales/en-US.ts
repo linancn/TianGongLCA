@@ -8,6 +8,8 @@ import settingDrawer from './en-US/settingDrawer';
 import settings from './en-US/settings';
 import plan from './en-US/plan';
 import project from './en-US/project';
+import flow from './en-US/flow';
+import options from './en-US/options';
 
 export default {
   'navBar.lang': 'Languages',
@@ -28,4 +30,6 @@ export default {
   ...homepage,
   ...plan,
   ...project,
+  ...flow,
+  ...options,
 };
