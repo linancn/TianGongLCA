@@ -194,7 +194,7 @@ const UnitGroupSelectByParent: FC<Props> = ({
             },
             sort,
           ) => {
-            return getUnitGroupGrid(params, sort, projectId);
+            return getUnitGroupGrid(params, sort, projectId, false);
           }}
           columns={unitGroupColumns}
           rowClassName={(record) => {
