@@ -1,12 +1,12 @@
 export default {
   'plan.index': 'No.',
-  'plan.name': 'Name',
+  'plan.dataName': 'Name',
   'plan.nation': 'Nation',
-  'plan.type': 'Type',
-  'plan.comment': 'Comment',
+  'plan.planType': 'Type',
+  'plan.description': 'Dvescription',
   'plan.creator': 'Creator',
   'plan.createTime': 'Create time',
-  'plan.lastUpdateTime': 'Last update',
+  'plan.lastChange': 'Last change',
   'plan.option': 'Options',
   'plan.version': 'Version',
 };

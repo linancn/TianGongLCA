@@ -10,6 +10,8 @@ export default {
   'menu.flows': 'Flows',
   'menu.measurements': 'Measurements',
   'menu.units': 'Units',
+  'menu.categories': 'Categories',
+  'menu.locations': 'Locations',
   'menu.global_parameters': 'Global Parameters',
   'menu.go_back': 'Go Back',
   'menu.back': 'Back',

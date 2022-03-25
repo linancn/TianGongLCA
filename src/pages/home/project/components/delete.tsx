@@ -13,7 +13,7 @@ type Props = {
 const ProjectDelete: FC<Props> = ({ pkid, actionRef }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
-      title: 'Are you sure to delete this projct?',
+      title: 'Are you sure you want to delete this projct?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {

@@ -23,7 +23,7 @@ export default {
   'pages.login.loginWith': 'Login with :',
   'pages.login.registerAccount': 'Register',
   'pages.cancel': 'Cancel',
-  'pages.submit': 'Submit',
+  'pages.submit': 'Finish',
   'pages.true': 'Yes',
   'pages.false': 'No',
   'pages.open': 'Open',
