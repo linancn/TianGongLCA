@@ -9,7 +9,6 @@ import { getProject } from '@/services/project/api';
 import type { FlowProperty } from '@/services/flowproperty/data';
 import FlowPropertyCreate from './components/create';
 import { getFlowPropertyGrid } from '@/services/flowproperty/api';
-import FlowPropertySelect from './components/select';
 import { Space } from 'antd';
 import FlowPropertyView from './components/view';
 import FlowPropertyEdit from './components/edit';
@@ -17,6 +16,7 @@ import FlowPropertyDelete from './components/delete';
 import CategoryViewByParent from '../category/components/viewbyparent';
 import UnitJsonList from '../unitgroup/components/unitjson/list';
 import UnitGroupViewByParent from '../unitgroup/components/viewbyparent';
+import FlowPropertySelect from './components/select';
 
 type ListProps = {
   location: {
@@ -71,11 +71,7 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       render: (_, row) => [
         <Space size={'small'}>
           {row.referenceUnit == null ? '-' : row.referenceUnit}
-          <UnitJsonList
-            projectId={row.projectId}
-            unitGroupPkid={row.unitGroupPkid}
-            parentActionRef={actionRef}
-          />
+          <UnitJsonList unitGroupPkid={row.unitGroupPkid} parentActionRef={actionRef} />
         </Space>,
       ],
     },
@@ -159,7 +155,7 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
         }}
         toolBarRender={() => [
           <FlowPropertyCreate projectId={projectid} actionRef={actionRef} />,
-          <FlowPropertySelect />,
+          <FlowPropertySelect projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {
@@ -168,7 +164,7 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
           },
           sort,
         ) => {
-          return getFlowPropertyGrid(params, sort, projectid);
+          return getFlowPropertyGrid(params, sort, projectid, false);
         }}
         columns={flowPropertyColumns}
       />

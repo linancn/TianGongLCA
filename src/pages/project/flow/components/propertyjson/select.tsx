@@ -135,7 +135,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
             },
             sort,
           ) => {
-            return getFlowPropertyGrid(params, sort, projectId);
+            return getFlowPropertyGrid(params, sort, projectId, false);
           }}
           columns={flowPropertyColumns}
           rowClassName={(record) => {
