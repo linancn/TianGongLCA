@@ -10,6 +10,7 @@ import { useCallback, useState, useRef } from 'react';
 import type { FlowProperty } from '@/services/flowproperty/data';
 import { getFlowPropertyGrid } from '@/services/flowproperty/api';
 import FlowPropertyCreate from '@/pages/project/flowproperty/components/create';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -21,31 +22,31 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
   const actionRef = useRef<ActionType>();
   const flowPropertyColumns: ProColumns<FlowProperty>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="flowproperty.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="flowproperty.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="flowproperty.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       // render: (_, row) => [
@@ -71,7 +72,9 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
   }, [formRef, selectRow]);
   return (
     <>
-      <Tooltip title="Select">
+      <Tooltip
+        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+      >
         <Button
           shape="circle"
           size="small"
@@ -83,7 +86,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
       </Tooltip>
 
       <Drawer
-        title="Select"
+        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
         width="100%"
         closable={false}
         extra={
@@ -117,7 +120,9 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
           }}
           toolBarRender={() => [
             <FlowPropertyCreate projectId={projectId} actionRef={actionRef} />,
-            <Tooltip title="Select From Database">
+            <Tooltip
+              title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+            >
               <Button
                 size={'middle'}
                 type="text"

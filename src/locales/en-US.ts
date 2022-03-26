@@ -10,6 +10,7 @@ import plan from './en-US/plan';
 import project from './en-US/project';
 import flow from './en-US/flow';
 import options from './en-US/options';
+import flowproperty from './en-US/flowproperty';
 
 export default {
   'navBar.lang': 'Languages',
@@ -32,4 +33,5 @@ export default {
   ...project,
   ...flow,
   ...options,
+  ...flowproperty,
 };

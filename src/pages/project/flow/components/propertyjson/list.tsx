@@ -5,12 +5,14 @@ import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import type { ListPagination } from '@/services/home/data';
 import ProTable from '@ant-design/pro-table';
-import type { FlowPropertyJson } from '@/services/flowproperty/data';
+// import type { FlowPropertyJson } from '@/services/flowproperty/data';
 import FlowPropertyJsonView from './view';
 import FlowPropertyJsonEdit from './edit';
 import FlowPropertyJsonCreate from './create';
 import { getFlowPropertyJsonViewGrid } from '@/services/flow/api';
 import FlowPropertyJsonDelete from './delete';
+import { FlowPropertyJson } from '@/services/flow/data';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -23,24 +25,31 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
 
   const flowPropertyJsonColumns: ProColumns<FlowPropertyJson>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="flowproperty.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Conversion Factor',
+      title: (
+        <FormattedMessage id="flowproperty.conversionFactor" defaultMessage="Conversion Factor" />
+      ),
       dataIndex: 'conversionFactor',
       search: false,
     },
     {
-      title: 'Reference Flow Property',
+      title: (
+        <FormattedMessage
+          id="flowproperty.referenceFlowProperty"
+          defaultMessage="Reference Flow Property"
+        />
+      ),
       dataIndex: 'referenceFlowProperty',
       search: false,
       render: (_, row) => [<>{row.referenceFlowProperty === true ? 'true' : 'false'}</>],
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
@@ -62,20 +71,20 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
     // ],
     // },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="flowproperty.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="flowproperty.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [

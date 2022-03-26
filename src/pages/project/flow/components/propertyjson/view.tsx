@@ -4,6 +4,7 @@ import { Button, Descriptions, Divider, Drawer, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getFlowPropertyJsonView } from '@/services/flow/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   flowPkid: number;
@@ -18,29 +19,53 @@ const FlowPropertyJsonView: FC<Props> = ({ flowPkid, propertyId }) => {
     getFlowPropertyJsonView(flowPkid, propertyId).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Conversion Factor">
+          <Descriptions.Item
+            label={
+              <FormattedMessage
+                id="flowproperty.conversionFactor"
+                defaultMessage="Conversion Factor"
+              />
+            }
+          >
             {result?.conversionFactor}
           </Descriptions.Item>
-          <Descriptions.Item label="Reference Flow Property">
+          <Descriptions.Item
+            label={
+              <FormattedMessage
+                id="flowproperty.referenceFlowProperty"
+                defaultMessage="Reference Flow Property"
+              />
+            }
+          >
             {result?.referenceFlowProperty === true ? 'true' : 'false'}
           </Descriptions.Item>
           <Divider>Measurement Base Info</Divider>
-          <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>
-          <Descriptions.Item label="Last Change">
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />}
+          >
+            {result?.dataName}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.lastChange" defaultMessage="Last Change" />}
+          >
             {moment(result?.lastChange).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
-          <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.description" defaultMessage="Description" />}
+          >
+            {result?.description}
+          </Descriptions.Item>
         </Descriptions>,
       );
     });
   };
   return (
     <>
-      <Tooltip title="View">
+      <Tooltip title={<FormattedMessage id="options.view" defaultMessage="View" />}>
         <Button shape="circle" icon={<ProfileOutlined />} size="small" onClick={onView} />
       </Tooltip>
       <Drawer
-        title="View"
+        title={<FormattedMessage id="options.view" defaultMessage="View" />}
         width="400px"
         closable={false}
         extra={

@@ -10,6 +10,7 @@ import plan from './zh-CN/plan';
 import project from './zh-CN/project';
 import flow from './zh-CN/flow';
 import options from './zh-CN/options';
+import flowproperty from './zh-CN/flowproperty';
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -31,4 +32,5 @@ export default {
   ...project,
   ...flow,
   ...options,
+  ...flowproperty,
 };
