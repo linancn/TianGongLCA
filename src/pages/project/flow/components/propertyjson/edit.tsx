@@ -10,6 +10,7 @@ import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getFlowPropertyJsonView, updateFlowPropertyJson } from '@/services/flow/api';
 import FlowPropertyJsonSelect from './select';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -50,7 +51,16 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
             return true;
           }}
         >
-          <ProFormText width="md" name="conversionFactor" label="Conversion Factor" />
+          <ProFormText
+            width="md"
+            name="conversionFactor"
+            label={
+              <FormattedMessage
+                id="flowproperty.conversionFactor"
+                defaultMessage="Conversion Factor"
+              />
+            }
+          />
           <ProFormSelect
             options={[
               {
@@ -60,7 +70,12 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
             ]}
             width="md"
             name="referenceFlowProperty"
-            label="Reference Flow Property"
+            label={
+              <FormattedMessage
+                id="flowproperty.referenceFlowProperty"
+                defaultMessage="Reference Flow Property"
+              />
+            }
             disabled={pi.referenceFlowProperty}
           />
           <Divider>
@@ -68,8 +83,18 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
             <FlowPropertyJsonSelect projectId={projectId} formRef={formRefEdit} />
           </Divider>
           <ProFormText width="md" name="flowPropertyId" label="Flow Property Id" hidden={true} />
-          <ProFormText width="md" name="dataName" label="Data Name" disabled={true} />
-          <ProFormTextArea width="md" name="description" label="Description" disabled={true} />
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />}
+            disabled={true}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="flowproperty.description" defaultMessage="Description" />}
+            disabled={true}
+          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -90,11 +115,11 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={

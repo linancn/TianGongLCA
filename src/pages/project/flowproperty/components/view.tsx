@@ -10,6 +10,7 @@ import FlowPropertyDelete from './delete';
 import styles from '@/style/custom.less';
 import UnitGroupViewByParent from '../../unitgroup/components/viewbyparent';
 import CategoryViewByParent from '../../category/components/viewbyparent';
+import { FormattedMessage } from 'umi';
 type Props = {
   pkid: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
@@ -24,16 +25,39 @@ const FlowPropertyView: FC<Props> = ({ pkid, actionRef }) => {
     getFlowPropertyByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>
-          <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
-          <Descriptions.Item label="Description">{result?.description}</Descriptions.Item>
-          <Descriptions.Item label="Last Change">
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />}
+          >
+            {result?.dataName}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.version" defaultMessage="Version" />}
+          >
+            {result?.version}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.description" defaultMessage="Description" />}
+          >
+            {result?.description}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.lastChange" defaultMessage="Last Change" />}
+          >
             {moment(result?.lastChange).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
-          <Descriptions.Item label="Flow Property Type">
+          <Descriptions.Item
+            label={
+              <FormattedMessage
+                id="flowproperty.flowPropertyType"
+                defaultMessage="Flow Property Type"
+              />
+            }
+          >
             {result?.flowPropertyType}
           </Descriptions.Item>
-          <Descriptions.Item label="Unit Group">
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.unitGroupName" defaultMessage="Unit Group" />}
+          >
             {result?.unitGroupName}
             <UnitGroupViewByParent
               projectId={result.projectId}
@@ -43,7 +67,9 @@ const FlowPropertyView: FC<Props> = ({ pkid, actionRef }) => {
               actionRef={actionRef}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Category Name">
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.categoryName" defaultMessage="Category" />}
+          >
             {result.categoryName}
             <CategoryViewByParent
               projectId={result.projectId}
@@ -53,7 +79,11 @@ const FlowPropertyView: FC<Props> = ({ pkid, actionRef }) => {
               actionRef={actionRef}
             />
           </Descriptions.Item>
-          <Descriptions.Item label="Release">{result?.release}</Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flowproperty.release" defaultMessage="Release" />}
+          >
+            {result?.release}
+          </Descriptions.Item>
         </Descriptions>,
       );
     });
@@ -76,11 +106,11 @@ const FlowPropertyView: FC<Props> = ({ pkid, actionRef }) => {
   };
   return (
     <>
-      <Tooltip title="View">
+      <Tooltip title={<FormattedMessage id="options.view" defaultMessage="View" />}>
         <Button shape="circle" icon={<ProfileOutlined />} size="small" onClick={onView} />
       </Tooltip>
       <Drawer
-        title="View"
+        title={<FormattedMessage id="options.view" defaultMessage="View" />}
         width="400px"
         closable={false}
         extra={

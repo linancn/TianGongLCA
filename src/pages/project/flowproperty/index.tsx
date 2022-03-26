@@ -31,24 +31,26 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
   const [projectName, setProjectName] = useState('');
   const flowPropertyColumns: ProColumns<FlowProperty>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="flowproperty.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Flow Property Type',
+      title: (
+        <FormattedMessage id="flowproperty.flowPropertyType" defaultMessage="Flow Property Type" />
+      ),
       dataIndex: 'flowPropertyType',
       sorter: true,
       search: false,
     },
     {
-      title: 'Unit Group',
+      title: <FormattedMessage id="flowproperty.unitGroupName" defaultMessage="Unit Group" />,
       dataIndex: 'unitGroupName',
       search: false,
       render: (_, row) => [
@@ -65,7 +67,7 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       ],
     },
     {
-      title: 'Reference Unit',
+      title: <FormattedMessage id="flowproperty.referenceUnit" defaultMessage="Reference Unit" />,
       dataIndex: 'referenceUnit',
       search: false,
       render: (_, row) => [
@@ -76,7 +78,7 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       ],
     },
     {
-      title: 'Category',
+      title: <FormattedMessage id="flowproperty.categoryName" defaultMessage="Category" />,
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
@@ -93,26 +95,26 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       ],
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="flowproperty.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Database',
+      title: <FormattedMessage id="flowproperty.database" defaultMessage="Database" />,
       dataIndex: 'database',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="flowproperty.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [

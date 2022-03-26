@@ -10,6 +10,7 @@ import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { createFlowPropertyJson } from '@/services/flow/api';
 import FlowPropertyJsonSelect from './select';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -26,7 +27,7 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
 
   return (
     <>
-      <Tooltip title="Create">
+      <Tooltip title={<FormattedMessage id="options.create" defaultMessage="Create" />}>
         <Button
           size={'middle'}
           type="text"
@@ -35,7 +36,7 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
         />
       </Tooltip>
       <Drawer
-        title="Create"
+        title={<FormattedMessage id="options.create" defaultMessage="Create" />}
         width="400px"
         closable={false}
         extra={
@@ -80,7 +81,16 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
             return true;
           }}
         >
-          <ProFormText width="md" name="conversionFactor" label="Conversion Factor" />
+          <ProFormText
+            width="md"
+            name="conversionFactor"
+            label={
+              <FormattedMessage
+                id="flowproperty.conversionFactor"
+                defaultMessage="Conversion Factor"
+              />
+            }
+          />
           <ProFormSelect
             options={[
               {
@@ -101,8 +111,18 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
             <FlowPropertyJsonSelect projectId={projectId} formRef={formRefEdit} />
           </Divider>
           <ProFormText width="md" name="flowPropertyId" label="Flow Property Id" hidden={true} />
-          <ProFormText width="md" name="dataName" label="Data Name" disabled={true} />
-          <ProFormTextArea width="md" name="description" label="Description" disabled={true} />
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />}
+            disabled={true}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="flowproperty.description" defaultMessage="Description" />}
+            disabled={true}
+          />
         </ProForm>
       </Drawer>
     </>
