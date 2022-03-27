@@ -11,12 +11,12 @@ import FlowDelete from './components/delete';
 import FlowCreate from './components/create';
 import { FormattedMessage } from 'umi';
 import { getProject } from '@/services/project/api';
-import FlowSelect from './components/select';
 import type { Flow } from '@/services/flow/data';
 import { getFlowGrid } from '@/services/flow/api';
 import LocationViewByParent from '../location/components/viewbyparent';
 import CategoryViewByParent from '../category/components/viewbyparent';
 import FlowPropertyJsonList from './components/propertyjson/list';
+import FlowSelect from './components/select';
 
 type ListProps = {
   location: {
@@ -170,7 +170,7 @@ const TableList: FC<ListProps> = (porps) => {
         }}
         toolBarRender={() => [
           <FlowCreate projectId={projectid} actionRef={actionRef} />,
-          <FlowSelect />,
+          <FlowSelect projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {
@@ -179,7 +179,7 @@ const TableList: FC<ListProps> = (porps) => {
           },
           sort,
         ) => {
-          return getFlowGrid(params, sort, projectid);
+          return getFlowGrid(params, sort, projectid, false);
         }}
         columns={flowColumns}
       />

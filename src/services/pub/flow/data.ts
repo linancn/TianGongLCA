@@ -1,15 +1,17 @@
-export type PubFlowProperty = {
+export type PubFlow = {
   id: string;
   dataName: string;
   lastChange: Date;
   description: string;
-  flowPropertyType: string;
-  unitGroupId: string;
-  unitGroupName: string;
-  referenceUnit: string;
+  synonyms: string;
+  formula: string;
+  flowType: string;
+  cas: string;
   categoryId: string;
   categoryPath: string;
   categoryName: string;
+  locationId: string;
+  locationName: string;
   version: string;
   tags: string;
   library: string;

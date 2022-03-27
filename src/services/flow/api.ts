@@ -9,6 +9,7 @@ export async function getFlowGrid(
   },
   sort: Record<string, SortOrder>,
   projectId: number,
+  otherProject: boolean,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -23,6 +24,7 @@ export async function getFlowGrid(
       sortBy,
       orderBy,
       projectId,
+      otherProject,
     },
   });
 }
@@ -110,4 +112,11 @@ export async function deleteFlowPropertyJson(flowPkid: number, propertyId: strin
       method: 'DELETE',
     },
   );
+}
+
+export async function saveFlow(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/flow/save', {
+    method: 'PUT',
+    data,
+  });
 }
