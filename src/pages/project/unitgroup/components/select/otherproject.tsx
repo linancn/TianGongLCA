@@ -56,15 +56,17 @@ const UnitGroupOtherProject: FC<Props> = ({ projectId, parentActionRef, setDrawe
 
   const submitSelectId = () => {
     if (selectRow) {
-      saveUnitGroup({ projectId, savePkid: selectRow.pkid }).then(async (result) => {
-        if (result === 'ok') {
-          message.success('Successfully Selected!');
-          setDrawerVisible(false);
-          reload();
-        } else {
-          message.error(result);
-        }
-      });
+      saveUnitGroup({ projectId, othProjectId: selectRow.projectId, othId: selectRow.id }).then(
+        async (result) => {
+          if (result === 'ok') {
+            message.success('Successfully Selected!');
+            setDrawerVisible(false);
+            reload();
+          } else {
+            message.error(result);
+          }
+        },
+      );
     } else {
       message.error('Select nothing');
     }

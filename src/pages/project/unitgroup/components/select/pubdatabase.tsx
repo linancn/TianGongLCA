@@ -50,7 +50,7 @@ const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawer
 
   const submitSelectId = () => {
     if (selectRow) {
-      savePubUnitGroup({ projectId, saveId: selectRow.id }).then(async (result) => {
+      savePubUnitGroup({ projectId, pubId: selectRow.id }).then(async (result) => {
         if (result === 'ok') {
           message.success('Successfully Selected!');
           setDrawerVisible(false);

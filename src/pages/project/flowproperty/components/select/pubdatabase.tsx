@@ -50,7 +50,7 @@ const FlowPropertyPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDra
 
   const submitSelectId = () => {
     if (selectRow) {
-      savePubFlowProperty({ projectId, saveId: selectRow.id }).then(async (result) => {
+      savePubFlowProperty({ projectId, pubId: selectRow.id }).then(async (result) => {
         if (result === 'ok') {
           message.success('Successfully Selected!');
           setDrawerVisible(false);

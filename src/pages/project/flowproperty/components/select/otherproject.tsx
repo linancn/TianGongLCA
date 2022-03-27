@@ -56,15 +56,17 @@ const FlowPropertyOtherProject: FC<Props> = ({ projectId, parentActionRef, setDr
 
   const submitSelectId = () => {
     if (selectRow) {
-      saveFlowProperty({ projectId, savePkid: selectRow.pkid }).then(async (result) => {
-        if (result === 'ok') {
-          message.success('Successfully Selected!');
-          setDrawerVisible(false);
-          reload();
-        } else {
-          message.error(result);
-        }
-      });
+      saveFlowProperty({ projectId, othProjectId: selectRow.projectId, othId: selectRow.id }).then(
+        async (result) => {
+          if (result === 'ok') {
+            message.success('Successfully Selected!');
+            setDrawerVisible(false);
+            reload();
+          } else {
+            message.error(result);
+          }
+        },
+      );
     } else {
       message.error('Select nothing');
     }
