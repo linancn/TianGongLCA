@@ -50,9 +50,11 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }
@@ -82,15 +84,15 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
             name="dataName"
             label={<FormattedMessage id="flow.dataName" defaultMessage="Data Name" />}
           />
+          <ProFormText
+            width="md"
+            name="flowType"
+            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
+          />
           <ProFormTextArea
             width="md"
             name="description"
             label={<FormattedMessage id="flow.description" defaultMessage="Description" />}
-          />
-          <ProFormText
-            width="md"
-            name="version"
-            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
           />
           <ProFormText
             width="md"
@@ -101,11 +103,6 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
             width="md"
             name="formula"
             label={<FormattedMessage id="flow.formula" defaultMessage="Formula" />}
-          />
-          <ProFormText
-            width="md"
-            name="flowType"
-            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
           />
           <ProFormText
             width="md"
@@ -121,6 +118,11 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
             width="md"
             name="release"
             label={<FormattedMessage id="flow.release" defaultMessage="Release" />}
+          />
+          <ProFormText
+            width="md"
+            name="version"
+            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
           />
         </ProForm>
       </Drawer>

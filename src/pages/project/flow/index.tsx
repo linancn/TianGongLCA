@@ -49,15 +49,16 @@ const TableList: FC<ListProps> = (porps) => {
       search: false,
     },
     {
-      title: <FormattedMessage id="flow.locationName" defaultMessage="Location Name" />,
-      dataIndex: 'locationName',
+      title: <FormattedMessage id="flow.categoryName" defaultMessage="Category" />,
+      dataIndex: 'categoryName',
+      sorter: true,
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          {row.locationId == null ? '-' : row.locationName}
-          <LocationViewByParent
+          {row.categoryId == null ? '-' : row.categoryName}
+          <CategoryViewByParent
             projectId={row.projectId}
-            id={row.locationId}
+            id={row.categoryId}
             parentType={'flow'}
             parentPkid={row.pkid}
             actionRef={actionRef}
@@ -66,15 +67,16 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
     {
-      title: <FormattedMessage id="flow.categoryName" defaultMessage="Category" />,
-      dataIndex: 'categoryName',
+      title: <FormattedMessage id="flow.locationName" defaultMessage="Location Name" />,
+      dataIndex: 'locationName',
+      sorter: true,
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          {row.categoryId == null ? '-' : row.categoryName}
-          <CategoryViewByParent
+          {row.locationId == null ? '-' : row.locationName}
+          <LocationViewByParent
             projectId={row.projectId}
-            id={row.categoryId}
+            id={row.locationId}
             parentType={'flow'}
             parentPkid={row.pkid}
             actionRef={actionRef}
@@ -106,13 +108,6 @@ const TableList: FC<ListProps> = (porps) => {
       ],
     },
     {
-      title: <FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />,
-      dataIndex: 'lastChange',
-      valueType: 'dateTime',
-      sorter: true,
-      search: false,
-    },
-    {
       title: <FormattedMessage id="flow.database" defaultMessage="Database" />,
       dataIndex: 'database',
       sorter: true,
@@ -121,6 +116,13 @@ const TableList: FC<ListProps> = (porps) => {
     {
       title: <FormattedMessage id="flow.release" defaultMessage="Release" />,
       dataIndex: 'release',
+      sorter: true,
+      search: false,
+    },
+    {
+      title: <FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />,
+      dataIndex: 'lastChange',
+      valueType: 'dateTime',
       sorter: true,
       search: false,
     },

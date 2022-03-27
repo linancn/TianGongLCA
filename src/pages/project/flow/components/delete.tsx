@@ -15,13 +15,13 @@ type Props = {
 const FlowDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
-      title: 'Are you sure to delete this flow?',
+      title: 'Are you sure you want to delete this flow?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
         deleteFlow(pkid).then(async (result) => {
           if (result === 'ok') {
-            message.success('Successfully deleted!');
+            message.success('Selected flow has been deleted.');
             setViewDrawerVisible(false);
             actionRef.current?.reload();
           } else {

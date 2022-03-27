@@ -33,16 +33,9 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
             {result.dataName}
           </Descriptions.Item>
           <Descriptions.Item
-            label={<FormattedMessage id="flow.locationName" defaultMessage="Location Name" />}
+            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
           >
-            {result.locationName}
-            <LocationViewByParent
-              projectId={result.projectId}
-              id={result.locationId}
-              parentType={'flow'}
-              parentPkid={pkid}
-              actionRef={actionRef}
-            />
+            {result.flowType}
           </Descriptions.Item>
           <Descriptions.Item
             label={<FormattedMessage id="flow.categoryName" defaultMessage="Category" />}
@@ -57,6 +50,19 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
             />
           </Descriptions.Item>
           <Descriptions.Item
+            label={<FormattedMessage id="flow.locationName" defaultMessage="Location Name" />}
+          >
+            {result.locationName}
+            <LocationViewByParent
+              projectId={result.projectId}
+              id={result.locationId}
+              parentType={'flow'}
+              parentPkid={pkid}
+              actionRef={actionRef}
+            />
+          </Descriptions.Item>
+
+          <Descriptions.Item
             label={
               <FormattedMessage id="flow.flowPropertyCount" defaultMessage="Measurement Count" />
             }
@@ -69,19 +75,9 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
             />
           </Descriptions.Item>
           <Descriptions.Item
-            label={<FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />}
-          >
-            {moment(result.lastChange).format('YYYY-MM-DD HH:mm:ss')}
-          </Descriptions.Item>
-          <Descriptions.Item
             label={<FormattedMessage id="flow.description" defaultMessage="Description" />}
           >
             {result.description}
-          </Descriptions.Item>
-          <Descriptions.Item
-            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
-          >
-            {result.version}
           </Descriptions.Item>
           <Descriptions.Item
             label={<FormattedMessage id="flow.synonyms" defaultMessage="Synonyms" />}
@@ -92,11 +88,6 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
             label={<FormattedMessage id="flow.formula" defaultMessage="Formula" />}
           >
             {result.formula}
-          </Descriptions.Item>
-          <Descriptions.Item
-            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
-          >
-            {result.flowType}
           </Descriptions.Item>
           <Descriptions.Item label={<FormattedMessage id="flow.cas" defaultMessage="Cas" />}>
             {result.cas}
@@ -110,6 +101,16 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
             label={<FormattedMessage id="flow.release" defaultMessage="Release" />}
           >
             {result.release}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />}
+          >
+            {moment(result.lastChange).format('YYYY-MM-DD HH:mm:ss')}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
+          >
+            {result.version}
           </Descriptions.Item>
         </Descriptions>,
       );

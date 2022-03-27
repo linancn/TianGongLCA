@@ -56,24 +56,11 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
             name="dataName"
             label={<FormattedMessage id="flow.dataName" defaultMessage="Data Name" />}
           />
-          <Form.Item
-            name="locationName"
-            label={<FormattedMessage id="flow.locationName" defaultMessage="Location Name" />}
-          >
-            <Input
-              disabled={true}
-              style={{ width: '328px' }}
-              addonAfter={
-                <LocationViewByParent
-                  projectId={pi.projectId}
-                  id={pi.locationId}
-                  parentType={'flow'}
-                  parentPkid={pkid}
-                  actionRef={actionRef}
-                />
-              }
-            />
-          </Form.Item>
+          <ProFormText
+            width="md"
+            name="flowType"
+            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
+          />
           <Form.Item
             name="categoryName"
             label={<FormattedMessage id="flow.categoryName" defaultMessage="Category" />}
@@ -85,6 +72,24 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
                 <CategoryViewByParent
                   projectId={pi.projectId}
                   id={pi.categoryId}
+                  parentType={'flow'}
+                  parentPkid={pkid}
+                  actionRef={actionRef}
+                />
+              }
+            />
+          </Form.Item>
+          <Form.Item
+            name="locationName"
+            label={<FormattedMessage id="flow.locationName" defaultMessage="Location Name" />}
+          >
+            <Input
+              disabled={true}
+              style={{ width: '328px' }}
+              addonAfter={
+                <LocationViewByParent
+                  projectId={pi.projectId}
+                  id={pi.locationId}
                   parentType={'flow'}
                   parentPkid={pkid}
                   actionRef={actionRef}
@@ -117,11 +122,6 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
           />
           <ProFormText
             width="md"
-            name="version"
-            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
-          />
-          <ProFormText
-            width="md"
             name="synonyms"
             label={<FormattedMessage id="flow.synonyms" defaultMessage="Synonyms" />}
           />
@@ -129,11 +129,6 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
             width="md"
             name="formula"
             label={<FormattedMessage id="flow.formula" defaultMessage="Formula" />}
-          />
-          <ProFormText
-            width="md"
-            name="flowType"
-            label={<FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />}
           />
           <ProFormText
             width="md"
@@ -149,6 +144,11 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
             width="md"
             name="release"
             label={<FormattedMessage id="flow.release" defaultMessage="Release" />}
+          />
+          <ProFormText
+            width="md"
+            name="version"
+            label={<FormattedMessage id="flow.version" defaultMessage="Version" />}
           />
         </ProForm>,
       );
@@ -189,10 +189,14 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }
