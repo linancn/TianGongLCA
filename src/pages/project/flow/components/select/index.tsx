@@ -6,6 +6,7 @@ import ProCard from '@ant-design/pro-card';
 import type { ActionType } from '@ant-design/pro-table';
 import FlowOtherProject from './otherproject';
 import FlowPubDatabase from './pubdatabase';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -17,7 +18,9 @@ const FlowSelect: FC<Props> = ({ projectId, parentActionRef }) => {
 
   return (
     <>
-      <Tooltip title="Select From Database">
+      <Tooltip
+        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+      >
         <Button
           size={'middle'}
           type="text"
@@ -28,7 +31,7 @@ const FlowSelect: FC<Props> = ({ projectId, parentActionRef }) => {
         />
       </Tooltip>
       <Drawer
-        title="Select From Database"
+        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
         width="100%"
         closable={false}
         extra={
