@@ -25,8 +25,8 @@ export async function getPubFlowGrid(
   });
 }
 
-export async function savePubFlow(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/pub/flow/save', {
+export async function copyPubFlow(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/pub/flow/copy', {
     method: 'PUT',
     data,
   });

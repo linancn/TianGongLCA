@@ -25,8 +25,8 @@ export async function getPubUnitGroupGrid(
   });
 }
 
-export async function savePubUnitGroup(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/pub/unitgroup/save', {
+export async function copyPubUnitGroup(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/pub/unitgroup/copy', {
     method: 'PUT',
     data,
   });

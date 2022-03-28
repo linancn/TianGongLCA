@@ -8,7 +8,7 @@ import styles from '@/style/custom.less';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message, Space } from 'antd';
 import type { PubFlow } from '@/services/pub/flow/data';
-import { getPubFlowGrid, savePubFlow } from '@/services/pub/flow/api';
+import { getPubFlowGrid, copyPubFlow } from '@/services/pub/flow/api';
 
 type Props = {
   projectId: number;
@@ -50,7 +50,7 @@ const FlowPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawerVisib
 
   const submitSelectId = () => {
     if (selectRow) {
-      savePubFlow({ projectId, pubId: selectRow.id }).then(async (result) => {
+      copyPubFlow({ projectId, pubId: selectRow.id }).then(async (result) => {
         if (result === 'ok') {
           message.success('Successfully Selected!');
           setDrawerVisible(false);

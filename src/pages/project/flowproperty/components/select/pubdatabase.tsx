@@ -7,7 +7,7 @@ import type { ListPagination } from '@/services/home/data';
 import styles from '@/style/custom.less';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message, Space } from 'antd';
-import { getPubFlowPropertyGrid, savePubFlowProperty } from '@/services/pub/flowproperty/api';
+import { getPubFlowPropertyGrid, copyPubFlowProperty } from '@/services/pub/flowproperty/api';
 import type { PubFlowProperty } from '@/services/pub/flowproperty/data';
 
 type Props = {
@@ -50,7 +50,7 @@ const FlowPropertyPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDra
 
   const submitSelectId = () => {
     if (selectRow) {
-      savePubFlowProperty({ projectId, pubId: selectRow.id }).then(async (result) => {
+      copyPubFlowProperty({ projectId, pubId: selectRow.id }).then(async (result) => {
         if (result === 'ok') {
           message.success('Successfully Selected!');
           setDrawerVisible(false);

@@ -55,8 +55,8 @@ export async function updateFlowProperty(data?: Record<string, any>) {
   });
 }
 
-export async function saveFlowProperty(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flowproperty/save', {
+export async function copyFlowProperty(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/flowproperty/copy', {
     method: 'PUT',
     data,
   });

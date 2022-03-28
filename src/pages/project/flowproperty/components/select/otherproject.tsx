@@ -8,7 +8,7 @@ import styles from '@/style/custom.less';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message, Space } from 'antd';
 import type { FlowProperty } from '@/services/flowproperty/data';
-import { getFlowPropertyGrid, saveFlowProperty } from '@/services/flowproperty/api';
+import { getFlowPropertyGrid, copyFlowProperty } from '@/services/flowproperty/api';
 
 type Props = {
   projectId: number;
@@ -56,7 +56,7 @@ const FlowPropertyOtherProject: FC<Props> = ({ projectId, parentActionRef, setDr
 
   const submitSelectId = () => {
     if (selectRow) {
-      saveFlowProperty({ projectId, othProjectId: selectRow.projectId, othId: selectRow.id }).then(
+      copyFlowProperty({ projectId, othProjectId: selectRow.projectId, othId: selectRow.id }).then(
         async (result) => {
           if (result === 'ok') {
             message.success('Successfully Selected!');

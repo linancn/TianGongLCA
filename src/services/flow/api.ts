@@ -114,8 +114,8 @@ export async function deleteFlowPropertyJson(flowPkid: number, propertyId: strin
   );
 }
 
-export async function saveFlow(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flow/save', {
+export async function copyFlow(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/flow/copy', {
     method: 'PUT',
     data,
   });

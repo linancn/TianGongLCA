@@ -7,7 +7,7 @@ import type { ListPagination } from '@/services/home/data';
 import styles from '@/style/custom.less';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message, Space } from 'antd';
-import { getUnitGroupGrid, saveUnitGroup } from '@/services/unitgroup/api';
+import { getUnitGroupGrid, copyUnitGroup } from '@/services/unitgroup/api';
 import type { UnitGroup } from '@/services/unitgroup/data';
 
 type Props = {
@@ -56,7 +56,7 @@ const UnitGroupOtherProject: FC<Props> = ({ projectId, parentActionRef, setDrawe
 
   const submitSelectId = () => {
     if (selectRow) {
-      saveUnitGroup({ projectId, othProjectId: selectRow.projectId, othId: selectRow.id }).then(
+      copyUnitGroup({ projectId, othProjectId: selectRow.projectId, othId: selectRow.id }).then(
         async (result) => {
           if (result === 'ok') {
             message.success('Successfully Selected!');

@@ -80,8 +80,8 @@ export async function updateUnitGroup(data?: Record<string, any>) {
   });
 }
 
-export async function saveUnitGroup(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/unitgroup/save', {
+export async function copyUnitGroup(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/unitgroup/copy', {
     method: 'PUT',
     data,
   });

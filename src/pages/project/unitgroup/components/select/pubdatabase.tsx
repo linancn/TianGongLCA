@@ -4,7 +4,7 @@ import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { ListPagination } from '@/services/home/data';
 import type { PubUnitGroup } from '@/services/pub/unitgroup/data';
-import { getPubUnitGroupGrid, savePubUnitGroup } from '@/services/pub/unitgroup/api';
+import { getPubUnitGroupGrid, copyPubUnitGroup } from '@/services/pub/unitgroup/api';
 
 import styles from '@/style/custom.less';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -50,7 +50,7 @@ const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawer
 
   const submitSelectId = () => {
     if (selectRow) {
-      savePubUnitGroup({ projectId, pubId: selectRow.id }).then(async (result) => {
+      copyPubUnitGroup({ projectId, pubId: selectRow.id }).then(async (result) => {
         if (result === 'ok') {
           message.success('Successfully Selected!');
           setDrawerVisible(false);
