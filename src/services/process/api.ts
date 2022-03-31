@@ -9,6 +9,7 @@ export async function getProcessGrid(
   },
   sort: Record<string, SortOrder>,
   projectId: number,
+  otherProject: boolean,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -23,6 +24,7 @@ export async function getProcessGrid(
       sortBy,
       orderBy,
       projectId,
+      otherProject,
     },
   });
 }
@@ -208,4 +210,11 @@ export async function deleteExchangeJson(processPkid: number, flowId: string, in
       method: 'DELETE',
     },
   );
+}
+
+export async function copyProcess(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/process/copy', {
+    method: 'PUT',
+    data,
+  });
 }

@@ -103,7 +103,7 @@ const TableList: FC<ListProps> = (props) => {
         }}
         toolBarRender={() => [
           <ProcessCreate projectId={projectid} actionRef={actionRef} />,
-          <ProcessSelect />,
+          <ProcessSelect projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {
@@ -112,7 +112,7 @@ const TableList: FC<ListProps> = (props) => {
           },
           sort,
         ) => {
-          return getProcessGrid(params, sort, projectid);
+          return getProcessGrid(params, sort, projectid, false);
         }}
         columns={columns}
       />
