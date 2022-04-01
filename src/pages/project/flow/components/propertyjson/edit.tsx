@@ -41,7 +41,9 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
               propertyId,
             }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Edit successfully!');
+                message.success(
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
+                );
                 setDrawerVisible(false);
                 actionRef.current?.reload();
               } else {
@@ -79,7 +81,7 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
             disabled={pi.referenceFlowProperty}
           />
           <Divider>
-            Flow Property Base Info{' '}
+            <FormattedMessage id="flowproperty.baseinfo" defaultMessage="Flow Property Base Info" />{' '}
             <FlowPropertyJsonSelect projectId={projectId} formRef={formRefEdit} />
           </Divider>
           <ProFormText width="md" name="flowPropertyId" label="Flow Property Id" hidden={true} />
@@ -134,10 +136,14 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

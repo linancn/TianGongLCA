@@ -112,7 +112,7 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
 
   return (
     <>
-      <Tooltip title="List">
+      <Tooltip title={<FormattedMessage id="options.list" defaultMessage="List" />}>
         <Button
           shape="circle"
           icon={<ProfileOutlined />}
@@ -121,7 +121,7 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
         />
       </Tooltip>
       <Drawer
-        title="List"
+        title={<FormattedMessage id="options.list" defaultMessage="List" />}
         width="100%"
         closable={false}
         extra={

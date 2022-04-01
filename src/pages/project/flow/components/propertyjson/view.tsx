@@ -39,7 +39,9 @@ const FlowPropertyJsonView: FC<Props> = ({ flowPkid, propertyId }) => {
           >
             {result?.referenceFlowProperty === true ? 'true' : 'false'}
           </Descriptions.Item>
-          <Divider>Measurement Base Info</Divider>
+          <Divider>
+            <FormattedMessage id="flowproperty.baseinfo" defaultMessage="Flow Property Base Info" />
+          </Divider>
           <Descriptions.Item
             label={<FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />}
           >

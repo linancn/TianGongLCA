@@ -8,4 +8,8 @@ export default {
   'options.cancel': 'Cancel',
   'options.reset': 'Reset',
   'options.submit': 'Save',
+  'options.list': 'List',
+  'options.editsuccess': 'Edit successfully!!',
+  'options.createsuccess': 'Successfully Created!!',
+  'options.deletesuccess': 'Delete successfully!',
 };

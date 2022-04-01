@@ -8,4 +8,8 @@ export default {
   'options.cancel': '返回',
   'options.reset': '恢复',
   'options.submit': '保存',
+  'options.list': 'List',
+  'options.editsuccess': 'Edit successfully!!',
+  'options.createsuccess': 'Successfully Created!!',
+  'options.deletesuccess': 'Delete successfully!!',
 };
