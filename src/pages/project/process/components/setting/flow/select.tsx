@@ -175,7 +175,7 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
             },
             sort,
           ) => {
-            return getFlowGrid(params, sort, projectId);
+            return getFlowGrid(params, sort, projectId, false);
           }}
           columns={flowColumns}
           rowClassName={(record) => {

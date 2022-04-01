@@ -11,7 +11,7 @@ import FlowPropertyJsonEdit from './edit';
 import FlowPropertyJsonCreate from './create';
 import { getFlowPropertyJsonViewGrid } from '@/services/flow/api';
 import FlowPropertyJsonDelete from './delete';
-import { FlowPropertyJson } from '@/services/flow/data';
+import type { FlowPropertyJson } from '@/services/flow/data';
 import { FormattedMessage } from 'umi';
 
 type Props = {

@@ -256,7 +256,7 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
             },
             sort,
           ) => {
-            return getProcessGrid(params, sort, projectId);
+            return getProcessGrid(params, sort, projectId, false);
           }}
           columns={processColumns}
           rowClassName={(record) => {

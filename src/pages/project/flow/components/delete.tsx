@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { useCallback } from 'react';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -17,7 +18,7 @@ const FlowDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisib
 
   const showModal = useCallback(() => {
     setIsModalVisible(true);
-  }, [actionRef, pkid, setViewDrawerVisible]);
+  }, []);
 
   const handleOk = useCallback(() => {
     deleteFlow(pkid).then(async (result) => {
@@ -39,7 +40,7 @@ const FlowDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisib
 
   const handleCancel = useCallback(() => {
     setIsModalVisible(false);
-  }, [actionRef, pkid, setViewDrawerVisible]);
+  }, []);
 
   return (
     <>

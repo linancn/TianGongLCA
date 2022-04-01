@@ -61,9 +61,19 @@ const CategorySelect: FC<Props> = ({
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <CategoryView pkid={row.pkid} />
-          <CategoryEdit pkid={row.pkid} actionRef={actionRef} />
-          <CategoryDelete pkid={row.pkid} actionRef={actionRef} />
+          <CategoryView pkid={row.pkid} actionRef={actionRef} />
+          <CategoryEdit
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
+          <CategoryDelete
+            pkid={row.pkid}
+            buttonType={'icon'}
+            actionRef={actionRef}
+            setViewDrawerVisible={() => {}}
+          />
         </Space>,
       ],
     },
