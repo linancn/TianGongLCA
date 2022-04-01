@@ -101,14 +101,16 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
             <Button
               onClick={() => {
                 setFormValue();
               }}
               type="primary"
             >
-              Select
+              <FormattedMessage id="options.select" defaultMessage="Select" />
             </Button>
           </Space>
         }

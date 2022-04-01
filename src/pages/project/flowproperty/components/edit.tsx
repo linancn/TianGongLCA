@@ -10,6 +10,7 @@ import type { ActionType } from '@ant-design/pro-table';
 import { getFlowPropertyByPkid, updateFlowProperty } from '@/services/flowproperty/api';
 import CategoryViewByParent from '../../category/components/viewbyparent';
 import UnitGroupViewByParent from '../../unitgroup/components/viewbyparent';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -36,7 +37,12 @@ const FlowPropertyEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawe
           onFinish={async (values) => {
             updateFlowProperty({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Edit successfully!');
+                message.success(
+                  <FormattedMessage
+                    id="options.deletesuccess"
+                    defaultMessage="Delete successfully!"
+                  />,
+                );
                 setDrawerVisible(false);
                 setViewDrawerVisible(false);
                 if (actionRef.current) {
@@ -49,11 +55,35 @@ const FlowPropertyEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawe
             return true;
           }}
         >
-          <ProFormText width="md" name="dataName" label="Data Name" />
-          <ProFormText width="md" name="version" label="Version" />
-          <ProFormTextArea width="md" name="description" label="Description" />
-          <ProFormText width="md" name="flowPropertyType" label="Flow Property Type" />
-          <Form.Item name="categoryName" label="Category">
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormText
+            width="md"
+            name="version"
+            label={<FormattedMessage id="flowproperty.version" defaultMessage="Version" />}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="flowproperty.description" defaultMessage="Description" />}
+          />
+          <ProFormText
+            width="md"
+            name="flowPropertyType"
+            label={
+              <FormattedMessage
+                id="flowproperty.flowPropertyType"
+                defaultMessage="Flow Property Type"
+              />
+            }
+          />
+          <Form.Item
+            name="categoryName"
+            label={<FormattedMessage id="flowproperty.categoryName" defaultMessage="Category" />}
+          >
             <Input
               disabled={true}
               style={{ width: '328px' }}
@@ -68,7 +98,10 @@ const FlowPropertyEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawe
               }
             />
           </Form.Item>
-          <Form.Item name="unitGroupName" label="Unit Group">
+          <Form.Item
+            name="unitGroupName"
+            label={<FormattedMessage id="flowproperty.unitGroupName" defaultMessage="Unit Group" />}
+          >
             <Input
               disabled={true}
               style={{ width: '328px' }}
@@ -83,7 +116,11 @@ const FlowPropertyEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawe
               }
             />
           </Form.Item>
-          <ProFormText width="md" name="release" label="Release" />
+          <ProFormText
+            width="md"
+            name="release"
+            label={<FormattedMessage id="flowproperty.release" defaultMessage="Release" />}
+          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -98,15 +135,17 @@ const FlowPropertyEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawe
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         {buttonType === 'icon' ? (
           <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
         ) : (
-          <Button onClick={onEdit}>Edit</Button>
+          <Button onClick={onEdit}>
+            <FormattedMessage id="options.edit" defaultMessage="Edit" />
+          </Button>
         )}{' '}
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={
@@ -121,10 +160,14 @@ const FlowPropertyEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawe
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

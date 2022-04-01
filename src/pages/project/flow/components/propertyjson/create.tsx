@@ -51,9 +51,11 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }
@@ -71,7 +73,12 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
               flowPkid,
             }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Edit successfully!');
+                message.success(
+                  <FormattedMessage
+                    id="options.createsuccess"
+                    defaultMessage="Successfully Created!"
+                  />,
+                );
                 setDrawerVisible(false);
                 reload();
               } else {
@@ -107,7 +114,7 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
             label="Reference Flow Property"
           />
           <Divider>
-            Flow Property Base Info{' '}
+            <FormattedMessage id="flowproperty.baseinfo" defaultMessage="Flow Property Base Info" />{' '}
             <FlowPropertyJsonSelect projectId={projectId} formRef={formRefEdit} />
           </Divider>
           <ProFormText width="md" name="flowPropertyId" label="Flow Property Id" hidden={true} />

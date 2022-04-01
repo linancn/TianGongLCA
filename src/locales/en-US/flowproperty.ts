@@ -2,6 +2,7 @@ export default {
   'flowproperty.index': 'No.',
   'flowproperty.conversionFactor': 'Conversion Factor',
   'flowproperty.referenceFlowProperty': 'Reference Flow Property',
+  'flowproperty.dataName': 'DataName',
   'flowproperty.locationName': 'Location Name',
   'flowproperty.categoryName': 'Category',
   'flowproperty.flowPropertyCount': 'Measurement Count',
@@ -13,4 +14,7 @@ export default {
   'flowproperty.flowPropertyType': 'Flow Property Type',
   'flowproperty.unitGroupName': 'Unit Group',
   'flowproperty.referenceUnit': 'Reference Unit',
+  'flowproperty.delete': 'Are you sure to delete this flow property?',
+  'flowproperty.deletesuccess': 'Delete successfully!',
+  'flowproperty.baseinfo': 'Flow Property Base Info',
 };
