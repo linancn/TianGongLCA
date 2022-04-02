@@ -27,18 +27,18 @@ import type {
 } from '@antv/xflow';
 import { MODELS, XFlowNodeCommands } from '@antv/xflow';
 import { XFlow, XFlowCanvas, XFlowEdgeCommands, XFlowGraphCommands } from '@antv/xflow';
-import { useGraphConfig } from './model/toolbar/config/graph';
+import { useGraphConfig } from './toolbar/config/graph';
 import { getPlanModelCells, getPlanParentGrid, updatePlanModelCells } from '@/services/plan/api';
-import { EdgeAttrs, EdgeConnector, EdgeRouter } from './model/toolbar/config/edge';
-import Add from './model/toolbar/add';
-import View from './model/toolbar/view';
-import Edit from './model/toolbar/edit';
-import Design from './model/toolbar/design';
-import RollUp from './model/toolbar/rollup';
+import { EdgeAttrs, EdgeConnector, EdgeRouter } from './toolbar/config/edge';
+import Add from './toolbar/add';
+import View from './toolbar/view';
+import Edit from './toolbar/edit';
+import Design from './toolbar/design';
+import RollUp from './toolbar/rollup';
 import type { PlanModelState } from '@/services/plan/data';
 
-import './model/index.css';
-import './model/index.less';
+import './index.css';
+import './index.less';
 import type { ActionType } from '@ant-design/pro-table';
 
 type Props = {
@@ -47,7 +47,7 @@ type Props = {
   name: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
+const Model: FC<Props> = ({ projectId, planId, name, actionRef }) => {
   const [xflowApp, setxflowApp] = useState<IApplication>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [addDrawerVisible, setAddDrawerVisible] = useState(false);
@@ -454,4 +454,4 @@ const PlanOpen: FC<Props> = ({ projectId, planId, name, actionRef }) => {
   );
 };
 
-export default PlanOpen;
+export default Model;

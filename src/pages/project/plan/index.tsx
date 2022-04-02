@@ -10,10 +10,10 @@ import type { ListPagination } from '@/services/home/data';
 import PlanDelete from './components/delete';
 import PlanView from './components/view';
 import PlanEdit from './components/edit';
-import PlanOpen from './components/open';
 import PlanCreate from './components/create';
 import { FormattedMessage } from 'umi';
 import { getProject } from '@/services/project/api';
+import Model from './components/model';
 
 type Props = {
   location: {
@@ -66,7 +66,7 @@ const PlanList: FC<Props> = (props) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <PlanOpen
+          <Model
             projectId={row.projectId}
             planId={row.id}
             name={row.dataName}
