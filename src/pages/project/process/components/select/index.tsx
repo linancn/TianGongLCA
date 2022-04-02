@@ -19,7 +19,9 @@ const ProcessSelect: FC<Props> = ({ projectId, parentActionRef }) => {
   return (
     <>
       <Tooltip
-        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+        title={
+          <FormattedMessage id="options.selectfromdatabase" defaultMessage="Select From Database" />
+        }
       >
         <Button
           size={'middle'}
@@ -31,7 +33,9 @@ const ProcessSelect: FC<Props> = ({ projectId, parentActionRef }) => {
         />
       </Tooltip>
       <Drawer
-        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+        title={
+          <FormattedMessage id="options.selectfromdatabase" defaultMessage="Select From Database" />
+        }
         width="100%"
         closable={false}
         extra={

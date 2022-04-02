@@ -102,7 +102,14 @@ const LocationIndex: FC<ListProps> = (props) => {
         }}
         toolBarRender={() => [
           <LocationCreate projectId={projectid} actionRef={actionRef} />,
-          <Tooltip title="Select From Database">
+          <Tooltip
+            title={
+              <FormattedMessage
+                id="options.selectfromdatabase"
+                defaultMessage="Select From Database"
+              />
+            }
+          >
             <Button
               size={'middle'}
               type="text"

@@ -30,18 +30,18 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
   const [projectName, setProjectName] = useState('');
   const unitGroupColumns: ProColumns<UnitGroup>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="unitgroup.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="flow.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Reference Unit',
+      title: <FormattedMessage id="unitgroup.referenceUnit" defaultMessage="Reference Unit" />,
       dataIndex: 'referenceUnit',
       search: false,
       render: (_, row) => [
@@ -60,7 +60,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
       ],
     },
     {
-      title: 'Category',
+      title: <FormattedMessage id="unitgroup.categoryName" defaultMessage="Category" />,
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
@@ -77,20 +77,20 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
       ],
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="unitgroup.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="unitgroup.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [

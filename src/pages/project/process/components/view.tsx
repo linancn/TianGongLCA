@@ -4,7 +4,7 @@ import { Button, Descriptions, Drawer, Space, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getProcessByPkid } from '@/services/process/api';
-import { ActionType } from '@ant-design/pro-table';
+import type { ActionType } from '@ant-design/pro-table';
 import ProcessDelete from './delete';
 import ProcessEdit from './edit';
 import styles from '@/style/custom.less';

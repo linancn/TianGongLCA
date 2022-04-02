@@ -12,6 +12,7 @@ import type { Category } from '@/services/category/data';
 import CategoryView from './view';
 import CategoryEdit from './edit';
 import CategoryDelete from './delete';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -147,7 +148,14 @@ const CategorySelectByParent: FC<Props> = ({
           }}
           toolBarRender={() => [
             <CategoryCreate projectId={projectId} actionRef={actionRef} />,
-            <Tooltip title="Select From Database">
+            <Tooltip
+              title={
+                <FormattedMessage
+                  id="options.selectfromdatabase"
+                  defaultMessage="Select From Database"
+                />
+              }
+            >
               <Button
                 size={'middle'}
                 type="text"

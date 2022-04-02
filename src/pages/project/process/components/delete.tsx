@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { useCallback } from 'react';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -22,7 +23,12 @@ const ProcessDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVi
   const handleOk = useCallback(() => {
     deleteProcess(pkid).then(async (result) => {
       if (result === 'ok') {
-        message.success('Successfully deleted!');
+        message.success(
+          <FormattedMessage
+            id="process.deletesuccess"
+            defaultMessage="Selected process has been deleted."
+          />,
+        );
         setViewDrawerVisible(false);
         setIsModalVisible(false);
         actionRef.current?.reload();

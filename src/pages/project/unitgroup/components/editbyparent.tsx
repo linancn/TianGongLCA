@@ -8,6 +8,7 @@ import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getUnitGroupByPkid, updateUnitGroup } from '@/services/unitgroup/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -33,7 +34,9 @@ const UnitGroupEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawer
           onFinish={async (values) => {
             updateUnitGroup({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Edit successfully!');
+                message.success(
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
+                );
                 setDrawerVisible(false);
                 setViewDrawerVisible(false);
                 parentActionRef.current?.reload();
@@ -44,8 +47,16 @@ const UnitGroupEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawer
             return true;
           }}
         >
-          <ProFormText width="md" name="dataName" label="Data Name" />
-          <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="unitgroup.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="unitgroup.description" defaultMessage="Description" />}
+          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -60,11 +71,13 @@ const UnitGroupEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawer
 
   return (
     <>
-      <Tooltip title="Edit">
-        <Button onClick={onEdit}>Edit</Button>
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
+        <Button onClick={onEdit}>
+          {<FormattedMessage id="options.edit" defaultMessage="Edit" />}
+        </Button>
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={
@@ -79,10 +92,16 @@ const UnitGroupEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawer
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              {' '}
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              {' '}
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

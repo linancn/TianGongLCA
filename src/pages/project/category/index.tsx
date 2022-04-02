@@ -96,7 +96,14 @@ const CategoryIndex: FC<ListProps> = (props) => {
         }}
         toolBarRender={() => [
           <CategoryCreate projectId={projectid} actionRef={actionRef} />,
-          <Tooltip title="Select From Database">
+          <Tooltip
+            title={
+              <FormattedMessage
+                id="options.selectfromdatabase"
+                defaultMessage="Select From Database"
+              />
+            }
+          >
             <Button
               size={'middle'}
               type="text"

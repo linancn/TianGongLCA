@@ -14,6 +14,7 @@ import CategoryViewByParent from '../../category/components/viewbyparent';
 // import UnitGroupDelete from './delete';
 import type { UnitGroup } from '@/services/unitgroup/data';
 import UnitGroupCreate from './create';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -35,18 +36,18 @@ const UnitGroupSelectByParent: FC<Props> = ({
   const actionRef = useRef<ActionType>();
   const unitGroupColumns: ProColumns<UnitGroup>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="unitgroup.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="flow.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Reference Unit',
+      title: <FormattedMessage id="unitgroup.referenceUnit" defaultMessage="Reference Unit" />,
       dataIndex: 'referenceUnit',
       search: false,
       render: (_, row) => [
@@ -65,7 +66,7 @@ const UnitGroupSelectByParent: FC<Props> = ({
       ],
     },
     {
-      title: 'Category',
+      title: <FormattedMessage id="unitgroup.categoryName" defaultMessage="Category" />,
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
@@ -82,20 +83,20 @@ const UnitGroupSelectByParent: FC<Props> = ({
       ],
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="unitgroup.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="unitgroup.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       // render: (_, row) => [
@@ -117,7 +118,12 @@ const UnitGroupSelectByParent: FC<Props> = ({
     if (selectRow) {
       updateParentUnitGroup(parentType, parentPkid, selectRow.id).then(async (result) => {
         if (result === 'ok') {
-          message.success('Successfully Selected!');
+          message.success(
+            <FormattedMessage
+              id="options.selectedsuccess"
+              defaultMessage="Successfully Selected!"
+            />,
+          );
           setDrawerVisible(false);
           reload();
         } else {
@@ -125,7 +131,9 @@ const UnitGroupSelectByParent: FC<Props> = ({
         }
       });
     } else {
-      message.error('Select nothing');
+      message.error(
+        <FormattedMessage id="options.selectedsuccess" defaultMessage="Successfully Selected!" />,
+      );
     }
   };
   return (
@@ -176,7 +184,14 @@ const UnitGroupSelectByParent: FC<Props> = ({
           }}
           toolBarRender={() => [
             <UnitGroupCreate projectId={projectId} actionRef={actionRef} />,
-            <Tooltip title="Select From Database">
+            <Tooltip
+              title={
+                <FormattedMessage
+                  id="options.selectfromdatabase"
+                  defaultMessage="Select From Database"
+                />
+              }
+            >
               <Button
                 size={'middle'}
                 type="text"

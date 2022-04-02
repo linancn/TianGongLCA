@@ -72,9 +72,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
   }, [formRef, selectRow]);
   return (
     <>
-      <Tooltip
-        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
-      >
+      <Tooltip title={<FormattedMessage id="options.select" defaultMessage="Select" />}>
         <Button
           shape="circle"
           size="small"
@@ -86,7 +84,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
       </Tooltip>
 
       <Drawer
-        title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+        title={<FormattedMessage id="options.select" defaultMessage="Select" />}
         width="100%"
         closable={false}
         extra={
@@ -110,7 +108,7 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
               }}
               type="primary"
             >
-              <FormattedMessage id="options.select" defaultMessage="Select" />
+              <FormattedMessage id="options.selectfromdatabase" defaultMessage="Select" />
             </Button>
           </Space>
         }
@@ -123,7 +121,12 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
           toolBarRender={() => [
             <FlowPropertyCreate projectId={projectId} actionRef={actionRef} />,
             <Tooltip
-              title={<FormattedMessage id="options.select" defaultMessage="Select From Database" />}
+              title={
+                <FormattedMessage
+                  id="options.selectfromdatabase"
+                  defaultMessage="Select From Database"
+                />
+              }
             >
               <Button
                 size={'middle'}

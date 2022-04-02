@@ -12,6 +12,7 @@ import LocationCreate from './create';
 import LocationView from './view';
 import LocationEdit from './edit';
 import LocationDelete from './delete';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -153,7 +154,14 @@ const LocationSelect: FC<Props> = ({
           }}
           toolBarRender={() => [
             <LocationCreate projectId={projectId} actionRef={actionRef} />,
-            <Tooltip title="Select From Database">
+            <Tooltip
+              title={
+                <FormattedMessage
+                  id="options.selectfromdatabase"
+                  defaultMessage="Select From Database"
+                />
+              }
+            >
               <Button
                 size={'middle'}
                 type="text"

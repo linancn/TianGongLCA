@@ -69,7 +69,12 @@ const FlowCreate: FC<Props> = ({ projectId, actionRef }) => {
           onFinish={async (values) => {
             createFlow({ ...values, projectId }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Successfully Created!');
+                message.success(
+                  <FormattedMessage
+                    id="options.createsuccess"
+                    defaultMessage="Created Successfully!"
+                  />,
+                );
                 setDrawerVisible(false);
                 reload();
               } else {
