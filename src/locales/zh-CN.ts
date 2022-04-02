@@ -12,6 +12,7 @@ import flow from './zh-CN/flow';
 import options from './zh-CN/options';
 import flowproperty from './zh-CN/flowproperty';
 import process from './zh-CN/process';
+import unitgroup from './zh-CN/unitgroup';
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -35,4 +36,5 @@ export default {
   ...options,
   ...flowproperty,
   ...process,
+  ...unitgroup,
 };

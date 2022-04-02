@@ -5,7 +5,7 @@ export default {
   'process.lastChange': '最后修改',
   'process.release': '版本',
   'process.description': '描述',
-  'process.delete': 'Are you sure to delete this flow property?',
+  'process.delete': 'Are you sure to delete this process?',
   'process.deletesuccess': 'Delete successfully!',
   'process.amount': 'Amount',
   'process.amountFormula': 'Amount Formula',

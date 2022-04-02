@@ -1,8 +1,9 @@
 export default {
   'options.option': '操作选项',
   'options.create': '创建',
-  'options.select': '导入',
+  'options.select': 'Select',
   'options.selectnothing': 'Select nothing',
+  'options.selectfromdatabase': '导入',
   'options.view': '查看',
   'options.edit': '编辑',
   'options.delete': '删除',
@@ -12,6 +13,8 @@ export default {
   'options.list': 'List',
   'options.setting': 'Setting',
   'options.finish': 'Finish',
+  'options.editsuccess': 'Edit successfully!!',
   'options.createsuccess': 'Successfully Created!!',
   'options.deletesuccess': 'Delete successfully!!',
+  'options.selectedsuccess': 'Successfully Selected!',
 };

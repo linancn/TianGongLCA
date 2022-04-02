@@ -1,8 +1,9 @@
 export default {
   'options.option': 'Options',
   'options.create': 'Create',
-  'options.select': 'Import',
+  'options.select': 'Select',
   'options.selectnothing': 'Select nothing',
+  'options.selectfromdatabase': 'Import',
   'options.view': 'View',
   'options.edit': 'Edit',
   'options.delete': 'Delete',
@@ -13,6 +14,7 @@ export default {
   'options.setting': 'Setting',
   'options.finish': 'Finish',
   'options.editsuccess': 'Edit successfully!!',
-  'options.createsuccess': 'Successfully Created!!',
-  'options.deletesuccess': 'Delete successfully!',
+  'options.createsuccess': 'Created Successfully!!',
+  'options.deletesuccess': 'Delete successfully!!',
+  'options.selectedsuccess': 'Successfully Selected!',
 };
