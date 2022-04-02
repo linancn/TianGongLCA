@@ -11,6 +11,7 @@ import project from './en-US/project';
 import flow from './en-US/flow';
 import options from './en-US/options';
 import flowproperty from './en-US/flowproperty';
+import process from './en-US/process';
 
 export default {
   'navBar.lang': 'Languages',
@@ -34,4 +35,5 @@ export default {
   ...flow,
   ...options,
   ...flowproperty,
+  ...process,
 };

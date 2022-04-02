@@ -15,4 +15,5 @@ export default {
   'flow.cas': 'CAS号',
   'flow.delete': 'Are you sure you want to delete this flow???',
   'flow.deletesuccess': 'Selected flow has been deleted...',
+  'flow.flowinfo': 'Flow Info',
 };

@@ -11,6 +11,7 @@ import project from './zh-CN/project';
 import flow from './zh-CN/flow';
 import options from './zh-CN/options';
 import flowproperty from './zh-CN/flowproperty';
+import process from './zh-CN/process';
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -33,4 +34,5 @@ export default {
   ...flow,
   ...options,
   ...flowproperty,
+  ...process,
 };

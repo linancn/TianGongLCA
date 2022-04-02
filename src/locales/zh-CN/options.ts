@@ -2,6 +2,7 @@ export default {
   'options.option': '操作选项',
   'options.create': '创建',
   'options.select': '导入',
+  'options.selectnothing': 'Select nothing',
   'options.view': '查看',
   'options.edit': '编辑',
   'options.delete': '删除',
@@ -9,7 +10,8 @@ export default {
   'options.reset': '恢复',
   'options.submit': '保存',
   'options.list': 'List',
-  'options.editsuccess': 'Edit successfully!!',
+  'options.setting': 'Setting',
+  'options.finish': 'Finish',
   'options.createsuccess': 'Successfully Created!!',
   'options.deletesuccess': 'Delete successfully!!',
 };
