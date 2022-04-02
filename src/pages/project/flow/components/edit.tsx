@@ -38,7 +38,9 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
           onFinish={async (values) => {
             updateFlow({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Edit successfully!');
+                message.success(
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
+                );
                 setDrawerVisible(false);
                 setViewDrawerVisible(false);
                 if (actionRef.current) {

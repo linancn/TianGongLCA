@@ -8,6 +8,7 @@ import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getProcessByPkid, updateProcess } from '@/services/process/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -34,7 +35,9 @@ const ProcessEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisi
           onFinish={async (values) => {
             updateProcess({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Successfully Edited!');
+                message.success(
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
+                );
                 setDrawerVisible(false);
                 setViewDrawerVisible(false);
                 if (actionRef.current) {
@@ -47,9 +50,21 @@ const ProcessEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisi
             return true;
           }}
         >
-          <ProFormText width="md" name="dataName" label="Data Name" />
-          <ProFormText width="md" name="processType" label="Process Type" />
-          <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="process.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormText
+            width="md"
+            name="processType"
+            label={<FormattedMessage id="process.processType" defaultMessage="Process Type" />}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="process.description" defaultMessage="Description" />}
+          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -64,15 +79,17 @@ const ProcessEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisi
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         {buttonType === 'icon' ? (
           <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
         ) : (
-          <Button onClick={onEdit}>Edit</Button>
+          <Button onClick={onEdit}>
+            {<FormattedMessage id="options.edit" defaultMessage="Edit" />}
+          </Button>
         )}
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={
@@ -87,10 +104,14 @@ const ProcessEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisi
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

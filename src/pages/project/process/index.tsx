@@ -30,37 +30,37 @@ const TableList: FC<ListProps> = (props) => {
   const [projectName, setProjectName] = useState('');
   const columns: ProColumns<Process>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="process.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="process.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Process Type',
+      title: <FormattedMessage id="process.processType" defaultMessage="Process Type" />,
       dataIndex: 'processType',
       sorter: true,
       search: false,
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="process.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="process.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       search: false,
       render: (_, row) => [
         <Space size={'small'}>

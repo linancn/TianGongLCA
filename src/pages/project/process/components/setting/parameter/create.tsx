@@ -9,6 +9,7 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { createParameterJson } from '@/services/process/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   processPkid: number;
@@ -24,7 +25,7 @@ const ParameterJsonCreate: FC<Props> = ({ processPkid, actionRef }) => {
 
   return (
     <>
-      <Tooltip title="Create">
+      <Tooltip title={<FormattedMessage id="options.create" defaultMessage="Create" />}>
         <Button
           size={'middle'}
           type="text"
@@ -35,7 +36,7 @@ const ParameterJsonCreate: FC<Props> = ({ processPkid, actionRef }) => {
         />
       </Tooltip>
       <Drawer
-        title="Create"
+        title={<FormattedMessage id="options.create" defaultMessage="Create" />}
         width="400px"
         closable={false}
         extra={
@@ -50,9 +51,12 @@ const ParameterJsonCreate: FC<Props> = ({ processPkid, actionRef }) => {
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              {' '}
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }
@@ -67,7 +71,12 @@ const ParameterJsonCreate: FC<Props> = ({ processPkid, actionRef }) => {
           onFinish={async (values) => {
             createParameterJson({ ...values, processPkid }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Successfully Created!');
+                message.success(
+                  <FormattedMessage
+                    id="options.createsuccess"
+                    defaultMessage="Successfully Created!"
+                  />,
+                );
                 setDrawerVisible(false);
                 reload();
               } else {

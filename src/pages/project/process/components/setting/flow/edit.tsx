@@ -9,6 +9,7 @@ import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getExchangeJson, updateExchangeJson } from '@/services/process/api';
 import ProcessFlowSelect from './select';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -36,7 +37,9 @@ const ProcessFlowEdit: FC<Props> = ({ projectId, processPkid, flowId, input, act
           onFinish={async (values) => {
             updateExchangeJson({ ...values, processPkid, input }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Successfully Edited!');
+                message.success(
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
+                );
                 setDrawerVisible(false);
                 actionRef.current?.reload();
               } else {
@@ -46,12 +49,26 @@ const ProcessFlowEdit: FC<Props> = ({ projectId, processPkid, flowId, input, act
             return true;
           }}
         >
-          <ProFormText width="md" name="amount" label="Amount" />
-          <ProFormText width="md" name="amountFormula" label="Amount Formula" />
+          <ProFormText
+            width="md"
+            name="amount"
+            label={<FormattedMessage id="process.amount" defaultMessage="Amount" />}
+          />
+          <ProFormText
+            width="md"
+            name="amountFormula"
+            label={<FormattedMessage id="process.amountFormula" defaultMessage="Amount Formula" />}
+          />
           <Divider>
-            Flow Info <ProcessFlowSelect projectId={projectId} formRef={formRefEdit} />
+            <FormattedMessage id="flow.flowinfo" defaultMessage="Flow Info" />{' '}
+            <ProcessFlowSelect projectId={projectId} formRef={formRefEdit} />
           </Divider>
-          <ProFormText width="md" name="flowName" label="Name" disabled={true} />
+          <ProFormText
+            width="md"
+            name="flowName"
+            label={<FormattedMessage id="flow.dataName" defaultMessage="Name" />}
+            disabled={true}
+          />
           <ProFormText width="md" name="flowId" label="Flow Id" hidden={true} />
         </ProForm>,
       );
@@ -67,11 +84,17 @@ const ProcessFlowEdit: FC<Props> = ({ projectId, processPkid, flowId, input, act
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
       </Tooltip>
       <Drawer
-        title={input ? 'Edit Input Flow' : 'Edit Output Flow'}
+        title={
+          input ? (
+            <FormattedMessage id="process.editInputFlow" defaultMessage="Edit Input Flow" />
+          ) : (
+            <FormattedMessage id="process.editOutputFlow" defaultMessage="Edit Output Flow" />
+          )
+        }
         width="400px"
         closable={false}
         extra={
@@ -86,10 +109,16 @@ const ProcessFlowEdit: FC<Props> = ({ projectId, processPkid, flowId, input, act
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              {' '}
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              {' '}
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

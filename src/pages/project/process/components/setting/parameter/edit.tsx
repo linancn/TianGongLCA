@@ -8,6 +8,7 @@ import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getParameterJson, updateParameterJson } from '@/services/process/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   processPkid: number;
@@ -34,7 +35,12 @@ const ParameterJsonEdit: FC<Props> = ({ processPkid, id, actionRef }) => {
             updateParameterJson({ ...values, processPkid: pi.processPkid, id: pi.id }).then(
               async (result) => {
                 if (result === 'ok') {
-                  message.success('Successfully Edited!');
+                  message.success(
+                    <FormattedMessage
+                      id="options.editsuccess"
+                      defaultMessage="Edit successfully!"
+                    />,
+                  );
                   setDrawerVisible(false);
                   if (actionRef.current) {
                     actionRef.current.reload();
@@ -67,11 +73,11 @@ const ParameterJsonEdit: FC<Props> = ({ processPkid, id, actionRef }) => {
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={
@@ -86,10 +92,16 @@ const ParameterJsonEdit: FC<Props> = ({ processPkid, id, actionRef }) => {
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              {' '}
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              {' '}
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

@@ -38,10 +38,7 @@ const FlowPropertyEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawe
             updateFlowProperty({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
                 message.success(
-                  <FormattedMessage
-                    id="options.deletesuccess"
-                    defaultMessage="Delete successfully!"
-                  />,
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
                 );
                 setDrawerVisible(false);
                 setViewDrawerVisible(false);

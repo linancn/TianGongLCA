@@ -30,6 +30,7 @@ const FlowPropertyDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDra
           />,
         );
         setViewDrawerVisible(false);
+        setIsModalVisible(false);
         actionRef.current?.reload();
       } else {
         message.error(result);
@@ -43,7 +44,7 @@ const FlowPropertyDelete: FC<Props> = ({ pkid, buttonType, actionRef, setViewDra
 
   return (
     <>
-      <Tooltip title="Delete">
+      <Tooltip title={<FormattedMessage id="options.delete" defaultMessage="Delete" />}>
         {buttonType === 'icon' ? (
           <>
             <Button shape="circle" icon={<DeleteOutlined />} size="small" onClick={showModal} />

@@ -5,6 +5,7 @@ import { CloseOutlined, SettingOutlined } from '@ant-design/icons';
 import styles from '@/style/custom.less';
 import FlowCard from './flow';
 import ParameterCard from './parameter';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -26,11 +27,11 @@ const ProcessSetting: FC<Props> = ({ projectId, processPkid }) => {
   };
   return (
     <>
-      <Tooltip title="Setting">
+      <Tooltip title={<FormattedMessage id="options.setting" defaultMessage="Setting" />}>
         <Button shape="circle" icon={<SettingOutlined />} size="small" onClick={onSetting} />
       </Tooltip>
       <Drawer
-        title="Setting"
+        title={<FormattedMessage id="options.setting" defaultMessage="Setting" />}
         width="100%"
         closable={false}
         extra={
@@ -46,7 +47,7 @@ const ProcessSetting: FC<Props> = ({ projectId, processPkid }) => {
         footer={
           <Space size={'middle'} className={styles.footer_right}>
             <Button onClick={() => setDrawerVisible(false)} type="primary">
-              Finish
+              <FormattedMessage id="options.finish" defaultMessage="Finish" />
             </Button>
           </Space>
         }

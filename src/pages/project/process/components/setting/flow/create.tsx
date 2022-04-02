@@ -9,6 +9,7 @@ import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import ProcessFlowSelect from './select';
 import { createExchangeJson } from '@/services/process/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -26,7 +27,7 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef
 
   return (
     <>
-      <Tooltip title="Create">
+      <Tooltip title={<FormattedMessage id="options.create" defaultMessage="Create" />}>
         <Button
           size={'middle'}
           type="text"
@@ -37,7 +38,13 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef
         />
       </Tooltip>
       <Drawer
-        title={input ? 'Create Input Flow' : 'Create Output Flow'}
+        title={
+          input ? (
+            <FormattedMessage id="process.createInputFlow" defaultMessage="Create Input Flow" />
+          ) : (
+            <FormattedMessage id="process.createOutputFlow" defaultMessage="Create Output Flow" />
+          )
+        }
         width="400px"
         closable={false}
         extra={
@@ -52,9 +59,12 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              {' '}
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
             <Button onClick={() => formRefCreate.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }
@@ -73,7 +83,12 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef
               input,
             }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Successfully Created!');
+                message.success(
+                  <FormattedMessage
+                    id="options.createsuccess"
+                    defaultMessage="Successfully Created!"
+                  />,
+                );
                 setDrawerVisible(false);
                 reload();
               } else {
@@ -83,12 +98,26 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef
             return true;
           }}
         >
-          <ProFormText width="md" name="amount" label="Amount" />
-          <ProFormText width="md" name="amountFormula" label="Amount Formula" />
+          <ProFormText
+            width="md"
+            name="amount"
+            label={<FormattedMessage id="process.amount" defaultMessage="Amount" />}
+          />
+          <ProFormText
+            width="md"
+            name="amountFormula"
+            label={<FormattedMessage id="process.amountFormula" defaultMessage="Amount Formula" />}
+          />
           <Divider>
-            Flow Info <ProcessFlowSelect projectId={projectId} formRef={formRefCreate} />
+            <FormattedMessage id="flow.flowinfo" defaultMessage="Flow Info" />{' '}
+            <ProcessFlowSelect projectId={projectId} formRef={formRefCreate} />
           </Divider>
-          <ProFormText width="md" name="flowName" label="Name" disabled={true} />
+          <ProFormText
+            width="md"
+            name="flowName"
+            label={<FormattedMessage id="flow.dataName" defaultMessage="Name" />}
+            disabled={true}
+          />
           <ProFormText width="md" name="flowId" label="Flow Id" hidden={true} />
         </ProForm>
       </Drawer>

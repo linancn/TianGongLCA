@@ -11,6 +11,7 @@ import ProcessFlowCreate from './flow/create';
 import { getExchangeJsonGrid } from '@/services/process/api';
 import type { ExchangeJson } from '@/services/process/data';
 import ProcessFlowEdit from './flow/edit';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -22,28 +23,28 @@ const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<ExchangeJson>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="process.index" defaultMessage="No." />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Amount',
+      title: <FormattedMessage id="process.amount" defaultMessage="Amount" />,
       dataIndex: 'amount',
       search: false,
     },
     {
-      title: 'Amount Formula',
+      title: <FormattedMessage id="process.amountFormula" defaultMessage="Amount Formula" />,
       dataIndex: 'amountFormula',
       search: false,
     },
     {
-      title: 'Flow Name',
+      title: <FormattedMessage id="process.flowName" defaultMessage="Flow Name" />,
       dataIndex: 'flowName',
       sorter: true,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
@@ -68,7 +69,17 @@ const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
 
   actionRef.current?.reload();
   return (
-    <ProCard title={input ? 'Input Flows' : 'Output Flows'} bordered={false} collapsible>
+    <ProCard
+      title={
+        input ? (
+          <FormattedMessage id="process.inputFlows" defaultMessage="Input Flows" />
+        ) : (
+          <FormattedMessage id="process.outputFlows" defaultMessage="Output Flows" />
+        )
+      }
+      bordered={false}
+      collapsible
+    >
       <ProTable<ExchangeJson, ListPagination>
         actionRef={actionRef}
         search={{

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Descriptions, Divider, Drawer, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import { getExchangeJson } from '@/services/process/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   processPkid: number;
@@ -18,22 +19,44 @@ const ProcessFlowView: FC<Props> = ({ processPkid, flowId, input }) => {
     getExchangeJson(processPkid, flowId, input).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Amount">{result?.amount}</Descriptions.Item>
-          <Descriptions.Item label="Amount Formula">{result?.amountFormula}</Descriptions.Item>
-          <Descriptions.Item label="Description">{result.description}</Descriptions.Item>
-          <Divider>Flow Info</Divider>
-          <Descriptions.Item label="Name">{result?.flowName}</Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="process.amount" defaultMessage="Amount" />}
+          >
+            {result?.amount}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="process.amountFormula" defaultMessage="Amount Formula" />}
+          >
+            {result?.amountFormula}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="process.description" defaultMessage="Description" />}
+          >
+            {result.description}
+          </Descriptions.Item>
+          <Divider>
+            <FormattedMessage id="flow.flowinfo" defaultMessage="Flow Info" />
+          </Divider>
+          <Descriptions.Item label={<FormattedMessage id="flow.dataName" defaultMessage="Name" />}>
+            {result?.flowName}
+          </Descriptions.Item>
         </Descriptions>,
       );
     });
   };
   return (
     <>
-      <Tooltip title="View">
+      <Tooltip title={<FormattedMessage id="options.view" defaultMessage="View" />}>
         <Button shape="circle" icon={<ProfileOutlined />} size="small" onClick={onView} />
       </Tooltip>
       <Drawer
-        title={input ? 'View Input Flow' : 'View Output Flow'}
+        title={
+          input ? (
+            <FormattedMessage id="process.viewInputFlow" defaultMessage="View Input Flow" />
+          ) : (
+            <FormattedMessage id="process.viewOutputFlow" defaultMessage="View Output Flow" />
+          )
+        }
         width="400px"
         closable={false}
         extra={

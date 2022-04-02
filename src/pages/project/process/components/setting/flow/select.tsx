@@ -9,6 +9,7 @@ import type { FC, MutableRefObject } from 'react';
 import { useCallback, useState } from 'react';
 import type { Flow } from '@/services/flow/data';
 import { getFlowGrid } from '@/services/flow/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -19,24 +20,24 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
   const [selectRow, setSelectRow] = useState<Flow>();
   const flowColumns: ProColumns<Flow>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="flow.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="flow.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Flow Type',
+      title: <FormattedMessage id="flow.flowType" defaultMessage="Flow Type" />,
       dataIndex: 'flowType',
       sorter: true,
       search: false,
     },
     {
-      title: 'Location Name',
+      title: <FormattedMessage id="flow.locationName" defaultMessage="Location Name" />,
       dataIndex: 'locationName',
       search: false,
       render: (_, row) => [
@@ -53,7 +54,7 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
       ],
     },
     {
-      title: 'Category',
+      title: <FormattedMessage id="flow.categoryName" defaultMessage="Category" />,
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
@@ -70,7 +71,7 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
       ],
     },
     {
-      title: 'Measurement Count',
+      title: <FormattedMessage id="flow.flowPropertyCount" defaultMessage="Measurement Count" />,
       dataIndex: 'flowPropertyCount',
       search: false,
       render: (_, row) => [
@@ -93,20 +94,20 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
       ],
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="flow.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Database',
+      title: <FormattedMessage id="flow.database" defaultMessage="Database" />,
       dataIndex: 'database',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="flow.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
@@ -121,12 +122,14 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
       });
       setDrawerVisible(false);
     } else {
-      message.error('Select nothing');
+      message.error(
+        <FormattedMessage id="options.selectnothing" defaultMessage="Select nothing" />,
+      );
     }
   }, [formRef, selectRow]);
   return (
     <>
-      <Tooltip title="Select">
+      <Tooltip title={<FormattedMessage id="options.select" defaultMessage="Import" />}>
         <Button
           shape="circle"
           size="small"
@@ -137,7 +140,12 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
         />
       </Tooltip>
       <Drawer
-        title="Select Flow Base Info"
+        title={
+          <FormattedMessage
+            id="process.selectFlowBaseinfo"
+            defaultMessage="Select Flow Base Info"
+          />
+        }
         width="100%"
         closable={false}
         extra={
