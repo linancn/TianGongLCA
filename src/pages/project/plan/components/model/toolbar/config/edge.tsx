@@ -32,7 +32,7 @@ export const EdgeConnector = () => {
 
 export const EdgeRouter = () => {
   const router = {
-    name: 'orth',
+    name: 'er',
   };
   return router;
 };
