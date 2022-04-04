@@ -11,7 +11,7 @@ export default {
   'menu.measurements': '度量',
   'menu.units': '单位',
   'menu.categories': '数据类别',
-  'menu.locations': '地理空间',
+  'menu.locations': '空间范围',
   'menu.global_parameters': '全局参数',
   'menu.go_back': '返回',
   'menu.back': '返回',

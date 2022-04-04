@@ -3,7 +3,7 @@ export default {
   'plan.dataName': 'Name',
   'plan.nation': 'Nation',
   'plan.planType': 'Type',
-  'plan.description': 'Dvescription',
+  'plan.description': 'Description',
   'plan.creator': 'Creator',
   'plan.createTime': 'Create time',
   'plan.lastChange': 'Last change',
