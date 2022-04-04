@@ -13,9 +13,9 @@ import { Space } from 'antd';
 import FlowPropertyView from './components/view';
 import FlowPropertyEdit from './components/edit';
 import FlowPropertyDelete from './components/delete';
-import CategoryViewByParent from '../category/components/viewbyparent';
+// import CategoryViewByParent from '../category/components/viewbyparent';
 import UnitJsonList from '../unitgroup/components/unitjson/list';
-import UnitGroupViewByParent from '../unitgroup/components/viewbyparent';
+// import UnitGroupViewByParent from '../unitgroup/components/viewbyparent';
 import FlowPropertySelect from './components/select';
 
 type ListProps = {
@@ -49,23 +49,23 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       sorter: true,
       search: false,
     },
-    {
-      title: <FormattedMessage id="flowproperty.unitGroupName" defaultMessage="Unit Group" />,
-      dataIndex: 'unitGroupName',
-      search: false,
-      render: (_, row) => [
-        <Space size={'small'}>
-          {row.unitGroupName == null ? '-' : row.unitGroupName}
-          <UnitGroupViewByParent
-            projectId={row.projectId}
-            id={row.unitGroupId}
-            parentPkid={row.pkid}
-            parentType={'flowproperty'}
-            actionRef={actionRef}
-          />
-        </Space>,
-      ],
-    },
+    // {
+    //   title: <FormattedMessage id="flowproperty.unitGroupName" defaultMessage="Unit Group" />,
+    //   dataIndex: 'unitGroupName',
+    //   search: false,
+    //   render: (_, row) => [
+    //     <Space size={'small'}>
+    //       {row.unitGroupName == null ? '-' : row.unitGroupName}
+    //       <UnitGroupViewByParent
+    //         projectId={row.projectId}
+    //         id={row.unitGroupId}
+    //         parentPkid={row.pkid}
+    //         parentType={'flowproperty'}
+    //         actionRef={actionRef}
+    //       />
+    //     </Space>,
+    //   ],
+    // },
     {
       title: <FormattedMessage id="flowproperty.referenceUnit" defaultMessage="Reference Unit" />,
       dataIndex: 'referenceUnit',
@@ -77,23 +77,23 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
         </Space>,
       ],
     },
-    {
-      title: <FormattedMessage id="flowproperty.categoryName" defaultMessage="Category" />,
-      dataIndex: 'categoryName',
-      search: false,
-      render: (_, row) => [
-        <Space size={'small'}>
-          {row.categoryId == null ? '-' : row.categoryName}
-          <CategoryViewByParent
-            projectId={row.projectId}
-            id={row.categoryId}
-            parentType={'flowproperty'}
-            parentPkid={row.pkid}
-            actionRef={actionRef}
-          />
-        </Space>,
-      ],
-    },
+    // {
+    //   title: <FormattedMessage id="flowproperty.categoryName" defaultMessage="Category" />,
+    //   dataIndex: 'categoryName',
+    //   search: false,
+    //   render: (_, row) => [
+    //     <Space size={'small'}>
+    //       {row.categoryId == null ? '-' : row.categoryName}
+    //       <CategoryViewByParent
+    //         projectId={row.projectId}
+    //         id={row.categoryId}
+    //         parentType={'flowproperty'}
+    //         parentPkid={row.pkid}
+    //         actionRef={actionRef}
+    //       />
+    //     </Space>,
+    //   ],
+    // },
     {
       title: <FormattedMessage id="flowproperty.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
@@ -101,12 +101,12 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       sorter: true,
       search: false,
     },
-    {
-      title: <FormattedMessage id="flowproperty.database" defaultMessage="Database" />,
-      dataIndex: 'database',
-      sorter: true,
-      search: false,
-    },
+    // {
+    //   title: <FormattedMessage id="flowproperty.database" defaultMessage="Database" />,
+    //   dataIndex: 'database',
+    //   sorter: true,
+    //   search: false,
+    // },
     {
       title: <FormattedMessage id="flowproperty.release" defaultMessage="Release" />,
       dataIndex: 'release',

@@ -1,7 +1,7 @@
 export default {
   'project.index': 'No.',
   'project.name': 'Name',
-  'project.nation': 'Nation',
+  'project.nation': 'Location',
   'project.projectType': 'Type',
   'project.star': 'Starred',
   'project.description': 'Description',
