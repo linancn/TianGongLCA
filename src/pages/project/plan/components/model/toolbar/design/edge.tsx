@@ -2,6 +2,7 @@ import { Button, Drawer, Form, Input, InputNumber, Popover, Space } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { ProFormInstance } from '@ant-design/pro-form';
+import { ProFormSelect } from '@ant-design/pro-form';
 import { ProFormText } from '@ant-design/pro-form';
 import ProForm from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
@@ -62,6 +63,7 @@ const DesignEdge: FC<Props> = ({ xflowApp, label, drawerVisible, setDrawerVisibl
         markerWidth: cell.attrs.line.targetMarker.width,
         markerHeight: cell.attrs.line.targetMarker.height,
         markerOffset: cell.attrs.line.targetMarker.offset,
+        router: cell.router.name,
       });
       setColorLC(cell.attrs.line.stroke);
     }
@@ -90,7 +92,11 @@ const DesignEdge: FC<Props> = ({ xflowApp, label, drawerVisible, setDrawerVisibl
             text: values.label,
           },
         },
+        router: {
+          name: values.router,
+        },
       };
+      console.log(config);
       xflowApp.commandService.executeCommand<NsEdgeCmd.UpdateEdge.IArgs>(
         XFlowEdgeCommands.UPDATE_EDGE.id,
         {
@@ -138,6 +144,37 @@ const DesignEdge: FC<Props> = ({ xflowApp, label, drawerVisible, setDrawerVisibl
         }}
       >
         <ProFormText width="md" name="label" label="Label" />
+        <ProFormSelect
+          options={[
+            {
+              value: 'normal',
+              label: 'normal',
+            },
+            {
+              value: 'orth',
+              label: 'orth',
+            },
+            {
+              value: 'oneSide',
+              label: 'oneSide',
+            },
+            {
+              value: 'manhattan',
+              label: 'manhattan',
+            },
+            {
+              value: 'metro',
+              label: 'metro',
+            },
+            {
+              value: 'er',
+              label: 'er',
+            },
+          ]}
+          width="md"
+          name="router"
+          label="Router"
+        />
         <Form.Item name="lineWidth" label="Line Width">
           <InputNumber style={{ width: '328px' }} />
         </Form.Item>
