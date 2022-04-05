@@ -63,6 +63,7 @@ const PlanList: FC<Props> = (props) => {
     },
     {
       title: <FormattedMessage id="plan.option" defaultMessage="Option" />,
+      dataIndex: 'pkid',
       search: false,
       render: (_, row) => [
         <Space size={'small'}>

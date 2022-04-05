@@ -145,6 +145,7 @@ const Model: FC<Props> = ({ projectId, planId, name, actionRef }) => {
     return state;
   };
   const loadModel = (loadModelId: string) => {
+    message.loading({ content: 'Loading...', key: 'LoadMessage', duration: 0 });
     getPlanModelCells(projectId, loadModelId).then((pm) => {
       setParentCount(pm.parentCount);
       const modelCells = JSON.parse(pm.modelCells);
@@ -170,6 +171,7 @@ const Model: FC<Props> = ({ projectId, planId, name, actionRef }) => {
       setModelId(pm.id);
       setModelName(pm.dataName);
       setParentCount(pm.parentCount);
+      message.success({ content: 'Loaded!', key: 'LoadMessage', duration: 2 });
     });
   };
   const onLoad: IAppLoad = async (app) => {
@@ -202,10 +204,10 @@ const Model: FC<Props> = ({ projectId, planId, name, actionRef }) => {
 
   useEffect(() => {
     if (drawerVisible) {
-      loadModel(modelId);
+      loadModel(planId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [drawerVisible]);
+  }, [drawerVisible, planId]);
 
   return (
     <>
