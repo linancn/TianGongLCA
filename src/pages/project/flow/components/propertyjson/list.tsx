@@ -31,11 +31,9 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
       search: false,
     },
     {
-      title: (
-        <FormattedMessage id="flowproperty.conversionFactor" defaultMessage="Conversion Factor" />
-      ),
-      dataIndex: 'conversionFactor',
-      search: false,
+      title: <FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />,
+      dataIndex: 'dataName',
+      sorter: true,
     },
     {
       title: (
@@ -49,9 +47,11 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
       render: (_, row) => [<>{row.referenceFlowProperty === true ? 'true' : 'false'}</>],
     },
     {
-      title: <FormattedMessage id="flowproperty.dataName" defaultMessage="Data Name" />,
-      dataIndex: 'dataName',
-      sorter: true,
+      title: (
+        <FormattedMessage id="flowproperty.conversionFactor" defaultMessage="Conversion Factor" />
+      ),
+      dataIndex: 'conversionFactor',
+      search: false,
     },
     // {
     //   title: 'Category',
