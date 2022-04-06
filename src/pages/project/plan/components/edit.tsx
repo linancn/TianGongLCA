@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
-import { Button, Drawer, message, Space, Tooltip } from 'antd';
+import { Button, Drawer, message, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined, FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
@@ -20,6 +20,11 @@ const PlanEdit: FC<Props> = ({ pkid, actionRef }) => {
 
   const onEdit = useCallback(() => {
     setDrawerVisible(true);
+    setEditForm(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getPlanByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm
