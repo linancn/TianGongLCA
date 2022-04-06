@@ -180,9 +180,14 @@ export async function deleteParameterJson(processPkid: number, id: string) {
   );
 }
 
-export async function getExchangeJson(processPkid: number, flowId: string, input: boolean) {
+export async function getExchangeJson(
+  projectId: number,
+  processId: string,
+  flowId: string,
+  input: boolean,
+) {
   return request<ExchangeJson>(
-    `http://localhost:8081/api/process/getexchangejson/${processPkid}/${flowId}/${input}`,
+    `http://localhost:8081/api/process/getexchangejson/${projectId}/${processId}/${flowId}/${input}`,
     {
       method: 'GET',
     },

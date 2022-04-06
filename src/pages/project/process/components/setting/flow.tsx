@@ -48,9 +48,15 @@ const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <ProcessFlowView processPkid={row.processPkid} flowId={row.flowId} input={input} />
+          <ProcessFlowView
+            projectId={projectId}
+            processId={row.processId}
+            flowId={row.flowId}
+            input={input}
+          />
           <ProcessFlowEdit
             projectId={projectId}
+            processId={row.processId}
             processPkid={row.processPkid}
             flowId={row.flowId}
             input={input}

@@ -13,19 +13,27 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
+  processId: string;
   processPkid: number;
   flowId: string;
   input: boolean;
   actionRef: MutableRefObject<ActionType | undefined>;
 };
-const ProcessFlowEdit: FC<Props> = ({ projectId, processPkid, flowId, input, actionRef }) => {
+const ProcessFlowEdit: FC<Props> = ({
+  projectId,
+  processId,
+  processPkid,
+  flowId,
+  input,
+  actionRef,
+}) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
   const onEdit = useCallback(() => {
     setDrawerVisible(true);
-    getExchangeJson(processPkid, flowId, input).then(async (pi) => {
+    getExchangeJson(projectId, processId, flowId, input).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -74,10 +82,10 @@ const ProcessFlowEdit: FC<Props> = ({ projectId, processPkid, flowId, input, act
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [processPkid, flowId, input, projectId, actionRef]);
+  }, [projectId, processId, flowId, input, processPkid, actionRef]);
 
   const onReset = () => {
-    getExchangeJson(processPkid, flowId, input).then(async (result) => {
+    getExchangeJson(projectId, processId, flowId, input).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };
