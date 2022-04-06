@@ -17,11 +17,13 @@ import { XFlowNodeCommands } from '@antv/xflow';
 type Props = {
   projectId: number;
   xflowApp: IApplication | undefined;
+  drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AddPlan: FC<Props> = ({ xflowApp, projectId, setDrawerVisible }) => {
+const AddPlan: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }) => {
   const [selectRow, setSelectRow] = useState<PlanInfo>();
+  // const [selectRow, setSelectRow] = useState<PlanInfo>();
   const columns: ProColumns<PlanInfo>[] = [
     {
       title: <FormattedMessage id="plan.index" defaultMessage="Index" />,
@@ -90,6 +92,7 @@ const AddPlan: FC<Props> = ({ xflowApp, projectId, setDrawerVisible }) => {
 
   return (
     <PageContainer
+      className={drawerVisible ? styles.disabled : styles.hidden}
       header={{ title: '', subTitle: '' }}
       footer={[
         <Space size={'middle'} className={styles.footer_right}>

@@ -40,6 +40,7 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
             <AddProcess
               projectId={projectId}
               xflowApp={xflowApp}
+              drawerVisible={drawerVisible}
               setDrawerVisible={setDrawerVisible}
             />
           </ProCard.TabPane>
@@ -47,6 +48,7 @@ const Add: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }
             <AddPlan
               projectId={projectId}
               xflowApp={xflowApp}
+              drawerVisible={drawerVisible}
               setDrawerVisible={setDrawerVisible}
             />
           </ProCard.TabPane>

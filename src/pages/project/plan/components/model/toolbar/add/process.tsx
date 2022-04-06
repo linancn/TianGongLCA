@@ -16,10 +16,11 @@ import { getProcessGrid } from '@/services/process/api';
 type Props = {
   projectId: number;
   xflowApp: IApplication | undefined;
+  drawerVisible: boolean;
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AddProcess: FC<Props> = ({ xflowApp, projectId, setDrawerVisible }) => {
+const AddProcess: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVisible }) => {
   const [selectRow, setSelectRow] = useState<Process>();
   const columns: ProColumns<Process>[] = [
     {
@@ -85,6 +86,7 @@ const AddProcess: FC<Props> = ({ xflowApp, projectId, setDrawerVisible }) => {
 
   return (
     <PageContainer
+      className={drawerVisible ? styles.disabled : styles.hidden}
       header={{ title: '', subTitle: '' }}
       footer={[
         <Space size={'middle'} className={styles.footer_right}>
