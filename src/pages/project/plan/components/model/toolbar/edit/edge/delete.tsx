@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
-import { deleteEdgeProcess } from '@/services/edgeprocess/api';
+import { deletePlanModelFlow } from '@/services/plan/api';
 
 type Props = {
   pkid: number;
@@ -16,7 +16,7 @@ const EdgeProcessDelete: FC<Props> = ({ pkid, actionRef }) => {
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deleteEdgeProcess(pkid).then(async (result) => {
+        deletePlanModelFlow({ pkid }).then(async (result) => {
           if (result === 'ok') {
             message.success('Successfully deleted!');
             actionRef.current?.reload();

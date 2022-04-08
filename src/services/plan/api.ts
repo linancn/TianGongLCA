@@ -64,6 +64,10 @@ export async function getPlanModelFlowGrid(
   planId: string,
   edgeSourceId: string,
   edgeTargetId: string,
+  planSourceId: string,
+  planTargetId: string,
+  processSourceId: string,
+  processTargetId: string,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -72,8 +76,8 @@ export async function getPlanModelFlowGrid(
     total?: number;
     success?: boolean;
   }>('http://localhost:8081/api/plan/getmodelflowgrid', {
-    method: 'GET',
-    params: {
+    method: 'POST',
+    data: {
       ...params,
       sortBy,
       orderBy,
@@ -81,6 +85,10 @@ export async function getPlanModelFlowGrid(
       planId,
       edgeSourceId,
       edgeTargetId,
+      planSourceId,
+      planTargetId,
+      processSourceId,
+      processTargetId,
     },
   });
 }
@@ -120,6 +128,13 @@ export async function updatePlanModelCells(data?: Record<string, any>) {
 export async function createPlanModelFlow(data?: Record<string, any>) {
   return request<string>('http://localhost:8081/api/plan/createmodelflow', {
     method: 'POST',
+    data,
+  });
+}
+
+export async function deletePlanModelFlow(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/plan/deletemodelflow', {
+    method: 'DELETE',
     data,
   });
 }

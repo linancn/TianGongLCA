@@ -1,7 +1,7 @@
 import type { Dispatch, FC } from 'react';
 import EditNode from './node';
-import EditEdge from './edge';
 import type { PlanModelState } from '@/services/plan/data';
+import EditEdgeProcess from './edge/process';
 
 type Props = {
   projectId: number;
@@ -29,16 +29,20 @@ const Edit: FC<Props> = ({
       );
     }
     if (planModelState.cellType === 'edge') {
-      return (
-        <EditEdge
-          projectId={projectId}
-          modelId={modelId}
-          sourceId={planModelState.cellConfig.source}
-          targetId={planModelState.cellConfig.target}
-          drawerVisible={drawerVisible}
-          setDrawerVisible={setDrawerVisible}
-        />
-      );
+      if (
+        planModelState.cellConfig.info.sourceType === 'process' &&
+        planModelState.cellConfig.info.targetType === 'process'
+      )
+        return (
+          <EditEdgeProcess
+            projectId={projectId}
+            modelId={modelId}
+            sourceId={planModelState.cellConfig.source}
+            targetId={planModelState.cellConfig.target}
+            drawerVisible={drawerVisible}
+            setDrawerVisible={setDrawerVisible}
+          />
+        );
     }
   }
   return <></>;

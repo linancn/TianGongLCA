@@ -13,12 +13,18 @@ import ModelFlowSelect from './select';
 type Props = {
   projectId: number;
   planId: string;
-  sourceId: string;
-  targetId: string;
+  edgeSourceId: string;
+  edgeTargetId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const CreateEdgeFlow: FC<Props> = ({ projectId, planId, sourceId, targetId, actionRef }) => {
+const CreateEdgeFlow: FC<Props> = ({
+  projectId,
+  planId,
+  edgeSourceId,
+  edgeTargetId,
+  actionRef,
+}) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
@@ -96,8 +102,12 @@ const CreateEdgeFlow: FC<Props> = ({ projectId, planId, sourceId, targetId, acti
               ...values,
               projectId,
               planId,
-              edgeSourceId: sourceId,
-              edgeTargetId: targetId,
+              edgeSourceId,
+              edgeTargetId,
+              planSourceId: '',
+              planTargetId: '',
+              processSourceId: edgeSourceId,
+              processTargetId: edgeTargetId,
             }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Create successfully!');
@@ -114,7 +124,7 @@ const CreateEdgeFlow: FC<Props> = ({ projectId, planId, sourceId, targetId, acti
             Source Flow
             <ModelFlowSelect
               projectId={projectId}
-              processId={sourceId}
+              processId={edgeSourceId}
               input={false}
               formRef={formRefCreate}
             />
@@ -125,7 +135,7 @@ const CreateEdgeFlow: FC<Props> = ({ projectId, planId, sourceId, targetId, acti
             Target Flow
             <ModelFlowSelect
               projectId={projectId}
-              processId={targetId}
+              processId={edgeTargetId}
               input={true}
               formRef={formRefCreate}
             />

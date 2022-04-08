@@ -83,7 +83,6 @@ const Model: FC<Props> = ({ projectId, planId, name, actionRef }) => {
         const relationSourceData = edge?.getSourceNode()?.data;
         const relationTargetData = edge?.getTargetNode()?.data;
         const edgeData: NsGraph.IEdgeConfig = edge?.getData();
-
         if (!edgeData) {
           appRef.executeCommand(XFlowEdgeCommands.DEL_EDGE.id, {
             x6Edge: edge as any,
@@ -94,6 +93,10 @@ const Model: FC<Props> = ({ projectId, planId, name, actionRef }) => {
               id: relationSourceData.id + '_' + relationTargetData.id,
               source: relationSourceData.id,
               target: relationTargetData.id,
+              info: {
+                sourceType: relationSourceData.info.type,
+                targetType: relationTargetData.info.type,
+              },
               attrs: EdgeAttrs(),
               router: EdgeRouter(),
               connector: EdgeConnector(),

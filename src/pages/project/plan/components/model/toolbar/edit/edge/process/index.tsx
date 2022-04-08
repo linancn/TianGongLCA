@@ -4,10 +4,10 @@ import { useCallback, useRef } from 'react';
 import styles from '@/style/custom.less';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import CreateEdgeFlow from './create';
 import { CloseOutlined } from '@ant-design/icons';
 import { getPlanModelFlowGrid } from '@/services/plan/api';
 import type { PlanModelFlow } from '@/services/plan/data';
+import CreateEdgeFlow from './create';
 
 type Props = {
   projectId: number;
@@ -18,7 +18,7 @@ type Props = {
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditEdge: FC<Props> = ({
+const EditEdgeProcess: FC<Props> = ({
   projectId,
   modelId,
   sourceId,
@@ -40,11 +40,11 @@ const EditEdge: FC<Props> = ({
     },
     {
       title: 'Source Name',
-      dataIndex: 'flowSourceId',
+      dataIndex: 'flowSourceName',
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.flowSourceId}
+          {row.flowSourceName}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
           {/* <EdgeProcessView projectId={projectId} id={row.flowSourceId} /> */}
@@ -63,11 +63,11 @@ const EditEdge: FC<Props> = ({
     },
     {
       title: 'Target Name',
-      dataIndex: 'flowTargetId',
+      dataIndex: 'flowTargetName',
       sorter: true,
       render: (_, row) => [
         <Space size={'small'} className={styles.footer_left}>
-          {row.flowTargetId}
+          {row.flowTargetName}
         </Space>,
         <Space size={'small'} className={styles.footer_right}>
           {/* <EdgeProcessView projectId={projectId} id={row.flowTargetId} /> */}
@@ -103,8 +103,8 @@ const EditEdge: FC<Props> = ({
           <CreateEdgeFlow
             projectId={projectId}
             planId={modelId}
-            sourceId={sourceId}
-            targetId={targetId}
+            edgeSourceId={sourceId}
+            edgeTargetId={targetId}
             actionRef={actionRef}
           />,
         ]}
@@ -115,10 +115,21 @@ const EditEdge: FC<Props> = ({
           },
           sort,
         ) => {
-          return getPlanModelFlowGrid(params, sort, projectId, modelId, sourceId, targetId);
+          return getPlanModelFlowGrid(
+            params,
+            sort,
+            projectId,
+            modelId,
+            sourceId,
+            targetId,
+            '',
+            '',
+            sourceId,
+            targetId,
+          );
         }}
       />
     </Drawer>
   );
 };
-export default EditEdge;
+export default EditEdgeProcess;
