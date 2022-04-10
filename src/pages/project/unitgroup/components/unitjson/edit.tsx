@@ -9,6 +9,7 @@ import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getUnitJson, updateUnitJson } from '@/services/unitgroup/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   unitGroupPkid: number;
@@ -38,7 +39,9 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
               id,
             }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Edit successfully!');
+                message.success(
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
+                );
                 setDrawerVisible(false);
                 actionRef.current?.reload();
               } else {
@@ -48,8 +51,21 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="conversionFactor" label="Conversion Factor" />
+          <ProFormText
+            width="md"
+            name="name"
+            label={<FormattedMessage id="unitgroup.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormText
+            width="md"
+            name="conversionFactor"
+            label={
+              <FormattedMessage
+                id="unitgroup.conversionFactor"
+                defaultMessage="Conversion Factor"
+              />
+            }
+          />
           <ProFormSelect
             options={[
               {
@@ -59,10 +75,16 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
             ]}
             width="md"
             name="referenceUnit"
-            label="Reference Unit"
+            label={
+              <FormattedMessage id="unitgroup.referenceUnit" defaultMessage="Reference Unit" />
+            }
             disabled={pi.referenceUnit}
           />
-          <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="unitgroup.description" defaultMessage="Description" />}
+          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -83,11 +105,11 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={
@@ -102,10 +124,16 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              {' '}
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              {' '}
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

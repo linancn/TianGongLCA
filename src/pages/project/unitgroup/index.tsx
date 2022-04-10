@@ -36,7 +36,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
       search: false,
     },
     {
-      title: <FormattedMessage id="flow.dataName" defaultMessage="Data Name" />,
+      title: <FormattedMessage id="unitgroup.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },

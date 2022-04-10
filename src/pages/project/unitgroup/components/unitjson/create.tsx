@@ -87,8 +87,21 @@ const UnitJsonCreate: FC<Props> = ({ unitGroupPkid, actionRef }) => {
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="conversionFactor" label="Conversion Factor" />
+          <ProFormText
+            width="md"
+            name="name"
+            label={<FormattedMessage id="unitgroup.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormText
+            width="md"
+            name="conversionFactor"
+            label={
+              <FormattedMessage
+                id="unitgroup.conversionFactor"
+                defaultMessage="Conversion Factor"
+              />
+            }
+          />
           <ProFormSelect
             options={[
               {
@@ -102,9 +115,15 @@ const UnitJsonCreate: FC<Props> = ({ unitGroupPkid, actionRef }) => {
             ]}
             width="md"
             name="referenceUnit"
-            label="Reference Unit"
+            label={
+              <FormattedMessage id="unitgroup.referenceUnit" defaultMessage="Reference Unit" />
+            }
           />
-          <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="unitgroup.description" defaultMessage="Description" />}
+          />
         </ProForm>
       </Drawer>
     </>
