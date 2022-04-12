@@ -1,7 +1,7 @@
 export default {
   'process.index': '序号',
   'process.dataName': '名称',
-  'process.processType': 'Process Type',
+  'process.processType': '类型',
   'process.lastChange': '最后修改',
   'process.release': '版本',
   'process.description': '描述',
