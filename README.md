@@ -63,3 +63,9 @@ After yarn build
 ```bash
 docker build --file Dockerfile --tag cystalca .
 ```
+
+### In case of "JavaScript heap out of memory"
+
+```bash
+export NODE_OPTIONS="--max-old-space-size=8192"
+```
