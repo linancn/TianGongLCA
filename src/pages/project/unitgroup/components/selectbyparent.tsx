@@ -138,14 +138,14 @@ const UnitGroupSelectByParent: FC<Props> = ({
   };
   return (
     <>
-      <Tooltip title="Select">
+      <Tooltip title={<FormattedMessage id="options.select" defaultMessage="Select" />}>
         <Button type="primary" onClick={() => setDrawerVisible(true)}>
-          Select
+          {<FormattedMessage id="options.select" defaultMessage="Select" />}
         </Button>
       </Tooltip>
 
       <Drawer
-        title="Select"
+        title={<FormattedMessage id="options.select" defaultMessage="Select" />}
         width="100%"
         closable={false}
         extra={
@@ -169,10 +169,10 @@ const UnitGroupSelectByParent: FC<Props> = ({
                 reload();
               }}
             >
-              Cancel
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
             </Button>
             <Button onClick={() => updateSelectId()} type="primary">
-              Select
+              {<FormattedMessage id="options.select" defaultMessage="Select" />}
             </Button>
           </Space>
         }

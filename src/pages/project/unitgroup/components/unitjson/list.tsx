@@ -11,6 +11,7 @@ import UnitJsonView from './view';
 import UnitJsonCreate from './create';
 import UnitJsonEdit from './edit';
 import UnitJsonDelete from './delete';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   unitGroupPkid: number;
@@ -22,29 +23,31 @@ const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
 
   const unitJsonColumns: ProColumns<UnitJson>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="unitgroup.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Name',
+      title: <FormattedMessage id="unitgroup.dataName" defaultMessage="Data Name" />,
       dataIndex: 'name',
       sorter: true,
     },
     {
-      title: 'Conversion Factor',
+      title: (
+        <FormattedMessage id="unitgroup.conversionFactor" defaultMessage="Conversion Factor" />
+      ),
       dataIndex: 'conversionFactor',
       search: false,
     },
     {
-      title: 'Reference Unit',
+      title: <FormattedMessage id="unitgroup.referenceUnit" defaultMessage="Reference Unit" />,
       dataIndex: 'referenceUnit',
       search: false,
       render: (_, row) => [<>{row.referenceUnit === true ? 'true' : 'false'}</>],
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
@@ -63,7 +66,7 @@ const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
   if (unitGroupPkid) {
     return (
       <>
-        <Tooltip title="List">
+        <Tooltip title={<FormattedMessage id="options.list" defaultMessage="List" />}>
           <Button
             shape="circle"
             icon={<ProfileOutlined />}
@@ -72,7 +75,7 @@ const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
           />
         </Tooltip>
         <Drawer
-          title="List"
+          title={<FormattedMessage id="options.list" defaultMessage="List" />}
           width="100%"
           closable={false}
           extra={
