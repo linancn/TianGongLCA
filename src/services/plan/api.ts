@@ -93,6 +93,37 @@ export async function getPlanModelFlowGrid(
   });
 }
 
+export async function getPlanModelProcessGrid(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  sort: Record<string, SortOrder>,
+  projectId: number,
+  planId: string,
+  edgeSourceId: string,
+  edgeTargetId: string,
+) {
+  const sortBy = Object.keys(sort)[0];
+  const orderBy = sort[sortBy]?.replace('end', '');
+  return request<{
+    data: PlanModelFlow[];
+    total?: number;
+    success?: boolean;
+  }>('http://localhost:8081/api/plan/getmodelprocessgrid', {
+    method: 'POST',
+    data: {
+      ...params,
+      sortBy,
+      orderBy,
+      projectId,
+      planId,
+      edgeSourceId,
+      edgeTargetId,
+    },
+  });
+}
+
 export async function getPlan(projectId: number, id: string) {
   return request<PlanInfo>(`http://localhost:8081/api/plan/get/${projectId}/${id}`, {
     method: 'GET',
@@ -141,6 +172,12 @@ export async function deletePlanModelFlow(data?: Record<string, any>) {
 
 export async function getPlanParentCount(projectId: number, id: string) {
   return request<number>(`http://localhost:8081/api/plan/getparentcount/${projectId}/${id}`, {
+    method: 'GET',
+  });
+}
+
+export async function getPlanModelNodeTree(projectId: number, id: string) {
+  return request<any>(`http://localhost:8081/api/plan/getmodelnodetree/${projectId}/${id}`, {
     method: 'GET',
   });
 }

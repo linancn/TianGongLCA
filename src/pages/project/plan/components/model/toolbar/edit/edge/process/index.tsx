@@ -87,7 +87,7 @@ const EditEdgeProcess: FC<Props> = ({
       visible={drawerVisible}
       maskClosable={false}
       title="Edit"
-      width="750px"
+      width="100%"
       closable={false}
       extra={
         <Button icon={<CloseOutlined />} style={{ border: 0 }} onClick={callbackDrawerVisible} />

@@ -37,10 +37,18 @@ export type PlanModelFlow = {
   planId: string;
   edgeSourceId: string;
   edgeSourceName: string;
+  planSourceId: string;
+  planSourceName: string;
+  processSourceId: string;
+  processSourceName: string;
   flowSourceId: string;
   flowSourceName: string;
   edgeTargetId: string;
   edgeTargetName: string;
+  planTargetId: string;
+  planTargetName: string;
+  processTargetId: string;
+  processTargetName: string;
   flowTargetId: string;
   flowTargetName: string;
 };
