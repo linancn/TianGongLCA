@@ -1,135 +1,69 @@
-import { Button, Drawer, Space } from 'antd';
+import { Input, TreeSelect } from 'antd';
 import type { Dispatch, FC } from 'react';
-import { useCallback, useRef } from 'react';
-import styles from '@/style/custom.less';
-import type { ActionType, ProColumns } from '@ant-design/pro-table';
-import ProTable from '@ant-design/pro-table';
-import { CloseOutlined } from '@ant-design/icons';
-import { getPlanModelFlowGrid } from '@/services/plan/api';
-import type { PlanModelFlow } from '@/services/plan/data';
-import CreateEdgeFlow from './create';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getPlanModelNodeTree } from '@/services/plan/api';
+import { getProcessById } from '@/services/process/api';
 
 type Props = {
   projectId: number;
-  modelId: string;
-  sourceId: string;
-  targetId: string;
-  drawerVisible: boolean;
-  setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
+  dataId: string;
+  dataType: string;
+  selectValue: string | undefined;
+  setSelectValue: Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const EditEdgeProcess: FC<Props> = ({
   projectId,
-  modelId,
-  sourceId,
-  targetId,
-  drawerVisible,
-  setDrawerVisible,
+  dataId,
+  dataType,
+  selectValue,
+  setSelectValue,
 }) => {
-  const actionRef = useRef<ActionType>();
-  const callbackDrawerVisible = useCallback(() => {
-    setDrawerVisible(false);
-  }, [setDrawerVisible]);
+  const [treeData, setTreeData] = useState<any>(undefined);
+  const onChange = (value: any) => {
+    setSelectValue(value);
+  };
 
-  const columns: ProColumns<PlanModelFlow>[] = [
-    {
-      title: '',
-      // render: (_, row) => [
-      // <EdgeProcessDelete pkid={row.pkid} actionRef={actionRef} />
-      // ],
-    },
-    {
-      title: 'Source Name',
-      dataIndex: 'flowSourceName',
-      sorter: true,
-      render: (_, row) => [
-        <Space size={'small'} className={styles.footer_left}>
-          {row.flowSourceName}
-        </Space>,
-        <Space size={'small'} className={styles.footer_right}>
-          {/* <EdgeProcessView projectId={projectId} id={row.flowSourceId} /> */}
-          {/* <EdgeProcessSelect
-            pkid={row.pkid}
-            projectId={projectId}
-            processId={sourceId}
-            st={'source'}
-            actionRef={actionRef}
-          /> */}
-        </Space>,
-      ],
-    },
-    {
-      title: '',
-    },
-    {
-      title: 'Target Name',
-      dataIndex: 'flowTargetName',
-      sorter: true,
-      render: (_, row) => [
-        <Space size={'small'} className={styles.footer_left}>
-          {row.flowTargetName}
-        </Space>,
-        <Space size={'small'} className={styles.footer_right}>
-          {/* <EdgeProcessView projectId={projectId} id={row.flowTargetId} /> */}
-          {/* <EdgeProcessSelect
-            pkid={row.pkid}
-            projectId={projectId}
-            processId={targetId}
-            st={'target'}
-            actionRef={actionRef}
-          /> */}
-        </Space>,
-      ],
-    },
-  ];
-  return (
-    <Drawer
-      visible={drawerVisible}
-      maskClosable={false}
-      title="Edit"
-      width="100%"
-      closable={false}
-      extra={
-        <Button icon={<CloseOutlined />} style={{ border: 0 }} onClick={callbackDrawerVisible} />
-      }
-      onClose={callbackDrawerVisible}
-    >
-      <ProTable
-        actionRef={actionRef}
-        search={false}
-        pagination={false}
-        columns={columns}
-        toolBarRender={() => [
-          <CreateEdgeFlow
-            projectId={projectId}
-            planId={modelId}
-            edgeSourceId={sourceId}
-            edgeTargetId={targetId}
-            actionRef={actionRef}
-          />,
-        ]}
-        request={(
-          params: {
-            pageSize: number;
-            current: number;
-          },
-          sort,
-        ) => {
-          return getPlanModelFlowGrid(
-            params,
-            sort,
-            projectId,
-            modelId,
-            sourceId,
-            targetId,
-            '',
-            '',
-            sourceId,
-            targetId,
-          );
-        }}
+  useEffect(() => {
+    if (dataType === 'plan')
+      getPlanModelNodeTree(projectId, dataId).then((result) => {
+        setTreeData(result);
+      });
+    else
+      getProcessById(projectId, dataId).then((result) => {
+        setSelectValue(dataId);
+        setTreeData(result);
+      });
+  }, [dataId, dataType, projectId, setSelectValue]);
+  if (dataType === 'plan')
+    return (
+      <TreeSelect
+        showSearch
+        treeNodeFilterProp="title"
+        style={{ width: '100%' }}
+        value={selectValue}
+        treeData={
+          treeData
+            ? treeData.map((r: any) => {
+                return {
+                  id: `${r.parentId}_${r.nodeId}`,
+                  pId: r.parentId,
+                  title: r.nodeName,
+                  value: `${r.parentId}_${r.nodeId}`,
+                  isLeaf: r.hasChildren ? false : true,
+                  selectable: r.nodeType === 'plan' ? false : true,
+                };
+              })
+            : []
+        }
+        onChange={onChange}
+        treeDataSimpleMode
+        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+        placeholder="Please select"
+        allowClear
       />
-    </Drawer>
-  );
+    );
+  else return <Input value={treeData ? treeData.dataName : ''} disabled={true} />;
 };
 export default EditEdgeProcess;

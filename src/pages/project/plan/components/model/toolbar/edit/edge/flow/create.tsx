@@ -69,7 +69,7 @@ const CreateEdgeFlow: FC<Props> = ({
       </Tooltip>
       <Drawer
         title="Create"
-        width="100%"
+        width="400px"
         closable={false}
         extra={
           <Button
