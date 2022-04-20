@@ -2,6 +2,7 @@ import type { Dispatch, FC } from 'react';
 import EditNode from './node';
 import type { PlanModelState } from '@/services/plan/data';
 import EditEdge from './edge';
+import EdgeProcess from './edge/process';
 
 type Props = {
   projectId: number;
@@ -29,18 +30,35 @@ const Edit: FC<Props> = ({
       );
     }
     if (planModelState.cellType === 'edge') {
-      return (
-        <EditEdge
-          projectId={projectId}
-          modelId={modelId}
-          sourceId={planModelState.cellConfig.source}
-          sourceType={planModelState.cellConfig.info.sourceType}
-          targetId={planModelState.cellConfig.target}
-          targetType={planModelState.cellConfig.info.targetType}
-          drawerVisible={drawerVisible}
-          setDrawerVisible={setDrawerVisible}
-        />
-      );
+      if (
+        planModelState.cellConfig.info.sourceType === 'process' &&
+        planModelState.cellConfig.info.targetType === 'process'
+      )
+        return (
+          <EdgeProcess
+            projectId={projectId}
+            modelId={modelId}
+            sourceId={planModelState.cellConfig.source}
+            sourceType={planModelState.cellConfig.info.sourceType}
+            targetId={planModelState.cellConfig.target}
+            targetType={planModelState.cellConfig.info.targetType}
+            drawerVisible={drawerVisible}
+            setDrawerVisible={setDrawerVisible}
+          />
+        );
+      else
+        return (
+          <EditEdge
+            projectId={projectId}
+            modelId={modelId}
+            sourceId={planModelState.cellConfig.source}
+            sourceType={planModelState.cellConfig.info.sourceType}
+            targetId={planModelState.cellConfig.target}
+            targetType={planModelState.cellConfig.info.targetType}
+            drawerVisible={drawerVisible}
+            setDrawerVisible={setDrawerVisible}
+          />
+        );
     }
   }
   return <></>;

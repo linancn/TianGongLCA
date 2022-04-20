@@ -1,12 +1,14 @@
-import { Button, Drawer } from 'antd';
+import { Button, Drawer, Space } from 'antd';
 import type { Dispatch, FC } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { useCallback } from 'react';
+import { useRef } from 'react';
+import type { ActionType, ProColumns } from '@ant-design/pro-table';
+import ProTable from '@ant-design/pro-table';
+import { getPlanModelProcessGrid } from '@/services/plan/api';
+import type { PlanModelProcess } from '@/services/plan/data';
 import { CloseOutlined } from '@ant-design/icons';
-import ProCard from '@ant-design/pro-card';
-import EditEdgeFlow from './flow';
-import EditEdgeProcess from './process/index';
+import CreateEdgeProcess from './process/create';
+import EditEdgeProcess from './process/edit';
 
 type Props = {
   projectId: number;
@@ -29,44 +31,49 @@ const EditEdge: FC<Props> = ({
   drawerVisible,
   setDrawerVisible,
 }) => {
-  const [sourceValue, setSourceValue] = useState<string>();
-  const [targetValue, setTargetValue] = useState<string>();
-
-  const [planSourceId, setPlanSourceId] = useState<string>('');
-  const [planTargetId, setPlanTargetId] = useState<string>('');
-
-  const [processSourceId, setProcessSourceId] = useState<string>();
-  const [processTargetId, setProcessTargetId] = useState<string>();
-
+  const actionRef = useRef<ActionType>();
+  const columns: ProColumns<PlanModelProcess>[] = [
+    {
+      title: 'Index',
+      dataIndex: 'index',
+      valueType: 'index',
+      search: false,
+    },
+    {
+      title: 'Source Name',
+      dataIndex: 'processSourceId',
+      sorter: true,
+    },
+    {
+      title: 'Target Name',
+      dataIndex: 'processTargetId',
+      sorter: true,
+    },
+    {
+      title: 'Option',
+      dataIndex: 'pkid',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          <EditEdgeProcess
+            projectId={projectId}
+            modelId={modelId}
+            edgeSourceId={row.edgeSourceId}
+            edgeTargetId={row.edgeTargetId}
+            planSourceId={row.planSourceId}
+            planTargetId={row.planTargetId}
+            processSourceId={row.processSourceId}
+            processTargetId={row.processTargetId}
+            processSourceName={row.processSourceName}
+            processTargetName={row.processTargetName}
+          />
+        </Space>,
+      ],
+    },
+  ];
   const callbackDrawerVisible = useCallback(() => {
     setDrawerVisible(false);
   }, [setDrawerVisible]);
-
-  useEffect(() => {
-    if (sourceValue) {
-      const idList = sourceValue.split('_');
-      setProcessSourceId(idList[idList.length - 1]);
-      if (idList.length >= 2) {
-        let planId = idList[1];
-        for (let i = 2; i < idList.length - 1; i++) {
-          planId = planId + '_' + idList[i];
-        }
-        setPlanSourceId(planId);
-      }
-    } else setProcessSourceId(undefined);
-
-    if (targetValue) {
-      const idList = targetValue.split('_');
-      setProcessTargetId(idList[idList.length - 1]);
-      if (idList.length >= 2) {
-        let planId = idList[1];
-        for (let i = 2; i < idList.length - 1; i++) {
-          planId = planId + '_' + idList[i];
-        }
-        setPlanTargetId(planId);
-      }
-    } else setProcessTargetId(undefined);
-  }, [sourceValue, targetValue]);
 
   return (
     <Drawer
@@ -80,35 +87,32 @@ const EditEdge: FC<Props> = ({
       }
       onClose={callbackDrawerVisible}
     >
-      <ProCard ghost gutter={[0, 8]} aria-disabled={false}>
-        <ProCard colSpan={12} title="Source Process" layout="center" bordered>
-          <EditEdgeProcess
+      <ProTable
+        headerTitle="Processes"
+        actionRef={actionRef}
+        search={false}
+        pagination={false}
+        columns={columns}
+        toolBarRender={() => [
+          <CreateEdgeProcess
             projectId={projectId}
-            dataId={sourceId}
-            dataType={sourceType}
-            selectValue={sourceValue}
-            setSelectValue={setSourceValue}
-          />
-        </ProCard>
-        <ProCard colSpan={12} title="Target Process" layout="center" bordered>
-          <EditEdgeProcess
-            projectId={projectId}
-            dataId={targetId}
-            dataType={targetType}
-            selectValue={targetValue}
-            setSelectValue={setTargetValue}
-          />
-        </ProCard>
-      </ProCard>
-      <EditEdgeFlow
-        projectId={projectId}
-        modelId={modelId}
-        edgeSourceId={sourceId}
-        edgeTargetId={targetId}
-        planSourceId={planSourceId}
-        planTargetId={planTargetId}
-        processSourceId={processSourceId}
-        processTargetId={processTargetId}
+            modelId={modelId}
+            sourceId={sourceId}
+            sourceType={sourceType}
+            targetId={targetId}
+            targetType={targetType}
+            actionRef={actionRef}
+          />,
+        ]}
+        request={(
+          params: {
+            pageSize: number;
+            current: number;
+          },
+          sort,
+        ) => {
+          return getPlanModelProcessGrid(params, sort, projectId, modelId, sourceId, targetId);
+        }}
       />
     </Drawer>
   );

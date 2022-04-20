@@ -1,69 +1,116 @@
-import { Input, TreeSelect } from 'antd';
+import { Button, Drawer } from 'antd';
 import type { Dispatch, FC } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getPlanModelNodeTree } from '@/services/plan/api';
-import { getProcessById } from '@/services/process/api';
+import { useCallback } from 'react';
+import { CloseOutlined } from '@ant-design/icons';
+import ProCard from '@ant-design/pro-card';
+import EditEdgeFlow from '../flow';
+import SelectEdgeProcess from './select';
 
 type Props = {
   projectId: number;
-  dataId: string;
-  dataType: string;
-  selectValue: string | undefined;
-  setSelectValue: Dispatch<React.SetStateAction<string | undefined>>;
+  modelId: string;
+  sourceId: string;
+  sourceType: string;
+  targetId: string;
+  targetType: string;
+  drawerVisible: boolean;
+  setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditEdgeProcess: FC<Props> = ({
+const EdgeProcess: FC<Props> = ({
   projectId,
-  dataId,
-  dataType,
-  selectValue,
-  setSelectValue,
+  modelId,
+  sourceId,
+  sourceType,
+  targetId,
+  targetType,
+  drawerVisible,
+  setDrawerVisible,
 }) => {
-  const [treeData, setTreeData] = useState<any>(undefined);
-  const onChange = (value: any) => {
-    setSelectValue(value);
-  };
+  const [sourceValue, setSourceValue] = useState<string>();
+  const [targetValue, setTargetValue] = useState<string>();
+
+  const [planSourceId, setPlanSourceId] = useState<string>('');
+  const [planTargetId, setPlanTargetId] = useState<string>('');
+
+  const [processSourceId, setProcessSourceId] = useState<string>();
+  const [processTargetId, setProcessTargetId] = useState<string>();
+
+  const callbackDrawerVisible = useCallback(() => {
+    setDrawerVisible(false);
+  }, [setDrawerVisible]);
 
   useEffect(() => {
-    if (dataType === 'plan')
-      getPlanModelNodeTree(projectId, dataId).then((result) => {
-        setTreeData(result);
-      });
-    else
-      getProcessById(projectId, dataId).then((result) => {
-        setSelectValue(dataId);
-        setTreeData(result);
-      });
-  }, [dataId, dataType, projectId, setSelectValue]);
-  if (dataType === 'plan')
-    return (
-      <TreeSelect
-        showSearch
-        treeNodeFilterProp="title"
-        style={{ width: '100%' }}
-        value={selectValue}
-        treeData={
-          treeData
-            ? treeData.map((r: any) => {
-                return {
-                  id: `${r.parentId}_${r.nodeId}`,
-                  pId: r.parentId,
-                  title: r.nodeName,
-                  value: `${r.parentId}_${r.nodeId}`,
-                  isLeaf: r.hasChildren ? false : true,
-                  selectable: r.nodeType === 'plan' ? false : true,
-                };
-              })
-            : []
+    if (sourceValue) {
+      const idList = sourceValue.split('_');
+      setProcessSourceId(idList[idList.length - 1]);
+      if (idList.length >= 2) {
+        let planId = idList[1];
+        for (let i = 2; i < idList.length - 1; i++) {
+          planId = planId + '_' + idList[i];
         }
-        onChange={onChange}
-        treeDataSimpleMode
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        placeholder="Please select"
-        allowClear
+        setPlanSourceId(planId);
+      }
+    } else setProcessSourceId(undefined);
+
+    if (targetValue) {
+      const idList = targetValue.split('_');
+      setProcessTargetId(idList[idList.length - 1]);
+      if (idList.length >= 2) {
+        let planId = idList[1];
+        for (let i = 2; i < idList.length - 1; i++) {
+          planId = planId + '_' + idList[i];
+        }
+        setPlanTargetId(planId);
+      }
+    } else setProcessTargetId(undefined);
+  }, [sourceValue, targetValue]);
+
+  return (
+    <Drawer
+      visible={drawerVisible}
+      maskClosable={false}
+      title="Edit"
+      width="100%"
+      closable={false}
+      extra={
+        <Button icon={<CloseOutlined />} style={{ border: 0 }} onClick={callbackDrawerVisible} />
+      }
+      onClose={callbackDrawerVisible}
+    >
+      <ProCard ghost gutter={[0, 8]} aria-disabled={false}>
+        <ProCard colSpan={12} title="Source Process" layout="center" bordered>
+          <SelectEdgeProcess
+            projectId={projectId}
+            dataId={sourceId}
+            dataType={sourceType}
+            selectValue={sourceValue}
+            setSelectValue={setSourceValue}
+          />
+        </ProCard>
+        <ProCard colSpan={12} title="Target Process" layout="center" bordered>
+          <SelectEdgeProcess
+            projectId={projectId}
+            dataId={targetId}
+            dataType={targetType}
+            selectValue={targetValue}
+            setSelectValue={setTargetValue}
+          />
+        </ProCard>
+      </ProCard>
+      <EditEdgeFlow
+        projectId={projectId}
+        modelId={modelId}
+        edgeSourceId={sourceId}
+        edgeTargetId={targetId}
+        planSourceId={planSourceId}
+        planTargetId={planTargetId}
+        processSourceId={processSourceId}
+        processTargetId={processTargetId}
       />
-    );
-  else return <Input value={treeData ? treeData.dataName : ''} disabled={true} />;
+    </Drawer>
+  );
 };
-export default EditEdgeProcess;
+export default EdgeProcess;

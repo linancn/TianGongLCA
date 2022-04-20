@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import type { PlanInfo, PlanModel, PlanModelFlow } from './data';
+import type { PlanInfo, PlanModel, PlanModelFlow, PlanModelProcess } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
 
 export async function getPlanGrid(
@@ -107,7 +107,7 @@ export async function getPlanModelProcessGrid(
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
   return request<{
-    data: PlanModelFlow[];
+    data: PlanModelProcess[];
     total?: number;
     success?: boolean;
   }>('http://localhost:8081/api/plan/getmodelprocessgrid', {
