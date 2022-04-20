@@ -5,7 +5,7 @@ export default {
   'process.lastChange': 'Last Change',
   'process.release': 'Release',
   'process.description': 'Description',
-  'process.delete': 'Are you sure to delete this process?',
+  'process.delete': 'Are you sure you want to delete this process?',
   'process.deletesuccess': 'Delete successfully!',
   'process.amount': 'Amount',
   'process.amountFormula': 'Amount Formula',
@@ -14,5 +14,5 @@ export default {
   'process.createInputFlow': 'Create Input Flow',
   'process.createOutputFlow': 'Create Output Flow',
   'process.selectFlowBaseinfo': 'Select Flow Base Info',
-  'process.flowName': 'Flow Name',
+  'process.flowName': 'Flow',
 };

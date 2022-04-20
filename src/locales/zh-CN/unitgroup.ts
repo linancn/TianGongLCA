@@ -7,7 +7,7 @@ export default {
   'unitgroup.release': '版本',
   'unitgroup.description': '描述',
   'unitgroup.version': '修订号',
-  'unitgroup.delete': 'Are you sure you want to delete this unitgroup???',
-  'unitgroup.deletesuccess': 'Selected unitgroup has been deleted...',
-  'unitgroup.conversionFactor': 'Conversion Factor',
+  'unitgroup.delete': '是否删除所选数据？',
+  'unitgroup.deletesuccess': '已删除',
+  'unitgroup.conversionFactor': '转换系数',
 };
