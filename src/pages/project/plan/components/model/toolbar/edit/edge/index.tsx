@@ -32,8 +32,11 @@ const EditEdge: FC<Props> = ({
   const [sourceValue, setSourceValue] = useState<string>();
   const [targetValue, setTargetValue] = useState<string>();
 
-  const [sourceProcessId, setSourceProcessId] = useState<string>();
-  const [targetProcessId, setTargetProcessId] = useState<string>();
+  const [planSourceId, setPlanSourceId] = useState<string>('');
+  const [planTargetId, setPlanTargetId] = useState<string>('');
+
+  const [processSourceId, setProcessSourceId] = useState<string>();
+  const [processTargetId, setProcessTargetId] = useState<string>();
 
   const callbackDrawerVisible = useCallback(() => {
     setDrawerVisible(false);
@@ -41,14 +44,28 @@ const EditEdge: FC<Props> = ({
 
   useEffect(() => {
     if (sourceValue) {
-      const sourceIdList = sourceValue.split('_');
-      setSourceProcessId(sourceIdList[sourceIdList.length - 1]);
-    } else setSourceProcessId(undefined);
+      const idList = sourceValue.split('_');
+      setProcessSourceId(idList[idList.length - 1]);
+      if (idList.length >= 2) {
+        let planId = idList[1];
+        for (let i = 2; i < idList.length - 1; i++) {
+          planId = planId + '_' + idList[i];
+        }
+        setPlanSourceId(planId);
+      }
+    } else setProcessSourceId(undefined);
 
     if (targetValue) {
-      const targetIdList = targetValue.split('_');
-      setTargetProcessId(targetIdList[targetIdList.length - 1]);
-    } else setTargetProcessId(undefined);
+      const idList = targetValue.split('_');
+      setProcessTargetId(idList[idList.length - 1]);
+      if (idList.length >= 2) {
+        let planId = idList[1];
+        for (let i = 2; i < idList.length - 1; i++) {
+          planId = planId + '_' + idList[i];
+        }
+        setPlanTargetId(planId);
+      }
+    } else setProcessTargetId(undefined);
   }, [sourceValue, targetValue]);
 
   return (
@@ -86,8 +103,12 @@ const EditEdge: FC<Props> = ({
       <EditEdgeFlow
         projectId={projectId}
         modelId={modelId}
-        sourceId={sourceProcessId}
-        targetId={targetProcessId}
+        edgeSourceId={sourceId}
+        edgeTargetId={targetId}
+        planSourceId={planSourceId}
+        planTargetId={planTargetId}
+        processSourceId={processSourceId}
+        processTargetId={processTargetId}
       />
     </Drawer>
   );

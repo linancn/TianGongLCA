@@ -15,6 +15,10 @@ type Props = {
   planId: string;
   edgeSourceId: string;
   edgeTargetId: string;
+  planSourceId: string;
+  planTargetId: string;
+  processSourceId: string;
+  processTargetId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
@@ -23,6 +27,10 @@ const CreateEdgeFlow: FC<Props> = ({
   planId,
   edgeSourceId,
   edgeTargetId,
+  planSourceId,
+  planTargetId,
+  processSourceId,
+  processTargetId,
   actionRef,
 }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -104,10 +112,10 @@ const CreateEdgeFlow: FC<Props> = ({
               planId,
               edgeSourceId,
               edgeTargetId,
-              planSourceId: '',
-              planTargetId: '',
-              processSourceId: edgeSourceId,
-              processTargetId: edgeTargetId,
+              planSourceId,
+              planTargetId,
+              processSourceId,
+              processTargetId,
             }).then(async (result) => {
               if (result === 'ok') {
                 message.success('Create successfully!');
@@ -124,7 +132,7 @@ const CreateEdgeFlow: FC<Props> = ({
             Source Flow
             <ModelFlowSelect
               projectId={projectId}
-              processId={edgeSourceId}
+              processId={processSourceId}
               input={false}
               formRef={formRefCreate}
             />
@@ -135,7 +143,7 @@ const CreateEdgeFlow: FC<Props> = ({
             Target Flow
             <ModelFlowSelect
               projectId={projectId}
-              processId={edgeTargetId}
+              processId={processTargetId}
               input={true}
               formRef={formRefCreate}
             />

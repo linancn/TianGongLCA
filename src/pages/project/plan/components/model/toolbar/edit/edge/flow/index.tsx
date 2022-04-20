@@ -12,11 +12,24 @@ import CreateEdgeFlow from './create';
 type Props = {
   projectId: number;
   modelId: string;
-  sourceId: string | undefined;
-  targetId: string | undefined;
+  edgeSourceId: string;
+  edgeTargetId: string;
+  planSourceId: string;
+  planTargetId: string;
+  processSourceId: string | undefined;
+  processTargetId: string | undefined;
 };
 
-const EditEdgeFlow: FC<Props> = ({ projectId, modelId, sourceId, targetId }) => {
+const EditEdgeFlow: FC<Props> = ({
+  projectId,
+  modelId,
+  edgeSourceId,
+  edgeTargetId,
+  planSourceId,
+  planTargetId,
+  processSourceId,
+  processTargetId,
+}) => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<PlanModelFlow>[] = [
     {
@@ -71,10 +84,10 @@ const EditEdgeFlow: FC<Props> = ({ projectId, modelId, sourceId, targetId }) => 
   ];
 
   useEffect(() => {
-    actionRef.current?.reload();
-  }, [sourceId, targetId]);
+    if (processSourceId && processTargetId) actionRef.current?.reload();
+  }, [processSourceId, processTargetId]);
 
-  if (sourceId && targetId)
+  if (processSourceId && processTargetId)
     return (
       <>
         <Divider />
@@ -88,8 +101,12 @@ const EditEdgeFlow: FC<Props> = ({ projectId, modelId, sourceId, targetId }) => 
             <CreateEdgeFlow
               projectId={projectId}
               planId={modelId}
-              edgeSourceId={sourceId}
-              edgeTargetId={targetId}
+              edgeSourceId={edgeSourceId}
+              edgeTargetId={edgeTargetId}
+              planSourceId={planSourceId}
+              planTargetId={planTargetId}
+              processSourceId={processSourceId}
+              processTargetId={processTargetId}
               actionRef={actionRef}
             />,
           ]}
@@ -105,12 +122,12 @@ const EditEdgeFlow: FC<Props> = ({ projectId, modelId, sourceId, targetId }) => 
               sort,
               projectId,
               modelId,
-              sourceId,
-              targetId,
-              '',
-              '',
-              sourceId,
-              targetId,
+              edgeSourceId,
+              edgeTargetId,
+              planSourceId,
+              planTargetId,
+              processSourceId,
+              processTargetId,
             );
           }}
         />
