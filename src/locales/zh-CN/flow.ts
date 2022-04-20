@@ -13,7 +13,7 @@ export default {
   'flow.synonyms': '别名',
   'flow.formula': '化学式',
   'flow.cas': 'CAS号',
-  'flow.delete': 'Are you sure you want to delete this flow???',
-  'flow.deletesuccess': 'Selected flow has been deleted...',
-  'flow.flowinfo': 'Flow Info',
+  'flow.delete': '是否删除所选流？',
+  'flow.deletesuccess': '所选流已删除',
+  'flow.flowinfo': '详情',
 };
