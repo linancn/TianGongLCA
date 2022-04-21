@@ -34,30 +34,30 @@ const CategorySelectByParent: FC<Props> = ({
   const actionRef = useRef<ActionType>();
   const categoryColumns: ProColumns<Category>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="category.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="category.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="category.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Version',
+      title: <FormattedMessage id="category.version" defaultMessage="Version" />,
       dataIndex: 'version',
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
@@ -89,7 +89,12 @@ const CategorySelectByParent: FC<Props> = ({
     if (selectRow) {
       updateParentCategory(parentType, parentPkid, selectRow.id).then(async (result) => {
         if (result === 'ok') {
-          message.success('Successfully Selected!');
+          message.success(
+            <FormattedMessage
+              id="options.selectedsuccess"
+              defaultMessage="Successfully Selected!"
+            />,
+          );
           setDrawerVisible(false);
           reload();
         } else {
@@ -97,19 +102,21 @@ const CategorySelectByParent: FC<Props> = ({
         }
       });
     } else {
-      message.error('Select nothing');
+      message.error(
+        <FormattedMessage id="options.selectnothing" defaultMessage="Nothing selected!" />,
+      );
     }
   };
   return (
     <>
-      <Tooltip title="Select">
+      <Tooltip title={<FormattedMessage id="options.select" defaultMessage="Select" />}>
         <Button type="primary" onClick={() => setDrawerVisible(true)}>
-          Select
+          <FormattedMessage id="options.select" defaultMessage="Select" />
         </Button>
       </Tooltip>
 
       <Drawer
-        title="Select"
+        title={<FormattedMessage id="options.select" defaultMessage="Select" />}
         width="100%"
         closable={false}
         extra={
@@ -133,10 +140,10 @@ const CategorySelectByParent: FC<Props> = ({
                 reload();
               }}
             >
-              Cancel
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
             </Button>
             <Button onClick={() => updateSelectId()} type="primary">
-              Select
+              <FormattedMessage id="options.select" defaultMessage="Select" />
             </Button>
           </Space>
         }

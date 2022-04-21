@@ -13,6 +13,7 @@ import options from './en-US/options';
 import flowproperty from './en-US/flowproperty';
 import process from './en-US/process';
 import unitgroup from './en-US/unitgroup';
+import category from './en-US/category';
 
 export default {
   'navBar.lang': 'Languages',
@@ -38,4 +39,5 @@ export default {
   ...flowproperty,
   ...process,
   ...unitgroup,
+  ...category,
 };
