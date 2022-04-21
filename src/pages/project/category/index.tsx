@@ -28,30 +28,30 @@ const CategoryIndex: FC<ListProps> = (props) => {
   const [projectName, setProjectName] = useState('');
   const categoryColumns: ProColumns<Category>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="category.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="category.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="category.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Version',
+      title: <FormattedMessage id="category.version" defaultMessage="Version" />,
       dataIndex: 'version',
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [

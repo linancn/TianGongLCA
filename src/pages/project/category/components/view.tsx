@@ -8,6 +8,7 @@ import type { ActionType } from '@ant-design/pro-table';
 import CategoryEdit from './edit';
 import CategoryDelete from './delete';
 import styles from '@/style/custom.less';
+import { FormattedMessage } from 'umi';
 type Props = {
   pkid: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
@@ -22,12 +23,22 @@ const CategoryView: FC<Props> = ({ pkid, actionRef }) => {
     getCategoryByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Data Name">{result?.dataName}</Descriptions.Item>
-          <Descriptions.Item label="Last Change">
+          <Descriptions.Item
+            label={<FormattedMessage id="category.dataName" defaultMessage="Data Name" />}
+          >
+            {result?.dataName}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="category.lastChange" defaultMessage="Last Change" />}
+          >
             {moment(result?.lastChange).format('YYYY-MM-DD HH:mm:ss')}
           </Descriptions.Item>
           {/* <Descriptions.Item label="Description">{result?.description}</Descriptions.Item> */}
-          <Descriptions.Item label="Version">{result?.version}</Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="category.version" defaultMessage="Version" />}
+          >
+            {result?.version}
+          </Descriptions.Item>
         </Descriptions>,
       );
       setFooterButtons(
@@ -50,11 +61,11 @@ const CategoryView: FC<Props> = ({ pkid, actionRef }) => {
   };
   return (
     <>
-      <Tooltip title="View">
+      <Tooltip title={<FormattedMessage id="options.view" defaultMessage="View" />}>
         <Button shape="circle" icon={<ProfileOutlined />} size="small" onClick={onView} />
       </Tooltip>
       <Drawer
-        title="View"
+        title={<FormattedMessage id="options.view" defaultMessage="View" />}
         width="400px"
         closable={false}
         extra={

@@ -3,6 +3,7 @@ import type { ActionType } from '@ant-design/pro-table';
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import { updateParentCategory } from '@/services/category/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -26,7 +27,12 @@ const CategoryDeleteByParent: FC<Props> = ({
   const onDelete = () => {
     updateParentCategory(parentType, parentPkid, '').then(async (result) => {
       if (result === 'ok') {
-        message.success('Successfully Deleted!');
+        message.success(
+          <FormattedMessage
+            id="category.deletesuccess"
+            defaultMessage="Selected category has been deleted."
+          />,
+        );
         reload();
       } else {
         message.error(result);
@@ -35,8 +41,10 @@ const CategoryDeleteByParent: FC<Props> = ({
   };
 
   return (
-    <Tooltip title="Delete">
-      <Button onClick={onDelete}>Delete</Button>
+    <Tooltip title={<FormattedMessage id="options.delete" defaultMessage="Delete" />}>
+      <Button onClick={onDelete}>
+        <FormattedMessage id="options.delete" defaultMessage="Delete" />
+      </Button>
     </Tooltip>
   );
 };
