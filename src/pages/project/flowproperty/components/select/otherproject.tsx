@@ -13,10 +13,16 @@ import { getFlowPropertyGrid, copyFlowProperty } from '@/services/flowproperty/a
 type Props = {
   projectId: number;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
+  drawerVisible: boolean;
   setDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const FlowPropertyOtherProject: FC<Props> = ({ projectId, parentActionRef, setDrawerVisible }) => {
+const FlowPropertyOtherProject: FC<Props> = ({
+  projectId,
+  parentActionRef,
+  drawerVisible,
+  setDrawerVisible,
+}) => {
   const [selectRow, setSelectRow] = useState<FlowProperty>();
   const columns: ProColumns<FlowProperty>[] = [
     {
@@ -74,6 +80,7 @@ const FlowPropertyOtherProject: FC<Props> = ({ projectId, parentActionRef, setDr
 
   return (
     <PageContainer
+      className={drawerVisible ? styles.disabled : styles.hidden}
       header={{ title: '', subTitle: '' }}
       footer={[
         <Space size={'middle'} className={styles.footer_right}>

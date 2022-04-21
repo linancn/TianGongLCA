@@ -58,6 +58,7 @@ const ProcessSelect: FC<Props> = ({ projectId, parentActionRef }) => {
             <ProcessOtherProject
               projectId={projectId}
               parentActionRef={parentActionRef}
+              drawerVisible={drawerVisible}
               setDrawerVisible={setDrawerVisible}
             />
           </ProCard.TabPane>
@@ -65,6 +66,7 @@ const ProcessSelect: FC<Props> = ({ projectId, parentActionRef }) => {
             <ProcessPubDatabase
               projectId={projectId}
               parentActionRef={parentActionRef}
+              drawerVisible={drawerVisible}
               setDrawerVisible={setDrawerVisible}
             />
           </ProCard.TabPane>

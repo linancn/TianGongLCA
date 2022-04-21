@@ -13,10 +13,16 @@ import { Button, message, Space } from 'antd';
 type Props = {
   projectId: number;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
+  drawerVisible: boolean;
   setDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawerVisible }) => {
+const UnitGroupPubDatabase: FC<Props> = ({
+  projectId,
+  parentActionRef,
+  drawerVisible,
+  setDrawerVisible,
+}) => {
   const [selectRow, setSelectRow] = useState<PubUnitGroup>();
   const columns: ProColumns<PubUnitGroup>[] = [
     {
@@ -66,6 +72,7 @@ const UnitGroupPubDatabase: FC<Props> = ({ projectId, parentActionRef, setDrawer
 
   return (
     <PageContainer
+      className={drawerVisible ? styles.disabled : styles.hidden}
       header={{ title: '', subTitle: '' }}
       footer={[
         <Space size={'middle'} className={styles.footer_right}>

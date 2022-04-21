@@ -52,6 +52,7 @@ const FlowPropertySelect: FC<Props> = ({ projectId, parentActionRef }) => {
             <UnitGroupOtherProject
               projectId={projectId}
               parentActionRef={parentActionRef}
+              drawerVisible={drawerVisible}
               setDrawerVisible={setDrawerVisible}
             />
           </ProCard.TabPane>
@@ -59,6 +60,7 @@ const FlowPropertySelect: FC<Props> = ({ projectId, parentActionRef }) => {
             <UnitGroupPubDatabase
               projectId={projectId}
               parentActionRef={parentActionRef}
+              drawerVisible={drawerVisible}
               setDrawerVisible={setDrawerVisible}
             />
           </ProCard.TabPane>

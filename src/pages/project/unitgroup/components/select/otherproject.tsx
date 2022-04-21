@@ -13,10 +13,16 @@ import type { UnitGroup } from '@/services/unitgroup/data';
 type Props = {
   projectId: number;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
+  drawerVisible: boolean;
   setDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const UnitGroupOtherProject: FC<Props> = ({ projectId, parentActionRef, setDrawerVisible }) => {
+const UnitGroupOtherProject: FC<Props> = ({
+  projectId,
+  parentActionRef,
+  drawerVisible,
+  setDrawerVisible,
+}) => {
   const [selectRow, setSelectRow] = useState<UnitGroup>();
   const columns: ProColumns<UnitGroup>[] = [
     {
@@ -74,6 +80,7 @@ const UnitGroupOtherProject: FC<Props> = ({ projectId, parentActionRef, setDrawe
 
   return (
     <PageContainer
+      className={drawerVisible ? styles.disabled : styles.hidden}
       header={{ title: '', subTitle: '' }}
       footer={[
         <Space size={'middle'} className={styles.footer_right}>
