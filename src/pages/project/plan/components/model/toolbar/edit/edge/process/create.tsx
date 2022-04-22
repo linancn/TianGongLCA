@@ -47,7 +47,7 @@ const CreateEdgeProcess: FC<Props> = ({
     if (sourceValue) {
       const idList = sourceValue.split('_');
       setProcessSourceId(idList[idList.length - 1]);
-      if (idList.length >= 2) {
+      if (idList.length > 2) {
         let planId = idList[1];
         for (let i = 2; i < idList.length - 1; i++) {
           planId = planId + '_' + idList[i];
@@ -59,7 +59,7 @@ const CreateEdgeProcess: FC<Props> = ({
     if (targetValue) {
       const idList = targetValue.split('_');
       setProcessTargetId(idList[idList.length - 1]);
-      if (idList.length >= 2) {
+      if (idList.length > 2) {
         let planId = idList[1];
         for (let i = 2; i < idList.length - 1; i++) {
           planId = planId + '_' + idList[i];

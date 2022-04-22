@@ -41,12 +41,12 @@ const EditEdge: FC<Props> = ({
     },
     {
       title: 'Source Name',
-      dataIndex: 'processSourceId',
+      dataIndex: 'processSourceName',
       sorter: true,
     },
     {
       title: 'Target Name',
-      dataIndex: 'processTargetId',
+      dataIndex: 'processTargetName',
       sorter: true,
     },
     {

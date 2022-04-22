@@ -39,9 +39,7 @@ const Edit: FC<Props> = ({
             projectId={projectId}
             modelId={modelId}
             sourceId={planModelState.cellConfig.source}
-            sourceType={planModelState.cellConfig.info.sourceType}
             targetId={planModelState.cellConfig.target}
-            targetType={planModelState.cellConfig.info.targetType}
             drawerVisible={drawerVisible}
             setDrawerVisible={setDrawerVisible}
           />
