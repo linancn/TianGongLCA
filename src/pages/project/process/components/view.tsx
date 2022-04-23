@@ -9,6 +9,8 @@ import ProcessDelete from './delete';
 import ProcessEdit from './edit';
 import styles from '@/style/custom.less';
 import { FormattedMessage } from 'umi';
+import CategoryViewByParent from '../../category/components/viewbyparent';
+import LocationViewByParent from '../../location/components/viewbyparent';
 
 type Props = {
   pkid: number;
@@ -48,6 +50,35 @@ const ProcessView: FC<Props> = ({ pkid, actionRef }) => {
             label={<FormattedMessage id="process.version" defaultMessage="Version" />}
           >
             {result?.version}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="process.database" defaultMessage="Database" />}
+          >
+            {result?.version}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="process.categoryName" defaultMessage="Category" />}
+          >
+            {result?.categoryName}
+            <CategoryViewByParent
+              projectId={result.projectId}
+              id={result.categoryId}
+              parentType={'process'}
+              parentPkid={pkid}
+              actionRef={actionRef}
+            />
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="process.locationName" defaultMessage="Location Name" />}
+          >
+            {result?.locationName}
+            <LocationViewByParent
+              projectId={result.projectId}
+              id={result.locationId}
+              parentType={'process'}
+              parentPkid={pkid}
+              actionRef={actionRef}
+            />
           </Descriptions.Item>
         </Descriptions>,
       );

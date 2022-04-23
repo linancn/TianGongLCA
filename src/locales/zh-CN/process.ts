@@ -5,6 +5,7 @@ export default {
   'process.lastChange': '最后修改',
   'process.release': '版本',
   'process.description': '描述',
+  'process.database': '源数据库',
   'process.delete': '确定删除所选数据？',
   'process.deletesuccess': '已删除',
   'process.amount': '数量',
@@ -19,4 +20,7 @@ export default {
   'process.flowName': '流',
   'process.inputFlows': '输入流',
   'process.outputFlows': '输出流',
+  'process.locationName': '空间范围',
+  'process.categoryName': '类别',
+  'process.version': '修订号',
 };
