@@ -14,6 +14,7 @@ import flowproperty from './en-US/flowproperty';
 import process from './en-US/process';
 import unitgroup from './en-US/unitgroup';
 import category from './en-US/category';
+import location from './en-US/location';
 
 export default {
   'navBar.lang': 'Languages',
@@ -40,4 +41,5 @@ export default {
   ...process,
   ...unitgroup,
   ...category,
+  ...location,
 };
