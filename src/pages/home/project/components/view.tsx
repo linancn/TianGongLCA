@@ -1,9 +1,10 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Drawer, Tooltip } from 'antd';
+import { Button, Descriptions, Drawer, Spin, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getProject } from '@/services/project/api';
+import styles from '@/style/custom.less';
 
 type Props = {
   pkid: number;
@@ -14,6 +15,11 @@ const ProjectView: FC<Props> = ({ pkid }) => {
 
   const onView = () => {
     handleDrawerVisible(true);
+    setViewDescriptions(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getProject(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>

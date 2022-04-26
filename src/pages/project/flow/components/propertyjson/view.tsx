@@ -1,10 +1,11 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Divider, Drawer, Tooltip } from 'antd';
+import { Button, Descriptions, Divider, Drawer, Spin, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getFlowPropertyJsonView } from '@/services/flow/api';
 import { FormattedMessage } from 'umi';
+import styles from '@/style/custom.less';
 
 type Props = {
   flowPkid: number;
@@ -16,6 +17,11 @@ const FlowPropertyJsonView: FC<Props> = ({ flowPkid, propertyId }) => {
 
   const onView = () => {
     handleDrawerVisible(true);
+    setViewDescriptions(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getFlowPropertyJsonView(flowPkid, propertyId).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>

@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
-import { Button, Drawer, message, Space, Tooltip } from 'antd';
+import { Button, Drawer, message, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
@@ -22,6 +22,11 @@ const UnitGroupEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawer
 
   const onEdit = useCallback(() => {
     setDrawerVisible(true);
+    setEditForm(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getUnitGroupByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm

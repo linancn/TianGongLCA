@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Drawer, Space, Tooltip } from 'antd';
+import { Button, Descriptions, Drawer, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getFlowByPkid } from '@/services/flow/api';
@@ -24,6 +24,11 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
 
   const onView = () => {
     setDrawerVisible(true);
+    setViewDescriptions(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getFlowByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>

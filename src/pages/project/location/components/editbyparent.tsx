@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
-import { Button, Drawer, message, Space, Tooltip } from 'antd';
+import { Button, Drawer, message, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
@@ -21,6 +21,11 @@ const LocationEditByParent: FC<Props> = ({ pkid, parentActionRef, setViewDrawerV
 
   const onEdit = useCallback(() => {
     handleDrawerVisible(true);
+    setEditForm(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getLocationByPkid(pkid).then(async (pi) => {
       setEditForm(
         <ProForm

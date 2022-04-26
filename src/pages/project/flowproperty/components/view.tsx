@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Drawer, Space, Tooltip } from 'antd';
+import { Button, Descriptions, Drawer, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getFlowPropertyByPkid } from '@/services/flowproperty/api';
@@ -11,6 +11,7 @@ import styles from '@/style/custom.less';
 import UnitGroupViewByParent from '../../unitgroup/components/viewbyparent';
 import CategoryViewByParent from '../../category/components/viewbyparent';
 import { FormattedMessage } from 'umi';
+
 type Props = {
   pkid: number;
   actionRef: React.MutableRefObject<ActionType | undefined>;
@@ -22,6 +23,11 @@ const FlowPropertyView: FC<Props> = ({ pkid, actionRef }) => {
 
   const onView = () => {
     setDrawerVisible(true);
+    setViewDescriptions(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getFlowPropertyByPkid(pkid).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>

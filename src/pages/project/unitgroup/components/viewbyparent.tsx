@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Drawer, Space, Tooltip } from 'antd';
+import { Button, Descriptions, Drawer, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import styles from '@/style/custom.less';
@@ -24,6 +24,11 @@ const UnitGroupViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentTyp
 
   const onView = () => {
     setDrawerVisible(true);
+    setViewDescriptions(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     if (id === null) {
       setViewDescriptions(
         <Descriptions column={1}>

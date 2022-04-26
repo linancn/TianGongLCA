@@ -1,9 +1,10 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Button, Descriptions, Divider, Drawer, Tooltip } from 'antd';
+import { Button, Descriptions, Divider, Drawer, Spin, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import { getExchangeJson } from '@/services/process/api';
 import { FormattedMessage } from 'umi';
+import styles from '@/style/custom.less';
 
 type Props = {
   projectId: number;
@@ -17,6 +18,11 @@ const ProcessFlowView: FC<Props> = ({ projectId, processId, internalId, input })
 
   const onView = () => {
     setDrawerVisible(true);
+    setViewDescriptions(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getExchangeJson(projectId, processId, internalId, input).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>

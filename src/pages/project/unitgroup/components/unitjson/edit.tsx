@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
-import { Button, Drawer, message, Space, Tooltip } from 'antd';
+import { Button, Drawer, message, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined, FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { ProFormSelect } from '@ant-design/pro-form';
@@ -23,6 +23,11 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
 
   const onEdit = useCallback(() => {
     setDrawerVisible(true);
+    setEditForm(
+      <div className={styles.loading_spin_div}>
+        <Spin />
+      </div>,
+    );
     getUnitJson(unitGroupPkid, id).then(async (pi) => {
       setEditForm(
         <ProForm
