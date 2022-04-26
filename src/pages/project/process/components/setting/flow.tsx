@@ -51,14 +51,14 @@ const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
           <ProcessFlowView
             projectId={projectId}
             processId={row.processId}
-            flowId={row.flowId}
+            internalId={row.internalId}
             input={input}
           />
           <ProcessFlowEdit
             projectId={projectId}
             processId={row.processId}
             processPkid={row.processPkid}
-            flowId={row.flowId}
+            internalId={row.internalId}
             input={input}
             actionRef={actionRef}
           />

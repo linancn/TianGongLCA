@@ -15,7 +15,7 @@ type Props = {
   projectId: number;
   processId: string;
   processPkid: number;
-  flowId: string;
+  internalId: number;
   input: boolean;
   actionRef: MutableRefObject<ActionType | undefined>;
 };
@@ -23,7 +23,7 @@ const ProcessFlowEdit: FC<Props> = ({
   projectId,
   processId,
   processPkid,
-  flowId,
+  internalId,
   input,
   actionRef,
 }) => {
@@ -33,7 +33,7 @@ const ProcessFlowEdit: FC<Props> = ({
 
   const onEdit = useCallback(() => {
     setDrawerVisible(true);
-    getExchangeJson(projectId, processId, flowId, input).then(async (pi) => {
+    getExchangeJson(projectId, processId, internalId, input).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -82,10 +82,10 @@ const ProcessFlowEdit: FC<Props> = ({
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [projectId, processId, flowId, input, processPkid, actionRef]);
+  }, [projectId, processId, internalId, input, processPkid, actionRef]);
 
   const onReset = () => {
-    getExchangeJson(projectId, processId, flowId, input).then(async (result) => {
+    getExchangeJson(projectId, processId, internalId, input).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };

@@ -8,16 +8,16 @@ import { FormattedMessage } from 'umi';
 type Props = {
   projectId: number;
   processId: string;
-  flowId: string;
+  internalId: number;
   input: boolean;
 };
-const ProcessFlowView: FC<Props> = ({ projectId, processId, flowId, input }) => {
+const ProcessFlowView: FC<Props> = ({ projectId, processId, internalId, input }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const onView = () => {
     setDrawerVisible(true);
-    getExchangeJson(projectId, processId, flowId, input).then(async (result) => {
+    getExchangeJson(projectId, processId, internalId, input).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item

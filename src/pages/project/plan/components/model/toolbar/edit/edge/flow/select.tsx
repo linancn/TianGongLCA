@@ -112,7 +112,9 @@ const ModelFlowSelect: FC<Props> = ({ projectId, processId, input, formRef }) =>
           }}
           columns={columns}
           rowClassName={(record) => {
-            return record.flowId === selectRow?.flowId ? styles.split_row_select_active : '';
+            return record.internalId === selectRow?.internalId
+              ? styles.split_row_select_active
+              : '';
           }}
           onRow={(record) => {
             return {
