@@ -6,19 +6,20 @@ import type { ActionType } from '@ant-design/pro-table';
 import { deleteParameterJson } from '@/services/process/api';
 
 type Props = {
-  processPkid: number;
+  projectId: number;
+  processId: string;
   id: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const ParameterJsonDelete: FC<Props> = ({ processPkid, id, actionRef }) => {
+const ParameterJsonDelete: FC<Props> = ({ projectId, processId, id, actionRef }) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
-      title: 'Are you sure to delete this flow?',
+      title: 'Are you sure to delete this parameter?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deleteParameterJson(processPkid, id).then(async (result) => {
+        deleteParameterJson({ projectId, processId, id }).then(async (result) => {
           if (result === 'ok') {
             message.success('Delete successfully!');
             actionRef.current?.reload();
@@ -29,7 +30,7 @@ const ParameterJsonDelete: FC<Props> = ({ processPkid, id, actionRef }) => {
       },
       onCancel() {},
     });
-  }, [actionRef, id, processPkid]);
+  }, [actionRef, id, processId, projectId]);
   return (
     <>
       <Tooltip title="Delete">

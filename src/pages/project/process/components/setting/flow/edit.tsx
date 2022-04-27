@@ -14,19 +14,11 @@ import { FormattedMessage } from 'umi';
 type Props = {
   projectId: number;
   processId: string;
-  processPkid: number;
   internalId: number;
   input: boolean;
   actionRef: MutableRefObject<ActionType | undefined>;
 };
-const ProcessFlowEdit: FC<Props> = ({
-  projectId,
-  processId,
-  processPkid,
-  internalId,
-  input,
-  actionRef,
-}) => {
+const ProcessFlowEdit: FC<Props> = ({ projectId, processId, internalId, input, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -48,17 +40,22 @@ const ProcessFlowEdit: FC<Props> = ({
             },
           }}
           onFinish={async (values) => {
-            updateExchangeJson({ ...values, processPkid, input }).then(async (result) => {
-              if (result === 'ok') {
-                message.success(
-                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
-                );
-                setDrawerVisible(false);
-                actionRef.current?.reload();
-              } else {
-                message.error(result);
-              }
-            });
+            updateExchangeJson({ ...values, projectId, processId, internalId, input }).then(
+              async (result) => {
+                if (result === 'ok') {
+                  message.success(
+                    <FormattedMessage
+                      id="options.editsuccess"
+                      defaultMessage="Edit successfully!"
+                    />,
+                  );
+                  setDrawerVisible(false);
+                  actionRef.current?.reload();
+                } else {
+                  message.error(result);
+                }
+              },
+            );
             return true;
           }}
         >
@@ -87,7 +84,7 @@ const ProcessFlowEdit: FC<Props> = ({
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [projectId, processId, internalId, input, processPkid, actionRef]);
+  }, [projectId, processId, internalId, input, actionRef]);
 
   const onReset = () => {
     getExchangeJson(projectId, processId, internalId, input).then(async (result) => {

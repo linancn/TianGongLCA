@@ -71,7 +71,7 @@ const TableList: FC<ListProps> = (props) => {
             actionRef={actionRef}
             setViewDrawerVisible={() => {}}
           />
-          <ProcessSetting projectId={row.projectId} processPkid={row.pkid} />
+          <ProcessSetting projectId={row.projectId} processId={row.id} />
           <ProcessDelete
             pkid={row.pkid}
             buttonType={'icon'}

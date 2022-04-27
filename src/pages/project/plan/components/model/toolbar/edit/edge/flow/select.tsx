@@ -8,7 +8,7 @@ import ProTable from '@ant-design/pro-table';
 import type { ListPagination } from '@/services/home/data';
 import { CloseOutlined, SelectOutlined } from '@ant-design/icons';
 import type { ExchangeJson } from '@/services/process/data';
-import { getExchangeJsonGridById } from '@/services/process/api';
+import { getExchangeJsonGrid } from '@/services/process/api';
 import type { ProFormInstance } from '@ant-design/pro-form';
 
 type Props = {
@@ -108,7 +108,7 @@ const ModelFlowSelect: FC<Props> = ({ projectId, processId, input, formRef }) =>
             },
             sort,
           ) => {
-            return getExchangeJsonGridById(params, sort, projectId, processId, input);
+            return getExchangeJsonGrid(params, sort, projectId, processId, input);
           }}
           columns={columns}
           rowClassName={(record) => {

@@ -12,10 +12,11 @@ import { createParameterJson } from '@/services/process/api';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  processPkid: number;
+  projectId: number;
+  processId: string;
   actionRef: MutableRefObject<ActionType | undefined>;
 };
-const ParameterJsonCreate: FC<Props> = ({ processPkid, actionRef }) => {
+const ParameterJsonCreate: FC<Props> = ({ projectId, processId, actionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
@@ -69,7 +70,7 @@ const ParameterJsonCreate: FC<Props> = ({ processPkid, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            createParameterJson({ ...values, processPkid }).then(async (result) => {
+            createParameterJson({ ...values, projectId, processId }).then(async (result) => {
               if (result === 'ok') {
                 message.success(
                   <FormattedMessage

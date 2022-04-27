@@ -13,11 +13,11 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  processPkid: number;
+  processId: string;
   input: boolean;
   actionRef: MutableRefObject<ActionType | undefined>;
 };
-const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef }) => {
+const ProcessFlowCreate: FC<Props> = ({ projectId, processId, input, actionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefCreate = useRef<ProFormInstance>();
 
@@ -79,7 +79,8 @@ const ProcessFlowCreate: FC<Props> = ({ projectId, processPkid, input, actionRef
           onFinish={async (values) => {
             createExchangeJson({
               ...values,
-              processPkid,
+              projectId,
+              processId,
               input,
             }).then(async (result) => {
               if (result === 'ok') {

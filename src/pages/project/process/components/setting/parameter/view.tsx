@@ -6,10 +6,11 @@ import { getParameterJson } from '@/services/process/api';
 import styles from '@/style/custom.less';
 
 type Props = {
-  processPkid: number;
+  projectId: number;
+  processId: string;
   id: string;
 };
-const ParameterJsonView: FC<Props> = ({ processPkid, id }) => {
+const ParameterJsonView: FC<Props> = ({ projectId, processId, id }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -20,7 +21,7 @@ const ParameterJsonView: FC<Props> = ({ processPkid, id }) => {
         <Spin />
       </div>,
     );
-    getParameterJson(processPkid, id).then(async (result) => {
+    getParameterJson(projectId, processId, id).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item label="Name">{result.name}</Descriptions.Item>

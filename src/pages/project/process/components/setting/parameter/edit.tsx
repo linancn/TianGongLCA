@@ -11,11 +11,12 @@ import { getParameterJson, updateParameterJson } from '@/services/process/api';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  processPkid: number;
+  projectId: number;
+  processId: string;
   id: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const ParameterJsonEdit: FC<Props> = ({ processPkid, id, actionRef }) => {
+const ParameterJsonEdit: FC<Props> = ({ projectId, processId, id, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -27,7 +28,7 @@ const ParameterJsonEdit: FC<Props> = ({ processPkid, id, actionRef }) => {
         <Spin />
       </div>,
     );
-    getParameterJson(processPkid, id).then(async (pi) => {
+    getParameterJson(projectId, processId, id).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -37,7 +38,7 @@ const ParameterJsonEdit: FC<Props> = ({ processPkid, id, actionRef }) => {
             },
           }}
           onFinish={async (values) => {
-            updateParameterJson({ ...values, processPkid: pi.processPkid, id: pi.id }).then(
+            updateParameterJson({ ...values, projectId, processId, id: pi.id }).then(
               async (result) => {
                 if (result === 'ok') {
                   message.success(
@@ -68,10 +69,10 @@ const ParameterJsonEdit: FC<Props> = ({ processPkid, id, actionRef }) => {
       );
       formRefEdit.current?.setFieldsValue(pi);
     });
-  }, [processPkid, id, actionRef]);
+  }, [projectId, processId, id, actionRef]);
 
   const onReset = () => {
-    getParameterJson(processPkid, id).then(async (result) => {
+    getParameterJson(projectId, processId, id).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
     });
   };

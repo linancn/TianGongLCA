@@ -35,7 +35,8 @@ export async function getParameterJsonGrid(
     pageSize?: number;
   },
   sort: Record<string, SortOrder>,
-  processPkid: number,
+  projectId: number,
+  processId: string,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -49,39 +50,13 @@ export async function getParameterJsonGrid(
       ...params,
       sortBy,
       orderBy,
-      processPkid,
+      projectId,
+      processId,
     },
   });
 }
 
 export async function getExchangeJsonGrid(
-  params: {
-    current?: number;
-    pageSize?: number;
-  },
-  sort: Record<string, SortOrder>,
-  processPkid: number,
-  input: boolean,
-) {
-  const sortBy = Object.keys(sort)[0];
-  const orderBy = sort[sortBy]?.replace('end', '');
-  return request<{
-    data: ExchangeJson[];
-    total?: number;
-    success?: boolean;
-  }>('http://localhost:8081/api/process/getexchangejsongrid', {
-    method: 'GET',
-    params: {
-      ...params,
-      sortBy,
-      orderBy,
-      processPkid,
-      input,
-    },
-  });
-}
-
-export async function getExchangeJsonGridById(
   params: {
     current?: number;
     pageSize?: number;
@@ -148,9 +123,9 @@ export async function deleteProcess(pkid: number) {
   });
 }
 
-export async function getParameterJson(processPkid: number, id: string) {
+export async function getParameterJson(projectId: number, processId: string, id: string) {
   return request<ParameterJson>(
-    `http://localhost:8081/api/process/getparameterjson/${processPkid}/${id}`,
+    `http://localhost:8081/api/process/getparameterjson/${projectId}/${processId}/${id}`,
     {
       method: 'GET',
     },
@@ -171,13 +146,11 @@ export async function updateParameterJson(data?: Record<string, any>) {
   });
 }
 
-export async function deleteParameterJson(processPkid: number, id: string) {
-  return request<string>(
-    `http://localhost:8081/api/process/deleteparameterjson/${processPkid}/${id}`,
-    {
-      method: 'DELETE',
-    },
-  );
+export async function deleteParameterJson(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/process/deleteparameterjson', {
+    method: 'DELETE',
+    data,
+  });
 }
 
 export async function getExchangeJson(
@@ -208,13 +181,11 @@ export async function updateExchangeJson(data?: Record<string, any>) {
   });
 }
 
-export async function deleteExchangeJson(processPkid: number, flowId: string, input: boolean) {
-  return request<string>(
-    `http://localhost:8081/api/process/deleteexchangejson/${processPkid}/${flowId}/${input}`,
-    {
-      method: 'DELETE',
-    },
-  );
+export async function deleteExchangeJson(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/process/deleteexchangejson', {
+    method: 'DELETE',
+    data,
+  });
 }
 
 export async function copyProcess(data?: Record<string, any>) {

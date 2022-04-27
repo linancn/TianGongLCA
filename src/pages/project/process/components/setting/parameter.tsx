@@ -13,10 +13,11 @@ import ParameterJsonEdit from './parameter/edit';
 import ParameterJsonDelete from './parameter/delete';
 
 type Props = {
-  processPkid: number;
+  projectId: number;
+  processId: string;
 };
 
-const ParameterCard: FC<Props> = ({ processPkid }) => {
+const ParameterCard: FC<Props> = ({ projectId, processId }) => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<ParameterJson>[] = [
     {
@@ -65,9 +66,19 @@ const ParameterCard: FC<Props> = ({ processPkid }) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <ParameterJsonView processPkid={row.processPkid} id={row.id} />
-          <ParameterJsonEdit processPkid={row.processPkid} id={row.id} actionRef={actionRef} />
-          <ParameterJsonDelete processPkid={row.processPkid} id={row.id} actionRef={actionRef} />
+          <ParameterJsonView projectId={projectId} processId={processId} id={row.id} />
+          <ParameterJsonEdit
+            projectId={projectId}
+            processId={processId}
+            id={row.id}
+            actionRef={actionRef}
+          />
+          <ParameterJsonDelete
+            projectId={projectId}
+            processId={processId}
+            id={row.id}
+            actionRef={actionRef}
+          />
         </Space>,
       ],
     },
@@ -82,7 +93,7 @@ const ParameterCard: FC<Props> = ({ processPkid }) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <ParameterJsonCreate processPkid={processPkid} actionRef={actionRef} />,
+          <ParameterJsonCreate projectId={projectId} processId={processId} actionRef={actionRef} />,
         ]}
         request={(
           params: {
@@ -91,7 +102,7 @@ const ParameterCard: FC<Props> = ({ processPkid }) => {
           },
           sort,
         ) => {
-          return getParameterJsonGrid(params, sort, processPkid);
+          return getParameterJsonGrid(params, sort, projectId, processId);
         }}
         columns={columns}
       />

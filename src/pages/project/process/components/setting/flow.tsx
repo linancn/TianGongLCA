@@ -15,11 +15,11 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  processPkid: number;
+  processId: string;
   input: boolean;
 };
 
-const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
+const FlowCard: FC<Props> = ({ projectId, processId, input }) => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<ExchangeJson>[] = [
     {
@@ -50,21 +50,21 @@ const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
         <Space size={'small'}>
           <ProcessFlowView
             projectId={projectId}
-            processId={row.processId}
+            processId={processId}
             internalId={row.internalId}
             input={input}
           />
           <ProcessFlowEdit
             projectId={projectId}
-            processId={row.processId}
-            processPkid={row.processPkid}
+            processId={processId}
             internalId={row.internalId}
             input={input}
             actionRef={actionRef}
           />
           <ProcessFlowDelete
-            processPkid={row.processPkid}
-            flowId={row.flowId}
+            projectId={projectId}
+            processId={processId}
+            internalId={row.internalId}
             input={input}
             actionRef={actionRef}
           />
@@ -94,7 +94,7 @@ const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
         toolBarRender={() => [
           <ProcessFlowCreate
             projectId={projectId}
-            processPkid={processPkid}
+            processId={processId}
             input={input}
             actionRef={actionRef}
           />,
@@ -106,7 +106,7 @@ const FlowCard: FC<Props> = ({ projectId, processPkid, input }) => {
           },
           sort,
         ) => {
-          return getExchangeJsonGrid(params, sort, processPkid, input);
+          return getExchangeJsonGrid(params, sort, projectId, processId, input);
         }}
         columns={columns}
       />

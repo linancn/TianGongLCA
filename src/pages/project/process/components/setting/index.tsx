@@ -9,9 +9,9 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  processPkid: number;
+  processId: string;
 };
-const ProcessSetting: FC<Props> = ({ projectId, processPkid }) => {
+const ProcessSetting: FC<Props> = ({ projectId, processId }) => {
   const [setting, setSetting] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -19,9 +19,9 @@ const ProcessSetting: FC<Props> = ({ projectId, processPkid }) => {
     setDrawerVisible(true);
     setSetting(
       <>
-        <ParameterCard processPkid={processPkid} />
-        <FlowCard projectId={projectId} processPkid={processPkid} input={true} />
-        <FlowCard projectId={projectId} processPkid={processPkid} input={false} />
+        <ParameterCard projectId={projectId} processId={processId} />
+        <FlowCard projectId={projectId} processId={processId} input={true} />
+        <FlowCard projectId={projectId} processId={processId} input={false} />
       </>,
     );
   };

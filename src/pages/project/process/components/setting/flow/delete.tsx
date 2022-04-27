@@ -8,13 +8,14 @@ import { deleteExchangeJson } from '@/services/process/api';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  processPkid: number;
-  flowId: string;
+  projectId: number;
+  processId: string;
+  internalId: number;
   input: boolean;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
 
-const ProcessFlowDelete: FC<Props> = ({ processPkid, flowId, input, actionRef }) => {
+const ProcessFlowDelete: FC<Props> = ({ projectId, processId, internalId, input, actionRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = useCallback(() => {
@@ -22,7 +23,7 @@ const ProcessFlowDelete: FC<Props> = ({ processPkid, flowId, input, actionRef })
   }, []);
 
   const handleOk = useCallback(() => {
-    deleteExchangeJson(processPkid, flowId, input).then(async (result) => {
+    deleteExchangeJson({ projectId, processId, internalId, input }).then(async (result) => {
       if (result === 'ok') {
         message.success(
           <FormattedMessage
@@ -36,7 +37,7 @@ const ProcessFlowDelete: FC<Props> = ({ processPkid, flowId, input, actionRef })
         message.error(result);
       }
     });
-  }, [actionRef, flowId, input, processPkid]);
+  }, [actionRef, input, internalId, processId, projectId]);
 
   const handleCancel = useCallback(() => {
     setIsModalVisible(false);
