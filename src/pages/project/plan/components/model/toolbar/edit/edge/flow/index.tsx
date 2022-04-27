@@ -8,6 +8,7 @@ import ProTable from '@ant-design/pro-table';
 import { getPlanModelFlowGrid } from '@/services/plan/api';
 import type { PlanModelFlow } from '@/services/plan/data';
 import CreateEdgeFlow from './create';
+import DeleteEdgeFlow from './delete';
 
 type Props = {
   projectId: number;
@@ -33,12 +34,6 @@ const EditEdgeFlow: FC<Props> = ({
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<PlanModelFlow>[] = [
     {
-      title: '',
-      // render: (_, row) => [
-      // <EdgeProcessDelete pkid={row.pkid} actionRef={actionRef} />
-      // ],
-    },
-    {
       title: 'Source Name',
       dataIndex: 'flowSourceName',
       sorter: true,
@@ -59,9 +54,6 @@ const EditEdgeFlow: FC<Props> = ({
       ],
     },
     {
-      title: '',
-    },
-    {
       title: 'Target Name',
       dataIndex: 'flowTargetName',
       sorter: true,
@@ -78,6 +70,28 @@ const EditEdgeFlow: FC<Props> = ({
             st={'target'}
             actionRef={actionRef}
           /> */}
+        </Space>,
+      ],
+    },
+    {
+      title: 'Option',
+      dataIndex: 'pkid',
+      search: false,
+      render: (_, row) => [
+        <Space size={'small'}>
+          <DeleteEdgeFlow
+            projectId={projectId}
+            planId={modelId}
+            edgeSourceId={row.edgeSourceId}
+            edgeTargetId={row.edgeTargetId}
+            planSourceId={row.planSourceId}
+            planTargetId={row.planTargetId}
+            processSourceId={row.processSourceId}
+            processTargetId={row.processTargetId}
+            actionRef={actionRef}
+            flowSourceId={row.flowSourceId}
+            flowTargetId={row.flowTargetId}
+          />
         </Space>,
       ],
     },

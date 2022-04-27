@@ -9,6 +9,7 @@ import type { PlanModelProcess } from '@/services/plan/data';
 import { CloseOutlined } from '@ant-design/icons';
 import CreateEdgeProcess from './process/create';
 import EditEdgeProcess from './process/edit';
+import DeleteEdgeProcess from './process/delete';
 
 type Props = {
   projectId: number;
@@ -66,6 +67,17 @@ const EditEdge: FC<Props> = ({
             processTargetId={row.processTargetId}
             processSourceName={row.processSourceName}
             processTargetName={row.processTargetName}
+          />
+          <DeleteEdgeProcess
+            projectId={projectId}
+            planId={modelId}
+            edgeSourceId={row.edgeSourceId}
+            edgeTargetId={row.edgeTargetId}
+            planSourceId={row.planSourceId}
+            planTargetId={row.planTargetId}
+            processSourceId={row.processSourceId}
+            processTargetId={row.processTargetId}
+            actionRef={actionRef}
           />
         </Space>,
       ],

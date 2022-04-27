@@ -170,6 +170,13 @@ export async function deletePlanModelFlow(data?: Record<string, any>) {
   });
 }
 
+export async function deletePlanModelFlowByProcess(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/plan/deletemodelflowbyprocess', {
+    method: 'DELETE',
+    data,
+  });
+}
+
 export async function getPlanParentCount(projectId: number, id: string) {
   return request<number>(`http://localhost:8081/api/plan/getparentcount/${projectId}/${id}`, {
     method: 'GET',
