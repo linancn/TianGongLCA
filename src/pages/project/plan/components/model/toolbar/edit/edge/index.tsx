@@ -70,7 +70,7 @@ const EditEdge: FC<Props> = ({
           />
           <DeleteEdgeProcess
             projectId={projectId}
-            planId={modelId}
+            modelId={modelId}
             edgeSourceId={row.edgeSourceId}
             edgeTargetId={row.edgeTargetId}
             planSourceId={row.planSourceId}

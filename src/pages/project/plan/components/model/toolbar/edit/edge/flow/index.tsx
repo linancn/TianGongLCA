@@ -81,7 +81,7 @@ const EditEdgeFlow: FC<Props> = ({
         <Space size={'small'}>
           <DeleteEdgeFlow
             projectId={projectId}
-            planId={modelId}
+            modelId={modelId}
             edgeSourceId={row.edgeSourceId}
             edgeTargetId={row.edgeTargetId}
             planSourceId={row.planSourceId}
@@ -114,7 +114,7 @@ const EditEdgeFlow: FC<Props> = ({
           toolBarRender={() => [
             <CreateEdgeFlow
               projectId={projectId}
-              planId={modelId}
+              modelId={modelId}
               edgeSourceId={edgeSourceId}
               edgeTargetId={edgeTargetId}
               planSourceId={planSourceId}

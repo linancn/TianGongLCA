@@ -7,7 +7,7 @@ import { deletePlanModelFlow } from '@/services/plan/api';
 
 type Props = {
   projectId: number;
-  planId: string;
+  modelId: string;
   edgeSourceId: string;
   edgeTargetId: string;
   planSourceId: string;
@@ -20,7 +20,7 @@ type Props = {
 };
 const DeleteEdgeFlow: FC<Props> = ({
   projectId,
-  planId,
+  modelId,
   edgeSourceId,
   edgeTargetId,
   planSourceId,
@@ -39,7 +39,7 @@ const DeleteEdgeFlow: FC<Props> = ({
       onOk() {
         deletePlanModelFlow({
           projectId,
-          planId,
+          planId: modelId,
           edgeSourceId,
           edgeTargetId,
           planSourceId,
@@ -65,7 +65,7 @@ const DeleteEdgeFlow: FC<Props> = ({
     edgeTargetId,
     flowSourceId,
     flowTargetId,
-    planId,
+    modelId,
     planSourceId,
     planTargetId,
     processSourceId,

@@ -12,7 +12,7 @@ import ModelFlowSelect from './select';
 
 type Props = {
   projectId: number;
-  planId: string;
+  modelId: string;
   edgeSourceId: string;
   edgeTargetId: string;
   planSourceId: string;
@@ -24,7 +24,7 @@ type Props = {
 
 const CreateEdgeFlow: FC<Props> = ({
   projectId,
-  planId,
+  modelId,
   edgeSourceId,
   edgeTargetId,
   planSourceId,
@@ -109,7 +109,7 @@ const CreateEdgeFlow: FC<Props> = ({
             createPlanModelFlow({
               ...values,
               projectId,
-              planId,
+              planId: modelId,
               edgeSourceId,
               edgeTargetId,
               planSourceId,
