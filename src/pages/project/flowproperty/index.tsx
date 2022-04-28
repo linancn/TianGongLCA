@@ -73,7 +73,11 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       render: (_, row) => [
         <Space size={'small'}>
           {row.referenceUnit == null ? '-' : row.referenceUnit}
-          <UnitJsonList unitGroupPkid={row.unitGroupPkid} parentActionRef={actionRef} />
+          <UnitJsonList
+            projectId={projectid}
+            unitGroupId={row.unitGroupId}
+            parentActionRef={actionRef}
+          />
         </Space>,
       ],
     },

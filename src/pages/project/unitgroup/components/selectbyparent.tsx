@@ -61,7 +61,7 @@ const UnitGroupSelectByParent: FC<Props> = ({
               // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
             />
           </Tooltip> */}
-          <UnitJsonList unitGroupPkid={row.pkid} parentActionRef={actionRef} />
+          <UnitJsonList projectId={projectId} unitGroupId={row.id} parentActionRef={actionRef} />
         </Space>,
       ],
     },
@@ -76,7 +76,7 @@ const UnitGroupSelectByParent: FC<Props> = ({
             projectId={row.projectId}
             id={row.categoryId}
             parentType={'unitgroup'}
-            parentPkid={row.pkid}
+            parentId={row.id}
             actionRef={actionRef}
           />
         </Space>,
