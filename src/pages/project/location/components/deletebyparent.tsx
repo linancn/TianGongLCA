@@ -7,14 +7,15 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  parentPkid: number;
+  parentId: string;
   parentType: string;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
   setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const LocationDeleteByParent: FC<Props> = ({
-  parentPkid,
+  projectId,
+  parentId,
   parentType,
   parentActionRef,
   setViewDrawerVisible,
@@ -25,7 +26,7 @@ const LocationDeleteByParent: FC<Props> = ({
   }, [parentActionRef, setViewDrawerVisible]);
 
   const onDelete = () => {
-    updateParentLocation(parentType, parentPkid, '').then(async (result) => {
+    updateParentLocation(parentType, projectId, parentId, '').then(async (result) => {
       if (result === 'ok') {
         message.success(
           <FormattedMessage

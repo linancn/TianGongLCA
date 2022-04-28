@@ -13,11 +13,11 @@ import LocationDeleteByParent from './deletebyparent';
 type Props = {
   projectId: number;
   id: string;
-  parentPkid: number;
+  parentId: string;
   parentType: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const LocationViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType, actionRef }) => {
+const LocationViewByParent: FC<Props> = ({ projectId, id, parentId, parentType, actionRef }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [footerButtons, setFooterButtons] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -41,7 +41,7 @@ const LocationViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
       setFooterButtons(
         <LocationSelect
           projectId={projectId}
-          parentPkid={parentPkid}
+          parentId={parentId}
           parentType={parentType}
           parentActionRef={actionRef}
           setViewDrawerVisible={setDrawerVisible}
@@ -63,7 +63,7 @@ const LocationViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
           <>
             <LocationDeleteByParent
               projectId={projectId}
-              parentPkid={parentPkid}
+              parentId={parentId}
               parentType={parentType}
               parentActionRef={actionRef}
               setViewDrawerVisible={setDrawerVisible}
@@ -75,7 +75,7 @@ const LocationViewByParent: FC<Props> = ({ projectId, id, parentPkid, parentType
             />
             <LocationSelect
               projectId={projectId}
-              parentPkid={parentPkid}
+              parentId={parentId}
               parentType={parentType}
               parentActionRef={actionRef}
               setViewDrawerVisible={setDrawerVisible}

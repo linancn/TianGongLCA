@@ -16,7 +16,7 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  parentPkid: number;
+  parentId: string;
   parentType: string;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
   setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +24,7 @@ type Props = {
 
 const LocationSelect: FC<Props> = ({
   projectId,
-  parentPkid,
+  parentId,
   parentType,
   parentActionRef,
   setViewDrawerVisible,
@@ -93,7 +93,7 @@ const LocationSelect: FC<Props> = ({
 
   const updateSelectId = () => {
     if (selectRow) {
-      updateParentLocation(parentType, parentPkid, selectRow.id).then(async (result) => {
+      updateParentLocation(parentType, projectId, parentId, selectRow.id).then(async (result) => {
         if (result === 'ok') {
           message.success(
             <FormattedMessage

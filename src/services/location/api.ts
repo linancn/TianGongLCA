@@ -43,14 +43,16 @@ export async function updateLocation(data?: Record<string, any>) {
 
 export async function updateParentLocation(
   parentType: string,
-  parentPkid: number,
+  projectId: number,
+  parentId: string,
   locationId: string,
 ) {
   return request<string>(`http://localhost:8081/api/${parentType}/updatelocation`, {
     method: 'PUT',
     data: {
-      pkid: parentPkid,
-      locationId: locationId,
+      projectId,
+      parentId,
+      locationId,
     },
   });
 }
