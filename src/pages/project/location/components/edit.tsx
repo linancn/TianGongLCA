@@ -8,6 +8,7 @@ import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getLocationByPkid, updateLocation } from '@/services/location/api';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   pkid: number;
@@ -39,7 +40,9 @@ const LocationEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVis
           onFinish={async (values) => {
             updateLocation({ ...values, pkid: pi.pkid }).then(async (result) => {
               if (result === 'ok') {
-                message.success('Edit successfully!');
+                message.success(
+                  <FormattedMessage id="options.editsuccess" defaultMessage="Edit successfully!" />,
+                );
                 setDrawerVisible(false);
                 setViewDrawerVisible(false);
                 if (actionRef.current) {
@@ -52,8 +55,16 @@ const LocationEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVis
             return true;
           }}
         >
-          <ProFormText width="md" name="dataName" label="Data Name" />
-          <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormText
+            width="md"
+            name="dataName"
+            label={<FormattedMessage id="location.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="location.description" defaultMessage="Description" />}
+          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);
@@ -68,15 +79,17 @@ const LocationEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVis
 
   return (
     <>
-      <Tooltip title="Edit">
+      <Tooltip title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}>
         {buttonType === 'icon' ? (
           <Button shape="circle" icon={<FormOutlined />} size="small" onClick={onEdit} />
         ) : (
-          <Button onClick={onEdit}>Edit</Button>
+          <Button onClick={onEdit}>
+            {<FormattedMessage id="options.edit" defaultMessage="Edit" />}
+          </Button>
         )}
       </Tooltip>
       <Drawer
-        title="Edit"
+        title={<FormattedMessage id="options.edit" defaultMessage="Edit" />}
         width="400px"
         closable={false}
         extra={
@@ -91,10 +104,16 @@ const LocationEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVis
         onClose={() => setDrawerVisible(false)}
         footer={
           <Space size={'middle'} className={styles.footer_right}>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button onClick={() => setDrawerVisible(false)}>
+              {' '}
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
+            </Button>
+            <Button onClick={onReset}>
+              {' '}
+              <FormattedMessage id="options.reset" defaultMessage="Reset" />
+            </Button>
             <Button onClick={() => formRefEdit.current?.submit()} type="primary">
-              Submit
+              <FormattedMessage id="options.submit" defaultMessage="Submit" />
             </Button>
           </Space>
         }

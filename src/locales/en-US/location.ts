@@ -1,9 +1,11 @@
 export default {
-  'flow.index': 'No.',
-  'flow.dataName': 'Name',
-  'flow.lastChange': 'Last change',
-  'flow.database': 'Database',
-  'flow.release': 'Release',
-  'flow.description': 'Description',
-  'flow.version': 'Version',
+  'location.index': 'No.',
+  'location.dataName': 'Name',
+  'location.lastChange': 'Last change',
+  'location.database': 'Database',
+  'location.release': 'Release',
+  'location.description': 'Description',
+  'location.version': 'Version',
+  'location.delete': 'Are you sure you want to delete this location?',
+  'location.deletesuccess': 'Selected location has been deleted.',
 };

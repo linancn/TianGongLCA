@@ -34,36 +34,36 @@ const LocationSelect: FC<Props> = ({
   const actionRef = useRef<ActionType>();
   const locationColumns: ProColumns<Location>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="location.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="location.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="location.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="location.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Version',
+      title: <FormattedMessage id="location.version" defaultMessage="Version" />,
       dataIndex: 'version',
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
@@ -95,7 +95,12 @@ const LocationSelect: FC<Props> = ({
     if (selectRow) {
       updateParentLocation(parentType, parentPkid, selectRow.id).then(async (result) => {
         if (result === 'ok') {
-          message.success('Successfully Selected!');
+          message.success(
+            <FormattedMessage
+              id="options.selectedsuccess"
+              defaultMessage="Successfully Selected!"
+            />,
+          );
           setDrawerVisible(false);
           reload();
         } else {
@@ -103,19 +108,21 @@ const LocationSelect: FC<Props> = ({
         }
       });
     } else {
-      message.error('Select nothing');
+      message.error(
+        <FormattedMessage id="options.selectnothing" defaultMessage="Nothing selected!" />,
+      );
     }
   };
   return (
     <>
-      <Tooltip title="Select">
+      <Tooltip title={<FormattedMessage id="options.select" defaultMessage="Select" />}>
         <Button type="primary" onClick={() => setDrawerVisible(true)}>
-          Select
+          {<FormattedMessage id="options.select" defaultMessage="Select" />}
         </Button>
       </Tooltip>
 
       <Drawer
-        title="Select"
+        title={<FormattedMessage id="options.select" defaultMessage="Select" />}
         width="100%"
         closable={false}
         extra={
@@ -139,10 +146,10 @@ const LocationSelect: FC<Props> = ({
                 reload();
               }}
             >
-              Cancel
+              <FormattedMessage id="options.cancel" defaultMessage="Cancel" />
             </Button>
             <Button onClick={() => updateSelectId()} type="primary">
-              Select
+              {<FormattedMessage id="options.select" defaultMessage="Select" />}
             </Button>
           </Space>
         }
