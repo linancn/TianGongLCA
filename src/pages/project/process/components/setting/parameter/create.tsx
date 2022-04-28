@@ -87,12 +87,36 @@ const ParameterJsonCreate: FC<Props> = ({ projectId, processId, actionRef }) => 
             return true;
           }}
         >
-          <ProFormText width="md" name="name" label="Name" />
-          <ProFormText width="md" name="formula" label="Formula" />
-          <ProFormText width="md" name="value" label="Value" />
-          <ProFormText width="md" name="uncertaintyGeomSd" label="SD" />
-          <ProFormText width="md" name="uncertaintyGeomMean" label="Mean" />
-          <ProFormTextArea width="md" name="description" label="Description" />
+          <ProFormText
+            width="md"
+            name="name"
+            label={<FormattedMessage id="parameter.dataName" defaultMessage="Data Name" />}
+          />
+          <ProFormText
+            width="md"
+            name="formula"
+            label={<FormattedMessage id="parameter.formula" defaultMessage="Formula" />}
+          />
+          <ProFormText
+            width="md"
+            name="value"
+            label={<FormattedMessage id="parameter.value" defaultMessage="Value" />}
+          />
+          <ProFormText
+            width="md"
+            name="uncertaintyGeomSd"
+            label={<FormattedMessage id="parameter.uncertaintyGeomSd" defaultMessage="SD" />}
+          />
+          <ProFormText
+            width="md"
+            name="uncertaintyGeomMean"
+            label={<FormattedMessage id="parameter.uncertaintyGeomMean" defaultMessage="Mean" />}
+          />
+          <ProFormTextArea
+            width="md"
+            name="description"
+            label={<FormattedMessage id="parameter.description" defaultMessage="Description" />}
+          />
         </ProForm>
       </Drawer>
     </>

@@ -15,6 +15,7 @@ import process from './zh-CN/process';
 import unitgroup from './zh-CN/unitgroup';
 import category from './zh-CN/category';
 import location from './zh-CN/location';
+import parameter from './zh-CN/parameter';
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -41,4 +42,5 @@ export default {
   ...unitgroup,
   ...category,
   ...location,
+  ...parameter,
 };

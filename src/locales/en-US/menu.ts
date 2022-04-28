@@ -12,6 +12,7 @@ export default {
   'menu.units': 'Units',
   'menu.categories': 'Categories',
   'menu.locations': 'Locations',
+  'menu.parameters': 'Parameters',
   'menu.global_parameters': 'Global Parameters',
   'menu.go_back': 'Go Back',
   'menu.back': 'Back',
