@@ -11,6 +11,7 @@ import ParameterJsonCreate from './parameter/create';
 import ParameterJsonView from './parameter/view';
 import ParameterJsonEdit from './parameter/edit';
 import ParameterJsonDelete from './parameter/delete';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -21,23 +22,23 @@ const ParameterCard: FC<Props> = ({ projectId, processId }) => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<ParameterJson>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="parameter.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Name',
+      title: <FormattedMessage id="parameter.dataName" defaultMessage="Data Name" />,
       dataIndex: 'name',
       sorter: true,
     },
     {
-      title: 'Formula',
+      title: <FormattedMessage id="parameter.formula" defaultMessage="Formula" />,
       dataIndex: 'formula',
       search: false,
     },
     {
-      title: 'Value',
+      title: <FormattedMessage id="parameter.value" defaultMessage="Value" />,
       dataIndex: 'value',
       search: false,
     },
@@ -52,17 +53,17 @@ const ParameterCard: FC<Props> = ({ projectId, processId }) => {
     //   search: false,
     // },
     {
-      title: 'SD',
+      title: <FormattedMessage id="parameter.uncertaintyGeomSd" defaultMessage="SD" />,
       dataIndex: 'uncertaintyGeomSd',
       search: false,
     },
     {
-      title: 'Mean',
+      title: <FormattedMessage id="parameter.uncertaintyGeomMean" defaultMessage="Mean" />,
       dataIndex: 'uncertaintyGeomMean',
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
@@ -86,7 +87,11 @@ const ParameterCard: FC<Props> = ({ projectId, processId }) => {
 
   actionRef.current?.reload();
   return (
-    <ProCard title="Parameters" bordered={false} collapsible>
+    <ProCard
+      title={<FormattedMessage id="menu.parameters" defaultMessage="Parameters" />}
+      bordered={false}
+      collapsible
+    >
       <ProTable<ParameterJson, ListPagination>
         actionRef={actionRef}
         search={{

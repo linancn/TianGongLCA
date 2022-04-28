@@ -4,6 +4,7 @@ import { Button, Descriptions, Drawer, Spin, Tooltip } from 'antd';
 import { CloseOutlined, ProfileOutlined } from '@ant-design/icons';
 import { getParameterJson } from '@/services/process/api';
 import styles from '@/style/custom.less';
+import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
@@ -24,24 +25,52 @@ const ParameterJsonView: FC<Props> = ({ projectId, processId, id }) => {
     getParameterJson(projectId, processId, id).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Name">{result.name}</Descriptions.Item>
-          <Descriptions.Item label="Formula">{result.formula}</Descriptions.Item>
-          <Descriptions.Item label="Value">{result.value}</Descriptions.Item>
-          <Descriptions.Item label="SD">{result.uncertaintyGeomSd}</Descriptions.Item>
-          <Descriptions.Item label="Mean">{result.uncertaintyGeomMean}</Descriptions.Item>
-          <Descriptions.Item label="Version">{result.version}</Descriptions.Item>
-          <Descriptions.Item label="Description">{result.description}</Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="parameter.dataName" defaultMessage="Data Name" />}
+          >
+            {result.name}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="parameter.formula" defaultMessage="Formula" />}
+          >
+            {result.formula}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="parameter.value" defaultMessage="Value" />}
+          >
+            {result.value}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="parameter.uncertaintyGeomSd" defaultMessage="SD" />}
+          >
+            {result.uncertaintyGeomSd}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="parameter.uncertaintyGeomMean" defaultMessage="Mean" />}
+          >
+            {result.uncertaintyGeomMean}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="parameter.version" defaultMessage="Version" />}
+          >
+            {result.version}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="parameter.description" defaultMessage="Description" />}
+          >
+            {result.description}
+          </Descriptions.Item>
         </Descriptions>,
       );
     });
   };
   return (
     <>
-      <Tooltip title="View">
+      <Tooltip title={<FormattedMessage id="options.view" defaultMessage="View" />}>
         <Button shape="circle" icon={<ProfileOutlined />} size="small" onClick={onView} />
       </Tooltip>
       <Drawer
-        title="View"
+        title={<FormattedMessage id="options.view" defaultMessage="View" />}
         width="400px"
         closable={false}
         extra={

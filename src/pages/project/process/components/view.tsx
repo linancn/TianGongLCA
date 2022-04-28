@@ -59,7 +59,12 @@ const ProcessView: FC<Props> = ({ pkid, actionRef }) => {
           <Descriptions.Item
             label={<FormattedMessage id="process.database" defaultMessage="Database" />}
           >
-            {result?.version}
+            {result?.database}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={<FormattedMessage id="process.release" defaultMessage="Release" />}
+          >
+            {result?.release}
           </Descriptions.Item>
           <Descriptions.Item
             label={<FormattedMessage id="process.categoryName" defaultMessage="Category" />}

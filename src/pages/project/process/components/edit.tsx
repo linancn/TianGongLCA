@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useRef } from 'react';
 import { useState } from 'react';
-import { Button, Drawer, message, Space, Spin, Tooltip } from 'antd';
+import { Button, Drawer, Form, Input, message, Space, Spin, Tooltip } from 'antd';
 import { CloseOutlined, FormOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
@@ -9,6 +9,8 @@ import styles from '@/style/custom.less';
 import type { ActionType } from '@ant-design/pro-table';
 import { getProcessByPkid, updateProcess } from '@/services/process/api';
 import { FormattedMessage } from 'umi';
+import CategoryViewByParent from '../../category/components/viewbyparent';
+import LocationViewByParent from '../../location/components/viewbyparent';
 
 type Props = {
   pkid: number;
@@ -65,10 +67,66 @@ const ProcessEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisi
             name="processType"
             label={<FormattedMessage id="process.processType" defaultMessage="Process Type" />}
           />
+          <Form.Item
+            name="categoryName"
+            label={<FormattedMessage id="process.categoryName" defaultMessage="Category" />}
+          >
+            <Input
+              disabled={true}
+              style={{ width: '328px' }}
+              addonAfter={
+                <CategoryViewByParent
+                  projectId={pi.projectId}
+                  id={pi.categoryId}
+                  parentType={'process'}
+                  parentPkid={pkid}
+                  actionRef={actionRef}
+                />
+              }
+            />
+          </Form.Item>
+          <Form.Item
+            name="locationName"
+            label={<FormattedMessage id="process.locationName" defaultMessage="Location Name" />}
+          >
+            <Input
+              disabled={true}
+              style={{ width: '328px' }}
+              addonAfter={
+                <LocationViewByParent
+                  projectId={pi.projectId}
+                  id={pi.locationId}
+                  parentType={'process'}
+                  parentPkid={pkid}
+                  actionRef={actionRef}
+                />
+              }
+            />
+          </Form.Item>
           <ProFormTextArea
             width="md"
             name="description"
             label={<FormattedMessage id="process.description" defaultMessage="Description" />}
+          />
+          <ProFormText
+            width="md"
+            name="version"
+            label={<FormattedMessage id="process.version" defaultMessage="Version" />}
+          />
+          <ProFormText
+            width="md"
+            name="database"
+            label={<FormattedMessage id="process.database" defaultMessage="Database" />}
+          />
+          <ProFormText
+            width="md"
+            name="version"
+            label={<FormattedMessage id="process.version" defaultMessage="Version" />}
+          />
+          <ProFormText
+            width="md"
+            name="release"
+            label={<FormattedMessage id="process.release" defaultMessage="Release" />}
           />
         </ProForm>,
       );

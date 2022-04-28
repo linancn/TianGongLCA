@@ -1,0 +1,15 @@
+export default {
+  'parameter.index': '序号',
+  'parameter.dataName': '名称',
+  'parameter.lastChange': '最后修改',
+  'parameter.database': '源数据库',
+  'parameter.release': '版本',
+  'parameter.description': '描述',
+  'parameter.version': '修订号',
+  'parameter.delete': '是否删除所选parameter？',
+  'parameter.deletesuccess': '所选parameter已删除',
+  'parameter.formula': 'Formula',
+  'parameter.value': 'Value',
+  'parameter.uncertaintyGeomSd': 'SD',
+  'parameter.uncertaintyGeomMean': 'Mean',
+};

@@ -12,6 +12,7 @@ export default {
   'menu.units': '单位',
   'menu.categories': '数据类别',
   'menu.locations': '空间范围',
+  'menu.parameters': 'Parameters',
   'menu.global_parameters': '全局参数',
   'menu.go_back': '返回',
   'menu.back': '返回',

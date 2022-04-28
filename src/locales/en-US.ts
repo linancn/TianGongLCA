@@ -15,6 +15,7 @@ import process from './en-US/process';
 import unitgroup from './en-US/unitgroup';
 import category from './en-US/category';
 import location from './en-US/location';
+import parameter from './en-US/parameter';
 
 export default {
   'navBar.lang': 'Languages',
@@ -42,4 +43,5 @@ export default {
   ...unitgroup,
   ...category,
   ...location,
+  ...parameter,
 };

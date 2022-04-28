@@ -1,0 +1,15 @@
+export default {
+  'parameter.index': 'No.',
+  'parameter.dataName': 'Name',
+  'parameter.lastChange': 'Last change',
+  'parameter.database': 'Database',
+  'parameter.release': 'Release',
+  'parameter.description': 'Description',
+  'parameter.version': 'Version',
+  'parameter.delete': 'Are you sure you want to delete this parameter?',
+  'parameter.deletesuccess': 'Selected parameter has been deleted.',
+  'parameter.formula': 'Formula',
+  'parameter.value': 'Value',
+  'parameter.uncertaintyGeomSd': 'SD',
+  'parameter.uncertaintyGeomMean': 'Mean',
+};

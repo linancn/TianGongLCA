@@ -28,36 +28,36 @@ const LocationIndex: FC<ListProps> = (props) => {
   const [projectName, setProjectName] = useState('');
   const locationColumns: ProColumns<Location>[] = [
     {
-      title: 'ID',
+      title: <FormattedMessage id="location.index" defaultMessage="Index" />,
       dataIndex: 'index',
       valueType: 'index',
       search: false,
     },
     {
-      title: 'Data Name',
+      title: <FormattedMessage id="location.dataName" defaultMessage="Data Name" />,
       dataIndex: 'dataName',
       sorter: true,
     },
     {
-      title: 'Last Change',
+      title: <FormattedMessage id="location.lastChange" defaultMessage="Last Change" />,
       dataIndex: 'lastChange',
       valueType: 'dateTime',
       sorter: true,
       search: false,
     },
     {
-      title: 'Release',
+      title: <FormattedMessage id="location.release" defaultMessage="Release" />,
       dataIndex: 'release',
       sorter: true,
       search: false,
     },
     {
-      title: 'Version',
+      title: <FormattedMessage id="location.version" defaultMessage="Version" />,
       dataIndex: 'version',
       search: false,
     },
     {
-      title: 'Option',
+      title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
