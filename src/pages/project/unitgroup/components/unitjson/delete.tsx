@@ -8,11 +8,12 @@ import { deleteUnitJson } from '@/services/unitgroup/api';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  unitGroupPkid: number;
+  projectId: number;
+  unitGroupId: string;
   id: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const UnitJsonDelete: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
+const UnitJsonDelete: FC<Props> = ({ projectId, unitGroupId, id, actionRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = useCallback(() => {
@@ -20,7 +21,7 @@ const UnitJsonDelete: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
   }, []);
 
   const handleOk = useCallback(() => {
-    deleteUnitJson(unitGroupPkid, id).then(async (result) => {
+    deleteUnitJson({ projectId, unitGroupId, id }).then(async (result) => {
       if (result === 'ok') {
         message.success(
           <FormattedMessage
@@ -34,7 +35,7 @@ const UnitJsonDelete: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
         message.error(result);
       }
     });
-  }, [actionRef, id, unitGroupPkid]);
+  }, [actionRef, id, projectId, unitGroupId]);
 
   const handleCancel = useCallback(() => {
     setIsModalVisible(false);

@@ -35,7 +35,8 @@ export async function getUnitJsonGrid(
     pageSize?: number;
   },
   sort: Record<string, SortOrder>,
-  unitGroupPkid: number,
+  projectId: number,
+  unitGroupId: string,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -49,7 +50,8 @@ export async function getUnitJsonGrid(
       ...params,
       sortBy,
       orderBy,
-      unitGroupPkid,
+      projectId,
+      unitGroupId,
     },
   });
 }
@@ -107,9 +109,9 @@ export async function deleteUnitGroup(pkid: number) {
   });
 }
 
-export async function getUnitJson(unitGroupPkid: number, id: string) {
+export async function getUnitJson(projectId: number, unitGroupId: string, id: string) {
   return request<UnitJson>(
-    `http://localhost:8081/api/unitgroup/getunitjson/${unitGroupPkid}/${id}`,
+    `http://localhost:8081/api/unitgroup/getunitjson/${projectId}/${unitGroupId}/${id}`,
     {
       method: 'GET',
     },
@@ -130,11 +132,9 @@ export async function updateUnitJson(data?: Record<string, any>) {
   });
 }
 
-export async function deleteUnitJson(unitGroupPkid: number, id: string) {
-  return request<string>(
-    `http://localhost:8081/api/unitgroup/deleteunitjson/${unitGroupPkid}/${id}`,
-    {
-      method: 'DELETE',
-    },
-  );
+export async function deleteUnitJson(data?: Record<string, any>) {
+  return request<string>('http://localhost:8081/api/unitgroup/deleteunitjson', {
+    method: 'DELETE',
+    data,
+  });
 }

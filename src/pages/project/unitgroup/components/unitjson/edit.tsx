@@ -12,11 +12,12 @@ import { getUnitJson, updateUnitJson } from '@/services/unitgroup/api';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  unitGroupPkid: number;
+  projectId: number;
+  unitGroupId: string;
   id: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
+const UnitJsonEdit: FC<Props> = ({ projectId, unitGroupId, id, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -28,7 +29,7 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
         <Spin />
       </div>,
     );
-    getUnitJson(unitGroupPkid, id).then(async (pi) => {
+    getUnitJson(projectId, unitGroupId, id).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -40,7 +41,8 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
           onFinish={async (values) => {
             updateUnitJson({
               ...values,
-              unitGroupPkid,
+              projectId,
+              unitGroupId,
               id,
             }).then(async (result) => {
               if (result === 'ok') {
@@ -97,10 +99,10 @@ const UnitJsonEdit: FC<Props> = ({ unitGroupPkid, id, actionRef }) => {
         referenceUnit: pi.referenceUnit === true ? 'true' : 'false',
       });
     });
-  }, [actionRef, id, unitGroupPkid]);
+  }, [actionRef, id, projectId, unitGroupId]);
 
   const onReset = () => {
-    getUnitJson(unitGroupPkid, id).then(async (result) => {
+    getUnitJson(projectId, unitGroupId, id).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
       formRefEdit.current?.setFieldsValue({
         referenceUnit: result.referenceUnit === true ? 'true' : 'false',

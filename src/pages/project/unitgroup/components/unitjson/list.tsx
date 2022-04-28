@@ -14,10 +14,11 @@ import UnitJsonDelete from './delete';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  unitGroupPkid: number;
+  projectId: number;
+  unitGroupId: string;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
+const UnitJsonList: FC<Props> = ({ projectId, unitGroupId, parentActionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const actionRef = useRef<ActionType>();
 
@@ -52,9 +53,19 @@ const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <UnitJsonView unitGroupPkid={unitGroupPkid} id={row.id} />
-          <UnitJsonEdit unitGroupPkid={unitGroupPkid} id={row.id} actionRef={actionRef} />
-          <UnitJsonDelete unitGroupPkid={unitGroupPkid} id={row.id} actionRef={actionRef} />
+          <UnitJsonView projectId={projectId} unitGroupId={unitGroupId} id={row.id} />
+          <UnitJsonEdit
+            projectId={projectId}
+            unitGroupId={unitGroupId}
+            id={row.id}
+            actionRef={actionRef}
+          />
+          <UnitJsonDelete
+            projectId={projectId}
+            unitGroupId={unitGroupId}
+            id={row.id}
+            actionRef={actionRef}
+          />
         </Space>,
       ],
     },
@@ -63,7 +74,7 @@ const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
   const reload = useCallback(() => {
     parentActionRef.current?.reload();
   }, [parentActionRef]);
-  if (unitGroupPkid) {
+  if (projectId && unitGroupId) {
     return (
       <>
         <Tooltip title={<FormattedMessage id="options.list" defaultMessage="List" />}>
@@ -101,7 +112,11 @@ const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
               defaultCollapsed: false,
             }}
             toolBarRender={() => [
-              <UnitJsonCreate unitGroupPkid={unitGroupPkid} actionRef={actionRef} />,
+              <UnitJsonCreate
+                projectId={projectId}
+                unitGroupId={unitGroupId}
+                actionRef={actionRef}
+              />,
             ]}
             request={(
               params: {
@@ -110,7 +125,7 @@ const UnitJsonList: FC<Props> = ({ unitGroupPkid, parentActionRef }) => {
               },
               sort,
             ) => {
-              return getUnitJsonGrid(params, sort, unitGroupPkid);
+              return getUnitJsonGrid(params, sort, projectId, unitGroupId);
             }}
             columns={unitJsonColumns}
           />

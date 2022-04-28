@@ -55,7 +55,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
               // onClick={() => onViewFlowProcess(row.sourceProcessId, row.sourceFlowId)}
             />
           </Tooltip> */}
-          <UnitJsonList unitGroupPkid={row.pkid} parentActionRef={actionRef} />
+          <UnitJsonList unitGroupId={row.id} parentActionRef={actionRef} projectId={projectid} />
         </Space>,
       ],
     },

@@ -7,10 +7,11 @@ import { FormattedMessage } from 'umi';
 import styles from '@/style/custom.less';
 
 type Props = {
-  unitGroupPkid: number;
+  projectId: number;
+  unitGroupId: string;
   id: string;
 };
-const UnitJsonView: FC<Props> = ({ unitGroupPkid, id }) => {
+const UnitJsonView: FC<Props> = ({ projectId, unitGroupId, id }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -21,7 +22,7 @@ const UnitJsonView: FC<Props> = ({ unitGroupPkid, id }) => {
         <Spin />
       </div>,
     );
-    getUnitJson(unitGroupPkid, id).then(async (result) => {
+    getUnitJson(projectId, unitGroupId, id).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item

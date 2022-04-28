@@ -12,10 +12,11 @@ import { createUnitJson } from '@/services/unitgroup/api';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  unitGroupPkid: number;
+  projectId: number;
+  unitGroupId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const UnitJsonCreate: FC<Props> = ({ unitGroupPkid, actionRef }) => {
+const UnitJsonCreate: FC<Props> = ({ projectId, unitGroupId, actionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
@@ -69,7 +70,8 @@ const UnitJsonCreate: FC<Props> = ({ unitGroupPkid, actionRef }) => {
           onFinish={async (values) => {
             createUnitJson({
               ...values,
-              unitGroupPkid,
+              projectId,
+              unitGroupId,
             }).then(async (result) => {
               if (result === 'ok') {
                 message.success(
