@@ -60,7 +60,7 @@ const TableList: FC<ListProps> = (porps) => {
             projectId={row.projectId}
             id={row.categoryId}
             parentType={'flow'}
-            parentPkid={row.pkid}
+            parentId={row.id}
             actionRef={actionRef}
           />
         </Space>,

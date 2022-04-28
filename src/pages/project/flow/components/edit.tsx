@@ -80,7 +80,7 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
                   projectId={pi.projectId}
                   id={pi.categoryId}
                   parentType={'flow'}
-                  parentPkid={pkid}
+                  parentId={pi.id}
                   actionRef={actionRef}
                 />
               }

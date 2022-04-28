@@ -70,7 +70,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
             projectId={row.projectId}
             id={row.categoryId}
             parentType={'unitgroup'}
-            parentPkid={row.pkid}
+            parentId={row.id}
             actionRef={actionRef}
           />
         </Space>,

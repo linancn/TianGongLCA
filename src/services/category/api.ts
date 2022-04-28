@@ -43,14 +43,16 @@ export async function updateCategory(data?: Record<string, any>) {
 
 export async function updateParentCategory(
   parentType: string,
-  parentPkid: number,
+  projectId: number,
+  parentId: string,
   categoryId: string,
 ) {
   return request<string>(`http://localhost:8081/api/${parentType}/updatecategory`, {
     method: 'PUT',
     data: {
-      pkid: parentPkid,
-      categoryId: categoryId,
+      projectId,
+      parentId,
+      categoryId,
     },
   });
 }

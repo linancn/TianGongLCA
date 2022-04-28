@@ -50,7 +50,7 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
               projectId={result.projectId}
               id={result.categoryId}
               parentType={'flow'}
-              parentPkid={pkid}
+              parentId={result.id}
               actionRef={actionRef}
             />
           </Descriptions.Item>

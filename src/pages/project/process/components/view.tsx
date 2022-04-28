@@ -74,7 +74,7 @@ const ProcessView: FC<Props> = ({ pkid, actionRef }) => {
               projectId={result.projectId}
               id={result.categoryId}
               parentType={'process'}
-              parentPkid={pkid}
+              parentId={result.id}
               actionRef={actionRef}
             />
           </Descriptions.Item>

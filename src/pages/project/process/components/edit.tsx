@@ -79,7 +79,7 @@ const ProcessEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisi
                   projectId={pi.projectId}
                   id={pi.categoryId}
                   parentType={'process'}
-                  parentPkid={pkid}
+                  parentId={pi.id}
                   actionRef={actionRef}
                 />
               }
