@@ -101,7 +101,7 @@ const TableList: FC<ListProps> = (porps) => {
           </Tooltip> */}
           <FlowPropertyJsonList
             projectId={row.projectId}
-            flowPkid={row.pkid}
+            flowId={row.id}
             parentActionRef={actionRef}
           />
         </Space>,
