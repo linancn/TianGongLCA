@@ -16,10 +16,10 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  flowPkid: number;
+  flowId: string;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef }) => {
+const FlowPropertyJsonList: FC<Props> = ({ projectId, flowId, parentActionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const actionRef = useRef<ActionType>();
 
@@ -89,15 +89,20 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
       search: false,
       render: (_, row) => [
         <Space size={'small'}>
-          <FlowPropertyJsonView flowPkid={flowPkid} propertyId={row.flowPropertyId} />
+          <FlowPropertyJsonView
+            projectId={projectId}
+            flowId={flowId}
+            propertyId={row.flowPropertyId}
+          />
           <FlowPropertyJsonEdit
             projectId={projectId}
-            flowPkid={flowPkid}
+            flowId={flowId}
             propertyId={row.flowPropertyId}
             actionRef={actionRef}
           />
           <FlowPropertyJsonDelete
-            flowPkid={flowPkid}
+            projectId={projectId}
+            flowId={flowId}
             propertyId={row.flowPropertyId}
             actionRef={actionRef}
           />
@@ -147,11 +152,7 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
             defaultCollapsed: false,
           }}
           toolBarRender={() => [
-            <FlowPropertyJsonCreate
-              projectId={projectId}
-              flowPkid={flowPkid}
-              actionRef={actionRef}
-            />,
+            <FlowPropertyJsonCreate projectId={projectId} flowId={flowId} actionRef={actionRef} />,
           ]}
           request={(
             params: {
@@ -160,7 +161,7 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowPkid, parentActionRef 
             },
             sort,
           ) => {
-            return getFlowPropertyJsonViewGrid(params, sort, projectId, flowPkid);
+            return getFlowPropertyJsonViewGrid(params, sort, projectId, flowId);
           }}
           columns={flowPropertyJsonColumns}
         />

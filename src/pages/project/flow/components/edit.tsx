@@ -116,7 +116,7 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
               addonAfter={
                 <FlowPropertyJsonList
                   projectId={pi.projectId}
-                  flowPkid={pkid}
+                  flowId={pi.id}
                   parentActionRef={actionRef}
                 />
               }

@@ -14,10 +14,10 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  flowPkid: number;
+  flowId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) => {
+const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowId, actionRef }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
 
@@ -70,7 +70,8 @@ const FlowPropertyJsonCreate: FC<Props> = ({ projectId, flowPkid, actionRef }) =
           onFinish={async (values) => {
             createFlowPropertyJson({
               ...values,
-              flowPkid,
+              projectId,
+              flowId,
             }).then(async (result) => {
               if (result === 'ok') {
                 message.success(

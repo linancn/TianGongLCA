@@ -14,11 +14,11 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  flowPkid: number;
+  flowId: string;
   propertyId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, actionRef }) => {
+const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowId, propertyId, actionRef }) => {
   const [editForm, setEditForm] = useState<JSX.Element>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const formRefEdit = useRef<ProFormInstance>();
@@ -30,7 +30,7 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
         <Spin />
       </div>,
     );
-    getFlowPropertyJsonView(flowPkid, propertyId).then(async (pi) => {
+    getFlowPropertyJsonView(projectId, flowId, propertyId).then(async (pi) => {
       setEditForm(
         <ProForm
           formRef={formRefEdit}
@@ -42,7 +42,8 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
           onFinish={async (values) => {
             updateFlowPropertyJson(propertyId, {
               ...values,
-              flowPkid,
+              projectId,
+              flowId,
               propertyId,
             }).then(async (result) => {
               if (result === 'ok') {
@@ -109,10 +110,10 @@ const FlowPropertyJsonEdit: FC<Props> = ({ projectId, flowPkid, propertyId, acti
         referenceFlowProperty: pi.referenceFlowProperty === true ? 'true' : 'false',
       });
     });
-  }, [actionRef, flowPkid, projectId, propertyId]);
+  }, [actionRef, flowId, projectId, propertyId]);
 
   const onReset = () => {
-    getFlowPropertyJsonView(flowPkid, propertyId).then(async (result) => {
+    getFlowPropertyJsonView(projectId, flowId, propertyId).then(async (result) => {
       formRefEdit.current?.setFieldsValue(result);
       formRefEdit.current?.setFieldsValue({
         referenceFlowProperty: result.referenceFlowProperty === true ? 'true' : 'false',

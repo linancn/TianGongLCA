@@ -36,7 +36,7 @@ export async function getFlowPropertyJsonViewGrid(
   },
   sort: Record<string, SortOrder>,
   projectId: number,
-  flowPkid: number,
+  flowId: string,
 ) {
   const sortBy = Object.keys(sort)[0];
   const orderBy = sort[sortBy]?.replace('end', '');
@@ -51,7 +51,7 @@ export async function getFlowPropertyJsonViewGrid(
       sortBy,
       orderBy,
       projectId,
-      flowPkid,
+      flowId,
     },
   });
 }
@@ -90,9 +90,13 @@ export async function updateFlowPropertyJson(propertyId: string, data?: Record<s
   });
 }
 
-export async function getFlowPropertyJsonView(flowPkid: number, propertyId: string) {
+export async function getFlowPropertyJsonView(
+  projectId: number,
+  flowId: string,
+  propertyId: string,
+) {
   return request<FlowPropertyJson>(
-    `http://localhost:8081/api/flow/getpropertyjsonview/${flowPkid}/${propertyId}`,
+    `http://localhost:8081/api/flow/getpropertyjsonview/${projectId}/${flowId}/${propertyId}`,
     {
       method: 'GET',
     },
@@ -105,9 +109,13 @@ export async function deleteFlow(pkid: number) {
   });
 }
 
-export async function deleteFlowPropertyJson(flowPkid: number, propertyId: string) {
+export async function deleteFlowPropertyJson(
+  projectId: number,
+  flowId: string,
+  propertyId: string,
+) {
   return request<string>(
-    `http://localhost:8081/api/flow/deletepropertyjson/${flowPkid}/${propertyId}`,
+    `http://localhost:8081/api/flow/deletepropertyjson/${projectId}/${flowId}/${propertyId}`,
     {
       method: 'DELETE',
     },

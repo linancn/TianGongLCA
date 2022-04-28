@@ -75,7 +75,7 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
             {result.flowPropertyCount}
             <FlowPropertyJsonList
               projectId={result.projectId}
-              flowPkid={pkid}
+              flowId={result.id}
               parentActionRef={actionRef}
             />
           </Descriptions.Item>

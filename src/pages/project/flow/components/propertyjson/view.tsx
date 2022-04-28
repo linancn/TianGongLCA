@@ -8,10 +8,11 @@ import { FormattedMessage } from 'umi';
 import styles from '@/style/custom.less';
 
 type Props = {
-  flowPkid: number;
+  projectId: number;
+  flowId: string;
   propertyId: string;
 };
-const FlowPropertyJsonView: FC<Props> = ({ flowPkid, propertyId }) => {
+const FlowPropertyJsonView: FC<Props> = ({ projectId, flowId, propertyId }) => {
   const [viewDescriptions, setViewDescriptions] = useState<JSX.Element>();
   const [drawerVisible, handleDrawerVisible] = useState(false);
 
@@ -22,7 +23,7 @@ const FlowPropertyJsonView: FC<Props> = ({ flowPkid, propertyId }) => {
         <Spin />
       </div>,
     );
-    getFlowPropertyJsonView(flowPkid, propertyId).then(async (result) => {
+    getFlowPropertyJsonView(projectId, flowId, propertyId).then(async (result) => {
       setViewDescriptions(
         <Descriptions column={1}>
           <Descriptions.Item

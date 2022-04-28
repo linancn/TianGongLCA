@@ -8,11 +8,12 @@ import { deleteFlowPropertyJson } from '@/services/flow/api';
 import { FormattedMessage } from 'umi';
 
 type Props = {
-  flowPkid: number;
+  projectId: number;
+  flowId: string;
   propertyId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const FlowPropertyJsonDelete: FC<Props> = ({ flowPkid, propertyId, actionRef }) => {
+const FlowPropertyJsonDelete: FC<Props> = ({ projectId, flowId, propertyId, actionRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = useCallback(() => {
@@ -20,7 +21,7 @@ const FlowPropertyJsonDelete: FC<Props> = ({ flowPkid, propertyId, actionRef }) 
   }, []);
 
   const handleOk = useCallback(() => {
-    deleteFlowPropertyJson(flowPkid, propertyId).then(async (result) => {
+    deleteFlowPropertyJson(projectId, flowId, propertyId).then(async (result) => {
       if (result === 'ok') {
         message.success(
           <FormattedMessage
@@ -34,7 +35,7 @@ const FlowPropertyJsonDelete: FC<Props> = ({ flowPkid, propertyId, actionRef }) 
         message.error(result);
       }
     });
-  }, [actionRef, flowPkid, propertyId]);
+  }, [actionRef, flowId, projectId, propertyId]);
 
   const handleCancel = useCallback(() => {
     setIsModalVisible(false);
