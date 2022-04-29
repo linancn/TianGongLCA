@@ -1,5 +1,4 @@
 import type { Dispatch, FC } from 'react';
-import ViewEdge from './edge';
 import type { PlanModelState } from '@/services/plan/data';
 import ViewNode from './node';
 
@@ -12,7 +11,7 @@ type Props = {
 };
 const View: FC<Props> = ({
   projectId,
-  modelId,
+  // modelId,
   drawerVisible,
   setDrawerVisible,
   planModelState,
@@ -29,16 +28,12 @@ const View: FC<Props> = ({
       );
     }
     if (planModelState.cellType === 'edge') {
-      return (
-        <ViewEdge
-          projectId={projectId}
-          modelId={modelId}
-          sourceId={planModelState.cellConfig.source}
-          targetId={planModelState.cellConfig.target}
-          drawerVisible={drawerVisible}
-          setDrawerVisible={setDrawerVisible}
-        />
-      );
+      if (
+        planModelState.cellConfig.info.sourceType === 'process' &&
+        planModelState.cellConfig.info.targetType === 'process'
+      )
+        return <></>;
+      else return <></>;
     }
   }
   return <></>;

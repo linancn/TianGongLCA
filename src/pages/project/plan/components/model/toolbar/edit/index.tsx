@@ -2,7 +2,7 @@ import type { Dispatch, FC } from 'react';
 import EditNode from './node';
 import type { PlanModelState } from '@/services/plan/data';
 import EditEdge from './edge';
-import EdgeProcess from './edge/process';
+import EditEdgeProcessToProcess from './edge/process/editp2p';
 
 type Props = {
   projectId: number;
@@ -35,7 +35,7 @@ const Edit: FC<Props> = ({
         planModelState.cellConfig.info.targetType === 'process'
       )
         return (
-          <EdgeProcess
+          <EditEdgeProcessToProcess
             projectId={projectId}
             modelId={modelId}
             sourceId={planModelState.cellConfig.source}

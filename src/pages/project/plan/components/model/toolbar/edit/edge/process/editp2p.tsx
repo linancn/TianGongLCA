@@ -17,7 +17,7 @@ type Props = {
   setDrawerVisible: Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EdgeProcess: FC<Props> = ({
+const EditEdgeProcessToProcess: FC<Props> = ({
   projectId,
   modelId,
   sourceId,
@@ -73,4 +73,4 @@ const EdgeProcess: FC<Props> = ({
     </Drawer>
   );
 };
-export default EdgeProcess;
+export default EditEdgeProcessToProcess;
