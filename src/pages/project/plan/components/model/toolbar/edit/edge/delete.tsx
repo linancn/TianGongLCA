@@ -3,20 +3,46 @@ import { useCallback } from 'react';
 import { Button, message, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
-import { deletePlanModelFlow } from '@/services/plan/api';
+import { deletePlanModelFlowByProcess } from '@/services/plan/api';
 
 type Props = {
-  pkid: number;
+  projectId: number;
+  modelId: string;
+  edgeSourceId: string;
+  edgeTargetId: string;
+  planSourceId: string;
+  planTargetId: string;
+  processSourceId: string;
+  processTargetId: string;
   actionRef: React.MutableRefObject<ActionType | undefined>;
 };
-const EdgeProcessDelete: FC<Props> = ({ pkid, actionRef }) => {
+const DeleteEdgeProcess: FC<Props> = ({
+  projectId,
+  modelId,
+  edgeSourceId,
+  edgeTargetId,
+  planSourceId,
+  planTargetId,
+  processSourceId,
+  processTargetId,
+  actionRef,
+}) => {
   const onDelete = useCallback(() => {
     Modal.confirm({
       title: 'Are you sure to delete this process?',
       icon: <ExclamationCircleOutlined />,
       content: '',
       onOk() {
-        deletePlanModelFlow({ pkid }).then(async (result) => {
+        deletePlanModelFlowByProcess({
+          projectId,
+          planId: modelId,
+          edgeSourceId,
+          edgeTargetId,
+          planSourceId,
+          planTargetId,
+          processSourceId,
+          processTargetId,
+        }).then(async (result) => {
           if (result === 'ok') {
             message.success('Successfully deleted!');
             actionRef.current?.reload();
@@ -27,7 +53,17 @@ const EdgeProcessDelete: FC<Props> = ({ pkid, actionRef }) => {
       },
       onCancel() {},
     });
-  }, [actionRef, pkid]);
+  }, [
+    actionRef,
+    edgeSourceId,
+    edgeTargetId,
+    modelId,
+    planSourceId,
+    planTargetId,
+    processSourceId,
+    processTargetId,
+    projectId,
+  ]);
   return (
     <>
       <Tooltip title="Delete">
@@ -37,4 +73,4 @@ const EdgeProcessDelete: FC<Props> = ({ pkid, actionRef }) => {
   );
 };
 
-export default EdgeProcessDelete;
+export default DeleteEdgeProcess;

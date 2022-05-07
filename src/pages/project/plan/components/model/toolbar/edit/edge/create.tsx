@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import ProCard from '@ant-design/pro-card';
-import EditEdgeFlow from '../flow';
+import EditEdgeFlow from './flow';
 import SelectEdgeProcess from './select';
 import type { ActionType } from '@ant-design/pro-table';
 

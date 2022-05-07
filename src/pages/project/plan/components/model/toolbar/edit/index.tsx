@@ -2,7 +2,7 @@ import type { Dispatch, FC } from 'react';
 import EditNode from './node';
 import type { PlanModelState } from '@/services/plan/data';
 import EditEdge from './edge';
-import EditEdgeProcessToProcess from './edge/process/editp2p';
+import EditEdgeProcess from './edge/edit';
 
 type Props = {
   projectId: number;
@@ -35,13 +35,18 @@ const Edit: FC<Props> = ({
         planModelState.cellConfig.info.targetType === 'process'
       )
         return (
-          <EditEdgeProcessToProcess
+          <EditEdgeProcess
             projectId={projectId}
             modelId={modelId}
-            sourceId={planModelState.cellConfig.source}
-            targetId={planModelState.cellConfig.target}
+            edgeSourceId={planModelState.cellConfig.source}
+            edgeTargetId={planModelState.cellConfig.target}
+            planSourceId={''}
+            planTargetId={''}
+            processSourceId={planModelState.cellConfig.source}
+            processTargetId={planModelState.cellConfig.target}
             drawerVisible={drawerVisible}
             setDrawerVisible={setDrawerVisible}
+            buttonVisible={false}
           />
         );
       else

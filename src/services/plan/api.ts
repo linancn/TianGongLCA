@@ -124,7 +124,7 @@ export async function getPlanModelProcessGrid(
   });
 }
 
-export async function getPlan(projectId: number, id: string) {
+export async function getPlanById(projectId: number, id: string) {
   return request<PlanInfo>(`http://localhost:8081/api/plan/get/${projectId}/${id}`, {
     method: 'GET',
   });

@@ -7,9 +7,9 @@ import ProTable from '@ant-design/pro-table';
 import { getPlanModelProcessGrid } from '@/services/plan/api';
 import type { PlanModelProcess } from '@/services/plan/data';
 import { CloseOutlined } from '@ant-design/icons';
-import CreateEdgeProcess from './process/create';
-import EditEdgeProcess from './process/edit';
-import DeleteEdgeProcess from './process/delete';
+import CreateEdgeProcess from './create';
+import EditEdgeProcess from './edit';
+import DeleteEdgeProcess from './delete';
 
 type Props = {
   projectId: number;
@@ -65,8 +65,9 @@ const EditEdge: FC<Props> = ({
             planTargetId={row.planTargetId}
             processSourceId={row.processSourceId}
             processTargetId={row.processTargetId}
-            processSourceName={row.processSourceName}
-            processTargetName={row.processTargetName}
+            drawerVisible={false}
+            setDrawerVisible={() => {}}
+            buttonVisible={true}
           />
           <DeleteEdgeProcess
             projectId={projectId}
