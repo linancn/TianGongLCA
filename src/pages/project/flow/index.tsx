@@ -15,7 +15,7 @@ import type { Flow } from '@/services/flow/data';
 import { getFlowGrid } from '@/services/flow/api';
 import LocationViewByParent from '../location/components/viewbyparent';
 import CategoryViewByParent from '../category/components/viewbyparent';
-import FlowPropertyJsonList from './components/propertyjson/list';
+import FlowPropertyJsonList from './components/propertyjson';
 import FlowSelect from './components/select';
 
 type ListProps = {
@@ -78,7 +78,7 @@ const TableList: FC<ListProps> = (porps) => {
             projectId={row.projectId}
             id={row.locationId}
             parentType={'flow'}
-            parentPkid={row.pkid}
+            parentId={row.id}
             actionRef={actionRef}
           />
         </Space>,

@@ -10,7 +10,7 @@ import type { ActionType } from '@ant-design/pro-table';
 import { getFlowByPkid, updateFlow } from '@/services/flow/api';
 import LocationViewByParent from '../../location/components/viewbyparent';
 import CategoryViewByParent from '../../category/components/viewbyparent';
-import FlowPropertyJsonList from './propertyjson/list';
+import FlowPropertyJsonList from './propertyjson';
 import { FormattedMessage } from 'umi';
 
 type Props = {
@@ -98,7 +98,7 @@ const FlowEdit: FC<Props> = ({ pkid, buttonType, actionRef, setViewDrawerVisible
                   projectId={pi.projectId}
                   id={pi.locationId}
                   parentType={'flow'}
-                  parentPkid={pkid}
+                  parentId={pi.id}
                   actionRef={actionRef}
                 />
               }

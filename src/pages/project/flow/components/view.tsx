@@ -10,7 +10,7 @@ import FlowDelete from './delete';
 import type { ActionType } from '@ant-design/pro-table';
 import LocationViewByParent from '../../location/components/viewbyparent';
 import CategoryViewByParent from '../../category/components/viewbyparent';
-import FlowPropertyJsonList from './propertyjson/list';
+import FlowPropertyJsonList from './propertyjson';
 import { FormattedMessage } from 'umi';
 
 type Props = {
@@ -62,7 +62,7 @@ const FlowView: FC<Props> = ({ pkid, actionRef }) => {
               projectId={result.projectId}
               id={result.locationId}
               parentType={'flow'}
-              parentPkid={pkid}
+              parentId={result.id}
               actionRef={actionRef}
             />
           </Descriptions.Item>
