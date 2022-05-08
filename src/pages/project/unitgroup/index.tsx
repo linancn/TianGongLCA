@@ -13,7 +13,7 @@ import UnitGroupEdit from './components/edit';
 import UnitGroupDelete from './components/delete';
 import { getUnitGroupGrid } from '@/services/unitgroup/api';
 import type { UnitGroup } from '@/services/unitgroup/data';
-import UnitJsonList from './components/unitjson/list';
+import UnitJsonList from './components/unitjson';
 import CategoryViewByParent from '../category/components/viewbyparent';
 import UnitGroupSelect from './components/select';
 

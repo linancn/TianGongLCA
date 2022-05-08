@@ -7,7 +7,7 @@ import type { ListPagination } from '@/services/home/data';
 import type { FC } from 'react';
 import { useState, useRef, useCallback } from 'react';
 import { getUnitGroupGrid, updateParentUnitGroup } from '@/services/unitgroup/api';
-import UnitJsonList from './unitjson/list';
+import UnitJsonList from './unitjson';
 import CategoryViewByParent from '../../category/components/viewbyparent';
 // import UnitGroupView from './view';
 // import UnitGroupEdit from './edit';

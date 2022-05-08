@@ -14,7 +14,7 @@ import FlowPropertyView from './components/view';
 import FlowPropertyEdit from './components/edit';
 import FlowPropertyDelete from './components/delete';
 // import CategoryViewByParent from '../category/components/viewbyparent';
-import UnitJsonList from '../unitgroup/components/unitjson/list';
+import UnitJsonList from '../unitgroup/components/unitjson';
 // import UnitGroupViewByParent from '../unitgroup/components/viewbyparent';
 import FlowPropertySelect from './components/select';
 
