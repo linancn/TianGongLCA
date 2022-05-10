@@ -1,8 +1,8 @@
 export default {
-  'homepage.card': 'Card',
-  'homepage.table': 'Table',
-  'homepage.projectsearch': 'Search project',
-  'homepage.projectcreate': 'New project',
-  'homepage.projectsearchbutton': 'Search',
-  'homepage.project_create_success': 'Project created successfully！',
+  'homepage.card': 'カード',
+  'homepage.table': 'リスト',
+  'homepage.projectsearch': 'プロジェクト検索',
+  'homepage.projectcreate': '新規プロジェクト',
+  'homepage.projectsearchbutton': '検索',
+  'homepage.project_create_success': 'プロジェクトを作成しました！',
 };
