@@ -5,7 +5,7 @@ export default {
   'menu.connect': 'サーバ接続',
   'menu.recyclebin': 'ごみ箱',
   'menu.database': 'データベース',
-  'menu.plans': '計画',
+  'menu.plans': '方案',
   'menu.processes': 'プロセス',
   'menu.flows': 'フロー',
   'menu.measurements': '測度',
