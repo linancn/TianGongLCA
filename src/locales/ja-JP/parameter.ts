@@ -1,0 +1,15 @@
+export default {
+  'parameter.index': '番号',
+  'parameter.dataName': 'データ名',
+  'parameter.lastChange': '最後の変更',
+  'parameter.database': 'データベース',
+  'parameter.release': 'リリス',
+  'parameter.description': '説明',
+  'parameter.version': 'バージョン',
+  'parameter.delete': 'このパラメータをごみ箱に移動しますか？',
+  'parameter.deletesuccess': 'ごみ箱に移動しました！',
+  'parameter.formula': '公式',
+  'parameter.value': '値',
+  'parameter.uncertaintyGeomSd': 'SD',
+  'parameter.uncertaintyGeomMean': 'Mean',
+};
