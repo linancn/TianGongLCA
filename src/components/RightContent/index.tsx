@@ -7,6 +7,7 @@ import styles from './index.less';
 import NoticeIconView from '../NoticeIcon';
 import ElectronButton from '../ElectronButton';
 import ElectronUpgrade from '../ElectronButton/upgrade';
+import ElectronMessage from '../ElectronButton/message';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -25,6 +26,7 @@ const GlobalHeaderRight: React.FC = () => {
   }
   return (
     <>
+      <ElectronMessage />
       <Space className={className}>
         {/* <HeaderSearch
         className={`${styles.action} ${styles.search}`}

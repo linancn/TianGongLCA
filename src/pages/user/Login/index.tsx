@@ -18,6 +18,7 @@ import styles from './index.less';
 import ElectronButton from '@/components/ElectronButton';
 
 import CustomStyles from '@/style/custom.less';
+import ElectronMessage from '@/components/ElectronButton/message';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -91,6 +92,7 @@ const Login: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <ElectronMessage />
       <div className={styles.lang} data-lang>
         <div
           className={CustomStyles.electron_drag}
