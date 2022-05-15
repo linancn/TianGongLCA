@@ -8,7 +8,7 @@ import { message } from 'antd';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+// import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import fixMenuItemIcon from './utils/fixMenuItemIcon';
 import { getHomeMenu } from './services/menu/home';
 import { getProjectMenu } from './services/menu/project';
@@ -71,7 +71,38 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     try {
-      const currentUser = await queryCurrentUser();
+      // const currentUser = await queryCurrentUser();
+      const currentUser: any = {
+        name: 'Admin',
+        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        userid: '00000001',
+        email: '',
+        signature: '',
+        title: '',
+        group: '',
+        tags: [
+          {
+            key: '0',
+            label: '',
+          },
+        ],
+        notifyCount: 12,
+        unreadCount: 6,
+        country: 'China',
+        access: {},
+        geographic: {
+          province: {
+            label: '',
+            key: '',
+          },
+          city: {
+            label: '',
+            key: '',
+          },
+        },
+        address: '',
+        phone: '',
+      };
       return currentUser;
     } catch (error) {
       history.push(loginPath);
