@@ -1,6 +1,7 @@
 import { request } from 'umi';
 import type { ExchangeJson, ParameterJson, Process } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
+import { getServiceHostName } from '../setting';
 
 export async function getProcessGrid(
   params: {
@@ -17,7 +18,7 @@ export async function getProcessGrid(
     data: Process[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/process/getgrid', {
+  }>(`${getServiceHostName()}/api/process/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -44,7 +45,7 @@ export async function getParameterJsonGrid(
     data: ParameterJson[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/process/getparameterjsongrid', {
+  }>(`${getServiceHostName()}/api/process/getparameterjsongrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -72,7 +73,7 @@ export async function getExchangeJsonGrid(
     data: ExchangeJson[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/process/getexchangejsongrid', {
+  }>(`${getServiceHostName()}/api/process/getexchangejsongrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -86,19 +87,19 @@ export async function getExchangeJsonGrid(
 }
 
 export async function getProcessById(projectId: number, id: string) {
-  return request<Process>(`http://localhost:8081/api/process/get/${projectId}/${id}`, {
+  return request<Process>(`${getServiceHostName()}/api/process/get/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
 export async function getProcessByPkid(pkid: number) {
-  return request<Process>(`http://localhost:8081/api/process/get/${pkid}`, {
+  return request<Process>(`${getServiceHostName()}/api/process/get/${pkid}`, {
     method: 'GET',
   });
 }
 
 export async function updateProcess(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/update', {
+  return request<string>(`${getServiceHostName()}/api/process/update`, {
     method: 'PUT',
     data,
   });
@@ -111,21 +112,21 @@ export async function updateProcess(data?: Record<string, any>) {
 // }
 
 export async function createProcess(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/create', {
+  return request<string>(`${getServiceHostName()}/api/process/create`, {
     method: 'POST',
     data,
   });
 }
 
 export async function deleteProcess(pkid: number) {
-  return request<string>(`http://localhost:8081/api/process/delete/${pkid}`, {
+  return request<string>(`${getServiceHostName()}/api/process/delete/${pkid}`, {
     method: 'DELETE',
   });
 }
 
 export async function getParameterJson(projectId: number, processId: string, id: string) {
   return request<ParameterJson>(
-    `http://localhost:8081/api/process/getparameterjson/${projectId}/${processId}/${id}`,
+    `${getServiceHostName()}/api/process/getparameterjson/${projectId}/${processId}/${id}`,
     {
       method: 'GET',
     },
@@ -133,21 +134,21 @@ export async function getParameterJson(projectId: number, processId: string, id:
 }
 
 export async function createParameterJson(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/createparameterjson', {
+  return request<string>(`${getServiceHostName()}/api/process/createparameterjson`, {
     method: 'POST',
     data,
   });
 }
 
 export async function updateParameterJson(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/updateparameterjson', {
+  return request<string>(`${getServiceHostName()}/api/process/updateparameterjson`, {
     method: 'PUT',
     data,
   });
 }
 
 export async function deleteParameterJson(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/deleteparameterjson', {
+  return request<string>(`${getServiceHostName()}/api/process/deleteparameterjson`, {
     method: 'DELETE',
     data,
   });
@@ -160,7 +161,7 @@ export async function getExchangeJson(
   input: boolean,
 ) {
   return request<ExchangeJson>(
-    `http://localhost:8081/api/process/getexchangejson/${projectId}/${processId}/${internalId}/${input}`,
+    `${getServiceHostName()}/api/process/getexchangejson/${projectId}/${processId}/${internalId}/${input}`,
     {
       method: 'GET',
     },
@@ -168,28 +169,28 @@ export async function getExchangeJson(
 }
 
 export async function createExchangeJson(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/createexchangejson', {
+  return request<string>(`${getServiceHostName()}/api/process/createexchangejson`, {
     method: 'POST',
     data,
   });
 }
 
 export async function updateExchangeJson(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/updateexchangejson', {
+  return request<string>(`${getServiceHostName()}/api/process/updateexchangejson`, {
     method: 'PUT',
     data,
   });
 }
 
 export async function deleteExchangeJson(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/deleteexchangejson', {
+  return request<string>(`${getServiceHostName()}/api/process/deleteexchangejson`, {
     method: 'DELETE',
     data,
   });
 }
 
 export async function copyProcess(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/process/copy', {
+  return request<string>(`${getServiceHostName()}/api/process/copy`, {
     method: 'PUT',
     data,
   });

@@ -1,6 +1,7 @@
 import { request } from 'umi';
 import type { Parameter } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
+import { getServiceHostName } from '../setting';
 
 export async function getParameterGrid(
   params: {
@@ -17,7 +18,7 @@ export async function getParameterGrid(
     data: Parameter[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/parameter/getgrid', {
+  }>(`${getServiceHostName()}/api/parameter/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -31,7 +32,7 @@ export async function getParameterGrid(
 
 export async function getParameterById(projectId: number, processId: string, id: string) {
   return request<Parameter>(
-    `http://localhost:8081/api/parameter/get/${projectId}/${processId}/${id}`,
+    `${getServiceHostName()}/api/parameter/get/${projectId}/${processId}/${id}`,
     {
       method: 'GET',
     },
@@ -39,27 +40,27 @@ export async function getParameterById(projectId: number, processId: string, id:
 }
 
 export async function getParameterByPkid(pkid: number) {
-  return request<Parameter>(`http://localhost:8081/api/parameter/get/${pkid}`, {
+  return request<Parameter>(`${getServiceHostName()}/api/parameter/get/${pkid}`, {
     method: 'GET',
   });
 }
 
 export async function updateParameter(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/parameter/update', {
+  return request<string>(`${getServiceHostName()}/api/parameter/update`, {
     method: 'PUT',
     data,
   });
 }
 
 export async function createParameter(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/parameter/create', {
+  return request<string>(`${getServiceHostName()}/api/parameter/create`, {
     method: 'POST',
     data,
   });
 }
 
 export async function deleteParameter(pkid: number) {
-  return request<string>(`http://localhost:8081/api/parameter/delete/${pkid}`, {
+  return request<string>(`${getServiceHostName()}/api/parameter/delete/${pkid}`, {
     method: 'DELETE',
   });
 }

@@ -1,3 +1,4 @@
+import { getServiceHostName } from '@/services/setting';
 import type { SortOrder } from 'antd/lib/table/interface';
 import { request } from 'umi';
 import type { PubProcess } from './data';
@@ -15,7 +16,7 @@ export async function getPubProcessGrid(
     data: PubProcess[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/pub/process/getgrid', {
+  }>(`${getServiceHostName()}/api/pub/process/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -26,7 +27,7 @@ export async function getPubProcessGrid(
 }
 
 export async function copyPubProcess(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/pub/process/copy', {
+  return request<string>(`${getServiceHostName()}/api/pub/process/copy`, {
     method: 'PUT',
     data,
   });

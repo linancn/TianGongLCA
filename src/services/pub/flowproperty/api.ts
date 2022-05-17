@@ -1,3 +1,4 @@
+import { getServiceHostName } from '@/services/setting';
 import type { SortOrder } from 'antd/lib/table/interface';
 import { request } from 'umi';
 import type { PubFlowProperty } from './data';
@@ -15,7 +16,7 @@ export async function getPubFlowPropertyGrid(
     data: PubFlowProperty[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/pub/flowproperty/getgrid', {
+  }>(`${getServiceHostName()}/api/pub/flowproperty/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -26,7 +27,7 @@ export async function getPubFlowPropertyGrid(
 }
 
 export async function copyPubFlowProperty(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/pub/flowproperty/copy', {
+  return request<string>(`${getServiceHostName()}/api/pub/flowproperty/copy`, {
     method: 'PUT',
     data,
   });

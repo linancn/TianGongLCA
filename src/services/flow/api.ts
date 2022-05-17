@@ -1,5 +1,6 @@
 import type { SortOrder } from 'antd/lib/table/interface';
 import { request } from 'umi';
+import { getServiceHostName } from '../setting';
 import type { Flow, FlowPropertyJson } from './data';
 
 export async function getFlowGrid(
@@ -17,7 +18,7 @@ export async function getFlowGrid(
     data: Flow[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/flow/getgrid', {
+  }>(`${getServiceHostName()}/api/flow/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -44,7 +45,7 @@ export async function getFlowPropertyJsonViewGrid(
     data: FlowPropertyJson[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/flow/getpropertyjsonviewgrid', {
+  }>(`${getServiceHostName()}/api/flow/getpropertyjsonviewgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -57,34 +58,34 @@ export async function getFlowPropertyJsonViewGrid(
 }
 
 export async function getFlowByPkid(pkid: number) {
-  return request<Flow>(`http://localhost:8081/api/flow/get/${pkid}`, {
+  return request<Flow>(`${getServiceHostName()}/api/flow/get/${pkid}`, {
     method: 'GET',
   });
 }
 
 export async function createFlow(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flow/create', {
+  return request<string>(`${getServiceHostName()}/api/flow/create`, {
     method: 'POST',
     data,
   });
 }
 
 export async function updateFlow(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flow/update', {
+  return request<string>(`${getServiceHostName()}/api/flow/update`, {
     method: 'PUT',
     data,
   });
 }
 
 export async function createFlowPropertyJson(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flow/createpropertyjson', {
+  return request<string>(`${getServiceHostName()}/api/flow/createpropertyjson`, {
     method: 'POST',
     data,
   });
 }
 
 export async function updateFlowPropertyJson(propertyId: string, data?: Record<string, any>) {
-  return request<string>(`http://localhost:8081/api/flow/updatepropertyjson/${propertyId}`, {
+  return request<string>(`${getServiceHostName()}/api/flow/updatepropertyjson/${propertyId}`, {
     method: 'PUT',
     data,
   });
@@ -96,7 +97,7 @@ export async function getFlowPropertyJsonView(
   propertyId: string,
 ) {
   return request<FlowPropertyJson>(
-    `http://localhost:8081/api/flow/getpropertyjsonview/${projectId}/${flowId}/${propertyId}`,
+    `${getServiceHostName()}/api/flow/getpropertyjsonview/${projectId}/${flowId}/${propertyId}`,
     {
       method: 'GET',
     },
@@ -104,7 +105,7 @@ export async function getFlowPropertyJsonView(
 }
 
 export async function deleteFlow(pkid: number) {
-  return request<string>(`http://localhost:8081/api/flow/delete/${pkid}`, {
+  return request<string>(`${getServiceHostName()}/api/flow/delete/${pkid}`, {
     method: 'DELETE',
   });
 }
@@ -115,7 +116,7 @@ export async function deleteFlowPropertyJson(
   propertyId: string,
 ) {
   return request<string>(
-    `http://localhost:8081/api/flow/deletepropertyjson/${projectId}/${flowId}/${propertyId}`,
+    `${getServiceHostName()}/api/flow/deletepropertyjson/${projectId}/${flowId}/${propertyId}`,
     {
       method: 'DELETE',
     },
@@ -123,7 +124,7 @@ export async function deleteFlowPropertyJson(
 }
 
 export async function copyFlow(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/flow/copy', {
+  return request<string>(`${getServiceHostName()}/api/flow/copy`, {
     method: 'PUT',
     data,
   });

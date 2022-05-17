@@ -1,3 +1,4 @@
+import { getServiceHostName } from '@/services/setting';
 import type { SortOrder } from 'antd/lib/table/interface';
 import { request } from 'umi';
 import type { PubUnitGroup } from './data';
@@ -15,7 +16,7 @@ export async function getPubUnitGroupGrid(
     data: PubUnitGroup[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/pub/unitgroup/getgrid', {
+  }>(`${getServiceHostName()}/api/pub/unitgroup/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -26,7 +27,7 @@ export async function getPubUnitGroupGrid(
 }
 
 export async function copyPubUnitGroup(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/pub/unitgroup/copy', {
+  return request<string>(`${getServiceHostName()}/api/pub/unitgroup/copy`, {
     method: 'PUT',
     data,
   });

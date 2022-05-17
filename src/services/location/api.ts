@@ -1,5 +1,6 @@
 import type { SortOrder } from 'antd/lib/table/interface';
 import { request } from 'umi';
+import { getServiceHostName } from '../setting';
 import type { Location } from './data';
 
 export async function getLocationGrid(
@@ -16,7 +17,7 @@ export async function getLocationGrid(
     data: Location[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/location/getgrid', {
+  }>(`${getServiceHostName()}/api/location/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -28,14 +29,14 @@ export async function getLocationGrid(
 }
 
 export async function createLocation(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/location/create', {
+  return request<string>(`${getServiceHostName()}/api/location/create`, {
     method: 'POST',
     data,
   });
 }
 
 export async function updateLocation(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/location/update', {
+  return request<string>(`${getServiceHostName()}/api/location/update`, {
     method: 'PUT',
     data,
   });
@@ -47,7 +48,7 @@ export async function updateParentLocation(
   parentId: string,
   locationId: string,
 ) {
-  return request<string>(`http://localhost:8081/api/${parentType}/updatelocation`, {
+  return request<string>(`${getServiceHostName()}/api/${parentType}/updatelocation`, {
     method: 'PUT',
     data: {
       projectId,
@@ -58,19 +59,19 @@ export async function updateParentLocation(
 }
 
 export async function getLocationById(projectId: number, id: string) {
-  return request<Location>(`http://localhost:8081/api/location/get/${projectId}/${id}`, {
+  return request<Location>(`${getServiceHostName()}/api/location/get/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
 export async function getLocationByPkid(pkid: number) {
-  return request<Location>(`http://localhost:8081/api/location/get/${pkid}`, {
+  return request<Location>(`${getServiceHostName()}/api/location/get/${pkid}`, {
     method: 'GET',
   });
 }
 
 export async function deleteLocation(pkid: number) {
-  return request<string>(`http://localhost:8081/api/location/delete/${pkid}`, {
+  return request<string>(`${getServiceHostName()}/api/location/delete/${pkid}`, {
     method: 'DELETE',
   });
 }

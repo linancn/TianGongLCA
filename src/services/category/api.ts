@@ -1,5 +1,6 @@
 import type { SortOrder } from 'antd/lib/table/interface';
 import { request } from 'umi';
+import { getServiceHostName } from '../setting';
 import type { Category } from './data';
 
 export async function getCategoryGrid(
@@ -16,7 +17,7 @@ export async function getCategoryGrid(
     data: Category[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/category/getgrid', {
+  }>(`${getServiceHostName()}/api/category/getgrid`, {
     method: 'GET',
     params: {
       ...params,
@@ -28,14 +29,14 @@ export async function getCategoryGrid(
 }
 
 export async function createCategory(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/category/create', {
+  return request<string>(`${getServiceHostName()}/api/category/create`, {
     method: 'POST',
     data,
   });
 }
 
 export async function updateCategory(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/category/update', {
+  return request<string>(`${getServiceHostName()}/api/category/update`, {
     method: 'PUT',
     data,
   });
@@ -47,7 +48,7 @@ export async function updateParentCategory(
   parentId: string,
   categoryId: string,
 ) {
-  return request<string>(`http://localhost:8081/api/${parentType}/updatecategory`, {
+  return request<string>(`${getServiceHostName()}/api/${parentType}/updatecategory`, {
     method: 'PUT',
     data: {
       projectId,
@@ -58,19 +59,19 @@ export async function updateParentCategory(
 }
 
 export async function getCategoryById(projectId: number, id: string) {
-  return request<Category>(`http://localhost:8081/api/category/get/${projectId}/${id}`, {
+  return request<Category>(`${getServiceHostName()}/api/category/get/${projectId}/${id}`, {
     method: 'GET',
   });
 }
 
 export async function getCategoryByPkid(pkid: number) {
-  return request<Category>(`http://localhost:8081/api/category/get/${pkid}`, {
+  return request<Category>(`${getServiceHostName()}/api/category/get/${pkid}`, {
     method: 'GET',
   });
 }
 
 export async function deleteCategory(pkid: number) {
-  return request<string>(`http://localhost:8081/api/category/delete/${pkid}`, {
+  return request<string>(`${getServiceHostName()}/api/category/delete/${pkid}`, {
     method: 'DELETE',
   });
 }

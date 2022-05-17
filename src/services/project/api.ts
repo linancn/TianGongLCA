@@ -1,6 +1,7 @@
 import { request } from 'umi';
 import type { Project } from './data';
 import type { SortOrder } from 'antd/lib/table/interface';
+import { getServiceHostName } from '../setting';
 
 export async function getProjectList(
   params: {
@@ -17,7 +18,7 @@ export async function getProjectList(
     data: Project[];
     total?: number;
     success?: boolean;
-  }>('http://localhost:8081/api/project/grid', {
+  }>(`${getServiceHostName()}/api/project/grid`, {
     method: 'GET',
     params: {
       ...params,
@@ -30,33 +31,33 @@ export async function getProjectList(
 }
 
 export async function getProject(id: number) {
-  return request<Project>(`http://localhost:8081/api/project/get/${id}`, {
+  return request<Project>(`${getServiceHostName()}/api/project/get/${id}`, {
     method: 'GET',
   });
 }
 
 export async function updateProject(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/project/update', {
+  return request<string>(`${getServiceHostName()}/api/project/update`, {
     method: 'PUT',
     data,
   });
 }
 
 export async function createProject(data?: Record<string, any>) {
-  return request<string>('http://localhost:8081/api/project/create', {
+  return request<string>(`${getServiceHostName()}/api/project/create`, {
     method: 'POST',
     data,
   });
 }
 
 export async function starProject(id: number) {
-  return request<string>(`http://localhost:8081/api/project/star/${id}`, {
+  return request<string>(`${getServiceHostName()}/api/project/star/${id}`, {
     method: 'PUT',
   });
 }
 
 export async function deleteProject(id: number) {
-  return request<string>(`http://localhost:8081/api/project/delete/${id}`, {
+  return request<string>(`${getServiceHostName()}/api/project/delete/${id}`, {
     method: 'DELETE',
   });
 }
