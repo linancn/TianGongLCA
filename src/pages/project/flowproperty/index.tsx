@@ -71,7 +71,7 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       dataIndex: 'referenceUnit',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.referenceUnit == null ? '-' : row.referenceUnit}
           <UnitJsonList
             projectId={projectid}
@@ -122,7 +122,7 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <FlowPropertyView pkid={row.pkid} actionRef={actionRef} />
           <FlowPropertyEdit
             pkid={row.pkid}
@@ -160,8 +160,8 @@ const FlowPropertyIndex: FC<ListProps> = (props) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <FlowPropertyCreate projectId={projectid} actionRef={actionRef} />,
-          <FlowPropertySelect projectId={projectid} parentActionRef={actionRef} />,
+          <FlowPropertyCreate key={0} projectId={projectid} actionRef={actionRef} />,
+          <FlowPropertySelect key={1} projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {

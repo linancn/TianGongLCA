@@ -88,7 +88,7 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowId, parentActionRef })
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <FlowPropertyJsonView
             projectId={projectId}
             flowId={flowId}
@@ -152,7 +152,12 @@ const FlowPropertyJsonList: FC<Props> = ({ projectId, flowId, parentActionRef })
             defaultCollapsed: false,
           }}
           toolBarRender={() => [
-            <FlowPropertyJsonCreate projectId={projectId} flowId={flowId} actionRef={actionRef} />,
+            <FlowPropertyJsonCreate
+              key={0}
+              projectId={projectId}
+              flowId={flowId}
+              actionRef={actionRef}
+            />,
           ]}
           request={(
             params: {

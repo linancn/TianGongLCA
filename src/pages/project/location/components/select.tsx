@@ -67,7 +67,7 @@ const LocationSelect: FC<Props> = ({
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <LocationView pkid={row.pkid} actionRef={actionRef} />
           <LocationEdit
             pkid={row.pkid}
@@ -160,8 +160,9 @@ const LocationSelect: FC<Props> = ({
             defaultCollapsed: false,
           }}
           toolBarRender={() => [
-            <LocationCreate projectId={projectId} actionRef={actionRef} />,
+            <LocationCreate key={0} projectId={projectId} actionRef={actionRef} />,
             <Tooltip
+              key={0}
               title={
                 <FormattedMessage
                   id="options.selectfromdatabase"

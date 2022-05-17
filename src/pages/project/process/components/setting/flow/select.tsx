@@ -41,7 +41,7 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
       dataIndex: 'locationName',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.locationId == null ? '-' : row.locationName}
           {/* <LocationViewByParent
             projectId={row.projectId}
@@ -58,7 +58,7 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.categoryId == null ? '-' : row.categoryName}
           {/* <CategoryViewByParent
             projectId={row.projectId}
@@ -75,7 +75,7 @@ const ProcessFlowSelect: FC<Props> = ({ projectId, formRef }) => {
       dataIndex: 'flowPropertyCount',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.flowPropertyCount}
           {/* <Tooltip title="List">
             <Button

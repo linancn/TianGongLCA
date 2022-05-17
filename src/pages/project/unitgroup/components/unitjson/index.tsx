@@ -52,7 +52,7 @@ const UnitJsonList: FC<Props> = ({ projectId, unitGroupId, parentActionRef }) =>
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <UnitJsonView projectId={projectId} unitGroupId={unitGroupId} id={row.id} />
           <UnitJsonEdit
             projectId={projectId}
@@ -113,6 +113,7 @@ const UnitJsonList: FC<Props> = ({ projectId, unitGroupId, parentActionRef }) =>
             }}
             toolBarRender={() => [
               <UnitJsonCreate
+                key={0}
                 projectId={projectId}
                 unitGroupId={unitGroupId}
                 actionRef={actionRef}

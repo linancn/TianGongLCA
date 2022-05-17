@@ -63,7 +63,7 @@ const TableList: FC<ListProps> = (props) => {
       title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <ProcessView pkid={row.pkid} actionRef={actionRef} />
           <ProcessEdit
             pkid={row.pkid}
@@ -102,8 +102,8 @@ const TableList: FC<ListProps> = (props) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <ProcessCreate projectId={projectid} actionRef={actionRef} />,
-          <ProcessSelect projectId={projectid} parentActionRef={actionRef} />,
+          <ProcessCreate key={0} projectId={projectid} actionRef={actionRef} />,
+          <ProcessSelect key={1} projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {

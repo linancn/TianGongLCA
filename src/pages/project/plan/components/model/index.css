@@ -1006,7 +1006,7 @@
   stroke-width: 1px;
 }
 /* .flowchart-extension-container.xflow-app-workspace .x6-edge.x6-edge-selected path:nth-child(2) { */
-  /* stroke: #1890ff; */
+/* stroke: #1890ff; */
 /* } */
 .flowchart-extension-container.xflow-app-workspace .x6-edge:hover path:nth-child(2) {
   stroke: #1890ff;

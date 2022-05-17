@@ -61,7 +61,7 @@ const LocationIndex: FC<ListProps> = (props) => {
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <LocationView pkid={row.pkid} actionRef={actionRef} />
           <LocationEdit
             pkid={row.pkid}
@@ -101,8 +101,9 @@ const LocationIndex: FC<ListProps> = (props) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <LocationCreate projectId={projectid} actionRef={actionRef} />,
+          <LocationCreate key={0} projectId={projectid} actionRef={actionRef} />,
           <Tooltip
+            key={1}
             title={
               <FormattedMessage
                 id="options.selectfromdatabase"

@@ -32,10 +32,10 @@ const LocationViewByParent: FC<Props> = ({ projectId, id, parentId, parentType, 
     if (id === null) {
       setViewDescriptions(
         <Descriptions column={1}>
-          <Descriptions.Item label="Data Name" children />
-          <Descriptions.Item label="Last Change" children />
-          <Descriptions.Item label="Description" children />
-          <Descriptions.Item label="Version" children />
+          <Descriptions.Item label="Data Name"> </Descriptions.Item>
+          <Descriptions.Item label="Last Change"> </Descriptions.Item>
+          <Descriptions.Item label="Description"> </Descriptions.Item>
+          <Descriptions.Item label="Version"> </Descriptions.Item>
         </Descriptions>,
       );
       setFooterButtons(

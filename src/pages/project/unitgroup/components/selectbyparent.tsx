@@ -51,7 +51,7 @@ const UnitGroupSelectByParent: FC<Props> = ({
       dataIndex: 'referenceUnit',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.referenceUnit == null ? '-' : row.referenceUnit}
           {/* <Tooltip title="List">
             <Button
@@ -70,7 +70,7 @@ const UnitGroupSelectByParent: FC<Props> = ({
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.categoryId == null ? '-' : row.categoryName}
           <CategoryViewByParent
             projectId={row.projectId}
@@ -183,8 +183,9 @@ const UnitGroupSelectByParent: FC<Props> = ({
             defaultCollapsed: false,
           }}
           toolBarRender={() => [
-            <UnitGroupCreate projectId={projectId} actionRef={actionRef} />,
+            <UnitGroupCreate key={0} projectId={projectId} actionRef={actionRef} />,
             <Tooltip
+              key={1}
               title={
                 <FormattedMessage
                   id="options.selectfromdatabase"

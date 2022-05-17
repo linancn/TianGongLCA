@@ -47,7 +47,7 @@ const FlowCard: FC<Props> = ({ projectId, processId, input }) => {
       title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <ProcessFlowView
             projectId={projectId}
             processId={processId}
@@ -93,6 +93,7 @@ const FlowCard: FC<Props> = ({ projectId, processId, input }) => {
         }}
         toolBarRender={() => [
           <ProcessFlowCreate
+            key={0}
             projectId={projectId}
             processId={processId}
             input={input}

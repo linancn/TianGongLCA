@@ -16,7 +16,7 @@ import { FormattedMessage } from 'umi';
 
 type Props = {
   projectId: number;
-  parentPkid: number;
+  parentId: string;
   parentType: string;
   parentActionRef: React.MutableRefObject<ActionType | undefined>;
   setViewDrawerVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +24,7 @@ type Props = {
 
 const CategorySelect: FC<Props> = ({
   projectId,
-  parentPkid,
+  parentId,
   parentType,
   parentActionRef,
   setViewDrawerVisible,
@@ -61,7 +61,7 @@ const CategorySelect: FC<Props> = ({
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <CategoryView pkid={row.pkid} actionRef={actionRef} />
           <CategoryEdit
             pkid={row.pkid}
@@ -87,7 +87,7 @@ const CategorySelect: FC<Props> = ({
 
   const updateSelectId = () => {
     if (selectRow) {
-      updateParentCategory(parentType, parentPkid, selectRow.id).then(async (result) => {
+      updateParentCategory(parentType, projectId, parentId, selectRow.id).then(async (result) => {
         if (result === 'ok') {
           message.success(
             <FormattedMessage
@@ -154,8 +154,9 @@ const CategorySelect: FC<Props> = ({
             defaultCollapsed: false,
           }}
           toolBarRender={() => [
-            <CategoryCreate projectId={projectId} actionRef={actionRef} />,
+            <CategoryCreate key={0} projectId={projectId} actionRef={actionRef} />,
             <Tooltip
+              key={0}
               title={
                 <FormattedMessage
                   id="options.selectfromdatabase"

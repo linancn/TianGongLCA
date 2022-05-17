@@ -38,10 +38,10 @@ const EditEdgeFlow: FC<Props> = ({
       dataIndex: 'flowSourceName',
       sorter: true,
       render: (_, row) => [
-        <Space size={'small'} className={styles.footer_left}>
+        <Space key={0} size={'small'} className={styles.footer_left}>
           {row.flowSourceName}
         </Space>,
-        <Space size={'small'} className={styles.footer_right}>
+        <Space key={1} size={'small'} className={styles.footer_right}>
           {/* <EdgeProcessView projectId={projectId} id={row.flowSourceId} /> */}
           {/* <EdgeProcessSelect
             pkid={row.pkid}
@@ -58,10 +58,10 @@ const EditEdgeFlow: FC<Props> = ({
       dataIndex: 'flowTargetName',
       sorter: true,
       render: (_, row) => [
-        <Space size={'small'} className={styles.footer_left}>
+        <Space key={0} size={'small'} className={styles.footer_left}>
           {row.flowTargetName}
         </Space>,
-        <Space size={'small'} className={styles.footer_right}>
+        <Space key={1} size={'small'} className={styles.footer_right}>
           {/* <EdgeProcessView projectId={projectId} id={row.flowTargetId} /> */}
           {/* <EdgeProcessSelect
             pkid={row.pkid}
@@ -78,7 +78,7 @@ const EditEdgeFlow: FC<Props> = ({
       dataIndex: 'pkid',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <DeleteEdgeFlow
             projectId={projectId}
             modelId={modelId}
@@ -113,6 +113,7 @@ const EditEdgeFlow: FC<Props> = ({
           columns={columns}
           toolBarRender={() => [
             <CreateEdgeFlow
+              key={0}
               projectId={projectId}
               modelId={modelId}
               edgeSourceId={edgeSourceId}

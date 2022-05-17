@@ -119,8 +119,9 @@ const FlowPropertyJsonSelect: FC<Props> = ({ projectId, formRef }) => {
             defaultCollapsed: false,
           }}
           toolBarRender={() => [
-            <FlowPropertyCreate projectId={projectId} actionRef={actionRef} />,
+            <FlowPropertyCreate key={0} projectId={projectId} actionRef={actionRef} />,
             <Tooltip
+              key={0}
               title={
                 <FormattedMessage
                   id="options.selectfromdatabase"

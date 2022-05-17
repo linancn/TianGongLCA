@@ -56,9 +56,9 @@ const ProjectCard: FC<Props> = ({ nl, r, star }) => {
         actions: {
           render: (_, row) => {
             return [
-              <ProjectStar pkid={row.id} star={row.star} actionRef={actionRef} />,
-              <ProjectOpen pkid={row.id} />,
-              <ProjectDelete pkid={row.id} actionRef={actionRef} />,
+              <ProjectStar key={0} pkid={row.id} star={row.star} actionRef={actionRef} />,
+              <ProjectOpen key={1} pkid={row.id} />,
+              <ProjectDelete key={2} pkid={row.id} actionRef={actionRef} />,
             ];
           },
         },

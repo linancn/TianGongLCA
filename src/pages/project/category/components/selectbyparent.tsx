@@ -61,7 +61,7 @@ const CategorySelectByParent: FC<Props> = ({
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <CategoryView pkid={row.pkid} actionRef={actionRef} />
           <CategoryEdit
             pkid={row.pkid}
@@ -154,8 +154,9 @@ const CategorySelectByParent: FC<Props> = ({
             defaultCollapsed: false,
           }}
           toolBarRender={() => [
-            <CategoryCreate projectId={projectId} actionRef={actionRef} />,
+            <CategoryCreate key={0} projectId={projectId} actionRef={actionRef} />,
             <Tooltip
+              key={0}
               title={
                 <FormattedMessage
                   id="options.selectfromdatabase"

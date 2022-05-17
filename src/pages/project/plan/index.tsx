@@ -66,7 +66,7 @@ const PlanList: FC<Props> = (props) => {
       dataIndex: 'pkid',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <Model
             projectId={row.projectId}
             planId={row.id}
@@ -100,7 +100,7 @@ const PlanList: FC<Props> = (props) => {
         search={{
           defaultCollapsed: false,
         }}
-        toolBarRender={() => [<PlanCreate projectId={projectid} actionRef={actionRef} />]}
+        toolBarRender={() => [<PlanCreate key={0} projectId={projectid} actionRef={actionRef} />]}
         request={(
           params: {
             pageSize: number;

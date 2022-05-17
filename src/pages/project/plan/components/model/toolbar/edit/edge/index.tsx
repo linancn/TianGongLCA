@@ -55,7 +55,7 @@ const EditEdge: FC<Props> = ({
       dataIndex: 'pkid',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <EditEdgeProcess
             projectId={projectId}
             modelId={modelId}
@@ -108,6 +108,7 @@ const EditEdge: FC<Props> = ({
         columns={columns}
         toolBarRender={() => [
           <CreateEdgeProcess
+            key={0}
             projectId={projectId}
             modelId={modelId}
             sourceId={sourceId}

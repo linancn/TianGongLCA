@@ -87,11 +87,11 @@ const ProjectTable: FC<Props> = ({ nl, r, star }) => {
       title: <FormattedMessage id="project.option" />,
       valueType: 'option',
       render: (_, record: Project) => [
-        <ProjectStar pkid={record.id} star={record.star} actionRef={actionRef} />,
-        <ProjectOpen pkid={record.id} />,
-        <ProjectView pkid={record.id} />,
-        <ProjectEdit pkid={record.id} actionRef={actionRef} />,
-        <ProjectDelete pkid={record.id} actionRef={actionRef} />,
+        <ProjectStar key={0} pkid={record.id} star={record.star} actionRef={actionRef} />,
+        <ProjectOpen key={1} pkid={record.id} />,
+        <ProjectView key={2} pkid={record.id} />,
+        <ProjectEdit key={3} pkid={record.id} actionRef={actionRef} />,
+        <ProjectDelete key={4} pkid={record.id} actionRef={actionRef} />,
       ],
     },
   ];

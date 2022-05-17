@@ -66,7 +66,7 @@ const ParameterCard: FC<Props> = ({ projectId, processId }) => {
       title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <ParameterJsonView projectId={projectId} processId={processId} id={row.id} />
           <ParameterJsonEdit
             projectId={projectId}
@@ -98,7 +98,12 @@ const ParameterCard: FC<Props> = ({ projectId, processId }) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <ParameterJsonCreate projectId={projectId} processId={processId} actionRef={actionRef} />,
+          <ParameterJsonCreate
+            key={0}
+            projectId={projectId}
+            processId={processId}
+            actionRef={actionRef}
+          />,
         ]}
         request={(
           params: {

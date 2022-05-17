@@ -54,7 +54,7 @@ const TableList: FC<ListProps> = (porps) => {
       sorter: true,
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space size={'small'} key={0}>
           {row.categoryId == null ? '-' : row.categoryName}
           <CategoryViewByParent
             projectId={row.projectId}
@@ -72,7 +72,7 @@ const TableList: FC<ListProps> = (porps) => {
       sorter: true,
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space size={'small'} key={0}>
           {row.locationId == null ? '-' : row.locationName}
           <LocationViewByParent
             projectId={row.projectId}
@@ -89,7 +89,7 @@ const TableList: FC<ListProps> = (porps) => {
       dataIndex: 'flowPropertyCount',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space size={'small'} key={0}>
           {row.flowPropertyCount}
           {/* <Tooltip title="List">
             <Button
@@ -131,7 +131,7 @@ const TableList: FC<ListProps> = (porps) => {
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space size={'small'} key={0}>
           <FlowView pkid={row.pkid} actionRef={actionRef} />
           <FlowEdit
             pkid={row.pkid}
@@ -169,8 +169,8 @@ const TableList: FC<ListProps> = (porps) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <FlowCreate projectId={projectid} actionRef={actionRef} />,
-          <FlowSelect projectId={projectid} parentActionRef={actionRef} />,
+          <FlowCreate key={0} projectId={projectid} actionRef={actionRef} />,
+          <FlowSelect key={1} projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {

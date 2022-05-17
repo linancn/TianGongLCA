@@ -89,7 +89,7 @@ const AddProcess: FC<Props> = ({ xflowApp, projectId, drawerVisible, setDrawerVi
       className={drawerVisible ? styles.disabled : styles.hidden}
       header={{ title: '', subTitle: '' }}
       footer={[
-        <Space size={'middle'} className={styles.footer_right}>
+        <Space key={0} size={'middle'} className={styles.footer_right}>
           <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
           <Button onClick={onAddToModel} type="primary">
             Add

@@ -75,7 +75,7 @@ const FlowPropertyPubDatabase: FC<Props> = ({
       className={drawerVisible ? styles.disabled : styles.hidden}
       header={{ title: '', subTitle: '' }}
       footer={[
-        <Space size={'middle'} className={styles.footer_right}>
+        <Space key={0} size={'middle'} className={styles.footer_right}>
           <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
           <Button onClick={() => submitSelectId()} type="primary">
             Select

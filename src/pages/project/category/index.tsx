@@ -55,7 +55,7 @@ const CategoryIndex: FC<ListProps> = (props) => {
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <CategoryView pkid={row.pkid} actionRef={actionRef} />
           <CategoryEdit
             pkid={row.pkid}
@@ -95,8 +95,9 @@ const CategoryIndex: FC<ListProps> = (props) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <CategoryCreate projectId={projectid} actionRef={actionRef} />,
+          <CategoryCreate key={0} projectId={projectid} actionRef={actionRef} />,
           <Tooltip
+            key={1}
             title={
               <FormattedMessage
                 id="options.selectfromdatabase"

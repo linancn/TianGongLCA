@@ -45,7 +45,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
       dataIndex: 'referenceUnit',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.referenceUnit == null ? '-' : row.referenceUnit}
           {/* <Tooltip title="List">
             <Button
@@ -64,7 +64,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
       dataIndex: 'categoryName',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           {row.categoryId == null ? '-' : row.categoryName}
           <CategoryViewByParent
             projectId={row.projectId}
@@ -94,7 +94,7 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
       dataIndex: 'option',
       search: false,
       render: (_, row) => [
-        <Space size={'small'}>
+        <Space key={0} size={'small'}>
           <UnitGroupView pkid={row.pkid} actionRef={actionRef} />
           <UnitGroupEdit
             pkid={row.pkid}
@@ -132,8 +132,8 @@ const UnitGroupIndex: FC<ListProps> = (props) => {
           defaultCollapsed: false,
         }}
         toolBarRender={() => [
-          <UnitGroupCreate projectId={projectid} actionRef={actionRef} />,
-          <UnitGroupSelect projectId={projectid} parentActionRef={actionRef} />,
+          <UnitGroupCreate key={0} projectId={projectid} actionRef={actionRef} />,
+          <UnitGroupSelect key={1} projectId={projectid} parentActionRef={actionRef} />,
         ]}
         request={(
           params: {
