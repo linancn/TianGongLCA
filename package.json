@@ -1,6 +1,6 @@
 {
   "name": "crystalca",
-  "version": "v0.0.4",
+  "version": "0.0.7",
   "private": true,
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
