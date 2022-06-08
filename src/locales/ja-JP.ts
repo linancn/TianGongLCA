@@ -21,7 +21,7 @@ export default {
   'layout.user.link.help': 'ヘルプ',
   'layout.user.link.privacy': 'プライバシー',
   'layout.user.link.terms': '利用規約',
-  'app.copyright.produced': '由CrystaLCA研发团队开发',
+  'app.copyright.produced': '由TianGongLCA研发团队开发',
   'app.preview.down.block': 'このページをローカルプロジェクトにダウンロードしてください',
   'app.welcome.link.fetch-blocks': '',
   'app.welcome.link.block-list': '',

@@ -97,7 +97,7 @@
 //   'POST /api/login/account': async (req: Request, res: Response) => {
 //     const { password, username, type } = req.body;
 //     await waitTime(2000);
-//     if (password === 'crystalca' && username === 'admin') {
+//     if (password === 'tiangonglca' && username === 'admin') {
 //       res.send({
 //         status: 'ok',
 //         type,
@@ -106,7 +106,7 @@
 //       access = 'admin';
 //       return;
 //     }
-//     if (password === 'crystalca' && username === 'user') {
+//     if (password === 'tiangonglca' && username === 'user') {
 //       res.send({
 //         status: 'ok',
 //         type,

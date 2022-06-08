@@ -11,7 +11,7 @@ const Settings: LayoutSettings & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'CrystaLCA',
+  title: 'TianGongLCA',
   pwa: true,
   logo: '/logo.svg',
   iconfontUrl: '',

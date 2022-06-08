@@ -1,10 +1,10 @@
 export default {
   'pages.layouts.userLayout.title': 'طراحی مورچه تأثیرگذارترین مشخصات طراحی وب در منطقه Xihu است',
   'pages.login.accountLogin.tab': 'ورود به حساب کاربری',
-  'pages.login.accountLogin.errorMessage': 'نام کاربری / رمزعبور نادرست （مدیر / crystalca)',
+  'pages.login.accountLogin.errorMessage': 'نام کاربری / رمزعبور نادرست （مدیر / tiangonglca)',
   'pages.login.username.placeholder': 'نام کاربری: مدیر یا کاربر',
   'pages.login.username.required': 'لطفا نام کاربری خود را وارد کنید!',
-  'pages.login.password.placeholder': 'رمز عبور: crystalca',
+  'pages.login.password.placeholder': 'رمز عبور: tiangonglca',
   'pages.login.password.required': 'لطفاً رمز ورود خود را وارد کنید!',
   'pages.login.phoneLogin.tab': 'ورود به سیستم تلفن',
   'pages.login.phoneLogin.errorMessage': 'خطای کد تأیید',

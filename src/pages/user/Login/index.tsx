@@ -132,7 +132,7 @@ const Login: React.FC = () => {
           <div className={styles.header}>
             <Link to="/">
               <img alt="logo" className={styles.logo} src="/logo.svg" />
-              <span className={styles.title}>CrystaLCA</span>
+              <span className={styles.title}>TianGongLCA</span>
             </Link>
           </div>
           <div className={styles.desc}>
@@ -189,7 +189,7 @@ const Login: React.FC = () => {
               <LoginMessage
                 content={intl.formatMessage({
                   id: 'pages.login.accountLogin.errorMessage',
-                  defaultMessage: '账户或密码错误（admin/crystalca)',
+                  defaultMessage: '账户或密码错误（admin/tiangonglca)',
                 })}
               />
             )}
@@ -225,7 +225,7 @@ const Login: React.FC = () => {
                   }}
                   placeholder={intl.formatMessage({
                     id: 'pages.login.password.placeholder',
-                    defaultMessage: '密码: crystalca',
+                    defaultMessage: '密码: tiangonglca',
                   })}
                   rules={[
                     {

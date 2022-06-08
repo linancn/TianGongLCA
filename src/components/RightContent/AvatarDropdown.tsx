@@ -47,7 +47,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         loginOut();
         return;
       } else if (key === 'help') {
-        window.open('https://www.crystalca.org');
+        window.open('https://www.tiangong.earth');
       } else {
         history.push(`/account/${key}`);
       }
