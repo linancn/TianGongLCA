@@ -1,17 +1,15 @@
-import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, message, Tabs } from 'antd';
-import React, { useCallback, useState } from 'react';
-import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+import React, { useState } from 'react';
+import ProForm, { ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
+import { login } from '@/services/user/api';
 // import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
-
 import styles from './index.less';
 import ElectronButton from '@/components/ElectronButton';
 
 import CustomStyles from '@/style/custom.less';
-import { login } from '@/services/user/api';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -53,34 +51,34 @@ const Login: React.FC = () => {
       });
     }
   };
-  const handleSubmit = useCallback((values: API.LoginParams) => {
-    setSubmitting(true);
-    const user = { ...values, type };
-    login(user).then(async (result) => {
-      if (result === 'ok') {
-        const defaultloginSuccessMessage = intl.formatMessage({
-          id: 'pages.login.success',
-          defaultMessage: '登录成功！',
-        });
-        message.success(defaultloginSuccessMessage);
-        await fetchUserInfo();
-        goto();
-        setUserLoginState({
-          status: 'ok',
-          type,
-          currentAuthority: user.username,
-        });
-        return;
-      } else {
-        const defaultLoginFailureMessage = intl.formatMessage({
-          id: 'pages.login.failure',
-          defaultMessage: '登录失败，请重试！',
-        });
-        message.error(defaultLoginFailureMessage);
-      }
-    });
-    setSubmitting(false);
-  }, []);
+  // const handleSubmit = useCallback((values: API.LoginParams) => {
+  //   setSubmitting(true);
+  //   const user = { ...values, type };
+  //   login(user).then(async (result) => {
+  //     if (result === 'ok') {
+  //       const defaultloginSuccessMessage = intl.formatMessage({
+  //         id: 'pages.login.success',
+  //         defaultMessage: '登录成功！',
+  //       });
+  //       message.success(defaultloginSuccessMessage);
+  //       await fetchUserInfo();
+  //       goto();
+  //       setUserLoginState({
+  //         status: 'ok',
+  //         type,
+  //         currentAuthority: user.username,
+  //       });
+  //       return;
+  //     } else {
+  //       const defaultLoginFailureMessage = intl.formatMessage({
+  //         id: 'pages.login.failure',
+  //         defaultMessage: '登录失败，请重试！',
+  //       });
+  //       message.error(defaultLoginFailureMessage);
+  //     }
+  //   });
+  //   setSubmitting(false);
+  // }, []);
   // const handleSubmit = async (values: API.LoginParams) => {
   // const handleSubmit = async () => {
   //   setSubmitting(true);
@@ -115,6 +113,49 @@ const Login: React.FC = () => {
   //   }
   //   setSubmitting(false);
   // };
+  const handleSubmit = async (values: API.LoginParams) => {
+    setSubmitting(true);
+    try {
+      // 登录
+      const msg = await login({ ...values });
+      if (msg === 'ok') {
+        localStorage.setItem(
+          'islogin',
+          JSON.stringify({
+            value: values.username === undefined ? '' : values.username,
+            expire: 3600000, //一小时
+            timestamp: new Date().getTime(),
+          }),
+        );
+        const defaultLoginSuccessMessage = intl.formatMessage({
+          id: 'pages.login.success',
+          defaultMessage: '登录成功！',
+        });
+        setUserLoginState({
+          status: 'ok',
+          type,
+          currentAuthority: values.username,
+        });
+        message.success(defaultLoginSuccessMessage);
+        await fetchUserInfo();
+        goto();
+        return;
+      }
+      // 如果失败去设置用户错误信息
+      setUserLoginState({
+        status: 'err',
+        type,
+        currentAuthority: '',
+      });
+    } catch (error) {
+      const defaultLoginFailureMessage = intl.formatMessage({
+        id: 'pages.login.failure',
+        defaultMessage: '登录失败，请重试！',
+      });
+      message.error(defaultLoginFailureMessage);
+    }
+    setSubmitting(false);
+  };
   const { status, type: loginType } = userLoginState;
 
   return (
@@ -132,7 +173,7 @@ const Login: React.FC = () => {
           <div className={styles.header}>
             <Link to="/">
               <img alt="logo" className={styles.logo} src="/logo.svg" />
-              <span className={styles.title}>TianGongLCA</span>
+              <span className={styles.title}>CrystaLCA</span>
             </Link>
           </div>
           <div className={styles.desc}>
@@ -176,13 +217,13 @@ const Login: React.FC = () => {
                   defaultMessage: '账户密码登录',
                 })}
               />
-              <Tabs.TabPane
+              {/* <Tabs.TabPane
                 key="mobile"
                 tab={intl.formatMessage({
                   id: 'pages.login.phoneLogin.tab',
                   defaultMessage: '手机号登录',
                 })}
-              />
+              /> */}
             </Tabs>
 
             {status === 'error' && loginType === 'account' && (
@@ -242,7 +283,7 @@ const Login: React.FC = () => {
               </>
             )}
 
-            {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+            {/* {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
             {type === 'mobile' && (
               <>
                 <ProFormText
@@ -323,7 +364,7 @@ const Login: React.FC = () => {
                   }}
                 />
               </>
-            )}
+            )} */}
             <div
               style={{
                 marginBottom: 24,
