@@ -1,6 +1,10 @@
+export type LoginParams = {
+  userName: string;
+  password: string;
+};
+
 export type User = {
   name: string;
-  username: string;
   password: string;
   autoLogin: boolean;
   type: string;

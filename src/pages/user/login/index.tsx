@@ -1,28 +1,28 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Alert, message, Tabs } from 'antd';
+import { message, Tabs } from 'antd';
 import React, { useState } from 'react';
-import ProForm, { ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { login } from '@/services/user/api';
-// import { login } from '@/services/ant-design-pro/api';
 import styles from './index.less';
 import ElectronButton from '@/components/ElectronButton';
 
 import CustomStyles from '@/style/custom.less';
+import type { LoginParams } from '@/services/user/data';
 
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({ content }) => (
-  <Alert
-    style={{
-      marginBottom: 24,
-    }}
-    message={content}
-    type="error"
-    showIcon
-  />
-);
+// const LoginMessage: React.FC<{
+//   content: string;
+// }> = ({ content }) => (
+//   <Alert
+//     style={{
+//       marginBottom: 24,
+//     }}
+//     message={content}
+//     type="error"
+//     showIcon
+//   />
+// );
 
 /** 此方法会跳转到 redirect 参数所在的位置 */
 const goto = () => {
@@ -36,7 +36,7 @@ const goto = () => {
 
 const Login: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  // const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
@@ -113,50 +113,56 @@ const Login: React.FC = () => {
   //   }
   //   setSubmitting(false);
   // };
-  const handleSubmit = async (values: API.LoginParams) => {
+  const handleSubmit = async (values: LoginParams) => {
     setSubmitting(true);
     try {
       // 登录
-      const msg = await login({ ...values });
-      if (msg === 'ok') {
-        localStorage.setItem(
-          'islogin',
-          JSON.stringify({
-            value: values.username === undefined ? '' : values.username,
-            expire: 3600000, //一小时
-            timestamp: new Date().getTime(),
-          }),
-        );
-        const defaultLoginSuccessMessage = intl.formatMessage({
-          id: 'pages.login.success',
-          defaultMessage: '登录成功！',
-        });
-        setUserLoginState({
-          status: 'ok',
-          type,
-          currentAuthority: values.username,
-        });
-        message.success(defaultLoginSuccessMessage);
+      localStorage.removeItem('token');
+      console.log(localStorage);
+      const result = await login({ ...values });
+      if (result.msg === 'ok') {
+        localStorage.setItem('token', result.token);
+        console.log(localStorage);
+        // localStorage.setItem(
+        //   'islogin',
+        //   JSON.stringify({
+        //     value: values.username === undefined ? '' : values.username,
+        //     expire: 3600000, //一小时
+        //     timestamp: new Date().getTime(),
+        //   }),
+        // );
+        // const defaultLoginSuccessMessage = intl.formatMessage({
+        //   id: 'pages.login.success',
+        //   defaultMessage: '登录成功！',
+        // });
+        // setUserLoginState({
+        //   status: 'ok',
+        //   type,
+        //   currentAuthority: values.username,
+        // });
+        // message.success(defaultLoginSuccessMessage);
+        message.success('登录成功！');
         await fetchUserInfo();
         goto();
         return;
       }
       // 如果失败去设置用户错误信息
-      setUserLoginState({
-        status: 'err',
-        type,
-        currentAuthority: '',
-      });
+      // setUserLoginState({
+      //   status: 'err',
+      //   type,
+      //   currentAuthority: '',
+      // });
     } catch (error) {
-      const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
-      });
-      message.error(defaultLoginFailureMessage);
+      // const defaultLoginFailureMessage = intl.formatMessage({
+      //   id: 'pages.login.failure',
+      //   defaultMessage: '登录失败，请重试！',
+      // });
+      // message.error(defaultLoginFailureMessage);
+      message.error('登录失败，请重试！');
     }
     setSubmitting(false);
   };
-  const { status, type: loginType } = userLoginState;
+  // const { status, type: loginType } = userLoginState;
 
   return (
     <div className={styles.container}>
@@ -173,7 +179,7 @@ const Login: React.FC = () => {
           <div className={styles.header}>
             <Link to="/">
               <img alt="logo" className={styles.logo} src="/logo.svg" />
-              <span className={styles.title}>CrystaLCA</span>
+              <span className={styles.title}>Tian Gong LCA</span>
             </Link>
           </div>
           <div className={styles.desc}>
@@ -203,7 +209,7 @@ const Login: React.FC = () => {
               },
             }}
             onFinish={async (values) => {
-              handleSubmit(values as API.LoginParams);
+              handleSubmit(values as LoginParams);
             }}
             // onFinish={async () => {
             //   handleSubmit();
@@ -226,18 +232,18 @@ const Login: React.FC = () => {
               /> */}
             </Tabs>
 
-            {status === 'error' && loginType === 'account' && (
+            {/* {status === 'error' && loginType === 'account' && (
               <LoginMessage
                 content={intl.formatMessage({
                   id: 'pages.login.accountLogin.errorMessage',
                   defaultMessage: '账户或密码错误（admin/tiangonglca)',
                 })}
               />
-            )}
+            )} */}
             {type === 'account' && (
               <>
                 <ProFormText
-                  name="username"
+                  name="userName"
                   fieldProps={{
                     size: 'large',
                     prefix: <UserOutlined className={styles.prefixIcon} />,
@@ -370,9 +376,9 @@ const Login: React.FC = () => {
                 marginBottom: 24,
               }}
             >
-              <ProFormCheckbox noStyle name="autoLogin">
+              {/* <ProFormCheckbox noStyle name="autoLogin">
                 <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
-              </ProFormCheckbox>
+              </ProFormCheckbox> */}
               <a
                 style={{
                   float: 'right',
