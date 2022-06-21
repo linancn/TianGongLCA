@@ -8,7 +8,6 @@ import { message } from 'antd';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-// import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { currentUser as queryCurrentUser } from '@/services/user/api';
 import fixMenuItemIcon from './utils/fixMenuItemIcon';
 import { getHomeMenu } from './services/menu/home';
@@ -223,8 +222,8 @@ export const layout = ({
   };
 };
 
-const addToken = async (url: any, options: any) => {
-  console.log(url, localStorage);
+//拦截器-请求前拦截
+const authHeaderInterceptor = (url: any, options: any) => {
   if (localStorage.getItem('token')) {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -240,23 +239,29 @@ const addToken = async (url: any, options: any) => {
   };
 };
 
-export const request = {
-  errorHandler: (error: any) => {
-    const { response } = error;
-    if (!response) {
-      message.error('Your network is abnormal and you cannot connect to the server!');
-      // notification.error({
-      //   // description: '您的网络发生异常，无法连接服务器',
-      //   description: 'Your network is abnormal and you cannot connect to the server',
-      //   // message: '网络异常',
-      //   message: 'Network Anomaly',
-      //   placement: 'bottomRight',
-      // });
-    }
+//拦截器-响应后拦截
+const errorResponseInterceptors = async (response: any) => {
+  const res = await response.clone().json(); //这里是关键，获取所有接口请求成功之后的数据
+  if (res?.code) {
+    if (res.code === 401) {
+      history.push(loginPath);
+    } else if (res.code === 403) message.error('没有权限，请联系管理员授权！');
+  }
+  return response;
+};
+//统一错误处理
+const errorHandler = (error: any) => {
+  const { response } = error;
+  if (!response) {
+    message.error('Your network is abnormal and you cannot connect to the server!');
+  }
+  throw error;
+};
 
-    throw error;
-  },
-  requestInterceptors: [addToken],
+export const request = {
+  errorHandler: errorHandler,
+  requestInterceptors: [authHeaderInterceptor],
+  responseInterceptors: [errorResponseInterceptors],
 };
 
 /**
