@@ -76,51 +76,7 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-  //   try {
-  //     console.log("localStorage", localStorage.getItem('islogin'));
-  //     if (localStorage.getItem('islogin') === 'admin') {
-  //       const current = await queryCurrentUser();
-  //       return current;
-  //     } else {
-  //       history.push(loginPath);
-  //     }
-  //     // const currentUser: any = {
-  //     // name: 'Admin',
-  //     // avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-  //     // userid: '00000001',
-  //     // email: '',
-  //     // signature: '',
-  //     // title: '',
-  //     // group: '',
-  //     // tags: [
-  //     //   {
-  //     //     key: '0',
-  //     //     label: '',
-  //     //   },
-  //     // ],
-  //     // notifyCount: 12,
-  //     // unreadCount: 6,
-  //     // country: 'China',
-  //     // access: {},
-  //     // geographic: {
-  //     //   province: {
-  //     //     label: '',
-  //     //     key: '',
-  //     //   },
-  //     //   city: {
-  //     //     label: '',
-  //     //     key: '',
-  //     //   },
-  //     // },
-  //     // address: '',
-  //     // phone: '',
-  //     // };
-  //     // return currentUser;
-  //   } catch (error) {
-  //     history.push(loginPath);
-  //   }
-  //   return undefined;
-  // };
+
   const fetchMenuData = async () => {
     try {
       const urlparam = getUrlParam();

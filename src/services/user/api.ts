@@ -19,6 +19,9 @@ export async function currentUser() {
 }
 
 /** 退出登录*/
-export async function outLogin() {
-  localStorage.removeItem('islogin');
+export async function logout() {
+  localStorage.removeItem('token');
+  return request<any>(`${getServiceHostName()}/api/user/logout`, {
+    method: 'GET',
+  });
 }
