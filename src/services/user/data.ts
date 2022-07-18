@@ -8,4 +8,8 @@ export type User = {
   password: string;
   autoLogin: boolean;
   type: string;
+  email: string;
+  createTime: Date;
+  description: string;
+  id: number;
 };

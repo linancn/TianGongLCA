@@ -27,12 +27,22 @@ export default [
     layout: false,
     routes: [
       {
-        path: '/user',
+        path: '/user/login',
         routes: [
           {
             name: 'login',
             path: '/user/login',
             component: './user/login',
+          },
+        ],
+      },
+      {
+        path: '/user/list',
+        routes: [
+          {
+            name: 'list',
+            path: '/user/list',
+            component: './user/list',
           },
         ],
       },
