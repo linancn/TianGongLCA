@@ -58,11 +58,6 @@ const UserEdit: FC<Props> = ({ id, buttonType, actionRef, setViewDrawerVisible }
           <ProFormText width="md" name="name" label="name" />
           <ProFormText width="md" name="email" label="email" />
           <ProFormTextArea width="md" name="description" label="description" />
-          <ProFormTextArea
-            width="md"
-            name="description"
-            label={<FormattedMessage id="flow.description" defaultMessage="Description" />}
-          />
         </ProForm>,
       );
       formRefEdit.current?.setFieldsValue(pi);

@@ -9,6 +9,8 @@ import UserCreate from './components/create';
 import { FormattedMessage } from 'umi';
 import { Space } from 'antd';
 import UserEdit from './components/edit';
+import UserView from './components/view';
+import UserDelete from './components/delete';
 export default (): React.ReactNode => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<User>[] = [
@@ -31,7 +33,7 @@ export default (): React.ReactNode => {
     },
     {
       title: 'create time',
-      dataIndex: 'lastChange',
+      dataIndex: 'createTime',
       valueType: 'dateTime',
       sorter: true,
       search: false,
@@ -42,19 +44,19 @@ export default (): React.ReactNode => {
       search: false,
       render: (_, row) => [
         <Space key={0} size={'small'}>
-          {/* <UserView pkid={row.pkid} actionRef={actionRef} /> */}
+          <UserView id={row.id} actionRef={actionRef} />
           <UserEdit
             id={row.id}
             buttonType={'icon'}
             actionRef={actionRef}
             setViewDrawerVisible={() => {}}
           />
-          {/* <UserDelete
+          <UserDelete
             id={row.id}
             buttonType={'icon'}
             actionRef={actionRef}
             setViewDrawerVisible={() => {}}
-          /> */}
+          />
         </Space>,
       ],
     },
