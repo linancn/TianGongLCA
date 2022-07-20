@@ -39,6 +39,12 @@ export default (): React.ReactNode => {
       search: false,
     },
     {
+      title: 'role name',
+      dataIndex: 'roleName',
+      sorter: true,
+      search: false,
+    },
+    {
       title: <FormattedMessage id="options.option" defaultMessage="Option" />,
       dataIndex: 'option',
       search: false,

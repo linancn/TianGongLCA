@@ -32,6 +32,7 @@ const UserView: FC<Props> = ({ id, actionRef }) => {
           <Descriptions.Item label="email">{result.email}</Descriptions.Item>
           <Descriptions.Item label="createTime">{result.createTime}</Descriptions.Item>
           <Descriptions.Item label="description">{result.description}</Descriptions.Item>
+          <Descriptions.Item label="roleName">{result.roleName}</Descriptions.Item>
         </Descriptions>,
       );
       setFooterButtons(

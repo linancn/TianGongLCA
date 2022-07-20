@@ -12,4 +12,5 @@ export type User = {
   createTime: Date;
   description: string;
   id: number;
+  roleName: string;
 };
